@@ -11,7 +11,6 @@ export function Header(){
     return(
         <Container>
             <StyleStatusBar/>
-
             <IcodsAsteroid />
             <IcodsIcon />
         </Container>

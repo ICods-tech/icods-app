@@ -1,50 +1,50 @@
-import styles from './styles';
-import Input from '../../components/Input'
 import { useAuth } from '../../hooks/auth'
 import Toast from 'react-native-toast-message';
 import React, { useState, useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { 
-  View, 
-  Text, 
-  TouchableWithoutFeedback, 
-  TouchableOpacity, 
-  KeyboardAvoidingView 
+import {
+  TouchableWithoutFeedback,
+  SafeAreaView,
+  Keyboard,
 } from 'react-native'
-import { 
-  HelpButtonContainer, 
-  HelpButtonText, 
+import {
+  Container,
+  HelpButtonContainer,
+  HelpButtonText,
   HelpContainer,
   HelpContainerTexts,
+  InputContainer,
   LoginButtonContainer,
   RegisterAndPassowordForgotContainer,
+  ScrollContainer,
   SignInOptions,
   SpacingContainer,
   SpacingLine,
   SpacingText,
 } from './newStyles';
 
+import FooterAuthentication from '../../components/Authentication/AuthFooter';
 import { Header } from '../../components/Authentication/Header';
 import { SubmitButton } from '../../components/Authentication/SubmitButton';
 import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
-import ButtonAuthentication from '../../components/Button';
+import { NewInput } from '../../components/NewInput';
 
 import GoogleIcon from '../../assets/images/Icons/google_icon.svg'
 import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
-import FooterAuthentication from '../../components/Authentication/AuthFooter';
-
+import UserIcon from '../../assets/images/Icons/signIn-user.svg';
+import KeyIcon from '../../assets/images/Icons/signIn-password.svg';
 
 const SignIn = () => {
   const { signIn, user } = useAuth()
   const navigation = useNavigation()
-  const [ email, setEmail ] = useState<string>( 'jorgeoreidafloresta@gmail.com' )
-  const [ password, setPassword ] = useState<string>( '1234' )
+  const [email, setEmail] = useState<string>('') //jorgeoreidafloresta@gmail.com'
+  const [password, setPassword] = useState<string>('') // '123456'
   const [errored, setErrored] = useState<boolean>(false)
-
+  const [secure, setSecure] = useState(true);
   const handleLogin = useCallback(async () => {
     try {
-      console.log({email, password})
+      console.log({ email, password })
       await signIn({ email, password })
       setErrored(false)
     } catch (error: any) {
@@ -62,110 +62,100 @@ const SignIn = () => {
   }, [email, password])
 
   return (
-    <View style={styles.background}>
-      {/* <HeaderAuthentication /> */}
-      <Header />
-      
-      <KeyboardAvoidingView behavior="height" style={styles.inputContainer}>
-        {/* <View style={styles.inputContainer}> */}
-        <SignInOptions>
+    <SafeAreaView style={{ flex: 1 }}>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Container>
+          <Header />
 
-          <Input
-            placeholder={'Email/Username'}
-            radius={'top'}
-            isErrored={errored}
-            isLoginUsername
-            change={(email: string) => setEmail(email)}
-            value={email}
-          />
-          <Input
-            placeholder={'Senha'}
-            radius={'bottom'}
-            isErrored={errored}       
-            isPassword
-            isLoginPassword
-            change={(password: string) => setPassword(password)}
-            value={password}
-          />
-        {/* </View> */}
+          <ScrollContainer>
+            <SignInOptions >
+
+              <InputContainer isErrored={errored}>
+                <NewInput
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  icon={UserIcon}
+                  keyboardType="email-address"
+                  placeholder="Email/Username"
+                  placeholderTextColor="rgba(0,0,0,0.6)"
+                  defaultValue={email}
+                  onChangeText={(email: string) => setEmail(email)}
+                />
+
+                <SpacingLine isErrored={errored} />
+
+                <NewInput
+                  icon={KeyIcon}
+                  passwordStyleInput
+                  placeholder="Senha"
+                  placeholderTextColor="rgba(0,0,0,0.6)"
+                  secure={secure}
+                  secureTextEntry={secure}
+                  setSecure={setSecure}
+                  defaultValue={password}
+                  onChangeText={(password: string) => setPassword(password)}
+                />
+              </InputContainer>
 
 
-          <RegisterAndPassowordForgotContainer>
-            <HelpButtonContainer
-                onPress={() => {
-                  setErrored(false)
-                  navigation.navigate('Register')}}
-              >
-              <HelpButtonText>Cadastre-se</HelpButtonText>
-            </HelpButtonContainer>
+              <RegisterAndPassowordForgotContainer>
+                <HelpButtonContainer
+                  onPress={() => {
+                    setErrored(false)
+                    navigation.navigate('Register')
+                  }}
+                >
+                  <HelpButtonText>Cadastre-se</HelpButtonText>
+                </HelpButtonContainer>
 
-            <HelpButtonContainer>
-              <HelpButtonText>Esqueceu a senha?</HelpButtonText>
-            </HelpButtonContainer>
-          </RegisterAndPassowordForgotContainer>
+                <HelpButtonContainer>
+                  <HelpButtonText>Esqueceu a senha?</HelpButtonText>
+                </HelpButtonContainer>
+              </RegisterAndPassowordForgotContainer>
 
-          <SubmitButton
-            onPress={() => handleLogin()} 
-            text='Entrar'
-          />
+              <SubmitButton
+                onPress={() => handleLogin()}
+                text='Entrar'
+              />
 
-          <SpacingContainer>
-            <SpacingLine style={{width: '40%'}}></SpacingLine>
-            <SpacingText>Ou</SpacingText>
-            <SpacingLine style={{width: '40%'}}></SpacingLine>
-          </SpacingContainer>
+              <SpacingContainer>
+                <SpacingLine style={{ width: '40%' }}></SpacingLine>
+                <SpacingText>Ou</SpacingText>
+                <SpacingLine style={{ width: '40%' }}></SpacingLine>
+              </SpacingContainer>
 
-          <LoginButtonContainer>
-            <LoginSocialButton 
-              title="Entrar com Google"
-              icon={GoogleIcon}
-              onPress={() => {}}
-            />
+              <LoginButtonContainer>
+                <LoginSocialButton
+                  title="Entrar com Google"
+                  icon={GoogleIcon}
+                  onPress={() => { }}
+                />
 
-            <LoginSocialButton 
-              title="Entrar com Facebook"
-              icon={FacebookIcon}
-              onPress={() => {}}
+                <LoginSocialButton
+                  title="Entrar com Facebook"
+                  icon={FacebookIcon}
+                  onPress={() => { }}
+                />
 
-            />
-          
-          </LoginButtonContainer>
+              </LoginButtonContainer>
 
-        </SignInOptions>
-
-        {/* <View style={styles.alternativeAuthenticationContainer}>
-          <ButtonAuthentication
-              pressed={() =>{}}
-              text="Continue Com Google"
-              notActivated
-              icon={<GoogleIcon style={{ marginRight: 8}}/>}
-            />
-          <ButtonAuthentication
-              pressed={() =>{}}
-              text="Continue Com Facebook"
-              notActivated
-              icon={<FacebookIcon style={{ marginRight: 8}}/>}
-            />
-        </View> */}
-        <SignInOptions>
-
-          <HelpContainer>
-              <HelpContainerTexts 
-              style={{marginRight: RFValue(2) }}
+              <HelpContainer>
+                <HelpContainerTexts
+                  style={{ marginRight: RFValue(2) }}
                 >Algum problema no login?
-              </HelpContainerTexts>
-              
-              <HelpButtonContainer>
-                <HelpButtonText>Contate-nos</HelpButtonText>
-              </HelpButtonContainer>
-          </HelpContainer>
+                </HelpContainerTexts>
 
-        </SignInOptions>
+                <HelpButtonContainer>
+                  <HelpButtonText>Contate-nos</HelpButtonText>
+                </HelpButtonContainer>
+              </HelpContainer>
 
-
-      </KeyboardAvoidingView>
-      <FooterAuthentication />
-    </View>
+            </SignInOptions>
+            <FooterAuthentication />
+          </ScrollContainer>
+        </Container>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
   )
 }
 

@@ -2,16 +2,38 @@ import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions } from 'react-native';
 
-
-
-
-
-
-
+// export const SignInOptions = styled.KeyboardAvoidingView.attrs({
+//     behavior: "height" 
+// })`
+export const Container = styled.View`
+    flex: 1;
+`;
+export const ScrollContainer = styled.ScrollView.attrs({
+    contentContainerStyle: {
+        flexGrow: 1, 
+        flexDirection: 'column', 
+        justifyContent: 'space-between'
+        
+    },
+    showsVerticalScrollIndicator:false
+})`
+   margin-top: ${RFValue(25)}px;
+`;
 
 export const SignInOptions = styled.View`
     width: 100%;
+    /* height: 100%; */
     padding: 0 ${RFValue(55)}px;
+    /* margin-bottom: ${Dimensions.get('window').width * 0.24}px; */
+`;
+
+interface ErrorStyleProps {
+    isErrored?: boolean;
+}
+
+export const InputContainer = styled.View<ErrorStyleProps>`
+    border: 0.5px solid ${({isErrored }) => isErrored ? '#DF2C2C' : 'rgba(0, 0, 0, 0.12)'};
+    border-radius: 4px;
 `;
 
 export const SpacingContainer = styled.View`
@@ -24,9 +46,9 @@ export const SpacingContainer = styled.View`
     justify-content: center;
 `;
 
-export const SpacingLine = styled.View`
+export const SpacingLine = styled.View<ErrorStyleProps>`
     height: 0.5px;
-    background-color: rgba(0, 0, 0, 0.12);
+    background-color: ${({isErrored }) => isErrored ? '#DF2C2C' : 'rgba(0, 0, 0, 0.12)'};
 `;
 
 export const SpacingText = styled.Text`
