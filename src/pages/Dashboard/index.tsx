@@ -72,6 +72,7 @@ const Dashboard = () => {
           <DashboardBlock pressed={() => navigation.navigate('History')} text={'Histórico'} image={'history'} />
           <DashboardBlock text={'Social'} image={'social'} />
         </ScrollView>
+        
         <View style={styles.activitiesContainer}>
           <View style={styles.activitiesHeader}>
             <Text style={styles.activitiesText}>Atividades</Text>

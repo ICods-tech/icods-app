@@ -5,9 +5,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F2F2F2',
     height: RFValue(72),
-    position: 'absolute',
-    bottom: 0,
-    marginTop: RFValue(62),
+    // position: 'absolute',
+    // bottom: 0,
+    marginTop: RFValue(40),
   },
   content: {
     display: 'flex',
