@@ -1,102 +1,111 @@
-import React from 'react';
-import { Dimensions, Platform, StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+// export const SignInOptions = styled.KeyboardAvoidingView.attrs({
+//     behavior: "height" 
+// })`
+export const Container = styled.View`
+    flex: 1;
+`;
+export const ScrollContainer = styled.ScrollView.attrs({
+    contentContainerStyle: {
+        flexGrow: 1, 
+        flexDirection: 'column', 
+        justifyContent: 'space-between'
+        
+    },
+    showsVerticalScrollIndicator:false
+})`
+   margin-top: ${RFValue(25)}px;
+`;
 
-const styles = StyleSheet.create({ 
-  background: {
-    flex: 1,
-    height: height,
-    backgroundColor: '#fff'
-  },
-  inputContainer: {
-    display: 'flex',
-    // top: Platform.OS === 'ios' ? 0 : -56,
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: RFValue(25),
-    // backgroundColor: '#f04'
-  },
-  textUnderneathInputsContainer: {
-    width: '60%',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: RFValue(8),
-    flexDirection: 'row',
-  },
-  underlineText: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#9BAEC8',
-  },
-  underlineSecondText: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#9BAEC8',
-    marginLeft: 'auto'
-  },
-  textUnderneathInputs: {
-    color: '#9BAEC8',
-    letterSpacing: 0.02,
-    fontSize: RFValue(10),
-  },
-  secondTextUnderneathInputs: {
-    color: '#9BAEC8',
-    fontSize: RFValue(10),
-    letterSpacing: 0.02,
-  },
-  buttonContainer: {
-    marginTop: RFValue(24),
-    alignItems: 'center'
-  },
-  orText: {
-    color: '#282C37',
-    fontSize: RFValue(14)
-  },
-  orContainer: {
-    marginTop: RFValue(24),
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  orLeftHorizontalLine: { 
-    width: RFValue(122),
-    marginTop: 'auto',
-    height: 8, 
-    borderTopColor: '0.5px solid rgba(0, 0, 0, 0.12);', 
-    borderTopWidth: 1, 
-    marginRight: RFValue(15)
-  },
-  orRightHorizontalLine: { 
-    width: RFValue(122), 
-    height: 8,
-    marginTop: 'auto',
-    borderTopColor: '0.5px solid rgba(0, 0, 0, 0.12);', 
-    borderTopWidth: 1, 
-    marginLeft: RFValue(15)
-  },
-  alternativeAuthenticationContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: RFValue(24),
-    marginBottom: RFValue(21),
-    height: RFValue(90)
-  },
-  
-  helpContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    width: 196,
-    alignSelf: 'center',
-  },
-  helpText: {
-    fontSize: RFValue(10),
-    color: 'rgba(0, 0, 0, 0.4);',
-    borderBottomWidth: 0.5,
-    borderBottomColor: 'rgba(0, 0, 0, 0.4);'
-  }
-})
+export const SignInOptions = styled.View`
+    width: 100%;
+    /* height: 100%; */
+    padding: 0 ${RFValue(55)}px;
+    /* margin-bottom: ${Dimensions.get('window').width * 0.24}px; */
+`;
 
-export default styles;
+interface ErrorStyleProps {
+    isErrored?: boolean;
+}
+
+export const InputContainer = styled.View<ErrorStyleProps>`
+    border: 1px solid ${({isErrored, theme }) => isErrored ? theme.colors.attention : theme.colors.light_line};
+    border-radius: 4px;
+`;
+
+export const SpacingContainer = styled.View`
+    width: 100%;
+
+    margin-top: ${RFValue(24)}px;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const SpacingLine = styled.View<ErrorStyleProps>`
+    height: 1px;
+    background-color: ${({isErrored, theme }) => isErrored ? theme.colors.attention : theme.colors.light_line};
+`;
+
+export const SpacingText = styled.Text`
+    margin: 0 ${RFValue(15)}px 0 ${RFValue(15)}px;
+    color: ${({theme}) => theme.colors.subtitle};
+    font-size: ${RFValue(12)}px;
+    font-weight: 500;
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+`;
+
+
+export const LoginButtonContainer = styled.View`
+    width: 100%;
+    height: ${RFValue(88)}px;
+
+    margin-top: ${RFValue(22)}px;
+
+    justify-content: space-between;
+`;
+
+export const HelpContainer = styled.View`
+    width: 100%;
+
+    margin: ${RFValue(12)}px 0 ${RFValue(24)}px 0;
+
+    flex-direction: row;
+    justify-content: center;
+`;
+
+export const HelpButtonContainer = styled.TouchableOpacity``;
+
+interface HelpButtonTextProps {
+    textColor: string;
+}
+
+export const HelpButtonText = styled.Text<HelpButtonTextProps>`
+    font-size: ${RFValue(10)}px;
+    font-weight: 500;
+    color: ${({textColor}) => textColor};
+    letter-spacing: ${Dimensions.get('window').width*0.001}px;
+    
+    border-bottom-width: 0.5px;
+    border-bottom-color: ${({textColor}) => textColor};
+`;
+
+export const RegisterAndPassowordForgotContainer = styled.View`
+    width: 100%;
+    
+    justify-content: space-between;
+    flex-direction: row;
+
+    margin: ${RFValue(12)}px 0 ${RFValue(24)}px 0;
+`;
+
+export const HelpContainerTexts = styled.Text`
+    font-size: ${RFValue(10)}px;
+    color: 'rgba(0, 0, 0, 0.4)';
+    font-weight: 400;
+
+`;

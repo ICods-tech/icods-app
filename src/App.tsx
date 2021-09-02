@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack'
+import { ThemeProvider } from 'styled-components';
 import { NavigationContainer } from '@react-navigation/native'
-import Routes from './routes'
-import { View, Text, StatusBar } from 'react-native'
-import Register from './pages/Register';
+import { View, StatusBar } from 'react-native'
 import AppProvider from './hooks'
+import Routes from './routes'
 import Toast, { BaseToast } from 'react-native-toast-message';
+import theme from './global/styles/theme';
 
 const toastConfig = {
   success: ({ text1, text2, ...rest }: {text1: string, text2: string}) => (
@@ -50,15 +50,17 @@ const toastConfig = {
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <StatusBar barStyle='dark-content' backgroundColor='#312e38'/>
-      <View style={{ flex: 1, backgroundColor: '#312e38' }}>
-        <AppProvider>
-        <Routes/>
-        </AppProvider>
-      </View>
-      <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
-    </NavigationContainer>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <StatusBar barStyle='light-content' backgroundColor={theme.colors.primary}/>
+        <View style={{ flex: 1, backgroundColor: '#312e38' }}>
+          <AppProvider>
+          <Routes/>
+          </AppProvider>
+        </View>
+        <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
+      </NavigationContainer>
+    </ThemeProvider>
   )
 }
 

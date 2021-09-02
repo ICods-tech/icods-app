@@ -7,7 +7,7 @@ export const Button = styled(RectButton)`
     width: 100%;
     height: ${RFValue(36)}px;
 
-    background-color: #2B90D9;
+    background-color: ${({theme}) => theme.colors.primary};
     border-radius: 4px;
 
     align-items: center;

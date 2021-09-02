@@ -27,9 +27,3 @@ export const IcodsIcon = styled(IcodsIconImage).attrs({
 })`
     margin-top: ${RFValue(8)}px;
 `;
-
-export const StyleStatusBar = styled(StatusBar).attrs({
-    backgroundColor:"#2b90d9",
-    barStyle: "light-content"
-})``;
-

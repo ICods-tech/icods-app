@@ -1,8 +1,8 @@
-import { useAuth } from '../../hooks/auth'
-import Toast from 'react-native-toast-message';
 import React, { useState, useCallback } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../hooks/auth'
 import { RFValue } from 'react-native-responsive-fontsize';
+import Toast from 'react-native-toast-message';
 import {
   TouchableWithoutFeedback,
   SafeAreaView,
@@ -22,7 +22,7 @@ import {
   SpacingContainer,
   SpacingLine,
   SpacingText,
-} from './newStyles';
+} from './styles';
 
 import FooterAuthentication from '../../components/Authentication/AuthFooter';
 import { Header } from '../../components/Authentication/Header';
@@ -34,8 +34,10 @@ import GoogleIcon from '../../assets/images/Icons/google_icon.svg'
 import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
 import UserIcon from '../../assets/images/Icons/signIn-user.svg';
 import KeyIcon from '../../assets/images/Icons/signIn-password.svg';
+import { useTheme } from 'styled-components';
 
 const SignIn = () => {
+  const theme = useTheme();
   const { signIn, user } = useAuth()
   const navigation = useNavigation()
   const [email, setEmail] = useState<string>('') //jorgeoreidafloresta@gmail.com'
@@ -77,7 +79,7 @@ const SignIn = () => {
                   icon={UserIcon}
                   keyboardType="email-address"
                   placeholder="Email/Username"
-                  placeholderTextColor="rgba(0,0,0,0.6)"
+                  placeholderTextColor={theme.colors.subtitle}
                   defaultValue={email}
                   onChangeText={(email: string) => setEmail(email)}
                 />
@@ -88,7 +90,7 @@ const SignIn = () => {
                   icon={KeyIcon}
                   passwordStyleInput
                   placeholder="Senha"
-                  placeholderTextColor="rgba(0,0,0,0.6)"
+                  placeholderTextColor={theme.colors.subtitle}
                   secure={secure}
                   secureTextEntry={secure}
                   setSecure={setSecure}
@@ -105,11 +107,17 @@ const SignIn = () => {
                     navigation.navigate('Register')
                   }}
                 >
-                  <HelpButtonText>Cadastre-se</HelpButtonText>
+                  <HelpButtonText 
+                    textColor={theme.colors.primary}
+                    >Cadastre-se
+                    </HelpButtonText>
                 </HelpButtonContainer>
 
                 <HelpButtonContainer>
-                  <HelpButtonText>Esqueceu a senha?</HelpButtonText>
+                  <HelpButtonText
+                    textColor={theme.colors.text}
+                    >Esqueceu a senha?
+                  </HelpButtonText>
                 </HelpButtonContainer>
               </RegisterAndPassowordForgotContainer>
 
@@ -146,7 +154,9 @@ const SignIn = () => {
                 </HelpContainerTexts>
 
                 <HelpButtonContainer>
-                  <HelpButtonText>Contate-nos</HelpButtonText>
+                  <HelpButtonText
+                  textColor={theme.colors.primary}
+                  >Contate-nos</HelpButtonText>
                 </HelpButtonContainer>
               </HelpContainer>
 
