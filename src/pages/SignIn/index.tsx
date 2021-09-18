@@ -1,12 +1,12 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../hooks/auth'
 import { RFValue } from 'react-native-responsive-fontsize';
 import Toast from 'react-native-toast-message';
 import {
   TouchableWithoutFeedback,
-  SafeAreaView,
   Keyboard,
+  TextInput
 } from 'react-native'
 import {
   Container,
@@ -17,6 +17,7 @@ import {
   InputContainer,
   LoginButtonContainer,
   RegisterAndPassowordForgotContainer,
+  SafeAreaView,
   ScrollContainer,
   SignInOptions,
   SpacingContainer,
@@ -28,7 +29,7 @@ import FooterAuthentication from '../../components/Authentication/AuthFooter';
 import { Header } from '../../components/Authentication/Header';
 import { SubmitButton } from '../../components/Authentication/SubmitButton';
 import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
-import { NewInput } from '../../components/NewInput';
+import NewInput  from '../../components/NewInput';
 
 import GoogleIcon from '../../assets/images/Icons/google_icon.svg'
 import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
@@ -44,13 +45,19 @@ const SignIn = () => {
   const [password, setPassword] = useState<string>('') // '123456'
   const [errored, setErrored] = useState<boolean>(false)
   const [secure, setSecure] = useState(true);
+  const [isInputFocus, setIsInputFocus] = useState(false);
+  const [inputFocusObserver, setInputFocusObserver] = useState(false);
+  const emailRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
   const handleLogin = useCallback(async () => {
     try {
       console.log({ email, password })
       await signIn({ email, password })
       setErrored(false)
     } catch (error: any) {
-      console.log('Error catched! 🧤')
+      console.log('Error catched! ')
+      console.log(error);
+      
       setErrored(true)
       Toast.show({
         type: 'error',
@@ -60,20 +67,27 @@ const SignIn = () => {
         visibilityTime: 1000,
         bottomOffset: 100,
       })
+      throw new Error(error.message);
     }
-  }, [email, password])
+  }, [email, password]);
+
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidHide', () => {
+      setIsInputFocus(false);
+    })  
+  }, [inputFocusObserver])
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-          <Header />
+          <Header isInputFocus={isInputFocus}/>
 
           <ScrollContainer>
             <SignInOptions >
-
               <InputContainer isErrored={errored}>
                 <NewInput
+                  ref={emailRef}
                   autoCorrect={false}
                   autoCapitalize="none"
                   icon={UserIcon}
@@ -82,11 +96,15 @@ const SignIn = () => {
                   placeholderTextColor={theme.colors.subtitle}
                   defaultValue={email}
                   onChangeText={(email: string) => setEmail(email)}
+                  onSubmitEditing={() => passwordInputRef.current?.focus()}
+                  returnKeyType="next"
+                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
                 />
 
                 <SpacingLine isErrored={errored} />
 
                 <NewInput
+                  ref={passwordInputRef}
                   icon={KeyIcon}
                   passwordStyleInput
                   placeholder="Senha"
@@ -96,6 +114,9 @@ const SignIn = () => {
                   setSecure={setSecure}
                   defaultValue={password}
                   onChangeText={(password: string) => setPassword(password)}
+                  onSubmitEditing={() => handleLogin()}
+                  returnKeyType="send"
+                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(false)}}
                 />
               </InputContainer>
 

@@ -25,7 +25,7 @@ export async function handleFieldAlreadyExistsErrors(
   for (let { message } of errors) {
     setErrorState((previousErrors) => ({
       ...previousErrors,
-      [fieldAlreadyExistsErrors[message as fieldExistsMessages]]: true
+      [fieldAlreadyExistsErrors[message as fieldExistsMessages]]: true,
     }))
   }
 

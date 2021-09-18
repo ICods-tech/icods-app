@@ -5,6 +5,11 @@ import { Dimensions } from 'react-native';
 // export const SignInOptions = styled.KeyboardAvoidingView.attrs({
 //     behavior: "height" 
 // })`
+
+export const SafeAreaView = styled.SafeAreaView`
+    flex: 1;
+`;
+
 export const Container = styled.View`
     flex: 1;
 `;
@@ -30,6 +35,10 @@ export const SignInOptions = styled.View`
 interface ErrorStyleProps {
     isErrored?: boolean;
 }
+
+export const InputContainerFocus = styled.TouchableWithoutFeedback`
+
+`;
 
 export const InputContainer = styled.View<ErrorStyleProps>`
     border: 1px solid ${({isErrored, theme }) => isErrored ? theme.colors.attention : theme.colors.light_line};
@@ -105,7 +114,7 @@ export const RegisterAndPassowordForgotContainer = styled.View`
 
 export const HelpContainerTexts = styled.Text`
     font-size: ${RFValue(10)}px;
-    color: 'rgba(0, 0, 0, 0.4)';
+    color: ${({theme}) => theme.colors.text};
     font-weight: 400;
 
 `;

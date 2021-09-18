@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     height: RFValue(72),
     // position: 'absolute',
     // bottom: 0,
-    marginTop: RFValue(40),
+    marginTop: RFValue(30),
   },
   content: {
     display: 'flex',
