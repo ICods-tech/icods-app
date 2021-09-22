@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { ScannerPopUPContainer, ScannerPopUPModal, ScannerPopUPSubContainer, ScannerPopUPSubContainerCloseButton, ScannerPopUPSubContainerIconContainer, ScannerPopUPSubContainerText, ScannerPopUPSubContainerTitle } from './styles';
 
 import GiftIcon from '../../../assets/images/Icons/scanner/gift_icon.svg';
 import CheckIcon from '../../../assets/images/Icons/scanner/check_icon.svg';
@@ -14,8 +12,7 @@ interface ScannerPopUPPros
   title: string | undefined;
   subtitle: string | undefined;
   icon: string | undefined;
-  press: string | undefined;
-  qrcode: QRCode | undefined;
+  press: () => void;
 }
 
 const ScannerPopUP = ( {
@@ -23,38 +20,55 @@ const ScannerPopUP = ( {
   subtitle,
   icon,
   press,
-  qrcode,
 }: ScannerPopUPPros ) =>
 {
-  const navigation = useNavigation();
+  const [isVisible, setIsVisible] = useState(true);
+  const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout>();
 
-  // useEffect(() => {
-  //   console.log('espere');
-  //   setTimeout(15);
-  //   console.log('esperando');
-  //   navigation.navigate(`${press}`);
+  useEffect(() => {
 
-  // }, []);
+    setMyTimeout( 
+      setTimeout(() => {
+        setIsVisible(false);
+        press();
+      }, 3000)
+    );
+  }, []);
 
   return (
-    <View style={ styles.container }>
-      <View style={ styles.popUp }>
-        <View style={ styles.iconContainer }>
-          { icon === 'gift' && <GiftIcon /> }
-          { icon === 'check' && <CheckIcon /> }
-          { icon === 'close' && <CloseIcon /> }
-        </View>
+    <ScannerPopUPModal 
+      animationType="slide"
+      transparent={true}
+      visible={isVisible}
+      onRequestClose={() => {}}
+    >
+      <ScannerPopUPContainer>
+        <ScannerPopUPSubContainer>
+          <ScannerPopUPSubContainerIconContainer>
+            { icon === 'gift' && <GiftIcon /> }
+            { icon === 'check' && <CheckIcon /> }
+            { icon === 'close' && <CloseIcon /> }
+          </ScannerPopUPSubContainerIconContainer>
 
-        <Text style={ styles.popUpTitle }>{ title }</Text>
-        <Text style={ styles.popUpSubtitle }>{ subtitle }</Text>
+          <ScannerPopUPSubContainerTitle>
+            { title }
+          </ScannerPopUPSubContainerTitle>
+          <ScannerPopUPSubContainerText>
+            { subtitle }
+          </ScannerPopUPSubContainerText>
 
-        <TouchableOpacity
-          style={ styles.closeButton }
-          onPress={ () => navigation.navigate( `${ press }`, { qrcode } ) }>
-          <CancelIcon />
-        </TouchableOpacity>
-      </View>
-    </View>
+          <ScannerPopUPSubContainerCloseButton
+            onPress={ () => {
+              setIsVisible(false);
+              clearTimeout(myTimeout as NodeJS.Timeout);
+              press();
+            } }
+          >
+            <CancelIcon />
+          </ScannerPopUPSubContainerCloseButton>
+        </ScannerPopUPSubContainer>
+      </ScannerPopUPContainer>
+    </ScannerPopUPModal>
   );
 };
 

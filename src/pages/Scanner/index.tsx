@@ -9,6 +9,7 @@ import api from '../../services/api';
 import { QRCode } from '../../types/QRCode';
 import { useAuth } from '../../hooks/auth';
 import LoggedFooter from '../../components/LoggedFooter';
+import { useNavigation } from '@react-navigation/native';
 
 interface PopUp
 {
@@ -20,6 +21,7 @@ interface PopUp
 
 const Scanner = () =>
 {
+  const navigation = useNavigation();
   const { user } = useAuth();
   const page = user ? 'Dashboard' : 'SignIn';
   const [ camera, setCamera ] = useState<RNCamera>();
@@ -27,6 +29,53 @@ const Scanner = () =>
   const [ qrcode, setQrcode ] = useState<QRCode>();
 
   const [ popUp, setPopUp ] = useState<PopUp>();
+
+  const handleCloseButton = () => {
+    setQrCodeValidate(false);
+    navigation.navigate(popUp?.press || 'Scanner', {qrcode});
+  }
+
+  const qrCodeIsEditable = () => {
+    setPopUp( {
+      title: 'QR Code lido com sucesso',
+      label: 'Agora é a vez de você editar',
+      icon: 'check',
+      press: 'Editor',
+    } );
+  }
+
+  const qrCodeContainsGift = () => {
+    setPopUp( {
+      title: 'Você tem um presente iCods',
+      label: 'Agora é a vez de você visualiza-lo',
+      icon: 'gift',
+      press: 'VideoPlayer',
+    } );
+  }
+
+  const qrCodeisNotBelongsIcods = () => {
+    setPopUp( {
+      title: 'O QR Code não pertence ao iCods',
+      label: 'Tente escanear um QR Code da iCods',
+      icon: 'close',
+      press: 'Scanner',
+    });
+  }
+
+  const verifyQRCodeContent = (qrCode: QRCode) => {
+    if (!qrCode.enabled && !user ){
+      qrCodeisNotBelongsIcods();
+      return;
+    }
+
+    if ( qrCode.enabled )
+    {
+      qrCodeContainsGift();
+    } else
+    {
+      qrCodeIsEditable();
+    }
+  }
 
   const barcodeRecognized = async ( { data }: BarCodeReadEvent ) =>
   {
@@ -38,40 +87,20 @@ const Scanner = () =>
       {
         const qrCode: QRCode = response.data;
         setQrcode( qrCode );
-
-        if ( qrCode.enabled )
-        {
-          setQrCodeValidate( true );
-          setPopUp( {
-            title: 'Você tem um presente iCods',
-            label: 'Agora é a vez de você visualiza-lo',
-            icon: 'gift',
-            press: 'VideoPlayer',
-          } );
-        } else
-        {
-          setQrCodeValidate( true );
-          setPopUp( {
-            title: 'QR Code lido com sucesso',
-            label: 'Agora é a vez de você editar',
-            icon: 'check',
-            press: 'Editor',
-          } );
-        }
+        verifyQRCodeContent(qrCode);
       } )
       .catch( ( error: any ) =>
       {
-        setQrCodeValidate( true );
-        setPopUp( {
-          title: 'O QR Code não pertence ao iCods',
-          label: 'Tente escanear um QR Code da iCods',
-          icon: 'close',
-          press: page,
-        } );
-      } );
+        console.log(error.message);
+        qrCodeisNotBelongsIcods();
+      });
+
+    setQrCodeValidate( true );
   };
 
+
   return (
+    
     <SafeAreaView style={ styles.container }>
       <RNCamera
         ref={ ( camera: RNCamera ) =>
@@ -93,11 +122,10 @@ const Scanner = () =>
 
         { qrCodeValidate && (
           <ScannerPopUP
-            press={ popUp?.press }
+            press={ handleCloseButton }
             title={ popUp?.title }
             subtitle={ popUp?.label }
             icon={ popUp?.icon }
-            qrcode={ qrcode }
           />
         ) }
 
