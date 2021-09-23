@@ -111,7 +111,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
       await updateUser(user)
     } catch (err) {
-      if (err.response as) {
+      if (err.response) {
         console.log(err.response.data);
         throw new Error(err)
       }  else if (err.request) {
