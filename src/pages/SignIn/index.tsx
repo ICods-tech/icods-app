@@ -41,8 +41,8 @@ const SignIn = () => {
   const theme = useTheme();
   const { signIn, user } = useAuth()
   const navigation = useNavigation()
-  const [email, setEmail] = useState<string>('') //jorgeoreidafloresta@gmail.com'
-  const [password, setPassword] = useState<string>('') // '123456'
+  const [email, setEmail] = useState<string>('jorgeoreidafloresta@gmail.com') //jorgeoreidafloresta@gmail.com'
+  const [password, setPassword] = useState<string>('jorgeorei') // 'jorgeorei'
   const [errored, setErrored] = useState<boolean>(false)
   const [secure, setSecure] = useState(true);
   const [isInputFocus, setIsInputFocus] = useState(false);

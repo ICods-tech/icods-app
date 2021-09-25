@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   dashboardContainer: {
-    marginLeft: 24
+    // marginLeft: 24
   },
   welcomeContainer: {
     marginTop: 12,

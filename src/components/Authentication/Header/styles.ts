@@ -3,9 +3,11 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '../../../assets/images/logo-home.svg';
 import { Dimensions, Platform } from 'react-native';
+
 interface ContainerProps {
     isInputFocus: boolean;
 }
+
 export const Gradient = styled(LinearGradient).attrs({ 
       start:{ x: 0, y: 0 },
       end:{ x: 0, y: 1 },

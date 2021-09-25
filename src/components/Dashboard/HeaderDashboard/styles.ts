@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   headerInformation: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   infoAndEllipsis: {
     marginRight: 12,

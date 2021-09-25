@@ -1,16 +1,40 @@
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native'
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { View, Text, Image, StatusBar, Button, SafeAreaView, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TouchableWithoutFeedback, 
+} from 'react-native';
+
+import { 
+  CloudLargeContainer, 
+  CloudSmallContainer, 
+  Container, 
+  Header, 
+  HighlightButtonList, 
+  HighlightTitle, 
+  WelcomeContainer, 
+  WelcomeTitle, 
+  WelcomeTitleContainer 
+} from './newStyles';
+
+import styles from './styles';
+
+import { HighlightButton } from '../../components/Dashboard/HighlightButton';
 import HeaderDashboard from '../../components/Dashboard/HeaderDashboard'
 import BottomAuthentication from '../../components/Authentication/BottomAuthentication'
-import styles from './styles';
 import { useAuth } from '../../hooks/auth'
 import extracNameAndSurname from '../../utils/extractNameAndSurname'
-import DashboardBlock from '../../components/Dashboard/DashboardBlock'
 import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg'
 import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg'
 import DashboardFooter from '../../components/LoggedFooter'
 import ModalMoreDashboard from '../../components/Dashboard/ModalMoreDashboard'
+
+import SocialIcon from '../../assets/images/Icons/social.svg';
+import HistoryIcon from '../../assets/images/Icons/history.svg';
+import ScanIcon from '../../assets/images/Icons/qrcode_scan.svg';
+import { RFValue } from 'react-native-responsive-fontsize';
+
 
 const Dashboard = () => {
   const navigation = useNavigation()
@@ -20,12 +44,9 @@ const Dashboard = () => {
   const { name, surname } = user ? extracNameAndSurname(user.name) : { name: '', surname: '' }
 
   return (
-    <View style={styles.background}>
-      <StatusBar
-        backgroundColor="#2b90d9"
-        barStyle="light-content"
-      />
-      <View>
+    <Container>
+
+      <Header>
         <HeaderDashboard
           name={name}
           surname={surname}
@@ -47,32 +68,46 @@ const Dashboard = () => {
             await signOut()
           }}
         />
-      </View>
-      <View style={styles.dashboardContainer}>
-        <View style={styles.welcomeContainer}>
-          <CloudRightSmall style={styles.cloudRightSmallWelcome} />
-          <View>
-            <View style={styles.welcomeTextContainer}>
-              <Text style={styles.welcomeText}>Bem-Vindo</Text>
-              <CloudLeftLarge style={styles.cloudLeftLargeWelcome} />
-            </View>
-            <View style={styles.toICodsTextContainer}>
-              <Text style={styles.welcomeText}>ao iCODS!</Text>
-              <CloudRightSmall style={styles.cloudRightSmallWelcomeText} />
-            </View>
-          </View>
-        </View>
-        <Text style={styles.selectOneOptionText}>Selecione uma das opções abaixo</Text>
-        <ScrollView style={styles.blockScrolling} horizontal>
-          <DashboardBlock
-            pressed={ () => navigation.navigate( 'Scanner' ) }
-            text={ 'Escanear' }
-            image={ 'scan' }
-          />
-          <DashboardBlock pressed={() => navigation.navigate('History')} text={'Histórico'} image={'history'} />
-          <DashboardBlock text={'Social'} image={'social'} />
-        </ScrollView>
+      </Header>
+      
+      <WelcomeContainer>
+          <WelcomeTitleContainer>
+            <WelcomeTitle>Bem vindo{"\n"}ao iCODS!</WelcomeTitle>
+            
+            <CloudLargeContainer>
+              <CloudRightSmall style={{marginLeft: RFValue(100)}}/>
+              <CloudLeftLarge />
+            </CloudLargeContainer>
+          </WelcomeTitleContainer>
+
+          <CloudSmallContainer>
+            <CloudRightSmall/>
+          </CloudSmallContainer>
+        <HighlightTitle>Selecione uma das opções abaixo</HighlightTitle>
+      </WelcomeContainer>
         
+      <HighlightButtonList>
+        <HighlightButton 
+          text='Escanear'
+          icon={ScanIcon}
+          onPress={() => navigation.navigate('Scanner')}
+        />
+        
+        <HighlightButton 
+          text='Histórico'
+          icon={HistoryIcon}
+          onPress={() => navigation.navigate('History')}
+          />
+        
+        <HighlightButton 
+          text='Social'
+          icon={SocialIcon}
+          onPress={() => {}}
+        />
+      </HighlightButtonList>  
+
+
+        <View>
         <View style={styles.activitiesContainer}>
           <View style={styles.activitiesHeader}>
             <Text style={styles.activitiesText}>Atividades</Text>
@@ -81,8 +116,8 @@ const Dashboard = () => {
                 <View style={choosenActivityScope === 'all' && styles.allActivitiesTextWrapper}>
                   <Text
                     style={choosenActivityScope === 'all'
-                      ? styles.allActivitiesTextSelection
-                      : styles.allActivitiesText}>Todas</Text>
+                    ? styles.allActivitiesTextSelection
+                    : styles.allActivitiesText}>Todas</Text>
                 </View>
               </TouchableWithoutFeedback>
               <TouchableWithoutFeedback onPress={() => setChoosenActivityScope('mine')}>
@@ -91,8 +126,8 @@ const Dashboard = () => {
                   : styles.myActivitiesTextWrapper}>
                   <Text
                     style={choosenActivityScope === 'mine'
-                      ? styles.myActivitiesTextSelection
-                      : styles.myActivitiesText}>Minhas</Text>
+                    ? styles.myActivitiesTextSelection
+                    : styles.myActivitiesText}>Minhas</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -101,11 +136,11 @@ const Dashboard = () => {
             <Text style={styles.belowActivitiesText}>Fique por dentro de tudo que aconteceu</Text>
           </View>
         </View>
-      </View>
       <DashboardFooter
         isDashboard={true}
-      />
-    </View>
+        />
+        </View>
+    </Container>
   )
 }
 
