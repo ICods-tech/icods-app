@@ -1,23 +1,19 @@
-import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react';
-import { View, Text, Image, StatusBar, Button, SafeAreaView, TouchableOpacity, TouchableHighlight, Pressable, Modal, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import profilePictureDashboard from '../../../assets/images/photo-perfil.png';
-import InfoAndEllipsis from '../../../assets/images/info_and_ellipsis.svg'
-import InfoIcon from '../../../assets/images/Icons/info_icon.svg'
-import EllipsisIcon from '../../../assets/images/Icons/ellipsis.svg'
 import EllipsisDashboard from '../../../assets/images/Icons/ellipsis-dashboard.svg'
-import HeaderDashboardBackground from '../../../assets/images/background-header-dashboard.svg';
-import styles from './styles'
+import HeaderDashboardBackgroundImage from '../../../assets/images/background-header-dashboard.png';
+
 import { 
   Container, 
   HeaderContainer, 
+  HeaderDashboardBackground,
   HeaderDashboardImageContainer, 
   HeaderMenuButton,
   HeaderUserInfoContainer,
   HeaderUserNameContainer,
   HeaderUserNameText,
-  HeaderUserPhoto
-} from './newStyles';
+  HeaderUserPhoto,
+} from './styles';
 
 interface HeaderProps {
   avatar?: string;
@@ -36,12 +32,14 @@ const HeaderDashboard = ({
   return (
     <Container>
         <HeaderDashboardImageContainer>
-          <HeaderDashboardBackground style={{width: '90%'}}/>
+          <HeaderDashboardBackground 
+            source={HeaderDashboardBackgroundImage}
+          />
         </HeaderDashboardImageContainer>
         
         <HeaderContainer>
           
-          <HeaderUserInfoContainer >
+          <HeaderUserInfoContainer>
             {avatar
               ? <></>
               : <HeaderUserPhoto 

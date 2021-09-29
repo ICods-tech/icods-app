@@ -8,7 +8,7 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-    height: ${RFValue(80)}px;
+    height: ${RFValue(100)}px;
 `;
 
 export const WelcomeContainer = styled.View`
@@ -22,8 +22,10 @@ export const WelcomeTitleContainer = styled.View`
 `;
 
 export const CloudLargeContainer = styled.View`
-    position: absolute;
-    right: ${RFValue(70)};
+    flex: 1;
+    padding: 0 ${RFValue(16)}px;
+    /* align-items: center; */
+    /* justify-content: space-between; */
 `;
 
 export const CloudSmallContainer = styled.View`

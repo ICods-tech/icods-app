@@ -75,13 +75,12 @@ const Dashboard = () => {
             <WelcomeTitle>Bem vindo{"\n"}ao iCODS!</WelcomeTitle>
             
             <CloudLargeContainer>
-              <CloudRightSmall style={{marginLeft: RFValue(100)}}/>
-              <CloudLeftLarge />
+              <CloudLeftLarge  style={{position: 'absolute', left: 15,  top: 0}}/>
+              <CloudRightSmall style={{position: 'absolute', right: 15, bottom: 0}}/>
             </CloudLargeContainer>
           </WelcomeTitleContainer>
 
           <CloudSmallContainer>
-            <CloudRightSmall/>
           </CloudSmallContainer>
         <HighlightTitle>Selecione uma das opções abaixo</HighlightTitle>
       </WelcomeContainer>
