@@ -19,7 +19,8 @@ export default {
         medium_line: 'rgba(0, 0, 0, 0.3)',
 
         shape: '#FFFFFF',
-        dark: '#000000'
+        dark: '#000000',
+        transparent: 'rgba(0, 0, 0, 0.0)'
 
          
         // background: '#F0F2F5',

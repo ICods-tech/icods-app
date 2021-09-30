@@ -1,39 +1,42 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native'
 import { 
-  View, 
-  Text, 
-  TouchableWithoutFeedback, 
-} from 'react-native';
-
-import { 
   CloudLargeContainer, 
   CloudSmallContainer, 
   Container, 
+  FeedContainer, 
+  FeedHeader, 
+  FeedOptionsTitleBorderAll, 
+  FeedOptionsTitleBorderMine, 
+  FeedOptionsTitleContainer, 
+  FeedOptionTitleAll, 
+  FeedOptionTitleButton, 
+  FeedOptionTitleMine, 
+  FeedSubTitle, 
+  FeedSubTitleContainer, 
+  FeedTitle, 
   Header, 
   HighlightButtonList, 
   HighlightTitle, 
+  HightLightListContainer, 
   WelcomeContainer, 
   WelcomeTitle, 
   WelcomeTitleContainer 
-} from './newStyles';
-
-import styles from './styles';
+} from './styles';
 
 import { HighlightButton } from '../../components/Dashboard/HighlightButton';
-import HeaderDashboard from '../../components/Dashboard/HeaderDashboard'
-import BottomAuthentication from '../../components/Authentication/BottomAuthentication'
 import { useAuth } from '../../hooks/auth'
+
+import HeaderDashboard from '../../components/Dashboard/HeaderDashboard'
 import extracNameAndSurname from '../../utils/extractNameAndSurname'
-import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg'
-import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg'
 import DashboardFooter from '../../components/LoggedFooter'
 import ModalMoreDashboard from '../../components/Dashboard/ModalMoreDashboard'
 
+import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg'
+import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg'
 import SocialIcon from '../../assets/images/Icons/social.svg';
 import HistoryIcon from '../../assets/images/Icons/history.svg';
 import ScanIcon from '../../assets/images/Icons/qrcode_scan.svg';
-import { RFValue } from 'react-native-responsive-fontsize';
 
 
 const Dashboard = () => {
@@ -85,60 +88,66 @@ const Dashboard = () => {
         <HighlightTitle>Selecione uma das opções abaixo</HighlightTitle>
       </WelcomeContainer>
         
-      <HighlightButtonList>
-        <HighlightButton 
-          text='Escanear'
-          icon={ScanIcon}
-          onPress={() => navigation.navigate('Scanner')}
-        />
-        
-        <HighlightButton 
-          text='Histórico'
-          icon={HistoryIcon}
-          onPress={() => navigation.navigate('History')}
-          />
-        
-        <HighlightButton 
-          text='Social'
-          icon={SocialIcon}
-          onPress={() => {}}
-        />
-      </HighlightButtonList>  
+      <HightLightListContainer>
+        <HighlightButtonList>
+          <HighlightButton 
+            text='Escanear'
+            icon={ScanIcon}
+            onPress={() => navigation.navigate('Scanner')}
+            />
+          
+          <HighlightButton 
+            text='Histórico'
+            icon={HistoryIcon}
+            onPress={() => navigation.navigate('History')}
+            />
+          
+          <HighlightButton 
+            text='Social'
+            icon={SocialIcon}
+            onPress={() => {}}
+            />
+        </HighlightButtonList>  
+      </HightLightListContainer>  
 
+      <FeedContainer>
+            <FeedHeader>
+              <FeedTitle>Atividades</FeedTitle>
+              
+              <FeedOptionsTitleContainer>
+                <FeedOptionTitleButton 
+                  onPress={() => setChoosenActivityScope('all')}>
+                  {/* <View style={choosenActivityScope === 'all' && styles.allActivitiesTextWrapper}> */}
+                    <>
+                    <FeedOptionTitleAll 
+                      active={choosenActivityScope}
+                      >Todas</FeedOptionTitleAll>
+                  {/* </View> */}
+                  <FeedOptionsTitleBorderAll active={choosenActivityScope}></FeedOptionsTitleBorderAll>
+                  </>
+                </FeedOptionTitleButton>
+                
+                <FeedOptionTitleButton 
+                  onPress={() => setChoosenActivityScope('mine')}>
+                    <FeedOptionTitleMine
+                      active={choosenActivityScope}>
+                      Minhas</FeedOptionTitleMine>
+                    <FeedOptionsTitleBorderMine active={choosenActivityScope}></FeedOptionsTitleBorderMine>
+                    
+                </FeedOptionTitleButton>
+              </FeedOptionsTitleContainer>
+            </FeedHeader>
 
-        <View>
-        <View style={styles.activitiesContainer}>
-          <View style={styles.activitiesHeader}>
-            <Text style={styles.activitiesText}>Atividades</Text>
-            <View style={styles.specificActivitiesContainer}>
-              <TouchableWithoutFeedback onPress={() => setChoosenActivityScope('all')}>
-                <View style={choosenActivityScope === 'all' && styles.allActivitiesTextWrapper}>
-                  <Text
-                    style={choosenActivityScope === 'all'
-                    ? styles.allActivitiesTextSelection
-                    : styles.allActivitiesText}>Todas</Text>
-                </View>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={() => setChoosenActivityScope('mine')}>
-                <View style={choosenActivityScope === 'mine'
-                  ? styles.myActivitiesTextWrapperSelected
-                  : styles.myActivitiesTextWrapper}>
-                  <Text
-                    style={choosenActivityScope === 'mine'
-                    ? styles.myActivitiesTextSelection
-                    : styles.myActivitiesText}>Minhas</Text>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </View>
-          <View style={styles.belowActivitiesTextContainer}>
-            <Text style={styles.belowActivitiesText}>Fique por dentro de tudo que aconteceu</Text>
-          </View>
-        </View>
+            <FeedSubTitleContainer>
+              <FeedSubTitle 
+                >Fique por dentro de tudo que aconteceu
+              </FeedSubTitle>
+            </FeedSubTitleContainer>
+      </FeedContainer>
+
       <DashboardFooter
         isDashboard={true}
         />
-        </View>
     </Container>
   )
 }

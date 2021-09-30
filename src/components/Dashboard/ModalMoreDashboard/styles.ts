@@ -28,8 +28,9 @@ const styles = StyleSheet.create({
   },
   dropdownOptionsText: {
     fontSize: RFValue(10),
-    color: '#000',
+    color: 'rgba(0, 0, 0, 0.87)',
     marginLeft: RFValue(19),
+    letterSpacing: Dimensions.get('window').width*0.002
   },
 })
 
