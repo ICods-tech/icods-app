@@ -1,22 +1,22 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Image, StatusBar, Button, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
-import styles from './styles';
-import Asteroid from '../../assets/images/asteroid_image.svg';
-import IcodsIcon from '../../assets/images/icods_icon.svg';
-import Back from '../../assets/images/back.svg';
-import Input from '../../components/Input'
-import HeaderAuthentication from '../../components/HeaderAuthentication'
-import BottomAuthentication from '../../components/Authentication/BottomAuthentication'
-import ButtonAuthentication from '../../components/ButtonAuthentication'
-import { useAuth } from '../../hooks/auth'
-import api from '../../services/api'
+import React from 'react';
+import { Container } from './styles';
+import Logo from '../../assets/images/iCods_logo.svg';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Splash = () => {
   return (
-    <View style={styles.background}>
-      <Text>SPLASH SCREEN 🌊</Text>
-    </View>
+    <LinearGradient
+      start={ { x: 0, y: 0 } }
+      end={ { x: 0, y: 1 } }
+      colors={ [ '#2B90D9', '#53C4E8' ] }
+      style={ { flex: 1 } }
+    >
+      <Container>
+        <Logo />
+      </Container>
+    </LinearGradient>
+
   )
 }
 

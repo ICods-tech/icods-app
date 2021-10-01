@@ -55,8 +55,9 @@ const AuthProvider: React.FC = ({ children }) => {
       }
     }
 
-    setIsLoading(false)
     loadStoredData()
+    setTimeout( () => { setIsLoading( false ) }, 3000 );
+
   }, [])
 
   const signIn = useCallback(async (credentials: SignInCredentials) => {
