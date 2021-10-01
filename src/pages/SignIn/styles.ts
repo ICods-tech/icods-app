@@ -63,7 +63,9 @@ export const SpacingLine = styled.View<ErrorStyleProps>`
 export const SpacingText = styled.Text`
     margin: 0 ${RFValue(15)}px 0 ${RFValue(15)}px;
     color: ${({theme}) => theme.colors.subtitle};
-    font-size: ${RFValue(12)}px;
+    font-size: ${RFValue(10)}px;
+    font-family: ${({theme}) => theme.fonts.medium};
+
     font-weight: 500;
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
 `;
@@ -95,9 +97,10 @@ interface HelpButtonTextProps {
 
 export const HelpButtonText = styled.Text<HelpButtonTextProps>`
     font-size: ${RFValue(10)}px;
-    font-weight: 500;
+    font-family: ${({theme}) => theme.fonts.semi_bold};
+
     color: ${({textColor}) => textColor};
-    letter-spacing: ${Dimensions.get('window').width*0.001}px;
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
     
     border-bottom-width: 0.5px;
     border-bottom-color: ${({textColor}) => textColor};
@@ -115,6 +118,5 @@ export const RegisterAndPassowordForgotContainer = styled.View`
 export const HelpContainerTexts = styled.Text`
     font-size: ${RFValue(10)}px;
     color: ${({theme}) => theme.colors.text};
-    font-weight: 400;
-
+    font-family: ${({theme}) => theme.fonts.regular};
 `;

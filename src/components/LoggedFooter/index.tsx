@@ -1,9 +1,8 @@
 import React from 'react';
-import styles from './styles'
+import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from '@react-navigation/native';
-import { Text, View, TouchableOpacity } from 'react-native';
+
 import SocialIcon from '../../assets/images/Icons/footer/socialDark.svg';
-import QrCodeScanIcon from '../../assets/images/Icons/footer/qrcode_scanSmall.svg';
 import ActivatedHomeIcon from '../../assets/images/Icons/footer/activated-home.svg';
 import DeactivatedHomeIcon from '../../assets/images/Icons/footer/deactivated-home.svg';
 import ActivatedHistoryIcon from '../../assets/images/Icons/footer/activated-history.svg';
@@ -16,9 +15,9 @@ import {
   Container, 
   FooterButton, 
   FooterButtonTitle,
-  ScannerButton, 
-} from './newStyles';
-import { RFValue } from 'react-native-responsive-fontsize';
+  // ScannerButton, 
+} from './styles';
+import { ScannerButton } from '../ScannerButton';
 
 interface LoggedFooterProps {
   isHistory?: boolean;
@@ -77,16 +76,8 @@ export function LoggedFooter({
 
         <ScannerButton 
           onPress={ () => navigation.navigate( 'Scanner' )} 
-        >
-          <ScannerImg 
-            width={RFValue(56)}
-            height={RFValue(56)}
-          />
-          
-          <FooterButtonTitle
-            selected={isScanner!}
-          >Escanear</FooterButtonTitle>
-        </ScannerButton>
+          selected={isScanner}
+        />
         
         <FooterButton>
           <BorderTop

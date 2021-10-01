@@ -32,7 +32,8 @@ export const IcodsLogo = styled(Logo).attrs({
 
 export const Title = styled.Text`
    font-size: ${RFValue(14)}px;
-   font-weight: 500;
+   font-family: ${({theme}) => theme.fonts.medium};
+
    text-align: center;
    margin-top: ${RFValue(4)}px;
 

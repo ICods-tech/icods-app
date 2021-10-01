@@ -25,7 +25,8 @@ export const Button = styled(RectButton)`
 
 export const Title = styled.Text`
     font-size: ${RFValue(16)}px;
-    font-weight: 600;
+    font-family: ${({theme}) => theme.fonts.semi_bold};
+
     color: ${({theme}) => theme.colors.shape};
 
     margin-top: ${RFValue(8)}px;

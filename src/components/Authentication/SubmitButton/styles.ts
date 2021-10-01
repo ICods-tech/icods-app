@@ -16,7 +16,8 @@ export const Button = styled(RectButton)`
 
 export const Text = styled.Text`
     font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.bold};
+
     color: #fff;
-    font-weight: 700;
     letter-spacing: ${Dimensions.get('window').width*0.001}px;
 `;

@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
   },
   dropdownOptionsText: {
     fontSize: RFValue(10),
+    fontFamily: 'Manrope-Regular',
     color: 'rgba(0, 0, 0, 0.87)',
     marginLeft: RFValue(19),
     letterSpacing: Dimensions.get('window').width*0.002

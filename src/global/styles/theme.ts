@@ -19,9 +19,19 @@ export default {
         medium_line: 'rgba(0, 0, 0, 0.3)',
 
         background: '#F0F2F5',
+        cloudly: '#F2F2F2 ',
         
         shape: '#FFFFFF',
         dark: '#000000',
         transparent: 'rgba(0, 0, 0, 0.0)'
+    },
+
+    fonts: {
+        extra_bold: 'Manrope-ExtraBold',
+        semi_bold: 'Manrope-SemiBold',
+        bold: 'Manrope-Bold',
+        medium: 'Manrope-Medium',
+        regular: 'Manrope-Regular',
+        light: 'Manrope-Light',
     }
 }

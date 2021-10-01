@@ -1,13 +1,21 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
+import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../hooks/auth'
 import { RFValue } from 'react-native-responsive-fontsize';
-import Toast from 'react-native-toast-message';
+import { useTheme } from 'styled-components';
+
+import { AuthFooter } from '../../components/Authentication/AuthFooter';
+import { Header } from '../../components/Authentication/Header';
+import { SubmitButton } from '../../components/Authentication/SubmitButton';
+import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
+
 import {
   TouchableWithoutFeedback,
   Keyboard,
   TextInput
 } from 'react-native'
+
 import {
   Container,
   HelpButtonContainer,
@@ -25,24 +33,19 @@ import {
   SpacingText,
 } from './styles';
 
-import FooterAuthentication from '../../components/Authentication/AuthFooter';
-import { Header } from '../../components/Authentication/Header';
-import { SubmitButton } from '../../components/Authentication/SubmitButton';
-import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
-import NewInput  from '../../components/NewInput';
+import NewInput from '../../components/NewInput';
 
 import GoogleIcon from '../../assets/images/Icons/google_icon.svg'
 import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
 import UserIcon from '../../assets/images/Icons/signIn-user.svg';
 import KeyIcon from '../../assets/images/Icons/signIn-password.svg';
-import { useTheme } from 'styled-components';
 
 const SignIn = () => {
   const theme = useTheme();
   const { signIn, user } = useAuth()
   const navigation = useNavigation()
-  const [email, setEmail] = useState<string>('jorgeoreidafloresta@gmail.com') //jorgeoreidafloresta@gmail.com'
-  const [password, setPassword] = useState<string>('jorgeorei') // 'jorgeorei'
+  const [email, setEmail] = useState<string>('') //jorgeoreidafloresta@gmail.com'
+  const [password, setPassword] = useState<string>('') // 'jorgeorei'
   const [errored, setErrored] = useState<boolean>(false)
   const [secure, setSecure] = useState(true);
   const [isInputFocus, setIsInputFocus] = useState(false);
@@ -182,7 +185,8 @@ const SignIn = () => {
               </HelpContainer>
 
             </SignInOptions>
-            <FooterAuthentication />
+            <AuthFooter />
+
           </ScrollContainer>
         </Container>
       </TouchableWithoutFeedback>

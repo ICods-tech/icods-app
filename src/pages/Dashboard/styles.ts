@@ -37,7 +37,7 @@ export const CloudSmallContainer = styled.View`
 
 export const WelcomeTitle = styled.Text`
     font-size: ${RFValue(26)}px;
-    font-weight: 700;
+    font-family: ${({theme}) => theme.fonts.extra_bold};
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
     color: ${({theme}) => theme.colors.title};
 `;
@@ -45,6 +45,7 @@ export const WelcomeTitle = styled.Text`
 export const HighlightTitle = styled.Text`
     color: ${({theme}) => theme.colors.text};
     font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.regular};
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
 `;
 
@@ -75,7 +76,8 @@ export const FeedHeader = styled.View`
 
 export const FeedTitle = styled.Text`
     font-size: ${RFValue(26)}px;
-    font-weight: 700;
+    font-family: ${({theme}) => theme.fonts.extra_bold};
+
     color: ${({theme}) => theme.colors.title};
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
 `;
@@ -101,6 +103,8 @@ export const FeedOptionTitleButton = styled(RectButton)`
 
 export const FeedOptionTitleAll = styled.Text<FeedOptionsTitleProps>`
     font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.semi_bold};
+
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
     font-weight: 600;
     color: ${({theme, active }) => active === 'all' ? 
@@ -109,6 +113,8 @@ export const FeedOptionTitleAll = styled.Text<FeedOptionsTitleProps>`
 
 export const FeedOptionTitleMine = styled.Text<FeedOptionsTitleProps>`
     font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.semi_bold};
+
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
     font-weight: 600;
     color: ${({theme, active }) => active === 'mine' ? 
@@ -138,6 +144,8 @@ export const FeedSubTitleContainer = styled.View`
 
 export const FeedSubTitle = styled.Text`
     font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.regular};
+
     color: ${({theme}) => theme.colors.text};
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
 `;

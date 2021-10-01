@@ -32,6 +32,8 @@ export const RegisterForm = styled.ScrollView.attrs(
 export const RegisterTitle = styled.Text`
     text-align: center;
     font-size: ${RFValue(16)}px;
+    font-family: ${({theme}) => theme.fonts.regular};
+
     margin-bottom: ${RFValue(17)}px;
     margin-top: ${RFValue(35)}px;
     letter-spacing: ${Dimensions.get('window').width*0.002}px;

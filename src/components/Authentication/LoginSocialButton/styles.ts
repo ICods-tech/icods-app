@@ -31,6 +31,6 @@ export const ButtonText = styled.Text`
     /* text-align: left; */
     color: ${({ theme }) => theme.colors.primary};
     font-size: ${RFValue(14)}px;
-    font-weight: 700;
+    font-family: ${({theme}) => theme.fonts.bold};
     letter-spacing: ${Dimensions.get('window').width*0.001}px;
 `;

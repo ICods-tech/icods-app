@@ -54,7 +54,8 @@ export const HeaderUserNameContainer = styled.View``;
 
 export const HeaderUserNameText = styled.Text`
     font-size: ${RFValue(18)}px;
-    font-weight: 600;
+    font-family: ${({theme}) => theme.fonts.semi_bold};
+;
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
     color: ${({theme}) => theme.colors.shape};
 `;
