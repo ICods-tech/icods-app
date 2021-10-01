@@ -1,44 +1,38 @@
 import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const styles = StyleSheet.create({
   dropdownStyle: {
     position: 'absolute',
-    top: 40,
+    top: 0,
     right: 0,
     zIndex: 2,
     backgroundColor: '#fff',
-    paddingLeft: 16,
-    paddingRight: 16,
-    paddingTop: 16,
-    paddingBottom: 12,
-    borderRadius: 22
+    paddingLeft: RFValue(16),
+    paddingTop: RFValue(18),
+    paddingBottom: RFValue(21),
+    width: RFValue(132),
+    height: RFValue(129),
+    borderRadius: RFValue(20)
   },
-  dropdownOptions: {
-    position: 'relative',
-    zIndex: 1,
+  dropdownSecondOption: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 10,
-    marginBottom: 16,
+    marginTop: RFValue(21),
+    marginBottom: RFValue(21),
+  },
+  dropdownEdgeOptions: {
+    display: 'flex',
+    flexDirection: 'row',
   },
   dropdownOptionsText: {
-    fontSize: 12,
-    color: '#282C37',
-    marginLeft: 18,
-    marginRight: 36
+    fontSize: RFValue(10),
+    fontFamily: 'Manrope-Regular',
+    color: 'rgba(0, 0, 0, 0.87)',
+    marginLeft: RFValue(19),
+    letterSpacing: Dimensions.get('window').width*0.002
   },
-  signOutContainer: {
-    position: 'relative',
-    zIndex: 999,
-    width: 156,
-    height: 36,
-    backgroundColor: '#292',
-  },
-  moreStyle: {
-    marginRight: 24,
-    marginTop: 12
-  }
 })
 
 export default styles;

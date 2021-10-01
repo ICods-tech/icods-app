@@ -61,8 +61,9 @@ const AuthProvider: React.FC = ({ children }) => {
   }, [])
 
   const signIn = useCallback(async (credentials: SignInCredentials) => {
+    
       const { email, password } = credentials;
-
+      console.log('login: ', credentials);
       const res = await api.post('signin', {
         email,
         password
@@ -81,7 +82,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const signUp = useCallback(async (credentials: SignUpCredentials) => {
       const { name, username, email, password, passwordConfirmation } = credentials;
-
+      console.log(credentials);
+      
       await api.post('signup', {
         name,
         username,
@@ -110,8 +112,18 @@ const AuthProvider: React.FC = ({ children }) => {
 
       await updateUser(user)
     } catch (err) {
-      throw new Error(err)
-    }
+      if (err.response) {
+        console.log(err.response.data);
+        throw new Error(err)
+      }  else if (err.request) {
+        console.log('2:', err.request);
+        throw new Error(err)
+        
+      } else {
+        console.log('3:', err.message );
+        throw new Error(err )
+      }
+      }
   }, [])
 
   const updateUser = useCallback(async (updatedUser: User) => {
