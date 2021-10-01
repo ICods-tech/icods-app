@@ -8,7 +8,7 @@ import ScannerPopUP from '../../components/Scanner/ScannerPopUP';
 import api from '../../services/api';
 import { QRCode } from '../../types/QRCode';
 import { useAuth } from '../../hooks/auth';
-import LoggedFooter from '../../components/LoggedFooter';
+import { LoggedFooter } from '../../components/LoggedFooter';
 
 interface PopUp
 {
@@ -25,7 +25,6 @@ const Scanner = () =>
   const [ camera, setCamera ] = useState<RNCamera>();
   const [ qrCodeValidate, setQrCodeValidate ] = useState( false );
   const [ qrcode, setQrcode ] = useState<QRCode>();
-
   const [ popUp, setPopUp ] = useState<PopUp>();
 
   const barcodeRecognized = async ( { data }: BarCodeReadEvent ) =>
@@ -102,7 +101,9 @@ const Scanner = () =>
         ) }
 
         { user &&
-          <LoggedFooter />
+          <LoggedFooter 
+            isScanner={true}
+          />
         }
       </RNCamera>
     </SafeAreaView>

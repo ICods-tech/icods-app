@@ -18,11 +18,10 @@ export default {
         light_line: 'rgba(0, 0, 0, 0.12)',
         medium_line: 'rgba(0, 0, 0, 0.3)',
 
+        background: '#F0F2F5',
+        
         shape: '#FFFFFF',
         dark: '#000000',
         transparent: 'rgba(0, 0, 0, 0.0)'
-
-         
-        // background: '#F0F2F5',
     }
 }

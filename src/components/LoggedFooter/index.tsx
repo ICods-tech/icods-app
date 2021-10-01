@@ -9,51 +9,107 @@ import DeactivatedHomeIcon from '../../assets/images/Icons/footer/deactivated-ho
 import ActivatedHistoryIcon from '../../assets/images/Icons/footer/activated-history.svg';
 import DeactivatedHistoryIcon from '../../assets/images/Icons/footer/deactivated-history.svg';
 import DeactivatedNotificationsIcon from '../../assets/images/Icons/footer/deactivated-bell.svg';
+import ScannerImg from '../../assets/images/ícone-qr-code.svg';
+
+import { 
+  BorderTop,
+  Container, 
+  FooterButton, 
+  FooterButtonTitle,
+  ScannerButton, 
+} from './newStyles';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface LoggedFooterProps {
   isHistory?: boolean;
   isDashboard?: boolean;
+  isScanner?: boolean;
 }
 
 
-const LoggedFooter = (props: LoggedFooterProps) => {
+export function LoggedFooter({
+  isDashboard, 
+  isHistory, 
+  isScanner}: LoggedFooterProps){
   const navigation = useNavigation()
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <TouchableOpacity
+    <Container>
+        <FooterButton
           onPress={() => navigation.navigate('Dashboard')}
-          style={styles.buttons}
-        >
-          {props.isDashboard && <View style={ styles.horizontalBlueHomeBar} />}
-          {props.isDashboard ?
-            <ActivatedHomeIcon /> :
-            <DeactivatedHomeIcon />
+          >
+
+          <BorderTop
+            selected={isDashboard!}
+          />
+          
+          {isDashboard ?
+            <ActivatedHomeIcon 
+              width={RFValue(24)}
+              height={RFValue(24)}
+            /> :
+            <DeactivatedHomeIcon 
+              width={RFValue(24)}
+              height={RFValue(24)}
+            />
           }
-          <Text style={props.isDashboard ? styles.homeText : [styles.homeText, { color: '#000'}]}>Início</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+
+          <FooterButtonTitle selected={isDashboard!}>Início</FooterButtonTitle>
+        </FooterButton>
+
+        <FooterButton
           onPress={() => navigation.navigate('History')}
-          style={styles.buttons}
         >
-          {props.isHistory && <View style={ styles.horizontalBlueHomeBar} />}
-          {props.isHistory ? <ActivatedHistoryIcon /> : <DeactivatedHistoryIcon />}
-          <Text style={props.isHistory ? styles.historyText : [styles.historyText, { color: '#000'}]}>Histórico</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={ () => navigation.navigate( 'Scanner' ) } style={ styles.scanner } >
-          <QrCodeScanIcon style={styles.scan} />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttons}>
-          <DeactivatedNotificationsIcon />
-          <Text style={styles.notificationsText}>Notificação</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttons}>
-          <SocialIcon />
-          <Text style={styles.socialText}>Social</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <BorderTop
+            selected={isHistory!}
+          />
+          {isHistory ?
+          <ActivatedHistoryIcon 
+            width={RFValue(24)}
+            height={RFValue(24)}
+          /> : 
+          <DeactivatedHistoryIcon 
+            width={RFValue(24)}
+            height={RFValue(24)}
+          />}
+          
+          <FooterButtonTitle selected={isHistory!}>Histórico</FooterButtonTitle>
+        </FooterButton>
+
+        <ScannerButton 
+          onPress={ () => navigation.navigate( 'Scanner' )} 
+        >
+          <ScannerImg 
+            width={RFValue(56)}
+            height={RFValue(56)}
+          />
+          
+          <FooterButtonTitle
+            selected={isScanner!}
+          >Escanear</FooterButtonTitle>
+        </ScannerButton>
+        
+        <FooterButton>
+          <BorderTop
+            selected={false}
+          />
+          <DeactivatedNotificationsIcon 
+            width={RFValue(24)}
+            height={RFValue(24)}
+          />
+          <FooterButtonTitle>Notificação</FooterButtonTitle>
+        </FooterButton>
+        
+        <FooterButton>
+          <BorderTop
+            selected={false}
+          />
+          <SocialIcon 
+            width={RFValue(24)}
+            height={RFValue(24)}
+          />
+          <FooterButtonTitle>Social</FooterButtonTitle>
+        </FooterButton>
+        
+    </Container>
   )
 }
-
-export default LoggedFooter;
