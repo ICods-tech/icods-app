@@ -1,67 +1,63 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import styled from 'styled-components/native';
 
-const {width, height} = Dimensions.get('window');
+export const ScannerPopUPModal = styled.Modal`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    width: width,
-    height: height,
-    zIndex: 3,
+export const ScannerPopUPContainer = styled.View`
+  width: 100%;
+  height: 100%;
+  background-color: #f0000000;
+  align-items: center;
+  justify-content: center;
+`;
 
-    position: 'absolute',
-    backgroundColor: '#00000090',
+export const ScannerPopUPSubContainer = styled.View`
+  background-color: #fff;
+  width: 80%;
+  height: 28%;
+  border-radius: 8px;
+  align-items: center;
+  justify-content: center;
+`;
 
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+export const ScannerPopUPSubContainerIconContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+`;
 
-  popUp: {
-    width: width * 0.8,
-    height: width * 0.5,
-    backgroundColor: '#fff',
+export const ScannerPopUPSubContainerTitle = styled.Text`
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 22px;
 
-    borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+  letter-spacing: 0.002px;
+  color: #282C37;
+`;
 
-  popUpTitle: {
-    fontWeight: '800',
-    fontSize: 16,
-    lineHeight: 22,
+export const ScannerPopUPSubContainerText = styled.Text`
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 22px;
 
-    letterSpacing: width * 0.002,
-    color: '#282C37',
-  },
+  letter-spacing: 0.002px;
+  color: #282C37;
+  opacity: 0.57;
+`;
 
-  popUpSubtitle: {
-    marginTop: 15,
-    fontStyle: 'normal',
-    fontSize: 14,
-    fontWeight: '600',
+export const ScannerPopUPSubContainerCloseButton = styled.TouchableOpacity`
+  position: absolute;
 
-    color: '#282C37',
-    opacity: 0.57,
-  },
+  width: 25px;
+  height: 25px;
 
-  iconContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 15,
-  },
+  right: 15px;
+  top: 15px;
 
-  closeButton: {
-    position: 'absolute',
-
-    width: 25,
-    height: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-
-    right: 15,
-    top: 15,
-  },
-});
-
-export default styles;
+  align-items: center;
+  justify-content: center;
+`;
