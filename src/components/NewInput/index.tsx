@@ -1,5 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { TextInput, TextInputProps } from 'react-native';
+import React, { 
+    forwardRef, 
+    useRef, 
+    useState, 
+    useImperativeHandle 
+} from 'react';
+import { Keyboard, TextInput, TextInputProps, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SvgProps } from 'react-native-svg';
 import { 
@@ -18,32 +23,51 @@ interface InputTextProps extends TextInputProps{
     secure?: boolean;
 }
 
-export function NewInput({
+interface InputRef {
+    focus(): void;
+}
+
+const NewInput: React.ForwardRefRenderFunction<InputRef, InputTextProps> = ({
     icon: Icon, 
     passwordStyleInput, 
     secure, 
     setSecure, 
     ...rest
-}: InputTextProps ){
+}, ref ) => {
+    
     const [toggleEye, setToggleEye] = useState(true); 
     const inputRef = useRef<TextInput>(null)
-    
+
     function handleToggleSecure(){
         setToggleEye(!toggleEye);
-        setSecure!(!secure) 
+        setSecure!(!secure);
+        // Keyboard.emit('keyboardWillShow');
+        //Esse !() indica que essa propriedade sempre existirá quando função for chamada
+        // ou seja, nunca será undefined quando essa função for chamada
+        // não tem nada haver com inverter true ou false.
     }
+
+    useImperativeHandle(ref, () => ({
+        focus(){
+            inputRef.current?.focus();
+        }
+    }));
+
     return(
         <Container>
                 {
                     Icon ? 
+                            <View>
+
                         <IconContainer
                             onPress={() => inputRef.current?.focus()}
-                        > 
+                            > 
                             <Icon 
                                 width={RFValue(16)}
                                 height={RFValue(16)}
-                            /> 
+                                /> 
                         </IconContainer>
+                    </View>
                         : null  
                 }
 
@@ -54,7 +78,8 @@ export function NewInput({
 
                 <ButtonEye
                     activate={passwordStyleInput}
-                    onPress={() => handleToggleSecure()}>
+                    onPress={() => handleToggleSecure()}
+                    >
                         { toggleEye ?
                             <ClosedEyeIcon 
                                 activate={passwordStyleInput}
@@ -68,3 +93,5 @@ export function NewInput({
         </Container>
     )
 }
+
+export default forwardRef(NewInput);

@@ -2,7 +2,12 @@ import React from 'react';
 import { RectButtonProperties } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SvgProps } from 'react-native-svg';
-import { Button, ButtonText, Container, IconContainer } from './styles';
+import { 
+    Button, 
+    ButtonText, 
+    Container, 
+    IconContainer 
+} from './styles';
 
 interface LoginSocialButtonProps extends RectButtonProperties {
     title: string;

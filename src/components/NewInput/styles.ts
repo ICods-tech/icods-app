@@ -16,7 +16,9 @@ export const Container = styled.View`
 export const InputText = styled(TextInput)`
     flex: 1;
     font-size: ${RFValue(14)}px;
-    color: #000;
+    font-family: ${({theme}) => theme.fonts.regular};
+    padding-left: ${RFValue(10)}px;
+    color: ${({theme}) => theme.colors.dark};
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
     /* background-color: #f3a; */
 `;

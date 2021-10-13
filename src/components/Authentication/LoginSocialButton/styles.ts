@@ -6,14 +6,14 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
     height: ${RFValue(36)}px;
     
-    background-color: #fff;
-    border: 2px solid #2B90D9;
+    background-color: ${({ theme }) => theme.colors.shape};
+    border: 2px solid ${({ theme }) => theme.colors.primary};
     border-radius: 4px;
 `;
 
 export const Button = styled(RectButton)`
     flex: 1;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.shape};
 
     flex-direction: row;    
     align-items: center;
@@ -29,8 +29,8 @@ export const IconContainer = styled.View`
 export const ButtonText = styled.Text`
     /* flex: 1; */
     /* text-align: left; */
-    color: #2B90D9;
+    color: ${({ theme }) => theme.colors.primary};
     font-size: ${RFValue(14)}px;
-    font-weight: 700;
+    font-family: ${({theme}) => theme.fonts.bold};
     letter-spacing: ${Dimensions.get('window').width*0.001}px;
 `;

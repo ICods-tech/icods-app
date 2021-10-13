@@ -1,147 +1,151 @@
-import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled, { css } from 'styled-components/native';
 
-const styles = StyleSheet.create({ 
-  background: {
-    flex: 1,
-    height: Dimensions.get('window').height,
-    backgroundColor: '#fff'
-  },
-  dashboardContainer: {
-    marginLeft: 24
-  },
-  welcomeContainer: {
-    marginTop: 12,
-  },
-  welcomeText: {
-    // fontFamily: 'Manrope',
-    fontStyle: 'normal',
-    fontWeight: "700",
-    fontSize: 25.888,
-    lineHeight: 50,
-    letterSpacing: 2,
-    color: '#282C37'
-  },
-  cloudRightSmallWelcome: {
-    marginLeft: 8
-  },
-  cloudRightSmallWelcomeText: {
-    marginRight: 36,
-  },
-  cloudLeftLargeWelcome: {
-    marginLeft: 64,
-  },
-  welcomeTextContainer: {
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  toICodsTextContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  selectOneOptionText: {
-    // fontfamily: Manrope;
-    color: 'rgba(40, 44, 55, 0.4)',
-    letterSpacing: 1,
-    marginTop: 12,
-    fontSize: 14
-  },
-  blockScrolling: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginTop: 24,
-    marginBottom: 42
-  },
-  activitiesContainer: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  activitiesHeader: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  activitiesText: {
-    // font-family: Manrope;
-    fontStyle: 'normal',
-    fontWeight: '700',
-    fontSize: 25.888,
-    lineHeight: 35,
-    letterSpacing: 1.25,
-    color: '#282C37'
-  },
-  specificActivitiesContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginTop: 10,
-    marginRight: 36
-  },
-  allActivitiesText: {
-    // fontFamily: Manrope,
-    fontStyle: 'normal',
-    fontWeight: '600',
+export const Container = styled.View`
+    flex: 1;
+    background-color: ${({theme}) => theme.colors.shape};
+`;
 
-    fontSize: 14,
-    lineHeight: 19,
-    letterSpacing: 1,
-    color: 'rgba(40, 44, 55, 0.5)'
-  },
-  allActivitiesTextSelection: {
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: 14,
-    lineHeight: 19,
-    paddingBottom: 8, 
-    letterSpacing: 1,
-    color: '#2B90D9'
-  },
-  allActivitiesTextWrapper: {
-    width: 70,
-    alignItems: 'center',
-    borderBottomColor: '#2B90D9',
-    borderBottomWidth: 2
-  },
-  myActivitiesTextWrapper: {
-    marginLeft: 24
-  },
-  myActivitiesTextWrapperSelected: {
-    width: 70,
-    alignItems: 'center',
-    borderBottomColor: '#2B90D9',
-    borderBottomWidth: 2,
-    marginLeft: 24
-  },
-  myActivitiesText: {
-    // fontFamily: Manrope,
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: 14,
-    lineHeight: 19,
-    letterSpacing: 1,
-    color: 'rgba(40, 44, 55, 0.5)',
-  },
-  myActivitiesTextSelection: {
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: 14,
-    lineHeight: 19,
-    letterSpacing: 1,
-    paddingBottom: 8,
-    color: '#2B90D9'
-  },
-  belowActivitiesTextContainer: {
-    marginTop: 16
-  }, 
-  belowActivitiesText: {
-    // fontFamily: Manrope,
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 14,
-    lineHeight: 19,
-    letterSpacing: 0.2,
-    color: 'rgba(40, 44, 55, 0.4)',
-  }
-})
+export const Header = styled.View`
+    height: ${RFValue(100)}px;
+`;
 
-export default styles;
+export const WelcomeContainer = styled.View`
+    margin-top: ${RFValue(28)}px;
+    padding: 0 ${RFValue(24)}px;
+`;
+
+export const WelcomeTitleContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+`;
+
+export const CloudLargeContainer = styled.View`
+    flex: 1;
+    padding: 0 ${RFValue(16)}px;
+    /* align-items: center; */
+    /* justify-content: space-between; */
+`;
+
+export const CloudSmallContainer = styled.View`
+    position: absolute;
+    bottom: 0;
+    right: ${RFValue(21)}px;
+`;
+
+export const WelcomeTitle = styled.Text`
+    font-size: ${RFValue(26)}px;
+    font-family: ${({theme}) => theme.fonts.extra_bold};
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    color: ${({theme}) => theme.colors.title};
+`;
+
+export const HighlightTitle = styled.Text`
+    color: ${({theme}) => theme.colors.text};
+    font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.regular};
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+`;
+
+export const HightLightListContainer = styled.View`
+    height: ${RFValue(160)}px;
+`;
+
+export const HighlightButtonList = styled.ScrollView.attrs({
+    showsHorizontalScrollIndicator: false,
+    horizontal: true,
+    contentContainerStyle: { 
+        paddingHorizontal: RFValue(16),
+    }
+})`
+    margin-top: ${RFValue(28)}px;
+`;
+
+export const FeedContainer = styled.View`
+    margin-top: ${RFValue(43)}px;
+    padding: 0 ${RFValue(24)}px;
+    flex: 1;
+`;
+
+export const FeedHeader = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
+`
+
+export const FeedTitle = styled.Text`
+    font-size: ${RFValue(26)}px;
+    font-family: ${({theme}) => theme.fonts.extra_bold};
+
+    color: ${({theme}) => theme.colors.title};
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+`;
+
+export const FeedOptionsTitleContainer = styled.View`
+    flex-direction: row;
+    align-self: flex-end;
+    justify-content: center;
+
+    height: ${RFValue(27)}px;   
+    width: ${RFValue(177)}px;
+`;
+
+interface FeedOptionsTitleProps {
+    active: 'all' | 'mine';
+}
+
+export const FeedOptionTitleButton = styled(RectButton)`
+    align-items: center;
+    justify-content: space-between;
+    width: ${RFValue(89)}px;
+`;
+
+export const FeedOptionTitleAll = styled.Text<FeedOptionsTitleProps>`
+    font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.semi_bold};
+
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    font-weight: 600;
+    color: ${({theme, active }) => active === 'all' ? 
+        theme.colors.primary : theme.colors.text};
+`;
+
+export const FeedOptionTitleMine = styled.Text<FeedOptionsTitleProps>`
+    font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.semi_bold};
+
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    font-weight: 600;
+    color: ${({theme, active }) => active === 'mine' ? 
+        theme.colors.primary : theme.colors.text};
+`;
+
+export const FeedOptionsTitleBorderAll = styled.View<FeedOptionsTitleProps>`
+    /* margin-top: ${RFValue(8)}px; */
+    width: 100%;
+    height: ${RFValue(2)}px;
+    background-color: ${({theme, active}) => active === 'all' ? 
+    theme.colors.primary : theme.colors.transparent};
+`;
+
+
+export const FeedOptionsTitleBorderMine = styled.View<FeedOptionsTitleProps>`
+    /* margin-top: ${RFValue(8)}px; */
+    width: 100%;
+    height: ${RFValue(2)}px;
+    background-color: ${({theme, active}) => active === 'mine' ? 
+    theme.colors.primary : theme.colors.transparent};
+`;
+
+export const FeedSubTitleContainer = styled.View`
+    margin-top: ${RFValue(13)}px;
+`;
+
+export const FeedSubTitle = styled.Text`
+    font-size: ${RFValue(14)}px;
+    font-family: ${({theme}) => theme.fonts.regular};
+
+    color: ${({theme}) => theme.colors.text};
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+`;

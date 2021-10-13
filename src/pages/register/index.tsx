@@ -1,19 +1,34 @@
-import styles from './styles'
-import { View, Text, KeyboardAvoidingView } from 'react-native'
-import Input from '../../components/Input'
+import React, { 
+  useState, 
+  useCallback, 
+  useRef, 
+  useEffect 
+} from 'react';
+import {
+  Keyboard,
+  TouchableWithoutFeedback,
+  TextInput,
+} from 'react-native';
+import {
+  BackButtonContainer,
+  Container,
+  InputContainer,
+  RegisterForm,
+  RegisterTitle,
+  SafeAreaView,
+  SubmitButtonContainer
+} from './styles';
 import { useAuth } from '../../hooks/auth'
 import Toast from 'react-native-toast-message'
-import Back from '../../assets/images/back.svg'
-import React, { useState, useCallback } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import ButtonAuthentication from '../../components/Button'
-import HeaderAuthentication from '../../components/Authentication/HeaderAuthentication'
-import FooterAuthentication from '../../components/Authentication/AuthFooter'
 import { delay } from '../../utils/delay'
 import { handleRegisterRouteErrors } from '../../utils/handleRegisterRouteErrors'
 import { handleFieldAlreadyExistsErrors } from '../../utils/handleFieldAlreadyExistsErrors'
 import { Header } from '../../components/Authentication/Header'
-import { RegisterForm, RegisterTitle } from './newStyles'
+import { BackButton } from '../../components/BackButton'
+import NewInput from '../../components/NewInput'
+import { SpacingLine } from '../SignIn/styles'
+import { useTheme } from 'styled-components'
+import { SubmitButton } from '../../components/Authentication/SubmitButton'
 
 export interface IRouteErrors {
   name: boolean;
@@ -32,12 +47,12 @@ const fields = {
 }
 
 const Register = () => {
-  const navigation = useNavigation()
-  const { signIn, signUp } = useAuth()
-  const [name, setName] = useState<string>('')
-  const [email, setEmail] = useState<string>('')
-  const [username, setUsername] = useState<string>('')
-  const [password, setPassword] = useState<string>('')
+  const theme = useTheme();
+  const { signIn, signUp } = useAuth();
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [isErrored, setIsErrored] = useState<IRouteErrors>({
     name: false,
     email: false,
@@ -45,17 +60,36 @@ const Register = () => {
     password: false,
     passwordConfirmation: false
   })
-
-  const [passwordConfirmation, setPasswordConfirmation] = useState<string>('')
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  
+  const [attention, setAttention] = useState(false);
+  const [isInputFocus, setIsInputFocus] = useState(false);
+  const [inputFocusObserver, setInputFocusObserver] = useState(false);
+  const [secure, setSecure] = useState(true);
+  const [secureConfirmation, setSecureConfirmation] = useState(true);
+  const userNameInputRef = useRef<TextInput>(null);
+  const emailInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+  const passwordConfirmationInputRef = useRef<TextInput>(null);
 
   const handleSignUp = useCallback(async () => {
+    const data = {
+      name, 
+      username, 
+      email, 
+      password, 
+      passwordConfirmation
+    }
+    
     try {
+      console.log('Dados do inputs:', data);
       for (let field of Object.keys(fields)) {
         setIsErrored((previousErrors) => ({
           ...previousErrors,
           [field]: false
         }))
       }
+
       await signUp({ name, username, email, password, passwordConfirmation })
       Toast.show({
         type: 'success',
@@ -66,83 +100,134 @@ const Register = () => {
       })
       await delay(1250)
       await signIn({ email, password })
+      setAttention(false);  
     } catch (errorResponse: any) {
       const errors = errorResponse.response.data
-      console.log(errors)
+      console.log('Não conseguiu cadastras:', data);
+      console.log(errors);
+      setAttention(true);
       if ('message' in errors) await handleRegisterRouteErrors(errors, setIsErrored)
       else await handleFieldAlreadyExistsErrors(errors, setIsErrored)
     }
   }, [name, username, email, password, passwordConfirmation])
-
+  
+  useEffect(() => {
+    Keyboard.addListener('keyboardDidHide', () => {
+      setIsInputFocus(false);
+    })  
+  }, [inputFocusObserver])
+  
   return (
-    <View style={styles.background}>
-      {/* <HeaderAuthentication /> */}
-      <KeyboardAvoidingView behavior="height" enabled>
-      <Header />
-      
-      <Back style={styles.backMenu} onPress={() => { navigation.navigate('SignIn') }} />
-      
-      {/* <Text style={styles.midText}>Fazer uma conta no iCODS é simples e
-        rápido, basta preencher os campos!
-      </Text> */}
+    <SafeAreaView>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Container>
+          <Header isInputFocus={isInputFocus} />
 
+          <BackButtonContainer>
+            <BackButton navigationTo='SignIn' />
+          </BackButtonContainer>
 
-      <RegisterTitle>
-        Fazer uma conta no iCODS é simples e
-        rápido, basta preencher os campos!
-      </RegisterTitle>
+          <RegisterForm>
+            <RegisterTitle>
+              Fazer uma conta no iCODS é simples e
+              rápido, basta preencher os campos!
+            </RegisterTitle>
+            <InputContainer 
+              isErrored={attention}>
 
-      <RegisterForm>
-        <View style={styles.inputContainer}>
-            <Input
-              placeholder={'Digite seu nome completo'}
-              radius={'top'}
-              isErrored={isErrored['name']}
-              bottomErrored={isErrored['username']}
-              change={(name: string) => setName(name)}
-              value={name}
-            />
-            <Input
-              placeholder={'Digite um username'}
-              radius={'middle'}
-              isErrored={isErrored['username']}
-              bottomErrored={isErrored['email']}
-              change={(username: string) => setUsername(username)}
-              value={username}
-            />
-            <Input
-              placeholder={'Digite seu email principal'}
-              radius={'middle'}
-              isErrored={isErrored['email']}
-              bottomErrored={isErrored['passwordConfirmation'] || isErrored['password']}
-              change={(email: string) => setEmail(email)}
-              value={email}
-            />
-            <Input
-              placeholder={'Digite sua senha'}
-              radius={'middle'}
-              isErrored={isErrored['passwordConfirmation'] || isErrored['password']}
-              bottomErrored={isErrored['passwordConfirmation']}
-              isPassword
-              change={(password: string) => setPassword(password)}
-              value={password}
-            />
-            <Input
-              placeholder={'Digite novamente sua senha'}
-              radius={'bottom'}
-              isPassword
-              isErrored={isErrored['passwordConfirmation'] || isErrored['password']}
-              change={(passwordConfirmation: string) => setPasswordConfirmation(passwordConfirmation)}
-              value={passwordConfirmation} />
-          </View>
+                <NewInput
+                  autoCorrect
+                  autoCapitalize="words"
+                  defaultValue={name}
+                  placeholder='Digite seu nome completo'
+                  placeholderTextColor={theme.colors.subtitle}
+                  onChangeText={(name: string) => setName(name)}
+                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
+                  onSubmitEditing={() => userNameInputRef.current?.focus()}
+                  value={name}
+                  returnKeyType="next"
+                />
 
-          <View style={styles.buttonContainer}>
-          <ButtonAuthentication text={'Cadastrar'} pressed={() => { handleSignUp() }} />
-        </View>
-      </RegisterForm>
-      {/* <FooterAuthentication /> */}
-    </KeyboardAvoidingView>
-    </View>
+                <SpacingLine  isErrored={attention}/>
+
+                <NewInput
+                  ref={userNameInputRef}
+                  autoCorrect
+                  autoCapitalize="none"
+                  defaultValue={username}
+                  placeholder='Digite seu username'
+                  placeholderTextColor={theme.colors.subtitle}
+                  onChangeText={(username: string) => setUsername(username)}
+                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
+                  onSubmitEditing={() => emailInputRef.current?.focus()}
+                  value={username}
+                  returnKeyType="next"
+                />
+
+                <SpacingLine isErrored={attention}/>
+
+                <NewInput
+                  ref={emailInputRef}
+                  autoCorrect={false}
+                  autoCapitalize="none"
+                  defaultValue={email}
+                  placeholder='Digite seu email principal'
+                  placeholderTextColor={theme.colors.subtitle}
+                  onChangeText={(email: string) => setEmail(email)}
+                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
+                  onSubmitEditing={() => passwordInputRef.current?.focus()}
+                  value={email}
+                  returnKeyType="next"
+                />
+
+                <SpacingLine isErrored={attention}/>
+
+                <NewInput
+                  ref={passwordInputRef}
+                  passwordStyleInput
+                  placeholder="Digite uma senha"
+                  placeholderTextColor={theme.colors.subtitle}
+                  secure={secure}
+                  secureTextEntry={secure}
+                  setSecure={setSecure}
+                  defaultValue={password}
+                  onChangeText={(password: string) => setPassword(password)}
+                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
+                  onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
+                  value={password}
+                  returnKeyType="next"
+                />
+
+                <SpacingLine isErrored={attention}/>
+
+                <NewInput
+                  ref={passwordConfirmationInputRef}
+                  passwordStyleInput
+                  placeholder="Digite novamente a senha"
+                  placeholderTextColor={theme.colors.subtitle}
+                  secure={secureConfirmation}
+                  secureTextEntry={secureConfirmation}
+                  setSecure={setSecureConfirmation}
+                  defaultValue={passwordConfirmation}
+                  onChangeText={(passwordConfirmation: string) => setPasswordConfirmation(passwordConfirmation)}
+                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
+                  onSubmitEditing={() => handleSignUp()}
+                  value={passwordConfirmation}
+                  returnKeyType="send"
+                />  
+            </InputContainer>
+
+            <SubmitButtonContainer>
+              <SubmitButton
+                  onPress={() => handleSignUp()}
+                  text='Cadastrar'
+                />
+            </SubmitButtonContainer>
+          </RegisterForm>
+        </Container>
+      </TouchableWithoutFeedback>
+    </SafeAreaView>
+
   )
 }
 

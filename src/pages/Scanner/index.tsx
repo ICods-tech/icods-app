@@ -11,6 +11,7 @@ import { useAuth } from '../../hooks/auth';
 import LoggedFooter from '../../components/LoggedFooter';
 import { useNavigation } from '@react-navigation/native';
 
+
 interface PopUp
 {
   title: string;
@@ -27,7 +28,6 @@ const Scanner = () =>
   const [ camera, setCamera ] = useState<RNCamera>();
   const [ qrCodeValidate, setQrCodeValidate ] = useState( false );
   const [ qrcode, setQrcode ] = useState<QRCode>();
-
   const [ popUp, setPopUp ] = useState<PopUp>();
 
   const handleCloseButton = () => {
@@ -130,7 +130,9 @@ const Scanner = () =>
         ) }
 
         { user &&
-          <LoggedFooter />
+          <LoggedFooter 
+            isScanner={true}
+          />
         }
       </RNCamera>
     </SafeAreaView>

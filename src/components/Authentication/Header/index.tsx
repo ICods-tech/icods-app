@@ -2,17 +2,22 @@ import React from 'react';
 
 import {
     Container,
-    IcodsAsteroid,
-    IcodsIcon,
-    StyleStatusBar
+    Gradient,
+    IcodsLogo,
+    Title,
 } from './styles';
 
-export function Header(){
+interface HeaderProps {
+    isInputFocus: boolean;
+}
+
+export function Header({isInputFocus}: HeaderProps){
     return(
-        <Container>
-            <StyleStatusBar/>
-            <IcodsAsteroid />
-            <IcodsIcon />
-        </Container>
+        <Gradient isInputFocus={isInputFocus}>
+            <Container>
+                <IcodsLogo />
+                <Title>Um novo jeito de compartilhar emoções</Title>
+            </Container>
+        </Gradient>
     )
 }
