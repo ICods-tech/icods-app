@@ -8,7 +8,7 @@ import ScannerPopUP from '../../components/Scanner/ScannerPopUP';
 import api from '../../services/api';
 import { QRCode } from '../../types/QRCode';
 import { useAuth } from '../../hooks/auth';
-import LoggedFooter from '../../components/LoggedFooter';
+import {LoggedFooter} from '../../components/LoggedFooter';
 import { useNavigation } from '@react-navigation/native';
 
 
@@ -44,13 +44,17 @@ const Scanner = () =>
     } );
   }
 
-  const qrCodeContainsGift = () => {
+  const qrCodeContainsGift = async (id: string) => {
     setPopUp( {
       title: 'Você tem um presente iCods',
       label: 'Agora é a vez de você visualiza-lo',
       icon: 'gift',
       press: 'VideoPlayer',
     } );
+
+    if (user)  {
+      await api.post(`/received_qrcode/${id}`, {});
+    }
   }
 
   const qrCodeisNotBelongsIcods = () => {
@@ -70,7 +74,8 @@ const Scanner = () =>
 
     if ( qrCode.enabled )
     {
-      qrCodeContainsGift();
+      const {id} = qrCode;
+      qrCodeContainsGift(id);
     } else
     {
       qrCodeIsEditable();
@@ -79,6 +84,7 @@ const Scanner = () =>
 
   const barcodeRecognized = async ( { data }: BarCodeReadEvent ) =>
   {
+    console.log(data);
     if ( qrCodeValidate ) return;
 
     await api

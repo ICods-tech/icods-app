@@ -22,7 +22,7 @@ import { QRCode } from '../../types/QRCode';
 import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
 
-const Editor = ( { route, _ } ) =>
+const Editor = ( { route, _ }: any ) =>
 {
   const navigation = useNavigation();
   const [ modalVisible, setModalVisible ] = useState( false );
@@ -36,7 +36,6 @@ const Editor = ( { route, _ } ) =>
   const [ cameraZoom, setCameraZoom ] = useState( 0.0 );
   const [ isRecording, setIsRecording ] = useState( false );
   const [ video, setVideo ] = useState( "" );
-  let camera2 = React.createRef<RNCamera>();
 
   const [ recordedData, setRecordedData ] = useState( '' );
 
@@ -79,7 +78,10 @@ const Editor = ( { route, _ } ) =>
           orientation: 'portrait',
           maxDuration: 30,
           maxFileSize: 100 * 1024 * 1024,
+          // path: `${RNFS.TemporaryDirectoryPath}/${ Date.now() }.mkv`
         } );
+
+        console.log(data);
 
         setRecordedData( data.uri );
         console.log( 'Iniciando a gravação' );
