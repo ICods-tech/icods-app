@@ -21,6 +21,7 @@ import api from '../../services/api';
 import { QRCode } from '../../types/QRCode';
 import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
+import DangerIcon from '../../assets/images/Icons/danger_icon.svg';
 
 const Editor = ( { route, _ }: any ) =>
 {
@@ -242,7 +243,7 @@ const Editor = ( { route, _ }: any ) =>
         <View style={ styles.modal }>
           <View style={ styles.modalContainer }>
             <View style={ styles.modalIcon }>
-              <Text>icon</Text>
+              <DangerIcon />
             </View>
             <Text style={ styles.modalTitle }>Você confirma a edição do iCod?</Text>
             <Text style={ styles.modalText }>Caso confirme, não será mais permitido a edição desse iCod</Text>
