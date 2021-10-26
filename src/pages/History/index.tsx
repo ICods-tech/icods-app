@@ -8,7 +8,7 @@ import NotFavoritedCardButton from '../../assets/images/Icons/notFavorited_qrcod
 import TrashQRCodeIcon from '../../assets/images/Icons/trash_qrcode_card.svg'
 import LargeSearchIcon from '../../assets/images/Icons/large-search.svg'
 import HeaderHistory from '../../components/History/HeaderHistory';
-import { LoggedFooter } from '../../components/LoggedFooter';
+import LoggedFooter  from '../../components/LoggedFooter';
 import HistoryCards from '../../components/History/HistoryCards';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Colors } from '../../interfaces/colors';
@@ -152,7 +152,7 @@ const History = () => {
                             creator={qrCodeCreatorName}
                             date={new Date(comparisonDate).toLocaleDateString("pt-BR")}
                             color={color}
-                            favorite={favorited}
+                            favorite={favorited || false}
                           />
                         </Swipeable>
                       </>

@@ -29,7 +29,7 @@ import { useAuth } from '../../hooks/auth'
 
 import HeaderDashboard from '../../components/Dashboard/HeaderDashboard'
 import extracNameAndSurname from '../../utils/extractNameAndSurname'
-import { LoggedFooter } from '../../components/LoggedFooter'
+import LoggedFooter from '../../components/LoggedFooter'
 import ModalMoreDashboard from '../../components/Dashboard/ModalMoreDashboard'
 
 import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg'

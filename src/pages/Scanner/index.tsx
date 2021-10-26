@@ -8,7 +8,7 @@ import ScannerPopUP from '../../components/Scanner/ScannerPopUP';
 import api from '../../services/api';
 import { QRCode } from '../../types/QRCode';
 import { useAuth } from '../../hooks/auth';
-import {LoggedFooter} from '../../components/LoggedFooter';
+import LoggedFooter from '../../components/LoggedFooter';
 import { useNavigation } from '@react-navigation/native';
 
 
