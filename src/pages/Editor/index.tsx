@@ -21,8 +21,9 @@ import api from '../../services/api';
 import { QRCode } from '../../types/QRCode';
 import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
+import DangerIcon from '../../assets/images/Icons/danger_icon.svg';
 
-const Editor = ( { route, _ } ) =>
+const Editor = ( { route, _ }: any ) =>
 {
   const navigation = useNavigation();
   const [ modalVisible, setModalVisible ] = useState( false );
@@ -36,7 +37,6 @@ const Editor = ( { route, _ } ) =>
   const [ cameraZoom, setCameraZoom ] = useState( 0.0 );
   const [ isRecording, setIsRecording ] = useState( false );
   const [ video, setVideo ] = useState( "" );
-  let camera2 = React.createRef<RNCamera>();
 
   const [ recordedData, setRecordedData ] = useState( '' );
 
@@ -79,7 +79,10 @@ const Editor = ( { route, _ } ) =>
           orientation: 'portrait',
           maxDuration: 30,
           maxFileSize: 100 * 1024 * 1024,
+          // path: `${RNFS.TemporaryDirectoryPath}/${ Date.now() }.mkv`
         } );
+
+        console.log(data);
 
         setRecordedData( data.uri );
         console.log( 'Iniciando a gravação' );
@@ -240,7 +243,7 @@ const Editor = ( { route, _ } ) =>
         <View style={ styles.modal }>
           <View style={ styles.modalContainer }>
             <View style={ styles.modalIcon }>
-              <Text>icon</Text>
+              <DangerIcon />
             </View>
             <Text style={ styles.modalTitle }>Você confirma a edição do iCod?</Text>
             <Text style={ styles.modalText }>Caso confirme, não será mais permitido a edição desse iCod</Text>

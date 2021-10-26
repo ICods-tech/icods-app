@@ -3,23 +3,26 @@ import {View, TouchableOpacity, Text, ColorValue} from 'react-native';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native';
 import BackButton from '../../assets/images/back.svg';
+import BackButtonWhite from '../../assets/images/back-button-white.svg';
 
 interface HeaderProps {
   page: string;
   navigate: string;
   color?: ColorValue;
+  isVideoPlayer?: boolean;
 }
 
-const Header = ({page, navigate, color}: HeaderProps): JSX.Element => {
+const Header = ({page, navigate, color, isVideoPlayer}: HeaderProps): JSX.Element => {
   const navigation = useNavigation();
 
   return (
     <View style={[styles.container]}>
       <TouchableOpacity
         onPress={() => {
+          console.log(`To indo: ${navigate}`);
           navigation.navigate(`${navigate}`);
         }}>
-        <BackButton />
+        {isVideoPlayer ? <BackButtonWhite/> : <BackButton /> }
       </TouchableOpacity>
       <Text
         style={[

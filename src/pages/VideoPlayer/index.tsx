@@ -5,9 +5,11 @@ import styles from './styles';
 import MediaControls, { PLAYER_STATES } from 'react-native-media-controls';
 import VideoPlayerFooter from '../../components/VideoPlayer/VideoPlayerFooter';
 import { useAuth } from '../../hooks/auth';
+import Header from '../../components/Header';
 
 const VideoPlayer = ( { route, _ }: any ) =>
 {
+  const {user} = useAuth();
 
   const { qrcode } = route.params;
   const uri = 'https://bucket-nodejs.s3.amazonaws.com/LOGOVETOR_1.mp4';
@@ -73,36 +75,39 @@ const VideoPlayer = ( { route, _ }: any ) =>
 
   return (
     <SafeAreaView style={ styles.container }>
-      <Video
-        onEnd={ onEnd }
-        onLoad={ onLoad }
-        onLoadStart={ onLoadStart }
-        posterResizeMode={ 'cover' }
-        onProgress={ onProgress }
-        paused={ paused }
-        resizeMode={ 'contain' }
+      <Header page="" navigate={ user ? 'Dashboard' : 'SignIn' } color="#FFFFFF" isVideoPlayer/>
+      <View>
+        <Video
+          onEnd={ onEnd }
+          onLoad={ onLoad }
+          onLoadStart={ onLoadStart }
+          posterResizeMode={ 'cover' }
+          onProgress={ onProgress }
+          paused={ paused }
+          resizeMode={ 'contain' }
 
-        ref={ ( ref ) => { setVideoPlayer( ref ); } }
-        source={ { uri: qrcode.link ? qrcode.link : "https://bucket-nodejs.s3.amazonaws.com/LOGOVETOR_1.mp4", type: "video/mp4" } }
-        style={ styles.video }
-      />
+          ref={ ( ref ) => { setVideoPlayer( ref ); } }
+          source={ { uri: qrcode.link ? qrcode.link : "https://bucket-nodejs.s3.amazonaws.com/LOGOVETOR_1.mp4", type: "video/mp4" } }
+          style={ styles.video }
+        />
 
-      <MediaControls
-        containerStyle={ styles.mediaControls }
-        isFullScreen={ false }
-        duration={ duration }
-        isLoading={ isLoading }
-        progress={ currentTime }
-        onPaused={ onPaused }
-        onReplay={ onReplay }
-        onSeek={ onSeek }
-        onSeeking={ onSeeking }
-        mainColor={ "black" }
-        playerState={ playerState }
-        sliderStyle={ { containerStyle: {}, thumbStyle: {}, trackStyle: {} } }
-      >
+        <MediaControls
+          containerStyle={ styles.mediaControls }
+          isFullScreen={ false }
+          duration={ duration }
+          isLoading={ isLoading }
+          progress={ currentTime }
+          onPaused={ onPaused }
+          onReplay={ onReplay }
+          onSeek={ onSeek }
+          onSeeking={ onSeeking }
+          mainColor={ "black" }
+          playerState={ playerState }
+          sliderStyle={ { containerStyle: {}, thumbStyle: {}, trackStyle: {} } }
+        >
 
-      </MediaControls>
+        </MediaControls>
+      </View>
 
       <View style={ styles.iconsContainer }>
         <VideoPlayerFooter url={ qrcode.link ? qrcode.link : uri } />
