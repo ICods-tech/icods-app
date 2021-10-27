@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-import { TextInput, TouchableOpacity, View, Text } from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import FilterModal from '../FilterModal'
-import SearchIcon from '../../../assets/images/Icons/search.svg';
 import NotFavoritedIcon from '../../../assets/images/Icons/favorite_search.svg';
 import FavoritedIcon from '../../../assets/images/Icons/favorited_search.svg';
-import MenuButton from '../../../assets/images/Icons/filter_search.svg';
-import styles from './styles';
 import { useAuth } from '../../../hooks/auth';
 import { 
   Container, 
@@ -73,9 +69,7 @@ const HeaderHistory = ({
                 returnKeyType='send'
               />
 
-              {/* <View style={styles.optionsButtonsContainer}> */}
               <OptionalButtonsContainer>
-
                 <FavoriteButton />
                 {/* <TouchableOpacity
                   onPress={() => setFavorite()}
@@ -83,23 +77,18 @@ const HeaderHistory = ({
                   >
                   {favorite ? <FavoritedIcon style={styles.iconButton} /> : <NotFavoritedIcon style={styles.iconButton} />}
                 </TouchableOpacity> */}
-                <FilterButton />
-                {/* <TouchableOpacity
+                <FilterButton 
                   onPress={() => setModalVisible(!modalVisible)}
-                  style={styles.optionsButton}>
-                  <MenuButton
-                    style={styles.iconButton}
-                    />
-                  <FilterModal
-                    visible={modalVisible}
-                    pressedOut={() => setModalVisible(!modalVisible)}
-                    confirmedFilter={async ({ date, color }) => {
-                      setModalVisible(false)
-                      setColorAndDate({ date, color })
-                    }}
-                    />
-                </TouchableOpacity> */}
-              {/* </View> */}
+                />
+
+                <FilterModal
+                  visible={modalVisible}
+                  pressedOut={() => setModalVisible(!modalVisible)}
+                  confirmedFilter={async ({ date, color }) => {
+                    setModalVisible(false)
+                    setColorAndDate({ date, color })
+                  }}
+                />
               </OptionalButtonsContainer>
             </SearchContainer >
           </>

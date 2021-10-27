@@ -13,6 +13,7 @@ export const SafeAreaView = styled.SafeAreaView`
 export const Container = styled.View`
     flex: 1;
 `;
+
 export const ScrollContainer = styled.ScrollView.attrs({
     contentContainerStyle: {
         flexGrow: 1, 
@@ -37,7 +38,6 @@ interface ErrorStyleProps {
 }
 
 export const InputContainerFocus = styled.TouchableWithoutFeedback`
-
 `;
 
 export const InputContainer = styled.View<ErrorStyleProps>`

@@ -20,7 +20,7 @@ interface ModalInterface {
   visible: boolean,
   pressedOut: () => void,
   confirmedFilter: (data: FilterData) => Promise<void>,
-  initialDateValue: undefined
+  initialDateValue?: undefined
 }
 
 interface FilterData {

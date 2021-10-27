@@ -1,13 +1,19 @@
 import React from 'react';
+import { BorderlessButtonProperties } from 'react-native-gesture-handler';
 
 import {
     Container, 
     FilterIcon, 
 } from './styles';
 
-export function FilterButton(){
+interface FilterButtonProps extends BorderlessButtonProperties{
+}
+
+export function FilterButton({...rest}: FilterButtonProps){
     return (
-        <Container>
+        <Container
+            {...rest}
+        >
             <FilterIcon />
         </Container>
     );
