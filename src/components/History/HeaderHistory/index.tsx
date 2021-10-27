@@ -5,10 +5,21 @@ import FilterModal from '../FilterModal'
 import SearchIcon from '../../../assets/images/Icons/search.svg';
 import NotFavoritedIcon from '../../../assets/images/Icons/favorite_search.svg';
 import FavoritedIcon from '../../../assets/images/Icons/favorited_search.svg';
-import BackButton from '../../../assets/images/back.svg';
 import MenuButton from '../../../assets/images/Icons/filter_search.svg';
 import styles from './styles';
 import { useAuth } from '../../../hooks/auth';
+import { 
+  Container, 
+  Header, 
+  OptionalButtonsContainer, 
+  SearchContainer, 
+  Title 
+} from './newStyles';
+import { BackButton } from '../../BackButton';
+import { SearchInput } from '../../SearchInput';
+import { useTheme } from 'styled-components';
+import { FavoriteButton } from '../../FavoriteButton';
+import { FilterButton } from '../../FilterButton';
 
 interface HeaderHistoryProps {
   favorite: boolean;
@@ -22,59 +33,79 @@ interface ColorAndDateProps {
   date: Date | undefined,
 }
 
-const HeaderHistory = ({ setColorAndDate, setFavorite, favorite, qrCodeDetails }: HeaderHistoryProps) => {
+const HeaderHistory = ({ 
+  setColorAndDate, 
+  setFavorite, 
+  favorite, 
+  qrCodeDetails }: 
+  HeaderHistoryProps) => {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false)
-
+  const theme = useTheme();
+  const [searchEntry, setSearchEntry] = useState('');
+  
+  function SearchInputSubmitTest() {
+    setSearchEntry('Sorvetao');
+  }
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => { navigation.goBack() }}>
-            <BackButton />
-          </TouchableOpacity>
-          <Text style={styles.title}>Histórico</Text>
-        </View>
+      <Container>
+        <Header>
+          <BackButton 
+            navigationTo='Dashboard'
+          />
+          <Title>Histórico</Title>
+        </Header>
 
-        {!qrCodeDetails && (<View style={styles.searchContainer}>
-          <View style={styles.searchBar}>
-            <TouchableOpacity style={styles.searchIcon}>
-              <SearchIcon />
-            </TouchableOpacity>
+        {!qrCodeDetails && 
+        (
+          <>
+            <SearchContainer>
 
-            <TextInput
-              style={styles.searchInput}
-              placeholder="Procurar"
-              placeholderTextColor="rgba(8, 9, 12, 0.2)"
-            >
-            </TextInput>
-          </View>
-          <View style={styles.optionsButtonsContainer}>
-            <TouchableOpacity
-              onPress={() => setFavorite()}
-              style={styles.optionsButton}
-            >
-              {favorite ? <FavoritedIcon style={styles.iconButton} /> : <NotFavoritedIcon style={styles.iconButton} />}
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => setModalVisible(!modalVisible)}
-              style={styles.optionsButton}>
-              <MenuButton
-                style={styles.iconButton}
+              <SearchInput 
+                autoCorrect
+                autoCapitalize='none'
+                placeholder='Procurar'
+                placeholderTextColor={theme.colors.subtitle}
+                onChangeText={text => setSearchEntry(text)} 
+                onSubmitEditing={() => SearchInputSubmitTest()}
+                submitFunction={() => SearchInputSubmitTest()}
+                value={searchEntry}
+                returnKeyType='send'
               />
-              <FilterModal
-                visible={modalVisible}
-                pressedOut={() => setModalVisible(!modalVisible)}
-                confirmedFilter={async ({ date, color }) => {
-                  setModalVisible(false)
-                  setColorAndDate({ date, color })
-                }}
-              />
-            </TouchableOpacity>
-          </View>
-        </View >)}
-      </View>
-    </>
+
+              {/* <View style={styles.optionsButtonsContainer}> */}
+              <OptionalButtonsContainer>
+
+                <FavoriteButton />
+                {/* <TouchableOpacity
+                  onPress={() => setFavorite()}
+                  style={styles.optionsButton}
+                  >
+                  {favorite ? <FavoritedIcon style={styles.iconButton} /> : <NotFavoritedIcon style={styles.iconButton} />}
+                </TouchableOpacity> */}
+                <FilterButton />
+                {/* <TouchableOpacity
+                  onPress={() => setModalVisible(!modalVisible)}
+                  style={styles.optionsButton}>
+                  <MenuButton
+                    style={styles.iconButton}
+                    />
+                  <FilterModal
+                    visible={modalVisible}
+                    pressedOut={() => setModalVisible(!modalVisible)}
+                    confirmedFilter={async ({ date, color }) => {
+                      setModalVisible(false)
+                      setColorAndDate({ date, color })
+                    }}
+                    />
+                </TouchableOpacity> */}
+              {/* </View> */}
+              </OptionalButtonsContainer>
+            </SearchContainer >
+          </>
+        )}
+
+      </Container>
   );
 }
 

@@ -14,6 +14,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Colors } from '../../interfaces/colors';
 import api from '../../services/api';
 import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
+import { Container } from './newStyles';
 
 export interface FilteredQRCodes {
   id: string,
@@ -58,7 +59,13 @@ const History = () => {
     loadQRCodes()
   }, [loadQRCodes])
 
-  const RightActions = (progress: any, dragX: any, id: string, qrCodeBelongsToUser: boolean, favorited: boolean) => {
+  const RightActions = (
+    progress: any, 
+    dragX: any, 
+    id: string, 
+    qrCodeBelongsToUser: boolean, 
+    favorited: boolean
+    ) => {
     const scale = dragX.interpolate({
       inputRange: qrCodeBelongsToUser ? [-120, 0] : [-90, 0],
       outputRange: qrCodeBelongsToUser ? [2, 0] : [0.8, 0]
@@ -111,7 +118,8 @@ const History = () => {
   }
 
   return (
-    <SafeAreaView style={styles.background}>
+    <SafeAreaView style={{flex: 1}}>
+      <Container>
       <HeaderHistory
         setColorAndDate={({ date, color: filteredColor }) => {
           console.log({ color, date })
@@ -174,6 +182,7 @@ const History = () => {
       <LoggedFooter
         isHistory={true}
       />
+      </Container>
     </SafeAreaView >
   )
 }

@@ -1,20 +1,32 @@
 import React from 'react';
 import { BorderlessButtonProperties } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
-import { BackIcon, Button, Container } from './styles';
+import {
+    BackBlueIcon,
+    BackWhiteIcon, 
+    Button, 
+    Container 
+} from './styles';
 
 interface BackButtonProps extends BorderlessButtonProperties {
     navigationTo: string;
+    color?: 'blue' | 'white';
 }
 
-export function BackButton({ navigationTo }: BackButtonProps){
+export function BackButton({ navigationTo, color }: BackButtonProps){
     const navigation = useNavigation();
     return(
-        <Container>
+        <Container
+            color={color}
+        >
             <Button
                 onPress={() => { navigation.navigate(navigationTo)}}
                 >
-                <BackIcon />
+                    {color === 'white' ?
+                        <BackWhiteIcon />
+                        :
+                        <BackBlueIcon/>
+                    }
             </Button>
         </Container>
     );

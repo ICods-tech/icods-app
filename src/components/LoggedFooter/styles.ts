@@ -7,7 +7,7 @@ export const Container = styled.View`
     flex-direction: row;
     background-color: ${({theme}) => theme.colors.cloudly};
     
-    height: ${RFValue(48)}px;
+    height: ${RFValue(56)}px;
     width: 100%;
     position: absolute;
     bottom: 0;
@@ -44,4 +44,5 @@ export const FooterButtonTitle = styled.Text<ButtonSelectedProps>`
         color: ${({theme}) => theme.colors.primary} 
         font-family: 'Manrope-Bold';
     `};
+    margin-bottom: 6px;
 `;
