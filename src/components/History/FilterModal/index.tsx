@@ -9,14 +9,12 @@ import Black from '../../../assets/images/Icons/colors/black.svg'
 import Pink from '../../../assets/images/Icons/colors/pink.svg'
 import Yellow from '../../../assets/images/Icons/colors/yellow.svg'
 import NoColor from '../../../assets/images/Icons/colors/none.svg'
-import ConfirmButton from '../ButtonCalendar'
-import DatePicker from 'react-native-date-picker'
-import Button from '../../Button'
 import styles from './styles'
 import MonthPicker from 'react-native-month-year-picker';
-// import CalendarModal from '../CalendarModal';
 import { Colors } from '../../../interfaces/colors';
-import { RectButton } from 'react-native-gesture-handler';
+import MonthSelectorCalendar from 'react-native-month-selector'; 
+import moment, { Moment } from 'moment';
+
 
 interface ModalInterface {
   visible: boolean,
@@ -45,7 +43,7 @@ export const colorsIconsList = [
 const FilterModal = ({ visible, pressedOut, confirmedFilter }: ModalInterface) => {
   const [selectedColor, setSelectedColor] = useState<Colors>('noFilter')
   const [calendarVisible, setCalendarVisible] = useState(false)
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
+  const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
 
   return (
     <>
@@ -84,17 +82,23 @@ const FilterModal = ({ visible, pressedOut, confirmedFilter }: ModalInterface) =
                 </View>
                 <View style={styles.dateContainer}>
                   <Text style={[styles.headerText, styles.orderDataText]}>Ordenar por data</Text>
-                  <Button
-                    pressed={() => {
-                      console.log("I WAS PRESSED")
-                      setCalendarVisible(!calendarVisible)
-                    }}
-                    text={"Escolher Data"}
+                  <MonthSelectorCalendar
+                    selectedDate={selectedDate}
+                    containerStyle={styles.calendarContainer}
+                    minDate={moment(new Date(2020, 0, 1))}
+                    nextIcon={<Text style={styles.arrowCalendar}>{'>'}</Text>}
+                    prevIcon={<Text style={styles.arrowCalendar}>{'<'}</Text>}
+                    seperatorColor={'#2B90D9'}
+                    selectedBackgroundColor={'#fff'}
+                    selectedMonthTextStyle={styles.selectedMonth}
+                    currentMonthTextStyle={styles.monthText}
+                    onMonthTapped={(date: Moment) => setSelectedDate(date)} 
                   />
                 </View>
                 <View style={styles.bottomContainer}>
                   <TouchableOpacity onPress={() => {
                     setCalendarVisible(false)
+                    setSelectedDate(undefined)
                     pressedOut()
                   }}>
                     <Text style={[styles.bottomText, styles.cancelText]}>CANCELAR</Text>
@@ -102,7 +106,7 @@ const FilterModal = ({ visible, pressedOut, confirmedFilter }: ModalInterface) =
                   <TouchableOpacity onPress={() => {
                     setCalendarVisible(false)
                     confirmedFilter({
-                      date: selectedDate,
+                      date: selectedDate?.toDate(),
                       color: selectedColor
                     })
                     setSelectedDate(undefined)
