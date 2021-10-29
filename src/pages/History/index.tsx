@@ -14,6 +14,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { Colors } from '../../interfaces/colors';
 import api from '../../services/api';
 import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
+import formattedDate from '../../utils/formatDates';
 
 export interface FilteredQRCodes {
   id: string,
@@ -37,7 +38,6 @@ const History = () => {
   const [color, setColor] = useState<string>('noFilter')
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>(false)
-
   const loadQRCodes = useCallback(async () => {
     const response = await api.get('filtered_qrcodes/data', {
       params: {
@@ -150,7 +150,7 @@ const History = () => {
                             key={id}
                             id={id}
                             creator={qrCodeCreatorName}
-                            date={new Date(comparisonDate).toLocaleDateString("pt-BR")}
+                            date={formattedDate(new Date(comparisonDate))}
                             color={color}
                             favorite={favorited || false}
                           />

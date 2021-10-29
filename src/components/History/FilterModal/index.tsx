@@ -14,7 +14,9 @@ import DatePicker from 'react-native-date-picker'
 import Button from '../../Button'
 import styles from './styles'
 import MonthPicker from 'react-native-month-year-picker';
-import CalendarModal from '../CalendarModal';
+// import CalendarModal from '../CalendarModal';
+import { Colors } from '../../../interfaces/colors';
+import { RectButton } from 'react-native-gesture-handler';
 
 interface ModalInterface {
   visible: boolean,
@@ -69,7 +71,9 @@ const FilterModal = ({ visible, pressedOut, confirmedFilter }: ModalInterface) =
                     {colorsIconsList.map(color => {
                       return (
                         <TouchableOpacity
-                          onPress={() => setSelectedColor(color.key as Colors)}
+                          onPress={() => {
+                            setSelectedColor(color.key as Colors)
+                          }}
                           style={selectedColor === color.key && styles.selectedColor}
                         >
                           {color}
@@ -82,6 +86,7 @@ const FilterModal = ({ visible, pressedOut, confirmedFilter }: ModalInterface) =
                   <Text style={[styles.headerText, styles.orderDataText]}>Ordenar por data</Text>
                   <Button
                     pressed={() => {
+                      console.log("I WAS PRESSED")
                       setCalendarVisible(!calendarVisible)
                     }}
                     text={"Escolher Data"}
@@ -109,10 +114,14 @@ const FilterModal = ({ visible, pressedOut, confirmedFilter }: ModalInterface) =
               {calendarVisible && (
                 <View style={{
                   opacity: 1,
+                  width: 40,
+                  height: 60,
+                  backgroundColor: 'blue',
                   display: 'flex',
                   marginTop: 'auto',
                   alignSelf: 'flex-start'
                 }}>
+                  <Text>Eu peguei do git</Text>
                   <MonthPicker
                     okButton="Filtrar pelo mês"
                     cancelButton="Cancelar"
