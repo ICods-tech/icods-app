@@ -1,8 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
-import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
 import FavoriteCardButton from '../../assets/images/Icons/favorite_qrcode_card.svg'
 import NotFavoritedCardButton from '../../assets/images/Icons/notFavorited_qrcode_card.svg'
 import TrashQRCodeIcon from '../../assets/images/Icons/trash_qrcode_card.svg'
@@ -11,10 +9,17 @@ import HeaderHistory from '../../components/History/HeaderHistory';
 import { LoggedFooter } from '../../components/LoggedFooter';
 import HistoryCards from '../../components/History/HistoryCards';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { Colors } from '../../interfaces/colors';
 import api from '../../services/api';
 import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
-import { Container } from './newStyles';
+import { 
+  CloudContainer, 
+  CloudLeftLarge, 
+  CloudRightSmall, 
+  Container, 
+  Content, 
+  QRCodeTitleContainer, 
+  QRCodeTitleDate
+} from './newStyles';
 
 export interface FilteredQRCodes {
   id: string,
@@ -38,6 +43,10 @@ const History = () => {
   const [color, setColor] = useState<string>('noFilter')
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>(false)
+
+  function handleFavoriteFilter() {
+    setFavoriteFilter(!favoriteFilter);
+  }
 
   const loadQRCodes = useCallback(async () => {
     const response = await api.get('filtered_qrcodes/data', {
@@ -127,19 +136,46 @@ const History = () => {
           setSelectedDate(date)
         }}
         favorite={favoriteFilter}
-        setFavorite={() => setFavoriteFilter(!favoriteFilter)}
+        setFavorite={() => handleFavoriteFilter()}
       />
-      <View style={styles.dateContainer}>
-        <CloudRightSmall style={styles.cloudRightSmallHistory} />
-        <CloudLeftLarge style={styles.cloudLeftLargeHistory} />
+      
+      <Content>
+      <ScrollView>
+        <QRCodeTitleContainer>
+          <QRCodeTitleDate>2 de Dezembro</QRCodeTitleDate>
+          <CloudContainer>
+            <CloudLeftLarge/>
+            <CloudRightSmall/>
+          </CloudContainer>
+        </QRCodeTitleContainer>
+
+        <HistoryCards
+          // key={id}
+          id='iCOD 12332442'
+          creator='Marcelo Alves'
+          date='02/12/2020'
+          color='yellow'
+          favorite={true}
+        />
+
+      </ScrollView>
+      
+
         <ScrollView>
+
           {qrCodes?.map((qrcode: FilteredQRCodesByDate, idx: number) => {
             const [date] = Object.keys(qrcode)
             if (date !== '0')
-              return (<>
-                <View key={idx} style={styles.dateCloudContainer}>
-                  <Text style={styles.date}>{date}</Text>
-                </View>
+              return (
+              <>
+                <QRCodeTitleContainer>
+                  <QRCodeTitleDate>{date}</QRCodeTitleDate>
+                  <CloudContainer>
+                    <CloudLeftLarge/>
+                    <CloudRightSmall/>
+                  </CloudContainer>
+                </QRCodeTitleContainer>
+                
                 <ScrollView style={{ height: qrcode[date].length > 1 ? 286 : 170, marginBottom: 12 }}>
                   {qrcode[date].map(
                     ({ id, color, comparisonDate, favorited, qrCodeCreatorName, content }) => (
@@ -168,17 +204,19 @@ const History = () => {
                   }
                 </ScrollView>
               </>)
-            else if (date === '0')
-              return (<View key={0} style={styles.notFoundContainer}>
-                <LargeSearchIcon />
-                <Text style={styles.noResultsFoundText}>Nenhum resultado obtido</Text>
-                <Text style={styles.noResultsFoundDescriptionText}>Tente realizar uma filtragem mais
-                  específica dos iCods
-                </Text>
-              </View>)
+            // else if (date === '0')
+            //   return (
+            //   <View key={0} style={styles.notFoundContainer}>
+            //     <LargeSearchIcon />
+            //     <Text style={styles.noResultsFoundText}>Nenhum resultado obtido</Text>
+            //     <Text style={styles.noResultsFoundDescriptionText}>Tente realizar uma filtragem mais
+            //       específica dos iCods
+            //     </Text>
+            //   </View>
+            //   )
           })}
         </ScrollView>
-      </View>
+      </Content>
       <LoggedFooter
         isHistory={true}
       />

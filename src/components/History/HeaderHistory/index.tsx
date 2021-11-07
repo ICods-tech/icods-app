@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import FilterModal from '../FilterModal'
-import NotFavoritedIcon from '../../../assets/images/Icons/favorite_search.svg';
-import FavoritedIcon from '../../../assets/images/Icons/favorited_search.svg';
 import { useAuth } from '../../../hooks/auth';
 import { 
   Container, 
@@ -10,7 +8,7 @@ import {
   OptionalButtonsContainer, 
   SearchContainer, 
   Title 
-} from './newStyles';
+} from './styles';
 import { BackButton } from '../../BackButton';
 import { SearchInput } from '../../SearchInput';
 import { useTheme } from 'styled-components';
@@ -43,6 +41,7 @@ const HeaderHistory = ({
   function SearchInputSubmitTest() {
     setSearchEntry('Sorvetao');
   }
+
   return (
       <Container>
         <Header>
@@ -70,17 +69,14 @@ const HeaderHistory = ({
               />
 
               <OptionalButtonsContainer>
-                <FavoriteButton />
-                {/* <TouchableOpacity
+                <FavoriteButton 
                   onPress={() => setFavorite()}
-                  style={styles.optionsButton}
-                  >
-                  {favorite ? <FavoritedIcon style={styles.iconButton} /> : <NotFavoritedIcon style={styles.iconButton} />}
-                </TouchableOpacity> */}
+                  favorite={favorite}
+                />
                 <FilterButton 
                   onPress={() => setModalVisible(!modalVisible)}
                 />
-
+                
                 <FilterModal
                   visible={modalVisible}
                   pressedOut={() => setModalVisible(!modalVisible)}

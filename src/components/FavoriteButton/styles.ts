@@ -4,7 +4,7 @@ import Favorited from '../../assets/images/Icons/favorited_search.svg';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-export const Container = styled(BorderlessButton)`
+export const Button = styled(BorderlessButton)`
     height: ${RFValue(32)}px;
     width: ${RFValue(32)}px;
 `;

@@ -5,13 +5,6 @@ import Swipeable from 'react-native-gesture-handler/Swipeable'
 import RedFlag from '../../../assets/images/red_flag.svg';
 import GreenFlag from '../../../assets/images/green_flag.svg';
 import ArrowIcon from '../../../assets/images/Icons/arrow_icon.svg';
-import GreenMarker from '../../../assets/images/Icons/cardMarker/Green.svg'
-import RedMarker from '../../../assets/images/Icons/cardMarker/Red.svg'
-import CyanMarker from '../../../assets/images/Icons/cardMarker/Cyan.svg'
-import BlackMarker from '../../../assets/images/Icons/cardMarker/Black.svg'
-import YellowMarker from '../../../assets/images/Icons/cardMarker/Yellow.svg'
-import PinkMarker from '../../../assets/images/Icons/cardMarker/Pink.svg'
-import BlueMarker from '../../../assets/images/Icons/cardMarker/Blue.svg'
 import NoColorMarker from '../../../assets/images/Icons/cardMarker/NoColor.svg'
 import HeartIcon from '../../../assets/images/Icons/heart_icon.svg';
 import QrCodeImg from '../../../assets/images/qr_code.svg';
@@ -19,22 +12,37 @@ import QrCodeImg from '../../../assets/images/qr_code.svg';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 
-interface HistoryCardsProps {
+import { 
+  BlackMarker,
+  BlueMarker, 
+  Button, 
+  Content, 
+  CyanMarker, 
+  GreenMarker, 
+  PinkMarker, 
+  RedMarker, 
+  YellowMarker
+} from './newStyles';
+
+import { RectButtonProperties } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
+
+interface HistoryCardsProps extends RectButtonProperties{
   id: string;
   creator: string;
-  date: string;
   color: Colors;
+  date: string;
   favorite: boolean;
 }
 
 const CardMarker = {
-  'red': <RedMarker />,
-  'green': <GreenMarker />,
-  'blue': <BlueMarker />,
-  'yellow': <YellowMarker />,
-  'cyan': <CyanMarker />,
-  'pink': <PinkMarker />,
   'black': <BlackMarker />,
+  'blue': <BlueMarker />,
+  'cyan': <CyanMarker />,
+  'green': <GreenMarker />,
+  'pink': <PinkMarker />,
+  'red': <RedMarker />,
+  'yellow': <YellowMarker />,
 }
 
 export const CardColors = {
@@ -48,17 +56,31 @@ export const CardColors = {
 }
 
 
-const HistoryCards = ({ id, creator, date, color, favorite }: HistoryCardsProps) => {
+const HistoryCards = ({ 
+  id, 
+  creator, 
+  date, 
+  color, 
+  favorite,
+  ...rest
+}: HistoryCardsProps) => 
+{
   const navigation = useNavigation()
   return (
     <>
-      <TouchableOpacity onPress={() => navigation.navigate('QRCodeHistoryDetails', { id, color, creator, favorite })}>
-        <View style={styles.qrCodeCard}>
-          {(color in CardColors &&
-            (color !== 'noFilter' && color !== 'noColor'))
-            && CardMarker[color]}
-          <View style={styles.qrCodeManneger}>
-            <QrCodeImg />
+      <Button 
+        onPress={
+          () => navigation.navigate('QRCodeHistoryDetails', 
+          { id, color, creator, favorite })}
+        color={color}
+        {...rest}
+        >
+          {( color in CardColors && 
+          (color !== 'noFilter' && color !== 'noColor'))
+          && CardMarker[color]}
+
+          <Content>
+            <QrCodeImg width={RFValue(82)} height={RFValue(82)}/>
 
             <View style={styles.qrCodeInfo}>
               <Text style={styles.textQRCodeInfo}>Código: {id.substr(id.length - 8)}</Text>
@@ -71,9 +93,8 @@ const HistoryCards = ({ id, creator, date, color, favorite }: HistoryCardsProps)
               {favorite && (<HeartIcon />)}
               <ArrowIcon />
             </View>
-          </View>
-        </View>
-      </TouchableOpacity>
+          </Content>
+      </Button>
     </>
   )
 }
