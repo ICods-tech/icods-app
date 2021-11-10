@@ -27,12 +27,12 @@ interface ColorAndDateProps {
   date: Date | undefined,
 }
 
-const HeaderHistory = ({ 
+export function HeaderHistory({ 
   setColorAndDate, 
   setFavorite, 
   favorite, 
   qrCodeDetails }: 
-  HeaderHistoryProps) => {
+  HeaderHistoryProps){
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false)
   const theme = useTheme();
@@ -93,5 +93,3 @@ const HeaderHistory = ({
       </Container>
   );
 }
-
-export default HeaderHistory;

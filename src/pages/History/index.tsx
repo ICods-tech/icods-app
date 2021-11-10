@@ -1,25 +1,29 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity } from 'react-native';
-import styles from './styles';
+import api from '../../services/api';
 import FavoriteCardButton from '../../assets/images/Icons/favorite_qrcode_card.svg'
 import NotFavoritedCardButton from '../../assets/images/Icons/notFavorited_qrcode_card.svg'
-import TrashQRCodeIcon from '../../assets/images/Icons/trash_qrcode_card.svg'
-import LargeSearchIcon from '../../assets/images/Icons/large-search.svg'
-import HeaderHistory from '../../components/History/HeaderHistory';
-import { LoggedFooter } from '../../components/LoggedFooter';
-import HistoryCards from '../../components/History/HistoryCards';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import api from '../../services/api';
-import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
+import TrashQRCodeIcon from '../../assets/images/Icons/trash_qrcode_card.svg'
+import styles from './styles';
+import { View, SafeAreaView, ScrollView, Animated, TouchableOpacity } from 'react-native';
 import { 
   CloudContainer, 
   CloudLeftLarge, 
   CloudRightSmall, 
   Container, 
   Content, 
+  LargeSearchIcon, 
+  NoResultsFoundDescriptionText, 
+  NoResultsFoundText, 
+  NotFountContainer, 
+  QRCodeList, 
   QRCodeTitleContainer, 
   QRCodeTitleDate
 } from './newStyles';
+import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
+import { HistoryCards } from '../../components/History/HistoryCards';
+import { HeaderHistory } from '../../components/History/HeaderHistory';
+import { LoggedFooter } from '../../components/LoggedFooter';
 
 export interface FilteredQRCodes {
   id: string,
@@ -33,7 +37,7 @@ export interface FilteredQRCodes {
   color: Colors
 }
 
-interface FilteredQRCodesByDate {
+export interface FilteredQRCodesByDate {
   [date: string]: FilteredQRCodes[] | []
 }
 
@@ -140,29 +144,8 @@ const History = () => {
       />
       
       <Content>
-      <ScrollView>
-        <QRCodeTitleContainer>
-          <QRCodeTitleDate>2 de Dezembro</QRCodeTitleDate>
-          <CloudContainer>
-            <CloudLeftLarge/>
-            <CloudRightSmall/>
-          </CloudContainer>
-        </QRCodeTitleContainer>
 
-        <HistoryCards
-          // key={id}
-          id='iCOD 12332442'
-          creator='Marcelo Alves'
-          date='02/12/2020'
-          color='yellow'
-          favorite={true}
-        />
-
-      </ScrollView>
-      
-
-        <ScrollView>
-
+        <QRCodeList>
           {qrCodes?.map((qrcode: FilteredQRCodesByDate, idx: number) => {
             const [date] = Object.keys(qrcode)
             if (date !== '0')
@@ -197,6 +180,7 @@ const History = () => {
                             date={new Date(comparisonDate).toLocaleDateString("pt-BR")}
                             color={color}
                             favorite={favorited}
+                            privacy="Público"
                           />
                         </Swipeable>
                       </>
@@ -204,19 +188,22 @@ const History = () => {
                   }
                 </ScrollView>
               </>)
-            // else if (date === '0')
-            //   return (
-            //   <View key={0} style={styles.notFoundContainer}>
-            //     <LargeSearchIcon />
-            //     <Text style={styles.noResultsFoundText}>Nenhum resultado obtido</Text>
-            //     <Text style={styles.noResultsFoundDescriptionText}>Tente realizar uma filtragem mais
-            //       específica dos iCods
-            //     </Text>
-            //   </View>
-            //   )
+            else if (date === '0')
+              return (
+              <NotFountContainer key={0}>
+                <LargeSearchIcon />
+                <NoResultsFoundText>Nenhum resultado obtido</NoResultsFoundText>
+                <NoResultsFoundDescriptionText>
+                  Tente realizar uma filtragem mais
+                  específica dos iCods 
+                </NoResultsFoundDescriptionText>
+              </NotFountContainer>
+              )
           })}
-        </ScrollView>
+        </QRCodeList>
+
       </Content>
+
       <LoggedFooter
         isHistory={true}
       />

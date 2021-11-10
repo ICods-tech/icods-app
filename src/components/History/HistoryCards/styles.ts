@@ -1,97 +1,129 @@
-import { StyleSheet, Platform, Dimensions } from 'react-native';
+import styled from 'styled-components/native';
+import ArrowIcon from '../../../assets/images/Icons/arrow_icon.svg';
+import BlackMarkerIcon from '../../../assets/images/Icons/cardMarker/Black.svg'
+import BlueMarkerIcon from '../../../assets/images/Icons/cardMarker/Blue.svg'
+import CyanMarkerIcon from '../../../assets/images/Icons/cardMarker/Cyan.svg'
+import GreenMarkerIcon from '../../../assets/images/Icons/cardMarker/Green.svg'
+import HeartIcon from '../../../assets/images/Icons/heart_icon.svg';
+import PinkMarkerIcon from '../../../assets/images/Icons/cardMarker/Pink.svg'
+import RedMarkerIcon from '../../../assets/images/Icons/cardMarker/Red.svg'
+import YellowMarkerIcon from '../../../assets/images/Icons/cardMarker/Yellow.svg'
 
-const styles = StyleSheet.create({
-  date: {
-    marginLeft: Platform.OS === 'ios' ? '4%' : '4%',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    color: '#282C37',
-    fontSize: 18,
-    letterSpacing: Dimensions.get('window').width * 0.002,
-    lineHeight: 21.86,
-  },
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
 
-  qrCodeCard: {
-    marginTop: 9,
-    marginLeft: 15,
-    marginRight: 15,
+interface ContentProps{
+    color: Colors;
+}
 
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 10,
-    // shadowColor: "#f00",
-    // shadowOffset: {
-    //     width: 0,
-    //     height: 3,
-    // },
-    // shadowOpacity: 0.259,
-    // shadowRadius: 4.65,
+export const Button = styled(RectButton)`
+    height: ${RFValue(128)}px;
+    width: 100%;
+    background-color: ${({ theme }) => theme.colors.shape};
+    justify-content: center;
+`;
 
-    // elevation: 1,
+export const Container = styled.View<ContentProps>`
+    flex-direction: row;
+   
+    width: 100%;
+   
+    padding-left: ${({color}) => 
+    (color !== 'noColor' && color !== 'noFilter') 
+    ? 0 : RFValue(10)}px;
 
-    borderLeftColor: ' rgba(0, 0, 0, 0.25)',
-    borderLeftWidth: 2,
+    align-items: center;
+    justify-content: space-between;
+`;
 
-    borderTopColor: ' rgba(0, 0, 0, 0.25)',
-    borderTopWidth: 0.5,
-    borderTopEndRadius: 10,
-    borderTopLeftRadius: 10,
+export const Content = styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: ${RFValue(11)}px;
+`; 
 
-    borderBottomColor: ' rgba(0, 0, 0, 0.25)',
-    borderBottomWidth: 2,
-    borderBottomEndRadius: 10,
-    borderBottomLeftRadius: 10,
+export const QRCodeInfo = styled.View`
+    margin-left: ${RFValue(16)}px;
+`;
 
+export const QRCodeInfoText = styled.Text`
+    font-size: ${RFValue(12)}px;
+    font-family: ${({theme}) => theme.fonts.bold};
+    color: ${({ theme }) => theme.colors.title};
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+`;
 
-    borderRightColor: ' rgba(0, 0, 0, 0.25)',
-    borderRightWidth: 2,
-    position: 'relative',
-  },
+export const QRCodeInfoPrivacy = styled.View`
+    flex-direction: row;
+`;
 
-  redStatus: {
-    position: 'absolute',
-    left: -1,
-  },
+export const QRCodePrivacyText = styled.Text`
+    font-size: ${RFValue(12)}px;
+    font-family: ${({theme}) => theme.fonts.bold};
+    color: ${({ theme }) => theme.colors.primary};
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+`;
 
-  qrCodeManneger: {
-    marginLeft: Platform.OS === 'ios' ? '4%' : '4%',
-    // marginTop: Platform.OS === 'ios' ? 28 : 28,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: Platform.OS === 'ios' ? 25 : 25,
-    paddingBottom: Platform.OS === 'ios' ? 25 : 25,
+export const QRCodeCardOptions = styled.View``;
 
-  },
+export const Favorited = styled(HeartIcon).attrs({
+    width: RFValue(16),
+    height: RFValue(16),
+})`
+    position: absolute;
+    top: ${RFValue(6)}px;
+    right:${RFValue(22)}px;
+`;
 
-  privacyInfo: {
-    color: '#2B90D9',
+export const OptionsButton = styled(BorderlessButton)`
+    height: ${RFValue(36)}px;
+    width: ${RFValue(36)}px;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
 
-  },
-  qrCodeInfo: {
-    marginLeft: Platform.OS === 'ios' ? '4%' : '4%',
-  },
+`;
 
-  textQRCodeInfo: {
-    // fontFamily: 'Manrope',
-    display: 'flex',
-    flexDirection: 'row',
-    fontWeight: '700',
-    fontStyle: 'normal',
-    fontSize: 12,
-    width: 180,
-    flexWrap: 'wrap-reverse',
-    letterSpacing: Dimensions.get('window').width * 0.002,
-  },
+export const OptionsButtonIcon = styled(ArrowIcon).attrs({
+    width: RFValue(16),
+    height: RFValue(16),
+})``;
 
-  rightQRCodeInfoButtons: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    marginLeft: 29,
-  }
-})
+// Color Makers
+export const BlackMarker = styled(BlackMarkerIcon).attrs({
+    width: RFValue(10),
+    height: RFValue(114),
+})``;
 
-export default styles;
+export const BlueMarker = styled(BlueMarkerIcon).attrs({
+    width: RFValue(10),
+    height: RFValue(114),
+})``;
+
+export const CyanMarker = styled(CyanMarkerIcon).attrs({
+    width: RFValue(10),
+    height: RFValue(114),
+})``;
+
+export const GreenMarker = styled(GreenMarkerIcon).attrs({
+    width: RFValue(10),
+    height: RFValue(114),
+})``;
+
+export const PinkMarker = styled(PinkMarkerIcon).attrs({
+    width: RFValue(10),
+    height: RFValue(114),
+})``;
+
+export const RedMarker = styled(RedMarkerIcon).attrs({
+    width: RFValue(10),
+    height: RFValue(114),
+})``;
+
+export const YellowMarker = styled(YellowMarkerIcon).attrs({
+    width: RFValue(10),
+    height: RFValue(114),
+})``;

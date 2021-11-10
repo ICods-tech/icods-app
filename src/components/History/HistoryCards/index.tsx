@@ -1,31 +1,32 @@
 'use strict';
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
-import RedFlag from '../../../assets/images/red_flag.svg';
-import GreenFlag from '../../../assets/images/green_flag.svg';
-import ArrowIcon from '../../../assets/images/Icons/arrow_icon.svg';
-import NoColorMarker from '../../../assets/images/Icons/cardMarker/NoColor.svg'
-import HeartIcon from '../../../assets/images/Icons/heart_icon.svg';
 import QrCodeImg from '../../../assets/images/qr_code.svg';
 
-import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { RectButtonProperties } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import { 
   BlackMarker,
   BlueMarker, 
   Button, 
+  Container, 
   Content, 
   CyanMarker, 
+  Favorited, 
   GreenMarker, 
+  OptionsButton, 
+  OptionsButtonIcon, 
   PinkMarker, 
+  QRCodeCardOptions, 
+  QRCodeInfo, 
+  QRCodeInfoPrivacy, 
+  QRCodeInfoText,
+  QRCodePrivacyText, 
   RedMarker, 
   YellowMarker
-} from './newStyles';
-
-import { RectButtonProperties } from 'react-native-gesture-handler';
-import { RFValue } from 'react-native-responsive-fontsize';
+} from './styles';
 
 interface HistoryCardsProps extends RectButtonProperties{
   id: string;
@@ -33,6 +34,7 @@ interface HistoryCardsProps extends RectButtonProperties{
   color: Colors;
   date: string;
   favorite: boolean;
+  privacy: "Público" | "Privado";
 }
 
 const CardMarker = {
@@ -56,47 +58,51 @@ export const CardColors = {
 }
 
 
-const HistoryCards = ({ 
+export function HistoryCards({ 
   id, 
   creator, 
   date, 
   color, 
   favorite,
+  privacy,
   ...rest
-}: HistoryCardsProps) => 
+}: HistoryCardsProps)
 {
   const navigation = useNavigation()
   return (
-    <>
       <Button 
         onPress={
           () => navigation.navigate('QRCodeHistoryDetails', 
           { id, color, creator, favorite })}
-        color={color}
+        
         {...rest}
         >
-          {( color in CardColors && 
-          (color !== 'noFilter' && color !== 'noColor'))
-          && CardMarker[color]}
+          <Container color={color}>
+            {( color in CardColors && 
+            (color !== 'noFilter' && color !== 'noColor'))
+            && CardMarker[color]}
 
-          <Content>
-            <QrCodeImg width={RFValue(82)} height={RFValue(82)}/>
+            <Content>
+              <QrCodeImg width={RFValue(82)} height={RFValue(82)}/>
+              <QRCodeInfo>
+                <QRCodeInfoText>Código: {id.substr(id.length - 8)}</QRCodeInfoText>
+                <QRCodeInfoPrivacy>
+                  <QRCodeInfoText>Conteúdo: </QRCodeInfoText> 
+                  <QRCodePrivacyText >{privacy}</QRCodePrivacyText>
+                </QRCodeInfoPrivacy>
+                <QRCodeInfoText>Feito por: {creator}</QRCodeInfoText>
+                <QRCodeInfoText>Data: {date}</QRCodeInfoText>
+              </QRCodeInfo>
 
-            <View style={styles.qrCodeInfo}>
-              <Text style={styles.textQRCodeInfo}>Código: {id.substr(id.length - 8)}</Text>
-              <Text style={styles.textQRCodeInfo}>Conteúdo: <Text style={styles.privacyInfo}>Público</Text></Text>
-              <Text style={styles.textQRCodeInfo}>Feito por: {creator}</Text>
-              <Text style={styles.textQRCodeInfo}>Data: {date}</Text>
-            </View>
+              <QRCodeCardOptions>
+                <OptionsButton>
+                  <OptionsButtonIcon />
+                </OptionsButton>
+              </QRCodeCardOptions>
+            </Content>
 
-            <View style={styles.rightQRCodeInfoButtons}>
-              {favorite && (<HeartIcon />)}
-              <ArrowIcon />
-            </View>
-          </Content>
+          {favorite && (<Favorited />)}
+          </Container>
       </Button>
-    </>
   )
 }
-
-export default HistoryCards;
