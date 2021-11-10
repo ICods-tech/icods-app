@@ -18,6 +18,7 @@ import QrCodeImg from '../../../assets/images/qr_code.svg';
 
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { Colors } from '../../../interfaces/colors';
 
 interface HistoryCardsProps {
   id: string;
@@ -45,7 +46,7 @@ export const CardColors = {
   'cyan': '#68f6ff',
   'pink': '#ff68c3',
   'black': '#000'
-}
+} 
 
 
 const HistoryCards = ({ id, creator, date, color, favorite }: HistoryCardsProps) => {
@@ -54,11 +55,14 @@ const HistoryCards = ({ id, creator, date, color, favorite }: HistoryCardsProps)
     <>
       <TouchableOpacity onPress={() => navigation.navigate('QRCodeHistoryDetails', { id, color, creator, favorite })}>
         <View style={styles.qrCodeCard}>
-          {(color in CardColors &&
-            (color !== 'noFilter' && color !== 'noColor'))
-            && CardMarker[color]}
-          <View style={styles.qrCodeManneger}>
-            <QrCodeImg />
+          {
+            (color in CardColors && (color !== 'noFilter' && color !== 'noColor')) &&
+            <View style={styles.cardMarkerContainer}>{CardMarker[color]}</View>
+          }
+          <View style={styles.qrCodeManager}>
+            <QrCodeImg
+              style={{'marginLeft': -10}}
+            />
 
             <View style={styles.qrCodeInfo}>
               <Text style={styles.textQRCodeInfo}>Código: {id.substr(id.length - 8)}</Text>

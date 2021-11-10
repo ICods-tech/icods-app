@@ -64,11 +64,11 @@ const AuthProvider: React.FC = ({ children }) => {
     
       const { email, password } = credentials;
       console.log('login: ', credentials);
+    
       const res = await api.post('signin', {
         email,
         password
       })
-
       const { token, user } = res.data
 
       await AsyncStorage.multiSet([
@@ -111,7 +111,7 @@ const AuthProvider: React.FC = ({ children }) => {
       const user = res.data
 
       await updateUser(user)
-    } catch (err) {
+    } catch (err: any) {
       if (err.response) {
         console.log(err.response.data);
         throw new Error(err)

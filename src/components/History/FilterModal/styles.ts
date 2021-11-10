@@ -4,7 +4,7 @@ import { Dimensions, StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   dropdownStyle: {
     position: 'absolute',
-    top: 120,
+    top: 40,
     left: 10,
     zIndex: 2,
   },
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: 360,
-    height: 448,
+    height: 560,
     borderRadius: 8,
     display: 'flex',
     alignItems: 'center',
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   orderDataText: {
-    marginBottom: 26
+    marginBottom: 12
   },
   colorIconsContainer: {
     display: 'flex',
@@ -89,8 +89,32 @@ const styles = StyleSheet.create({
     color: '#2B90D9',
     fontWeight: '500'
   },
+  calendarContainer: {
+    display: 'flex',
+    width: 240,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   cancelText: {
     color: '#DF2C2C'
+  },
+  calendarText: {
+    fontSize: 14,
+    fontFamily: 'Manrope'
+  },
+  selectedMonth: {
+    fontSize: 18,
+    fontFamily: 'Manrope',
+    color: '#2B90D9'
+  },
+  monthText: {
+    fontSize: 14,
+    fontFamily: 'Manrope',
+    color: '#000'
+  },
+  arrowCalendar: {
+    fontSize: 20
   }
 })
 

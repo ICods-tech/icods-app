@@ -13,6 +13,7 @@ import FavoritedIcon from '../../assets/images/Icons/favorited-line.svg'
 import NotFavoritedIcon from '../../assets/images/Icons/notFavorited-line.svg'
 import ButtonAuthentication from '../../components/Button';
 import Toast from 'react-native-toast-message';
+import { Colors } from '../../interfaces/colors';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;

@@ -26,7 +26,7 @@ interface LoggedFooterProps {
 }
 
 
-export function LoggedFooter({
+export default function LoggedFooter({
   isDashboard, 
   isHistory, 
   isScanner}: LoggedFooterProps){

@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
     lineHeight: 21.86,
   },
 
+  cardMarkerContainer: {
+    marginLeft: 10
+  },
+
   qrCodeCard: {
     marginTop: 9,
     marginLeft: 15,
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     left: -1,
   },
 
-  qrCodeManneger: {
+  qrCodeManager: {
     marginLeft: Platform.OS === 'ios' ? '4%' : '4%',
     // marginTop: Platform.OS === 'ios' ? 28 : 28,
     display: 'flex',

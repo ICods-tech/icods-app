@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Register from '../pages/Register';
+import Register from '../pages/register';
 import SignIn from '../pages/SignIn'
 import Dashboard from '../pages/Dashboard'
 import Profile from '../pages/Profile'
@@ -15,6 +15,8 @@ import Scanner from '../pages/Scanner';
 import Editor from '../pages/Editor';
 import GiftOpen from '../pages/GiftOpen';
 import Processing from '../pages/Processing';
+import ProcessingICods from '../pages/ProcessingICodsCircleProgress';
+import ProcessingICodsCircleProgress from '../pages/ProcessingICodsCircleProgress';
 
 const App = createStackNavigator()
 
@@ -38,7 +40,8 @@ const Routes: React.FC = () => {
               <App.Screen name='History' component={History} />
               <App.Screen name='QRCodeHistoryDetails' component={QRCodeHistoryDetails} />
               <App.Screen name='Support' component={Support} />
-              <App.Screen name='Editor' component={ Editor } />
+              <App.Screen name='Editor' component={Editor} />
+              <App.Screen name='ProcessingICodsCircleProgress' component={ ProcessingICodsCircleProgress } />
               <App.Screen name='Scanner' component={ Scanner } />
               <App.Screen name='VideoPlayer' component={ VideoPlayer } />
               <App.Screen name='Processing' component={ Processing } />
