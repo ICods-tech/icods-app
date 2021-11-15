@@ -10,6 +10,7 @@ import { QRCode } from '../../types/QRCode';
 import { useAuth } from '../../hooks/auth';
 import LoggedFooter from '../../components/LoggedFooter';
 import { useNavigation } from '@react-navigation/native';
+import { checkConnection } from '../../utils/checkConnection';
 
 
 interface PopUp
@@ -31,7 +32,6 @@ const Scanner = () =>
   const [ popUp, setPopUp ] = useState<PopUp>();
 
   const handleCloseButton = () => {
-    setQrCodeValidate(false);
     navigation.navigate(popUp?.press || 'Scanner', {qrcode});
   }
 
@@ -55,6 +55,7 @@ const Scanner = () =>
     if (user)  {
       await api.post(`/received_qrcode/${id}`, {});
     }
+
   }
 
   const qrCodeisNotBelongsIcods = () => {
@@ -66,41 +67,68 @@ const Scanner = () =>
     });
   }
 
+  const qrCodeBelongsToIcodsButIsNotActive = () => {
+    setPopUp( {
+      title: 'Necessidade de Login',
+      label: 'Para prosseguir, você precisa está conectado com uma conta ativa',
+      icon: 'edicion',
+      press: 'Register',
+    });
+  }
+
+  const qrCodeContainsGiftButIsNotProcessed = () => {
+    setPopUp( {
+      title: 'Seu vídeo está indo para a nuvem',
+      label: 'Estamos processando o vídeo para que ele fique pronto para a visualização em alguns minutos',
+      icon: 'cloud_sync',
+      press: page,
+    } );
+  }
+
   const verifyQRCodeContent = (qrCode: QRCode) => {
-    if (!qrCode.enabled && !user ){
-      qrCodeisNotBelongsIcods();
+    if (qrCode.status === 'INACTIVE' && !user ){
+      qrCodeBelongsToIcodsButIsNotActive();
+      return;
+    }
+    
+    if (qrCode.status === 'IN_PROGRESS') {
+      qrCodeContainsGiftButIsNotProcessed();
       return;
     }
 
-    if ( qrCode.enabled )
-    {
+    if ( qrCode.status === 'ACTIVE' ) {
       const {id} = qrCode;
       qrCodeContainsGift(id);
-    } else
-    {
+      return;
+    } else {
       qrCodeIsEditable();
     }
   }
 
   const barcodeRecognized = async ( { data }: BarCodeReadEvent ) =>
   {
-    console.log(data);
     if ( qrCodeValidate ) return;
-
+    
+    const connection = await checkConnection();
+    if (!connection) {
+      navigation.navigate('ConnectionProblems');
+      return;
+    } 
+    
     await api
-      .get( `qrcodes/${ data }` )
-      .then( ( response: any ) =>
-      {
-        const qrCode: QRCode = response.data;
-        setQrcode( qrCode );
-        verifyQRCodeContent(qrCode);
-      } )
-      .catch( ( error: any ) =>
-      {
-        console.log(error.message);
-        qrCodeisNotBelongsIcods();
-      });
-
+    .get( `qrcodes/${ data }` )
+    .then( ( response: any ) =>
+    {
+      const qrCode: QRCode = response.data;
+      setQrcode( qrCode );
+      verifyQRCodeContent(qrCode);
+    })
+    .catch( ( error: any ) =>
+    {
+      console.log(error.message);
+      qrCodeisNotBelongsIcods();
+    });
+    
     setQrCodeValidate( true );
   };
 

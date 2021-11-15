@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
 
+interface LabelStyleProps {
+  color: '#2B90D9' | '#DF2C2C',
+}
+
 export const ScannerPopUPModal = styled.Modal`
   flex: 1;
   align-items: center;
@@ -24,9 +28,10 @@ export const ScannerPopUPSubContainer = styled.View`
 `;
 
 export const ScannerPopUPSubContainerIconContainer = styled.View`
+  margin-top: 16px;
   align-items: center;
   justify-content: center;
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 `;
 
 export const ScannerPopUPSubContainerTitle = styled.Text`
@@ -39,6 +44,8 @@ export const ScannerPopUPSubContainerTitle = styled.Text`
 `;
 
 export const ScannerPopUPSubContainerText = styled.Text`
+  width: 90%;
+  text-align: center;
   margin-top: 15px;
   font-size: 14px;
   font-weight: 600;
@@ -60,4 +67,21 @@ export const ScannerPopUPSubContainerCloseButton = styled.TouchableOpacity`
 
   align-items: center;
   justify-content: center;
+`;
+
+export const ScannerPopUpContainerButtons = styled.View`
+  margin: 16px 0;
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const ScannerPopUpContainerButtonsTouchableButton = styled.TouchableOpacity`
+
+`;
+
+export const ScannerPopUpContainerButtonsButtonLabel = styled.Text<LabelStyleProps>`
+  color: ${(props) => props.color};
+  font-size: 16px;
 `;

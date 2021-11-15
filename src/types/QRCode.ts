@@ -1,6 +1,6 @@
 export interface QRCode {
   id: string;
-  enabled: false;
+  status:  'ACTIVE' | 'INACTIVE' | 'IN_PROGRESS';
   link: string;
   content: string;
   postId: string;

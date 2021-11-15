@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import Register from '../pages/register';
+import Register from '../pages/Register';
 import SignIn from '../pages/SignIn'
 import Dashboard from '../pages/Dashboard'
 import Profile from '../pages/Profile'
@@ -17,6 +17,7 @@ import GiftOpen from '../pages/GiftOpen';
 import Processing from '../pages/Processing';
 import ProcessingICods from '../pages/ProcessingICodsCircleProgress';
 import ProcessingICodsCircleProgress from '../pages/ProcessingICodsCircleProgress';
+import ConnectionProblems from '../pages/ConnectionProblems';
 
 const App = createStackNavigator()
 
@@ -45,6 +46,7 @@ const Routes: React.FC = () => {
               <App.Screen name='Scanner' component={ Scanner } />
               <App.Screen name='VideoPlayer' component={ VideoPlayer } />
               <App.Screen name='Processing' component={ Processing } />
+              <App.Screen name='ConnectionProblems' component={ConnectionProblems} />
             </>
           ) : (
               <>
@@ -53,6 +55,7 @@ const Routes: React.FC = () => {
                 <App.Screen name='Scanner' component={ Scanner } />
                 <App.Screen name='VideoPlayer' component={ VideoPlayer } />
                 <App.Screen name='GiftOpen' component={ GiftOpen } />
+                <App.Screen name='ConnectionProblems' component={ConnectionProblems} />
             </>
           )
       }
