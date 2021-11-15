@@ -9,7 +9,8 @@ export const ColorsButtonList = styled(
     ).attrs({
         showsHorizontalScrollIndicator: false,
         horizontal: true,
-})``;
+})`
+`;
 
 
 interface ColorButtonProps {

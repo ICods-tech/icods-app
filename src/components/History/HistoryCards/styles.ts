@@ -34,7 +34,7 @@ export const Container = styled.View<ContentProps>`
     ? 0 : RFValue(10)}px;
 
     align-items: center;
-    justify-content: space-between;
+    /* justify-content: center; */
 `;
 
 export const Content = styled.View`
