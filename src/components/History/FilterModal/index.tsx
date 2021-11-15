@@ -84,7 +84,7 @@ export const colorsIconsList = [
   },
 
   {
-    key: 'noFilter',
+    key: 'noFilter' || 'noColor',
     icon: NoColorIcon,
   }
 ]
