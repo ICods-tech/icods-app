@@ -20,6 +20,7 @@ export const FooterButton = styled(RectButton)`
     width: ${RFValue(70)}px;
     align-items: center;
     justify-content: space-between;
+    /* background-color: orange; */
 `;
 
 interface ButtonSelectedProps {
@@ -36,6 +37,7 @@ export const FooterButtonTitle = styled.Text<ButtonSelectedProps>`
     font-size: ${RFValue(9)}px;
     color: ${({theme}) => theme.colors.title};
     font-family: 'Manrope-Light';
+    /* background-color: cyan; */
     
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
     

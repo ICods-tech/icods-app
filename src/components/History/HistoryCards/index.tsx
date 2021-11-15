@@ -16,6 +16,7 @@ import {
   CyanMarker, 
   Favorited, 
   GreenMarker, 
+  MainContainer, 
   OptionsButton, 
   OptionsButtonIcon, 
   PinkMarker, 
@@ -84,6 +85,7 @@ export function HistoryCards({
 
             <Content>
               <QrCodeImg width={RFValue(82)} height={RFValue(82)}/>
+              <MainContainer>
               <QRCodeInfo>
                 <QRCodeInfoText>Código: {id.substr(id.length - 8)}</QRCodeInfoText>
                 <QRCodeInfoPrivacy>
@@ -99,7 +101,9 @@ export function HistoryCards({
                   <OptionsButtonIcon />
                 </OptionsButton>
               </QRCodeCardOptions>
+              </MainContainer>
             </Content>
+
 
           {favorite && (<Favorited />)}
           </Container>

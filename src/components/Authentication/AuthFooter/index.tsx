@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { Container } from './styles';
+import { Container, Title } from './styles';
 import { ScannerButton } from '../../ScannerButton';
 
 export function AuthFooter(){

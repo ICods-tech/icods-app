@@ -1,6 +1,7 @@
+import { Dimensions } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View`
     height: ${RFValue(48)}px;
@@ -8,4 +9,13 @@ export const Container = styled.View`
     background-color: ${({theme}) => theme.colors.cloudly};
     align-items: center;
     justify-content: center;
+`;
+
+export const Title = styled.Text`
+    font-size: ${RFValue(9)}px;
+
+    color: ${({theme}) => theme.colors.title};
+    font-family: ${({theme}) => theme.fonts.light};
+    
+    letter-spacing: ${Dimensions.get('window').width*0.002}px;
 `;

@@ -160,7 +160,8 @@ const History = () => {
                   </CloudContainer>
                 </QRCodeTitleContainer>
                 
-                <ScrollView style={{ height: qrcode[date].length > 1 ? 286 : 170, marginBottom: 12 }}>
+                <ScrollView 
+                style={{ height: qrcode[date].length > 1 ? 286 : 170, marginBottom: 12 }}>
                   {qrcode[date].map(
                     ({ id, color, comparisonDate, favorited, qrCodeCreatorName, content }) => (
                       <>

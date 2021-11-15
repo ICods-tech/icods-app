@@ -21,8 +21,8 @@ export function ScannerButton({selected,...rest}: ScannerButtonProps){
             <ScannerImg 
                 width={RFValue(56)}
                 height={RFValue(56)}
+                style={{marginBottom: RFValue(4)}}
             />
-          
             <Title selected={selected}>Escanear</Title>
 
         </Button>
