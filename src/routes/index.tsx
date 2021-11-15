@@ -18,6 +18,7 @@ import Processing from '../pages/Processing';
 import ProcessingICods from '../pages/ProcessingICodsCircleProgress';
 import ProcessingICodsCircleProgress from '../pages/ProcessingICodsCircleProgress';
 import ConnectionProblems from '../pages/ConnectionProblems';
+import Working from '../pages/Working';
 
 const App = createStackNavigator()
 
@@ -47,6 +48,7 @@ const Routes: React.FC = () => {
               <App.Screen name='VideoPlayer' component={ VideoPlayer } />
               <App.Screen name='Processing' component={ Processing } />
               <App.Screen name='ConnectionProblems' component={ConnectionProblems} />
+              <App.Screen name='Working' component={Working} />
             </>
           ) : (
               <>
