@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import HeaderHistory from '../../components/History/HeaderHistory';
+import { HeaderHistory } from '../../components/History/HeaderHistory';
 import HistoryFooter from '../../components/LoggedFooter';
 import QRCodeTemplate from '../../assets/images/qrCodeLargeTemplate.svg'
 import { colorsIconsList } from '../../components/History/FilterModal'
@@ -14,6 +14,7 @@ import NotFavoritedIcon from '../../assets/images/Icons/notFavorited-line.svg'
 import ButtonAuthentication from '../../components/Button';
 import Toast from 'react-native-toast-message';
 import { Colors } from '../../interfaces/colors';
+import { ColorButton, ColorsButtonList, Separator } from './newStyles';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -71,20 +72,39 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         </View>
         <View style={styles.colorContainer}>
           <Text style={styles.headersText}>Alterar cor</Text>
-          <View style={styles.colorIconsContainer}>
+          <ColorsButtonList 
+                data={colorsIconsList}
+                keyExtractor={(item) => item.key}
+                renderItem={({item}) => {
+                  const {icon: Icon, key} = item;
+                  return (
+                    <ColorButton
+                      onPress={() =>{ handleChangeQRCodeColor(key as Colors) }}
+                      selectedColor={updatedColor}
+                      color={key as Colors}
+                    >
+                    <Icon/>
+                  </ColorButton>
+                    )
+                  }
+                }
+                ItemSeparatorComponent={() => <Separator />}
+              />
+          {/* <View style={styles.colorIconsContainer}>
             {colorsIconsList.map(color => {
+              const {key, icon: Icon} = color;
               return (
                 <TouchableOpacity
-                  onPress={() => { handleChangeQRCodeColor(color.key as Colors) }}
+                  onPress={() => { handleChangeQRCodeColor(key as Colors) }}
                   style={(
-                    (updatedColor === color.key)
-                    || (updatedColor === 'noColor' && color.key === 'noFilter')) && styles.selectedColor}
+                    (updatedColor == key)
+                    || (updatedColor == 'noColor' && key === 'noFilter')) && styles.selectedColor}
                 >
-                  {color}
+                  {Icon}
                 </TouchableOpacity>
               )
             })}
-          </View>
+          </View> */}
         </View>
         <View style={{
           marginTop: 36,

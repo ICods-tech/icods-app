@@ -50,6 +50,34 @@ export const ColorsButtonList = styled(
         horizontal: true,
 })``;
 
+
+
+interface ColorButtonProps {
+    selectedColor: Colors;
+    color: Colors;
+}
+
+export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
+    width: ${RFValue(16)}px;
+    height: ${RFValue(16)}px;
+    align-items: center;
+    justify-content: center;
+    ${({selectedColor, color}) => selectedColor === color && css`
+        width: ${RFValue(20)}px;
+        height: ${RFValue(20)}px;
+        padding: ${RFValue(10)}px ${RFValue(10)}px;
+        border-width: ${RFValue(2)}px;
+        border-radius: ${RFValue(4)}px;
+        border-color: ${({theme}) => theme.colors.title};
+    `};
+`;
+
+export const Separator = styled.View`
+    width: ${RFValue(14)}px;
+    height: 100%;
+    background-color: white;
+`;
+
 export const DataContainer = styled.View`
     align-items: center;
     justify-content: center;
@@ -79,33 +107,6 @@ export const SubmitButtonText = styled.Text`
     font-size: ${RFValue(14)}px;
     color: ${({theme}) => theme.colors.shape};
     letter-spacing: ${Dimensions.get('window').width*0.001}px;
-`;
-
-
-interface ColorButtonProps {
-    selectedColor: Colors;
-    color: Colors;
-}
-
-export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
-    width: ${RFValue(16)}px;
-    height: ${RFValue(16)}px;
-    align-items: center;
-    justify-content: center;
-    ${({selectedColor, color}) => selectedColor === color && css`
-        width: ${RFValue(20)}px;
-        height: ${RFValue(20)}px;
-        padding: ${RFValue(10)}px ${RFValue(10)}px;
-        border-width: ${RFValue(2)}px;
-        border-radius: ${RFValue(4)}px;
-        border-color: ${({theme}) => theme.colors.title};
-    `};
-`;
-
-export const Separator = styled.View`
-    width: ${RFValue(14)}px;
-    height: 100%;
-    background-color: white;
 `;
 
 
