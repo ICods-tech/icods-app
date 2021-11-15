@@ -1,21 +1,14 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import Toast from 'react-native-toast-message';
-import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../hooks/auth'
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useTheme } from 'styled-components';
-
-import { AuthFooter } from '../../components/Authentication/AuthFooter';
-import { Header } from '../../components/Authentication/Header';
-import { SubmitButton } from '../../components/Authentication/SubmitButton';
-import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
-
+import React, { 
+  useState, 
+  useCallback, 
+  useRef, 
+  useEffect 
+} from 'react';
 import {
   TouchableWithoutFeedback,
   Keyboard,
   TextInput
 } from 'react-native'
-
 import {
   Container,
   HelpButtonContainer,
@@ -33,12 +26,21 @@ import {
   SpacingText,
 } from './styles';
 
-import NewInput from '../../components/NewInput';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../hooks/auth'
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
+import { AuthFooter } from '../../components/Authentication/AuthFooter';
+import { Header } from '../../components/Authentication/Header';
+import { SubmitButton } from '../../components/Authentication/SubmitButton';
+import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
 
 import GoogleIcon from '../../assets/images/Icons/google_icon.svg'
+import NewInput from '../../components/NewInput';
 import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
-import UserIcon from '../../assets/images/Icons/signIn-user.svg';
 import KeyIcon from '../../assets/images/Icons/signIn-password.svg';
+import UserIcon from '../../assets/images/Icons/signIn-user.svg';
+import Toast from 'react-native-toast-message';
 
 const SignIn = () => {
   const theme = useTheme();
@@ -157,7 +159,7 @@ const SignIn = () => {
                 <SpacingLine style={{ width: '40%' }}></SpacingLine>
               </SpacingContainer>
 
-              <LoginButtonContainer>
+              {/* <LoginButtonContainer>
                 <LoginSocialButton
                   title="Entrar com Google"
                   icon={GoogleIcon}
@@ -170,7 +172,7 @@ const SignIn = () => {
                   onPress={() => { }}
                 />
 
-              </LoginButtonContainer>
+              </LoginButtonContainer> */}
 
               <HelpContainer>
                 <HelpContainerTexts

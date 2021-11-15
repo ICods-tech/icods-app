@@ -5,10 +5,9 @@ import { Dimensions } from 'react-native';
 
 export const Button = styled(BorderlessButton)`
     width: ${RFValue(60)}px;
-    margin-bottom: ${RFValue(28)}px;
-    
+    height: 100%; 
+    margin-bottom: ${RFValue(34)}px;
     align-items: center;
-    justify-content: space-between;
 `;
 
 interface ButtonSelectedProps {
@@ -17,6 +16,7 @@ interface ButtonSelectedProps {
 
 export const Title = styled.Text<ButtonSelectedProps>`
     font-size: ${RFValue(9)}px;
+
     color: ${({theme}) => theme.colors.title};
     font-family: 'Manrope-Light';
     

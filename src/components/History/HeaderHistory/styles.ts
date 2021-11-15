@@ -1,80 +1,45 @@
-import { StyleSheet, Platform, Dimensions } from 'react-native'
+import { Dimensions } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
+export const Container = styled.View`
+    padding: 0px ${RFValue(15)}px;
+    background-color: ${({ theme }) => theme.colors.shape};
+`;
 
-  container: {
-    marginTop: Platform.OS === 'ios' ? 2 : 2,
-  },
+export const Header = styled.View`
+    flex-direction: row;
+    align-items: center;
+    margin-top: ${RFValue(getStatusBarHeight() + 3)}px;
+    background-color: ${({theme}) => theme.colors.shape};
 
-  header: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
+`;
 
-  title: {
-    color: '#282C37',
+export const Title = styled.Text`
+    font-size: ${RFValue(26)}px;
 
-    // fontFamily: 'Manrope',
-    fontSize: 25.89,
-    fontStyle: 'normal',
-    fontWeight: '700',
-    lineHeight: 35,
-    letterSpacing: Dimensions.get('window').width * 0.002,
+    font-family: ${({theme}) => theme.fonts.extra_bold};
+    color: ${({theme}) => theme.colors.title};
+    
+    letter-spacing: ${Dimensions.get('window').width*0.001}px;
+    
+    margin-left: ${RFValue(17)}px;
+    margin-bottom: 4px;
+`;
 
-    marginTop: 6,
-    marginLeft: -4,
-  },
+export const SearchContainer = styled.View`
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 
-  searchContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    // backgroundColor: '#000',
-    marginLeft: 12,
-  },
+    margin-top: ${RFValue(26)}px;
+`;
 
-  searchIcon: {
-    paddingLeft: Platform.OS === 'ios' ? '8%' : '8%',
-    paddingRight: Platform.OS === 'ios' ? '4%' : '4%',
+export const OptionalButtonsContainer = styled.View`
+    width: ${RFValue(80)}px;
 
-  },
-
-  searchBar: {
-    backgroundColor: '#F2F2F2',
-    borderRadius: 18,
-    width: Dimensions.get('window').width * 0.65,
-    height: 47,
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    marginBottom: Platform.OS === 'ios' ? '8%' : '8%',
-  },
-  searchInput: {
-    fontWeight: "400",
-    letterSpacing: Dimensions.get('window').width * 0.002,
-    color: '#282C37',
-    fontSize: 16,
-    width: Dimensions.get('window').width * 1,
-  },
-  optionsButton: {
-  },
-  option: {
-  },
-  optionsButtonsContainer: {
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    width: 120,
-    height: 40,
-    marginBottom: 36,
-    flexDirection: 'row',
-    shadowOffset: { width: 1, height: 2, },
-    shadowColor: 'rgba(0, 0, 0, 0.25)',
-    shadowOpacity: 1.0
-  },
-  iconButton: {
-    marginLeft: 8
-  }
-});
-export default styles;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+`;

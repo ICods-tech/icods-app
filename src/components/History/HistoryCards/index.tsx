@@ -1,41 +1,50 @@
 'use strict';
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import React from 'react';
 import Swipeable from 'react-native-gesture-handler/Swipeable'
-import RedFlag from '../../../assets/images/red_flag.svg';
-import GreenFlag from '../../../assets/images/green_flag.svg';
-import ArrowIcon from '../../../assets/images/Icons/arrow_icon.svg';
-import GreenMarker from '../../../assets/images/Icons/cardMarker/Green.svg'
-import RedMarker from '../../../assets/images/Icons/cardMarker/Red.svg'
-import CyanMarker from '../../../assets/images/Icons/cardMarker/Cyan.svg'
-import BlackMarker from '../../../assets/images/Icons/cardMarker/Black.svg'
-import YellowMarker from '../../../assets/images/Icons/cardMarker/Yellow.svg'
-import PinkMarker from '../../../assets/images/Icons/cardMarker/Pink.svg'
-import BlueMarker from '../../../assets/images/Icons/cardMarker/Blue.svg'
-import NoColorMarker from '../../../assets/images/Icons/cardMarker/NoColor.svg'
-import HeartIcon from '../../../assets/images/Icons/heart_icon.svg';
 import QrCodeImg from '../../../assets/images/qr_code.svg';
 
-import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
-import { Colors } from '../../../interfaces/colors';
+import { RectButtonProperties } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
 
-interface HistoryCardsProps {
+import { 
+  BlackMarker,
+  BlueMarker, 
+  Button, 
+  Container, 
+  Content, 
+  CyanMarker, 
+  Favorited, 
+  GreenMarker, 
+  OptionsButton, 
+  OptionsButtonIcon, 
+  PinkMarker, 
+  QRCodeCardOptions, 
+  QRCodeInfo, 
+  QRCodeInfoPrivacy, 
+  QRCodeInfoText,
+  QRCodePrivacyText, 
+  RedMarker, 
+  YellowMarker
+} from './styles';
+
+interface HistoryCardsProps extends RectButtonProperties{
   id: string;
   creator: string;
-  date: string;
   color: Colors;
+  date: string;
   favorite: boolean;
+  privacy: "Público" | "Privado";
 }
 
 const CardMarker = {
-  'red': <RedMarker />,
-  'green': <GreenMarker />,
-  'blue': <BlueMarker />,
-  'yellow': <YellowMarker />,
-  'cyan': <CyanMarker />,
-  'pink': <PinkMarker />,
   'black': <BlackMarker />,
+  'blue': <BlueMarker />,
+  'cyan': <CyanMarker />,
+  'green': <GreenMarker />,
+  'pink': <PinkMarker />,
+  'red': <RedMarker />,
+  'yellow': <YellowMarker />,
 }
 
 export const CardColors = {
@@ -49,37 +58,51 @@ export const CardColors = {
 } 
 
 
-const HistoryCards = ({ id, creator, date, color, favorite }: HistoryCardsProps) => {
+export function HistoryCards({ 
+  id, 
+  creator, 
+  date, 
+  color, 
+  favorite,
+  privacy,
+  ...rest
+}: HistoryCardsProps)
+{
   const navigation = useNavigation()
   return (
-    <>
-      <TouchableOpacity onPress={() => navigation.navigate('QRCodeHistoryDetails', { id, color, creator, favorite })}>
-        <View style={styles.qrCodeCard}>
-          {
-            (color in CardColors && (color !== 'noFilter' && color !== 'noColor')) &&
-            <View style={styles.cardMarkerContainer}>{CardMarker[color]}</View>
-          }
-          <View style={styles.qrCodeManager}>
-            <QrCodeImg
-              style={{'marginLeft': -10}}
-            />
+      <Button 
+        onPress={
+          () => navigation.navigate('QRCodeHistoryDetails', 
+          { id, color, creator, favorite })}
+        
+        {...rest}
+        >
+          <Container color={color}>
+            {( color in CardColors && 
+            (color !== 'noFilter' && color !== 'noColor'))
+            && CardMarker[color]}
 
-            <View style={styles.qrCodeInfo}>
-              <Text style={styles.textQRCodeInfo}>Código: {id.substr(id.length - 8)}</Text>
-              <Text style={styles.textQRCodeInfo}>Conteúdo: <Text style={styles.privacyInfo}>Público</Text></Text>
-              <Text style={styles.textQRCodeInfo}>Feito por: {creator}</Text>
-              <Text style={styles.textQRCodeInfo}>Data: {date}</Text>
-            </View>
+            <Content>
+              <QrCodeImg width={RFValue(82)} height={RFValue(82)}/>
+              <QRCodeInfo>
+                <QRCodeInfoText>Código: {id.substr(id.length - 8)}</QRCodeInfoText>
+                <QRCodeInfoPrivacy>
+                  <QRCodeInfoText>Conteúdo: </QRCodeInfoText> 
+                  <QRCodePrivacyText >{privacy}</QRCodePrivacyText>
+                </QRCodeInfoPrivacy>
+                <QRCodeInfoText>Feito por: {creator}</QRCodeInfoText>
+                <QRCodeInfoText>Data: {date}</QRCodeInfoText>
+              </QRCodeInfo>
 
-            <View style={styles.rightQRCodeInfoButtons}>
-              {favorite && (<HeartIcon />)}
-              <ArrowIcon />
-            </View>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </>
+              <QRCodeCardOptions>
+                <OptionsButton>
+                  <OptionsButtonIcon />
+                </OptionsButton>
+              </QRCodeCardOptions>
+            </Content>
+
+          {favorite && (<Favorited />)}
+          </Container>
+      </Button>
   )
 }
-
-export default HistoryCards;

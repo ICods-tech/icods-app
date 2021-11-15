@@ -19,7 +19,8 @@ export default {
         medium_line: 'rgba(0, 0, 0, 0.3)',
 
         background: '#F0F2F5',
-        cloudly: '#F2F2F2 ',
+        cloudly: '#F2F2F2',
+        cloudly_strong: '#E2E2E2', 
         
         shape: '#FFFFFF',
         dark: '#000000',
