@@ -55,7 +55,7 @@ export const CardColors = {
   'cyan': '#68f6ff',
   'pink': '#ff68c3',
   'black': '#000'
-}
+} 
 
 
 export function HistoryCards({ 

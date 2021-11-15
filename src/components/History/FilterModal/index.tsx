@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Modal from 'react-native-modal';
 import DatePicker from 'react-native-date-picker';
 import MonthPicker from 'react-native-month-year-picker';
-import CalendarModal from '../CalendarModal';
 import { 
   Container, 
   Footer, 

@@ -23,7 +23,8 @@ import {
 import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
 import { HistoryCards } from '../../components/History/HistoryCards';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
-import { LoggedFooter } from '../../components/LoggedFooter';
+import LoggedFooter  from '../../components/LoggedFooter';
+import formattedDate from '../../utils/formatDates';
 
 export interface FilteredQRCodes {
   id: string,
@@ -177,7 +178,7 @@ const History = () => {
                             key={id}
                             id={id}
                             creator={qrCodeCreatorName}
-                            date={new Date(comparisonDate).toLocaleDateString("pt-BR")}
+                            date={formattedDate(new Date(comparisonDate))}
                             color={color}
                             favorite={favorited}
                             privacy="Público"
