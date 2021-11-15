@@ -1,10 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { ScannerPopUPContainer, ScannerPopUPModal, ScannerPopUPSubContainer, ScannerPopUPSubContainerCloseButton, ScannerPopUPSubContainerIconContainer, ScannerPopUPSubContainerText, ScannerPopUPSubContainerTitle } from './styles';
+import { 
+  ScannerPopUPContainer, 
+  ScannerPopUpContainerButtons, 
+  ScannerPopUpContainerButtonsButtonLabel, 
+  ScannerPopUpContainerButtonsTouchableButton, 
+  ScannerPopUPModal, 
+  ScannerPopUPSubContainer, 
+  ScannerPopUPSubContainerCloseButton, 
+  ScannerPopUPSubContainerIconContainer, 
+  ScannerPopUPSubContainerText, 
+  ScannerPopUPSubContainerTitle 
+} from './styles';
 
 import GiftIcon from '../../../assets/images/Icons/scanner/gift_icon.svg';
 import CheckIcon from '../../../assets/images/Icons/scanner/check_icon.svg';
 import CloseIcon from '../../../assets/images/Icons/scanner/close_icon.svg';
 import CancelIcon from '../../../assets/images/Icons/scanner/cancel_icon.svg';
+import EdicionIcon from '../../../assets/images/Icons/scanner/edicion_icon.svg';
+import CloudSyncIcon from '../../../assets/images/Icons/scanner/cloud_sync_icon.svg';
 import { QRCode } from '../../../types/QRCode';
 
 interface ScannerPopUPPros
@@ -26,7 +39,6 @@ const ScannerPopUP = ( {
   const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout>();
 
   useEffect(() => {
-
     setMyTimeout( 
       setTimeout(() => {
         setIsVisible(false);
@@ -48,6 +60,8 @@ const ScannerPopUP = ( {
             { icon === 'gift' && <GiftIcon /> }
             { icon === 'check' && <CheckIcon /> }
             { icon === 'close' && <CloseIcon /> }
+            { icon === 'edicion' && <EdicionIcon /> }
+            { icon === 'cloud_sync' && <CloudSyncIcon /> }
           </ScannerPopUPSubContainerIconContainer>
 
           <ScannerPopUPSubContainerTitle>
@@ -56,16 +70,17 @@ const ScannerPopUP = ( {
           <ScannerPopUPSubContainerText>
             { subtitle }
           </ScannerPopUPSubContainerText>
-
-          <ScannerPopUPSubContainerCloseButton
-            onPress={ () => {
-              setIsVisible(false);
-              clearTimeout(myTimeout as NodeJS.Timeout);
-              press();
-            } }
-          >
-            <CancelIcon />
-          </ScannerPopUPSubContainerCloseButton>
+            <ScannerPopUPSubContainerCloseButton
+              onPress={ () => {
+                setIsVisible(false);
+                if (myTimeout) {
+                  clearTimeout(myTimeout as NodeJS.Timeout);
+                }
+                press();
+              } }
+            >
+              <CancelIcon />
+            </ScannerPopUPSubContainerCloseButton>
         </ScannerPopUPSubContainer>
       </ScannerPopUPContainer>
     </ScannerPopUPModal>
