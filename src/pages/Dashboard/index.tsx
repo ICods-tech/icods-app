@@ -105,7 +105,7 @@ const Dashboard = () => {
           <HighlightButton 
             text='Social'
             icon={SocialIcon}
-            onPress={() => navigation.navigate('ProcessingICodsCircleProgress')}
+            onPress={() => navigation.navigate('Working')}
             />
         </HighlightButtonList>  
       </HightLightListContainer>  

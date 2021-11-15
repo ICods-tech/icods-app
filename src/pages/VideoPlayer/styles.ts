@@ -1,32 +1,22 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 
-const { width, height } = Dimensions.get( 'window' );
+export const Container = styled.SafeAreaView`
+  background-color: #000;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  height: 100%;
+`;
 
-const styles = StyleSheet.create( {
-  container: {
-    backgroundColor: '#000',
-    flex: 1,
-    justifyContent: 'center',
-    height: height,
+export const VideoContainer = styled.View`
+  height: 80%;
+`;
 
-  },
-  video: {
-    height: height * 0.8,
-    width: width,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  iconsContainer: {
-    width: width,
-    height: height * 0.1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  mediaControls: {
-    width: width,
-  },
-} );
-
-export default styles;
+export const IconsContainer = styled.View`
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;

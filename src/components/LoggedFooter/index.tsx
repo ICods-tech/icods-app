@@ -79,7 +79,9 @@ export default function LoggedFooter({
           selected={isScanner}
         />
         
-        <FooterButton>
+        <FooterButton
+          onPress={ () => navigation.navigate( 'Working' )}
+        >
           <BorderTop
             selected={false}
           />
@@ -90,7 +92,9 @@ export default function LoggedFooter({
           <FooterButtonTitle>Notificação</FooterButtonTitle>
         </FooterButton>
         
-        <FooterButton>
+        <FooterButton
+          onPress={ () => navigation.navigate( 'Working' )}
+        >
           <BorderTop
             selected={false}
           />
