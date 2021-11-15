@@ -4,6 +4,16 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { Dimensions } from 'react-native';
 
+
+export const Gradient = styled(LinearGradient).attrs({ 
+    start:{ x: 0, y: 0 },
+    end:{ x: 0, y: 1 },
+    colors:['#2B90D9', '#53C4E8'],
+    style:{ flex: 1 }
+})`
+    height: ${RFValue(72)}px;
+`;
+
 export const Container = styled.View`
     width: 100%;
     height: 100%;

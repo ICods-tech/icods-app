@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import FilterModal from '../FilterModal'
 import { useAuth } from '../../../hooks/auth';
 import { 
   Container, 
@@ -14,6 +13,8 @@ import { SearchInput } from '../../SearchInput';
 import { useTheme } from 'styled-components';
 import { FavoriteButton } from '../../FavoriteButton';
 import { FilterButton } from '../../FilterButton';
+import { Keyboard, Modal, TouchableWithoutFeedback, View } from 'react-native';
+import { FilterModal } from '../FilterModal';
 
 interface HeaderHistoryProps {
   favorite: boolean;
@@ -39,10 +40,11 @@ export function HeaderHistory({
   const [searchEntry, setSearchEntry] = useState('');
   
   function SearchInputSubmitTest() {
-    setSearchEntry('Sorvetao');
+    setSearchEntry('Input do Histórico funcionando');
   }
 
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
         <Header>
           <BackButton 
@@ -53,30 +55,31 @@ export function HeaderHistory({
 
         {!qrCodeDetails && 
         (
-          <>
-            <SearchContainer>
-
-              <SearchInput 
-                autoCorrect
-                autoCapitalize='none'
-                placeholder='Procurar'
-                placeholderTextColor={theme.colors.subtitle}
-                onChangeText={text => setSearchEntry(text)} 
-                onSubmitEditing={() => SearchInputSubmitTest()}
-                submitFunction={() => SearchInputSubmitTest()}
-                value={searchEntry}
-                returnKeyType='send'
-              />
+          <SearchContainer>
+                <SearchInput 
+                  autoCorrect
+                  autoCapitalize='none'
+                  placeholder='Procurar'
+                  placeholderTextColor={theme.colors.subtitle}
+                  onChangeText={text => setSearchEntry(text)} 
+                  onSubmitEditing={() => SearchInputSubmitTest()}
+                  submitFunction={() => SearchInputSubmitTest()}
+                  value={searchEntry}
+                  returnKeyType='send'
+                  />
 
               <OptionalButtonsContainer>
                 <FavoriteButton 
                   onPress={() => setFavorite()}
                   favorite={favorite}
-                />
+                  />
                 <FilterButton 
                   onPress={() => setModalVisible(!modalVisible)}
-                />
-                
+                  />
+              <Modal
+                visible={modalVisible}
+                transparent
+              >
                 <FilterModal
                   visible={modalVisible}
                   pressedOut={() => setModalVisible(!modalVisible)}
@@ -85,11 +88,14 @@ export function HeaderHistory({
                     setColorAndDate({ date, color })
                   }}
                 />
+              </Modal>
+
+
               </OptionalButtonsContainer>
             </SearchContainer >
-          </>
         )}
 
       </Container>
+      </TouchableWithoutFeedback>
   );
 }

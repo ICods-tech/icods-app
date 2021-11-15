@@ -5,6 +5,7 @@ import HeaderDashboardBackgroundImage from '../../../assets/images/background-he
 
 import { 
   Container, 
+  Gradient, 
   HeaderContainer, 
   HeaderDashboardBackground,
   HeaderDashboardImageContainer, 
@@ -30,37 +31,33 @@ const HeaderDashboard = ({
 }: HeaderProps) => {
   const [dropdownMenu, setDropdownMenu] = useState(false)
   return (
-    <Container>
-        <HeaderDashboardImageContainer>
-          <HeaderDashboardBackground 
-            source={HeaderDashboardBackgroundImage}
-          />
-        </HeaderDashboardImageContainer>
-        
-        <HeaderContainer>
-          
-          <HeaderUserInfoContainer>
-            {avatar
-              ? <></>
-              : <HeaderUserPhoto 
-                  source={profilePictureDashboard}
-                />
-            }
+    <Gradient>
+      <Container>
+          <HeaderContainer>
             
-            <HeaderUserNameContainer>
-              <HeaderUserNameText>{name ? name : 'Unknown'}</HeaderUserNameText>
-              <HeaderUserNameText>{surname ? surname : 'Surname'}</HeaderUserNameText>
-            </HeaderUserNameContainer>
-          
-          </HeaderUserInfoContainer>
+            <HeaderUserInfoContainer>
+              {avatar
+                ? <></>
+                : <HeaderUserPhoto 
+                    source={profilePictureDashboard}
+                    />
+                  }
+              
+              <HeaderUserNameContainer>
+                <HeaderUserNameText>{name ? name : 'Unknown'}</HeaderUserNameText>
+                <HeaderUserNameText>{surname ? surname : 'Surname'}</HeaderUserNameText>
+              </HeaderUserNameContainer>
+            
+            </HeaderUserInfoContainer>
 
-          <HeaderMenuButton 
-            onPress={ellipsisPressed}>
-            <EllipsisDashboard />
-          </HeaderMenuButton>
+            <HeaderMenuButton 
+              onPress={ellipsisPressed}>
+              <EllipsisDashboard />
+            </HeaderMenuButton>
 
-        </HeaderContainer>
-    </Container>
+          </HeaderContainer>
+      </Container>
+    </Gradient>
   )
 }
 

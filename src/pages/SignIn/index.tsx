@@ -158,7 +158,7 @@ const SignIn = () => {
                 <SpacingLine style={{ width: '40%' }}></SpacingLine>
               </SpacingContainer>
 
-              <LoginButtonContainer>
+              {/* <LoginButtonContainer>
                 <LoginSocialButton
                   title="Entrar com Google"
                   icon={GoogleIcon}
@@ -171,7 +171,7 @@ const SignIn = () => {
                   onPress={() => { }}
                 />
 
-              </LoginButtonContainer>
+              </LoginButtonContainer> */}
 
               <HelpContainer>
                 <HelpContainerTexts

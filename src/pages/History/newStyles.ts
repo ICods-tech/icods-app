@@ -102,8 +102,6 @@ export const NoResultsFoundText = styled.Text`
 export const NoResultsFoundDescriptionText = styled.Text`
     font-size: ${RFValue(16)}px;
     font-family: ${({theme}) => theme.fonts.semi_bold};
-
-
     color: ${({theme}) => theme.colors.text};
     text-align: center;
     letter-spacing: ${RFValue(0.5)}px;
