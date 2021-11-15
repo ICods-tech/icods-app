@@ -72,6 +72,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         </View>
         <View style={styles.colorContainer}>
           <Text style={styles.headersText}>Alterar cor</Text>
+          <View style={styles.colorIconsContainer}>
           <ColorsButtonList 
                 data={colorsIconsList}
                 keyExtractor={(item) => item.key}
@@ -90,6 +91,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
                 }
                 ItemSeparatorComponent={() => <Separator />}
               />
+              </View> 
           {/* <View style={styles.colorIconsContainer}>
             {colorsIconsList.map(color => {
               const {key, icon: Icon} = color;
