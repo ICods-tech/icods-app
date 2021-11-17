@@ -154,11 +154,7 @@ export function FilterModal({
             selectedMonthTextStyle={(selectedDate === undefined)
               ? calendarStyles.monthText
               : calendarStyles.selectedMonth}
-            currentMonthTextStyle={
-                (selectedDate === undefined)
-                ? calendarStyles.selectedMonth
-                : calendarStyles.monthText
-            }
+            currentMonthTextStyle={calendarStyles.monthText}
             onMonthTapped={(date: Moment) => setSelectedDate(date)} 
           />
 

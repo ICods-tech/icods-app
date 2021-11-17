@@ -15,7 +15,6 @@ import ButtonAuthentication from '../../components/Button';
 import Toast from 'react-native-toast-message';
 import { Colors } from '../../interfaces/colors';
 import { ColorButton, ColorsButtonList, Separator } from './newStyles';
-import Header from '../../components/Header';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -52,13 +51,20 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   }, [updatedFavorite])
 
   const handleChangeQRCodeColor = useCallback(async (color: Colors) => {
-    await api.patch(`received_qrcode/color/${id}`, { color })
+    await api.patch(`received_qrcode/color/${id}`, {
+      color: (color === 'noFilter') ? 'noColor' : color
+    })
     setUpdatedColor(color)
   }, [updatedColor])
 
   return (
     <SafeAreaView style={styles.background}>
-      <Header page="Detalhes" navigate="back" />
+      <HeaderHistory
+        favorite={false}
+        qrCodeDetails={true}
+        setFavorite={() => { }}
+        setColorAndDate={() => { }}
+      />
       <View style={styles.container}>
         <View style={styles.codeContainer}>
           <Text style={styles.headersText}>iCOD {id.substr(id.length - 8)}</Text>

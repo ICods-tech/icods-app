@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
   },
   colorIconsContainer: {
     display: 'flex',
-    width: 230,
+    marginLeft: 20,
+    width: 260,
     flexDirection: 'row',
     justifyContent: 'space-evenly'
   },
