@@ -19,8 +19,12 @@ const Header = ({page, navigate, color, isVideoPlayer}: HeaderProps): JSX.Elemen
     <View style={[styles.container]}>
       <TouchableOpacity
         onPress={() => {
-          console.log(`To indo: ${navigate}`);
-          navigation.navigate(`${navigate}`);
+          if (navigate === 'back') {
+            navigation.goBack();
+          } else {
+            console.log(`To indo: ${navigate}`);
+            navigation.navigate(`${navigate}`);
+          }
         }}>
         {isVideoPlayer ? <BackButtonWhite/> : <BackButton /> }
       </TouchableOpacity>

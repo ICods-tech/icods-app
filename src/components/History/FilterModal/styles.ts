@@ -9,15 +9,15 @@ import Yellow from '../../../assets/images/Icons/colors/yellow.svg'
 import NoColor from '../../../assets/images/Icons/colors/none.svg'
 import { colorsIconsProps } from '.';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { Dimensions, FlatList } from 'react-native';
+import { Dimensions, FlatList, StyleSheet } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 
-export const Container =  styled.View``;
+export const Container = styled.View``;
 
 export const ModalContainer = styled.View`
-    width: ${RFValue(308)}px;
-    height: ${RFValue(416)}px;
-    background-color: ${({theme}) => theme.colors.shape};
+    width: ${RFValue(320)}px;
+    height: ${RFValue(460)}px;
+    background-color: ${({ theme }) => theme.colors.shape};
 
     justify-content: center;
     border-radius: 8px;
@@ -26,35 +26,34 @@ export const ModalContainer = styled.View`
 export const ColorsContainer = styled.View`
     align-items: center;
     justify-content: center;
-
-    margin-top: ${RFValue(50)}px; 
-    margin-bottom: ${RFValue(28)}px;
+    margin-top: ${RFValue(36)}px; 
+    margin-bottom: ${RFValue(12)}px;
 `;
 
 export const ColorOrderContainer = styled.View`
-    margin-bottom: ${RFValue(28)}px;
+    margin-bottom: ${RFValue(24)}px;
 `;
 
 export const ColorOrderText = styled.Text`
-    font-family: ${({theme}) => theme.fonts.extra_bold};
+    font-family: ${({ theme }) => theme.fonts.extra_bold};
     font-size: ${RFValue(16)}px;
 
-    color: ${({theme}) => theme.colors.title};
-    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    color: ${({ theme }) => theme.colors.title};
+    letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 
 export const ColorsButtonList = styled(
-    FlatList as new () => FlatList<colorsIconsProps>
-    ).attrs({
-        showsHorizontalScrollIndicator: false,
-        horizontal: true,
+  FlatList as new () => FlatList<colorsIconsProps>
+).attrs({
+  showsHorizontalScrollIndicator: false,
+  horizontal: true,
 })``;
 
 
 
 interface ColorButtonProps {
-    selectedColor: Colors;
-    color: Colors;
+  selectedColor: Colors;
+  color: Colors;
 }
 
 export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
@@ -62,13 +61,13 @@ export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
     height: ${RFValue(16)}px;
     align-items: center;
     justify-content: center;
-    ${({selectedColor, color}) => selectedColor === color && css`
+    ${({ selectedColor, color }) => selectedColor === color && css`
         width: ${RFValue(20)}px;
         height: ${RFValue(20)}px;
         padding: ${RFValue(10)}px ${RFValue(10)}px;
         border-width: ${RFValue(2)}px;
         border-radius: ${RFValue(4)}px;
-        border-color: ${({theme}) => theme.colors.title};
+        border-color: ${({ theme }) => theme.colors.title};
     `};
 `;
 
@@ -86,14 +85,14 @@ export const DataContainer = styled.View`
 
 export const DataText = styled.Text`
     font-size: ${RFValue(16)}px;
-    font-family: ${({theme}) => theme.fonts.extra_bold};
-    color: ${({theme}) => theme.colors.title};
-    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    font-family: ${({ theme }) => theme.fonts.extra_bold};
+    color: ${({ theme }) => theme.colors.title};
+    letter-spacing: ${Dimensions.get('window').width * 0.002}px;
     margin-bottom: ${RFValue(28)}px;
 `;
 
 export const SubmitButton = styled.TouchableOpacity`
-    background-color: ${({theme}) => theme.colors.primary};
+    background-color: ${({ theme }) => theme.colors.primary};
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -103,12 +102,11 @@ export const SubmitButton = styled.TouchableOpacity`
 `;
 
 export const SubmitButtonText = styled.Text`
-    font-family: ${({theme}) => theme.fonts.bold};
+    font-family: ${({ theme }) => theme.fonts.bold};
     font-size: ${RFValue(14)}px;
-    color: ${({theme}) => theme.colors.shape};
-    letter-spacing: ${Dimensions.get('window').width*0.001}px;
+    color: ${({ theme }) => theme.colors.shape};
+    letter-spacing: ${Dimensions.get('window').width * 0.001}px;
 `;
-
 
 export const Footer = styled.View`
     flex: 1;
@@ -131,63 +129,85 @@ export const BottomButton = styled.TouchableOpacity`
 
 export const ModalConfirmButtonText = styled.Text`
     text-transform: uppercase;
-    font-family: ${({theme}) => theme.fonts.medium};
+    font-family: ${({ theme }) => theme.fonts.medium};
     font-size: ${RFValue(14)}px;
-    letter-spacing: ${Dimensions.get('window').width*0.001}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.001}px;
     
-    color: ${({theme}) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const ModalCancelButtonText = styled.Text`
     text-transform: uppercase;
-    font-family: ${({theme}) => theme.fonts.medium};
+    font-family: ${({ theme }) => theme.fonts.medium};
     font-size: ${RFValue(14)}px;
-    letter-spacing: ${Dimensions.get('window').width*0.001}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.001}px;
     
-    color: ${({theme}) => theme.colors.secundary};
-`;
-
-export const CalendarContainer = styled.View`
-    opacity: 1;
-    align-self: flex-start;
+    color: ${({ theme }) => theme.colors.attention};
 `;
 
 export const BlackIcon = styled(Black).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
 
 export const BlueIcon = styled(Blue).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
 
 export const CyanIcon = styled(Cyan).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
 
 export const GreenIcon = styled(Green).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
 
 export const RedIcon = styled(Red).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
 
 export const PinkIcon = styled(Pink).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
 
 export const YellowIcon = styled(Yellow).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
 
 export const NoColorIcon = styled(NoColor).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
+
+export const calendarStyles = StyleSheet.create({
+  calendarContainer: {
+    display: 'flex',
+    width: 240,
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  calendarText: {
+    fontSize: 14,
+    fontFamily: 'Manrope'
+  },
+  selectedMonth: {
+    fontSize: 18,
+    fontFamily: 'Manrope',
+    color: '#2B90D9'
+  },
+  monthText: {
+    fontSize: 14,
+    fontFamily: 'Manrope',
+    color: '#000'
+  },
+  arrowCalendar: {
+    fontSize: 20
+  }
+});

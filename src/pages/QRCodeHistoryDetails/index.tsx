@@ -15,6 +15,7 @@ import ButtonAuthentication from '../../components/Button';
 import Toast from 'react-native-toast-message';
 import { Colors } from '../../interfaces/colors';
 import { ColorButton, ColorsButtonList, Separator } from './newStyles';
+import Header from '../../components/Header';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -57,12 +58,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
 
   return (
     <SafeAreaView style={styles.background}>
-      <HeaderHistory
-        favorite={false}
-        qrCodeDetails={true}
-        setFavorite={() => { }}
-        setColorAndDate={() => { }}
-      />
+      <Header page="Detalhes" navigate="back" />
       <View style={styles.container}>
         <View style={styles.codeContainer}>
           <Text style={styles.headersText}>iCOD {id.substr(id.length - 8)}</Text>

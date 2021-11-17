@@ -54,6 +54,10 @@ const History = () => {
   }
 
   const loadQRCodes = useCallback(async () => {
+    console.log('I am being loaded with the following data')
+    console.log('Color', color)
+    console.log('Month', selectedDate?.getMonth())
+    console.log('Year', selectedDate?.getFullYear())
     const response = await api.get('filtered_qrcodes/data', {
       params: {
         color,

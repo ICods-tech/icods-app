@@ -84,13 +84,12 @@ export function HeaderHistory({
                   visible={modalVisible}
                   pressedOut={() => setModalVisible(!modalVisible)}
                   confirmedFilter={async ({ date, color }) => {
+                    
                     setModalVisible(false)
                     setColorAndDate({ date, color })
                   }}
                 />
               </Modal>
-
-
               </OptionalButtonsContainer>
             </SearchContainer >
         )}
