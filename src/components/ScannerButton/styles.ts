@@ -23,7 +23,6 @@ export const Title = styled.Text<ButtonSelectedProps>`
     font-family: ${({theme}) => theme.fonts.light};
     
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
-    /* background-color: cyan; */
     ${({selected}) => selected && 
     css`
         color: ${({theme}) => theme.colors.primary};

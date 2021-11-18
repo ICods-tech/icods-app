@@ -9,8 +9,8 @@ export const Container = styled.View`
     align-items: center;
 
     height: ${RFValue(47)}px;
-    width: ${RFValue(240)}px;
-
+    /* width: ${RFValue(240)}px; */
+    width: ${Dimensions.get('window').width*0.6}px;
     border-radius: ${RFValue(8)}px;
     background-color: ${({theme}) => theme.colors.cloudly};
 `;
