@@ -57,7 +57,7 @@ const Routes: React.FC = () => {
                 <App.Screen name='Scanner' component={ Scanner } />
                 <App.Screen name='VideoPlayer' component={ VideoPlayer } />
                 <App.Screen name='GiftOpen' component={ GiftOpen } />
-                <App.Screen name='ConnectionProblems' component={ConnectionProblems} />
+                <App.Screen name='ConnectionProblems' component={ ConnectionProblems } />
             </>
           )
       }

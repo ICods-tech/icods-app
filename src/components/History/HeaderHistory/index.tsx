@@ -48,7 +48,7 @@ export function HeaderHistory({
       <Container>
         <Header>
           <BackButton 
-            navigationTo='Dashboard'
+            navigationTo={qrCodeDetails ? 'History' : 'Dashboard'}
           />
           <Title>Histórico</Title>
         </Header>
@@ -84,13 +84,12 @@ export function HeaderHistory({
                   visible={modalVisible}
                   pressedOut={() => setModalVisible(!modalVisible)}
                   confirmedFilter={async ({ date, color }) => {
+                    
                     setModalVisible(false)
                     setColorAndDate({ date, color })
                   }}
                 />
               </Modal>
-
-
               </OptionalButtonsContainer>
             </SearchContainer >
         )}

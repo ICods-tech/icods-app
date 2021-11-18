@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
-import DatePicker from 'react-native-date-picker';
-import MonthPicker from 'react-native-month-year-picker';
 import { 
   Container, 
   Footer, 
@@ -27,9 +25,12 @@ import {
   DataText,
   SubmitButton,
   SubmitButtonText,
-  CalendarContainer
+  calendarStyles
 } from './styles';
 import { SvgProps } from 'react-native-svg';
+import MonthSelectorCalendar from 'react-native-month-selector'; 
+import moment, { Moment } from 'moment';
+import { Text } from 'react-native';
 
 interface ModalInterface {
   visible: boolean,
@@ -89,14 +90,14 @@ export const colorsIconsList = [
   }
 ]
 
-export function FilterModal(
-  { visible, 
+export function FilterModal({
+    visible, 
     pressedOut, 
     confirmedFilter 
   }: ModalInterface){
   const [selectedColor, setSelectedColor] = useState<Colors>('noFilter')
   const [calendarVisible, setCalendarVisible] = useState(false)
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined) 
+  const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
 
   function handleOpenCalendar(){
     setCalendarVisible(true)
@@ -141,17 +142,21 @@ export function FilterModal(
 
           </ColorsContainer>
 
-          <DataContainer>
-            <DataText>Ordenar por data</DataText>
-
-            <SubmitButton
-              onPress={() => {
-                setCalendarVisible(!calendarVisible)
-              }}
-            > 
-              <SubmitButtonText>Escolher Data</SubmitButtonText>
-            </SubmitButton>
-          </DataContainer>
+          <MonthSelectorCalendar
+            selectedDate={selectedDate}
+            currentDate={undefined}
+            containerStyle={calendarStyles.calendarContainer}
+            minDate={moment(new Date(2020, 0, 1))}
+            nextIcon={<Text style={calendarStyles.arrowCalendar}>{'>'}</Text>}
+            prevIcon={<Text style={calendarStyles.arrowCalendar}>{'<'}</Text>}
+            seperatorColor={'#2B90D9'}
+            selectedBackgroundColor={'#fff'}
+            selectedMonthTextStyle={(selectedDate === undefined)
+              ? calendarStyles.monthText
+              : calendarStyles.selectedMonth}
+            currentMonthTextStyle={calendarStyles.monthText}
+            onMonthTapped={(date: Moment) => setSelectedDate(date)} 
+          />
 
           <Footer>
             <BottomButton 
@@ -165,18 +170,18 @@ export function FilterModal(
             <BottomButton
               onPress={() => {
                 handleCloseCalendar()
+                setSelectedDate(undefined)
                 confirmedFilter({
-                  date: selectedDate,
+                  date: selectedDate?.toDate(),
                   color: selectedColor
                 })
-                setSelectedDate(undefined)
               }}
               >
               <ModalConfirmButtonText>confirmar</ModalConfirmButtonText>
             </BottomButton>
           </Footer>
         </ModalContainer>
-              {calendarVisible && (
+              {/* {calendarVisible && (
                 <CalendarContainer>
                   <MonthPicker
                     okButton="Filtrar pelo mês"
@@ -189,7 +194,7 @@ export function FilterModal(
                     locale="pt-BR"
                   />
                 </CalendarContainer>
-              )}
+              )} */}
       </Modal>
     </Container>
   )

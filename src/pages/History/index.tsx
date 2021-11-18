@@ -162,7 +162,7 @@ const History = () => {
                 
                 <ScrollView style={{ height: qrcode[date].length > 1 ? 286 : 170, marginBottom: 12 }}>
                   {qrcode[date].map(
-                    ({ id, color, comparisonDate, favorited, qrCodeCreatorName, content }) => (
+                    ({ id, color, comparisonDate, favorited, qrCodeCreatorName, link, content }) => (
                       <>
                         <Swipeable
                           key={id}
@@ -180,6 +180,7 @@ const History = () => {
                             creator={qrCodeCreatorName}
                             date={formattedDate(new Date(comparisonDate))}
                             color={color}
+                            link={link}
                             favorite={favorited}
                             privacy="Público"
                           />
@@ -202,9 +203,7 @@ const History = () => {
               )
           })}
         </QRCodeList>
-
       </Content>
-
       <LoggedFooter
         isHistory={true}
       />
