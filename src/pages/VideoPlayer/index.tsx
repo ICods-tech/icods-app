@@ -4,17 +4,17 @@ import { Container, IconsContainer, VideoContainer } from './styles';
 import VideoPlayerFooter from '../../components/VideoPlayer/VideoPlayerFooter';
 import { useAuth } from '../../hooks/auth';
 import Header from '../../components/Header';
+import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
 
-const VideoPlayer = ( { route, _ }: any ) =>
-{
-  const {user} = useAuth();
-
+const VideoPlayer = ( { route, _ }: any ) => {
+  const { user } = useAuth();
   const { qrcode } = route.params;
+  console.log('oier ', qrcode.link)
   const url = 'https://bucket-nodejs.s3.amazonaws.com/LOGOVETOR_1.mp4';
 
   return (
     <Container>
-      <Header page="" navigate={ user ? 'Dashboard' : 'SignIn' } color="#FFFFFF" isVideoPlayer/>
+      <Header page="" navigate={'back'} color="#FFFFFF" isVideoPlayer/>
       <VideoContainer>
         <Video 
           video={{ uri: qrcode.link ? qrcode.link : url}}
@@ -29,12 +29,9 @@ const VideoPlayer = ( { route, _ }: any ) =>
           }}
         />
       </VideoContainer>
-
       <IconsContainer>
         <VideoPlayerFooter url={ qrcode.link ? qrcode.link : url } />
       </IconsContainer>
-
-
     </Container>
   );
 }

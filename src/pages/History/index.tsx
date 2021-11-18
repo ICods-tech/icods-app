@@ -144,7 +144,7 @@ const History = () => {
           }}
           renderItem={({item}) => {
             const [date] = Object.keys(item)
-            if (date !== '0'){
+            if (date !== '0' && date !== null && date !== undefined) {
               return (
                 <>
                   <QRCodeTitleContainer>
@@ -159,7 +159,7 @@ const History = () => {
                     data={item[date]}
                     keyExtractor={(item) => item.id}
                     renderItem={({item}) => {
-                      const { id, color, content, comparisonDate, favorited, qrCodeCreatorName  } = item
+                      const { id, color, content, comparisonDate, favorited, qrCodeCreatorName, link  } = item
                       return(
                         <>
                           <Swipeable
@@ -178,6 +178,7 @@ const History = () => {
                               creator={qrCodeCreatorName}
                               date={formattedDate(new Date(comparisonDate))}
                               color={color}
+                              link={link}
                               favorite={favorited}
                               privacy="Público"
                             />
@@ -188,7 +189,7 @@ const History = () => {
                   }                  
                   />
                 </>
-              )} else if (date === '0'){
+              )} else{
                   return (
                     <NotFountContainer>
                       <LargeSearchIcon />
@@ -199,11 +200,10 @@ const History = () => {
                       </NoResultsFoundDescriptionText>
                     </NotFountContainer>
                   )
-              } else return (<></>);
+              };
           }}
         />
       </Content>
-
       <LoggedFooter
         isHistory={true}
       />

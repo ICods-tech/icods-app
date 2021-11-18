@@ -152,7 +152,6 @@ const SignIn = () => {
                 onPress={() => handleLogin()}
                 text='Entrar'
               />
-
               <SpacingContainer>
                 <SpacingLine style={{ width: '40%' }}></SpacingLine>
                 <SpacingText>Ou</SpacingText>
