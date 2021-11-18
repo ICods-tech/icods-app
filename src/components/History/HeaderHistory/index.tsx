@@ -48,7 +48,7 @@ export function HeaderHistory({
       <Container>
         <Header>
           <BackButton 
-            navigationTo='Dashboard'
+            navigationTo={qrCodeDetails ? 'History' : 'Dashboard'}
           />
           <Title>Histórico</Title>
         </Header>

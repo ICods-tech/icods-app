@@ -15,6 +15,7 @@ import ButtonAuthentication from '../../components/Button';
 import Toast from 'react-native-toast-message';
 import { Colors } from '../../interfaces/colors';
 import { ColorButton, ColorsButtonList, Separator } from './newStyles';
+import { useNavigation } from '@react-navigation/native';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -28,26 +29,29 @@ interface RouteParams {
       id: string,
       color: Colors,
       favorite: boolean,
-      creator: string
+      creator: string,
+      link: string
     }
   }
 }
 
 const QRCodeHistoryDetails = ({ route }: RouteParams) => {
-  const { id, color, creator, favorite } = route.params
+  const navigation = useNavigation()
+  const { id, color, creator, favorite, link } = route.params
   const [updatedFavorite, setUpdatedFavorite] = useState<boolean>(favorite)
   const [updatedColor, setUpdatedColor] = useState<Colors>(color)
 
   const handleFavoriteQRCode = useCallback(async (id: string) => {
+    console.log('oiii, eu to aqui??')
     await api.patch(`received_qrcode/favorite/${id}`)
     setUpdatedFavorite(!updatedFavorite)
-    !updatedFavorite && Toast.show({
-      type: 'success',
-      position: 'bottom',
-      text1: 'Você curtiu o iCod',
-      visibilityTime: 1200,
-      bottomOffset: 100,
-    })
+    // !updatedFavorite && Toast.show({
+    //   type: 'success',
+    //   position: 'bottom',
+    //   text1: 'Você curtiu o iCod',
+    //   visibilityTime: 1200,
+    //   bottomOffset: 100,
+    // })
   }, [updatedFavorite])
 
   const handleChangeQRCodeColor = useCallback(async (color: Colors) => {
@@ -117,7 +121,13 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
           height: creator === 'Você' ? 90 : 140,
         }}>
           <ButtonAuthentication
-            pressed={() => { }}
+            pressed={() => {
+              navigation.navigate('VideoPlayer', {
+                qrcode: {
+                  link
+                }
+              })
+            }}
             text="Visualizar Conteúdo"
             icon={<PlayIcon style={{ marginRight: 8 }} />}
           />
