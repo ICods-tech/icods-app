@@ -31,17 +31,12 @@ const ModalMoreDashboard = ({
 }: ModalInterface) => {
   return (
     <Modal
-      style={visible ? styles.dropdownStyle : { display: 'none' }}
+      style={styles.dropdownStyle}
       animationIn={"fadeIn"}
       animationOut={"fadeOut"}
       isVisible={visible}
       onBackdropPress={pressedOut}
     >
-      <TouchableOpacity
-        activeOpacity={1}
-        onPressOut={() => { console.log('oe') }}
-      >
-        <TouchableWithoutFeedback>
           <View >
             <TouchableOpacity style={styles.dropdownEdgeOptions} onPress={profilePage}>
               <UserIcon 
@@ -65,8 +60,6 @@ const ModalMoreDashboard = ({
               <Text style={styles.dropdownOptionsText}>Sair</Text>
             </TouchableOpacity>
           </View>
-        </TouchableWithoutFeedback>
-      </TouchableOpacity>
     </Modal>
   )
 }

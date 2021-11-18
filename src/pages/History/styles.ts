@@ -75,8 +75,7 @@ export const FavoritedButton = styled.TouchableOpacity`
 export const FavoriteCardButtonIcon = styled(FavoriteCardButton).attrs({
     width: RFValue(45),
     height: RFValue(45),
-})`
-`;
+})``;
 
 export const NotFavoritedCardButtonIcon = styled(NotFavoritedCardButton).attrs({
     width: RFValue(45),
