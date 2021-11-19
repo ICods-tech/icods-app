@@ -48,7 +48,6 @@ const Dashboard = () => {
 
   return (
     <Container>
-
       <Header>
         <HeaderDashboard
           name={name}
@@ -105,7 +104,7 @@ const Dashboard = () => {
           <HighlightButton 
             text='Social'
             icon={SocialIcon}
-            onPress={() => navigation.navigate('Working')}
+            onPress={() => navigation.navigate('Working', { type: 'Social' })}
             />
         </HighlightButtonList>  
       </HightLightListContainer>  
