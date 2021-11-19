@@ -20,8 +20,9 @@ interface ContentProps{
 export const Button = styled(RectButton)`
     height: ${RFValue(128)}px;
     width: 100%;
-    background-color: ${({ theme }) => theme.colors.shape};
+    /* background-color: ${({ theme }) => theme.colors.shape}; */
     justify-content: center;
+    /* background-color: gray; */
 `;
 
 export const Container = styled.View<ContentProps>`
@@ -34,15 +35,24 @@ export const Container = styled.View<ContentProps>`
     ? 0 : RFValue(10)}px;
 
     align-items: center;
-    /* justify-content: center; */
+    /* background-color: green; */
 `;
 
 export const Content = styled.View`
     flex-direction: row;
+    flex: 1;
+    align-items: center;
+    margin-left: ${RFValue(11)}px;
+    /* background-color: red; */
+`; 
+
+export const MainContainer = styled.View`
+    flex: 1;
+    flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-left: ${RFValue(11)}px;
-`; 
+    /* background-color: cyan; */
+`;
 
 export const QRCodeInfo = styled.View`
     margin-left: ${RFValue(16)}px;
@@ -66,7 +76,8 @@ export const QRCodePrivacyText = styled.Text`
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
 `;
 
-export const QRCodeCardOptions = styled.View``;
+export const QRCodeCardOptions = styled.View`
+`;
 
 export const Favorited = styled(HeartIcon).attrs({
     width: RFValue(16),

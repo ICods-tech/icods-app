@@ -47,7 +47,10 @@ export const ColorsButtonList = styled(
 ).attrs({
   showsHorizontalScrollIndicator: false,
   horizontal: true,
-})``;
+})`
+  height: ${RFValue(50)}px;
+  Width: 100%;
+`;
 
 
 
@@ -57,14 +60,13 @@ interface ColorButtonProps {
 }
 
 export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
-    width: ${RFValue(16)}px;
-    height: ${RFValue(16)}px;
+    width: ${RFValue(24)}px;
+    height: ${RFValue(24)}px;
     align-items: center;
     justify-content: center;
     ${({ selectedColor, color }) => selectedColor === color && css`
-        width: ${RFValue(20)}px;
-        height: ${RFValue(20)}px;
-        padding: ${RFValue(10)}px ${RFValue(10)}px;
+        width: ${RFValue(32)}px;
+        height: ${RFValue(32)}px;
         border-width: ${RFValue(2)}px;
         border-radius: ${RFValue(4)}px;
         border-color: ${({ theme }) => theme.colors.title};
@@ -72,9 +74,8 @@ export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
 `;
 
 export const Separator = styled.View`
-    width: ${RFValue(14)}px;
-    height: 100%;
-    background-color: white;
+    width: ${RFValue(8)}px;
+    height: ${RFValue(24)}px;
 `;
 
 export const DataContainer = styled.View`
@@ -146,43 +147,43 @@ export const ModalCancelButtonText = styled.Text`
 `;
 
 export const BlackIcon = styled(Black).attrs({
-  width: RFValue(16),
-  height: RFValue(16),
+  width: RFValue(24),
+  height: RFValue(24),
 })``;
 
 export const BlueIcon = styled(Blue).attrs({
-  width: RFValue(16),
-  height: RFValue(16),
+  width: RFValue(24),
+  height: RFValue(24),
 })``;
 
 export const CyanIcon = styled(Cyan).attrs({
-  width: RFValue(16),
-  height: RFValue(16),
+  width: RFValue(24),
+  height: RFValue(24),
 })``;
 
 export const GreenIcon = styled(Green).attrs({
-  width: RFValue(16),
-  height: RFValue(16),
+  width: RFValue(24),
+  height: RFValue(24),
 })``;
 
 export const RedIcon = styled(Red).attrs({
-  width: RFValue(16),
-  height: RFValue(16),
+  width: RFValue(24),
+  height: RFValue(24),
 })``;
 
 export const PinkIcon = styled(Pink).attrs({
-  width: RFValue(16),
-  height: RFValue(16),
+  width: RFValue(24),
+  height: RFValue(24),
 })``;
 
 export const YellowIcon = styled(Yellow).attrs({
-  width: RFValue(16),
-  height: RFValue(16),
+  width: RFValue(24),
+  height: RFValue(24),
 })``;
 
 export const NoColorIcon = styled(NoColor).attrs({
-  width: RFValue(16),
-  height: RFValue(16),
+  width: RFValue(24),
+  height: RFValue(24),
 })``;
 
 export const calendarStyles = StyleSheet.create({

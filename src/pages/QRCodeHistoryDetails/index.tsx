@@ -98,21 +98,6 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
                 ItemSeparatorComponent={() => <Separator />}
               />
               </View> 
-          {/* <View style={styles.colorIconsContainer}>
-            {colorsIconsList.map(color => {
-              const {key, icon: Icon} = color;
-              return (
-                <TouchableOpacity
-                  onPress={() => { handleChangeQRCodeColor(key as Colors) }}
-                  style={(
-                    (updatedColor == key)
-                    || (updatedColor == 'noColor' && key === 'noFilter')) && styles.selectedColor}
-                >
-                  {Icon}
-                </TouchableOpacity>
-              )
-            })}
-          </View> */}
         </View>
         <View style={{
           marginTop: 36,

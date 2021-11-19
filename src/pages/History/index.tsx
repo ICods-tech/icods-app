@@ -1,30 +1,34 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import api from '../../services/api';
-import FavoriteCardButton from '../../assets/images/Icons/favorite_qrcode_card.svg'
-import NotFavoritedCardButton from '../../assets/images/Icons/notFavorited_qrcode_card.svg'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import TrashQRCodeIcon from '../../assets/images/Icons/trash_qrcode_card.svg'
-import styles from './styles';
-import { View, SafeAreaView, ScrollView, Animated, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Animated } from 'react-native';
 import { 
   CloudContainer, 
   CloudLeftLarge, 
   CloudRightSmall, 
   Container, 
   Content, 
+  DeleteButton, 
+  DeleteButtonIcon, 
+  FavoriteCardButtonIcon, 
+  FavoritedButton, 
   LargeSearchIcon, 
   NoResultsFoundDescriptionText, 
   NoResultsFoundText, 
+  NotFavoritedCardButtonIcon, 
   NotFountContainer, 
+  QRCodeDateList, 
   QRCodeList, 
+  QRCodeOptionsContainer, 
   QRCodeTitleContainer, 
   QRCodeTitleDate
-} from './newStyles';
+} from './styles';
 import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
 import { HistoryCards } from '../../components/History/HistoryCards';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
 import LoggedFooter  from '../../components/LoggedFooter';
 import formattedDate from '../../utils/formatDates';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export interface FilteredQRCodes {
   id: string,
@@ -39,16 +43,15 @@ export interface FilteredQRCodes {
 }
 
 export interface FilteredQRCodesByDate {
-  [date: string]: FilteredQRCodes[] | []
+  [date: string]: FilteredQRCodes[];
 }
-
 
 const History = () => {
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(filteredQRCodesByDatePlaceholder)
   const [color, setColor] = useState<string>('noFilter')
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>(false)
-
+  // console.log('lista', qrCodes);
   function handleFavoriteFilter() {
     setFavoriteFilter(!favoriteFilter);
   }
@@ -64,7 +67,6 @@ const History = () => {
     })
     setQRCodes(response.data.data)
   }, [qrCodes])
-
   const handleFavoriteQRCodes = useCallback(async (id: string) => {
     await api.patch(`received_qrcode/favorite/${id}`)
   }, [])
@@ -81,13 +83,13 @@ const History = () => {
     favorited: boolean
     ) => {
     const scale = dragX.interpolate({
-      inputRange: qrCodeBelongsToUser ? [-120, 0] : [-90, 0],
+      inputRange: qrCodeBelongsToUser ? [-RFValue(120), 0] : [-RFValue(90), 0],
       outputRange: qrCodeBelongsToUser ? [2, 0] : [0.8, 0]
     })
     return (
-      <View style={styles.iconsCardContainer}>
+      <QRCodeOptionsContainer>
         {!qrCodeBelongsToUser && (
-          <View>
+          <>
             <Animated.Text
               style={{
                 transform: [{ scale }],
@@ -95,39 +97,28 @@ const History = () => {
                 alignItems: 'center',
                 justifyContent: 'center'
               }}>
-              <TouchableOpacity onPress={() => handleFavoriteQRCodes(id)}>
+              <FavoritedButton 
+                onPress={() => handleFavoriteQRCodes(id)}
+                activeOpacity={0.8}
+                >
                 {
                   favorited
-                    ? (<FavoriteCardButton style={{
-                      shadowOffset: { width: 1, height: 2, },
-                      shadowColor: 'rgba(0, 0, 0, 0.25)',
-                      shadowOpacity: 1.0,
-                    }} />)
-                    : (<NotFavoritedCardButton style={{
-                      shadowOffset: { width: 1, height: 2, },
-                      shadowColor: 'rgba(0, 0, 0, 0.25)',
-                      shadowOpacity: 1.0,
-                    }} />)
+                    ? (<FavoriteCardButtonIcon  />)
+                    : (<NotFavoritedCardButtonIcon />)
                 }
-              </TouchableOpacity>
+              </FavoritedButton>
             </Animated.Text>
-          </View>
+          </>
         )}
-        <View>
-          <TouchableOpacity>
+          <DeleteButton>
             <Animated.Text
               style={{
                 transform: [{ scale }]
               }}>
-              <TrashQRCodeIcon style={{
-                shadowOffset: { width: 1, height: 2, },
-                shadowColor: 'rgba(0, 0, 0, 0.25)',
-                shadowOpacity: 1.0,
-              }} />
+              <DeleteButtonIcon />
             </Animated.Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+          </DeleteButton>
+      </QRCodeOptionsContainer>
     )
   }
 
@@ -136,7 +127,7 @@ const History = () => {
       <Container>
       <HeaderHistory
         setColorAndDate={({ date, color: filteredColor }) => {
-          console.log({ color, date })
+          // console.log({ color, date })
           setColor(filteredColor)
           setSelectedDate(date)
         }}
@@ -145,64 +136,73 @@ const History = () => {
       />
       
       <Content>
-
-        <QRCodeList>
-          {qrCodes?.map((qrcode: FilteredQRCodesByDate, idx: number) => {
-            const [date] = Object.keys(qrcode)
-            if (date !== '0')
+        <QRCodeDateList
+          data={qrCodes}
+          keyExtractor={(item) => {
+            const [date] = Object.keys(item)
+            return date;
+          }}
+          renderItem={({item}) => {
+            const [date] = Object.keys(item)
+            if (date !== '0' && date !== null && date !== undefined) {
               return (
-              <>
-                <QRCodeTitleContainer>
-                  <QRCodeTitleDate>{date}</QRCodeTitleDate>
-                  <CloudContainer>
-                    <CloudLeftLarge/>
-                    <CloudRightSmall/>
-                  </CloudContainer>
-                </QRCodeTitleContainer>
-                
-                <ScrollView style={{ height: qrcode[date].length > 1 ? 286 : 170, marginBottom: 12 }}>
-                  {qrcode[date].map(
-                    ({ id, color, comparisonDate, favorited, qrCodeCreatorName, link, content }) => (
-                      <>
-                        <Swipeable
-                          key={id}
-                          renderRightActions={(progress: any, dragX: any) => RightActions(
-                            progress,
-                            dragX,
-                            id,
-                            qrCodeCreatorName === 'Você',
-                            favorited
-                          )}
-                        >
-                          <HistoryCards
+                <>
+                  <QRCodeTitleContainer>
+                    <QRCodeTitleDate>{date}</QRCodeTitleDate>
+                    <CloudContainer>
+                      <CloudLeftLarge/>
+                      <CloudRightSmall/>
+                    </CloudContainer>
+                  </QRCodeTitleContainer>
+                  
+                  <QRCodeList 
+                    data={item[date]}
+                    keyExtractor={(item) => item.id}
+                    renderItem={({item}) => {
+                      const { id, color, content, comparisonDate, favorited, qrCodeCreatorName, link  } = item
+                      return(
+                        <>
+                          <Swipeable
                             key={id}
-                            id={id}
-                            creator={qrCodeCreatorName}
-                            date={formattedDate(new Date(comparisonDate))}
-                            color={color}
-                            link={link}
-                            favorite={favorited}
-                            privacy="Público"
-                          />
-                        </Swipeable>
-                      </>
-                    ))
-                  }
-                </ScrollView>
-              </>)
-            else if (date === '0')
-              return (
-              <NotFountContainer key={0}>
-                <LargeSearchIcon />
-                <NoResultsFoundText>Nenhum resultado obtido</NoResultsFoundText>
-                <NoResultsFoundDescriptionText>
-                  Tente realizar uma filtragem mais
-                  específica dos iCods 
-                </NoResultsFoundDescriptionText>
-              </NotFountContainer>
-              )
-          })}
-        </QRCodeList>
+                            renderRightActions={(progress: any, dragX: any) => RightActions(
+                              progress,
+                              dragX,
+                              id,
+                              qrCodeCreatorName === 'Você',
+                              favorited
+                            )}
+                          >
+                            <HistoryCards
+                              key={id}
+                              id={id}
+                              creator={qrCodeCreatorName}
+                              date={formattedDate(new Date(comparisonDate))}
+                              color={color}
+                              link={link}
+                              favorite={favorited}
+                              privacy="Público"
+                            />
+                          </Swipeable>
+                        </>
+                      )
+                    }    
+                  }                  
+                  />
+                </>
+              )} else{
+                  return (
+                    <NotFountContainer>
+                      <LargeSearchIcon />
+                      <NoResultsFoundText>Nenhum resultado obtido</NoResultsFoundText>
+                      <NoResultsFoundDescriptionText>
+                        Tente realizar uma filtragem mais
+                        específica dos iCods 
+                      </NoResultsFoundDescriptionText>
+                    </NotFountContainer>
+                  )
+              };
+          }}
+        />
       </Content>
       <LoggedFooter
         isHistory={true}
