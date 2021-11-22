@@ -1,25 +1,23 @@
-import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
+import { Dimensions } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    height: Dimensions.get('window').height,
-    backgroundColor: '#fff'
-  },
-  activitiesContainer: {
-    marginTop: 120,
-    alignItems: 'center'
-  },
-  activitiesText: {
-    // fontFamily: 'Manrope',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    fontSize: 16,
-    lineHeight: 19,
-    letterSpacing: 0.02,
-    color: '#282C37'
-  }
-})
+export const ActivitiesContainer = styled.View`
+  margin-top: ${RFValue(52)}px;
+  align-items: center;
+`
 
-export default styles;
+export const Container = styled.View`
+  flex: 1;
+  height: ${Dimensions.get('window').height};
+  background-color: #fff;
+`
+
+export const ActivitiesText = styled.Text`
+  font-style: normal;
+  font-weight: bold;
+  font-size: ${RFValue(16)}px;
+  line-height: ${RFValue(19)}px;
+  letter-spacing: ${Dimensions.get('window').width*0.002}px;
+  color: #282C37;
+`
