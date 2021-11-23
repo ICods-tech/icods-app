@@ -66,7 +66,6 @@ const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPr
                       <EditIcon />
                     </EditIconContainer>
                   )}
-
                   <ProfilePicture />
                 </ProfilePictureContainer>
                 {

@@ -9,7 +9,7 @@ export const ActivitiesContainer = styled.View`
 
 export const Container = styled.View`
   flex: 1;
-  height: ${Dimensions.get('window').height};
+  height: ${Dimensions.get('window').height}px;
   background-color: #fff;
 `
 

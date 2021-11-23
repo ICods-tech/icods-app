@@ -116,12 +116,10 @@ const Dashboard = () => {
               <FeedOptionsTitleContainer>
                 <FeedOptionTitleButton 
                   onPress={() => setChoosenActivityScope('all')}>
-                  {/* <View style={choosenActivityScope === 'all' && styles.allActivitiesTextWrapper}> */}
                     <>
                     <FeedOptionTitleAll 
                       active={choosenActivityScope}
-                      >Todas</FeedOptionTitleAll>
-                  {/* </View> */}
+                    >Todas</FeedOptionTitleAll>
                   <FeedOptionsTitleBorderAll active={choosenActivityScope}></FeedOptionsTitleBorderAll>
                   </>
                 </FeedOptionTitleButton>

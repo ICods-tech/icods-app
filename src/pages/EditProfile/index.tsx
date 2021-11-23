@@ -1,53 +1,81 @@
-import { useNavigation } from '@react-navigation/native'
-import React, { useState, useCallback } from 'react';
-import { View, Text, Image, StatusBar, Button, SafeAreaView, TouchableOpacity } from 'react-native';
-import styles from './styles';
+import React, { useCallback, useState } from 'react';
+import {  StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Container, ExcludeAccountText, PrivateProfileContainer, UserInformationContainer, UserInformationLabel, UserInformationText, UserLabelAndInfoContainer } from './styles';
 import HeaderProfile from '../../components/HeaderProfile'
 import ButtonOn from '../../assets/images/button-on.svg'
 import ButtonOff from '../../assets/images/button-off.svg'
-import { useAuth } from '../../hooks/auth'
+import { useAuth, User } from '../../hooks/auth'
+import { DeleteAccountModal } from '../../components/DeleteAccountModal';
 
-const EditProfile = ({ route }) => {
-  const { user, token, alterProfileVisibility } = useAuth()
+interface EditProfileProps { 
+  route: {
+    params: {
+      following: number,
+      follower: number
+    }
+  }
+}
+
+type UserFields = 'id'|'name'|'email'|'username'|'visibility'
+
+const EditProfile = ({ route }: EditProfileProps) => {
+  const { user, token, alterProfileVisibility, signOut, deleteUser } = useAuth()
+  const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false)
   const { following, follower } = route.params
+
+  const handleUserObject = (field: UserFields, user: User | undefined) => {
+    if (user === undefined) {
+      return 'Placeholder'
+    }
+    
+    return field !== 'visibility'
+            ? user[field].toString()
+            : user[field]
+  }
 
   const handleProfileVisibility = useCallback(async () => {
     try {
-      console.log(token)
       await alterProfileVisibility(user.id, token)
-      console.log(user)
-    } catch (err) {
-      console.log('Error catched! 🧤')
+    } catch (err: any) {
       console.error(err.message)
     }
   }, [user, token, alterProfileVisibility])
 
   return (
-    <View style={styles.background}>
+    <Container>
       <SafeAreaView style={{ backgroundColor: '#2b90d9' }} />
       <StatusBar
         backgroundColor="#2c92da"
         barStyle="light-content"
       />
       <HeaderProfile
-        fullName={user.name}
+        fullName={String(handleUserObject('name', user))}
         following={following}
         follower={follower}
         edit
       />
-      <View style={styles.userInformationContainer}>
-        <View style={styles.userLabelAndInfoContainer}>
-          <Text style={styles.userInformationLabel}>Username</Text>
-          <Text style={styles.userInformationText}>{user.username}</Text>
-        </View>
-        <View style={styles.userLabelAndInfoContainer}>
-          <Text style={styles.userInformationLabel}>Email</Text>
-          <Text style={styles.userInformationText}>{user.email}</Text>
-        </View>
-        <View style={styles.privateProfileContainer}>
-          <Text style={styles.userInformationLabel}>Perfil privado</Text>
+      <DeleteAccountModal
+        visible={deleteAccountModalOpen}
+        pressedOut={() => setDeleteAccountModalOpen(!deleteAccountModalOpen)}
+        confirmedDeletion={async () => {
+          setDeleteAccountModalOpen(false)
+          await signOut()
+          await deleteUser(token)
+        }}
+      />
+      <UserInformationContainer>
+        <UserLabelAndInfoContainer>
+          <UserInformationLabel>Username</UserInformationLabel>
+          <UserInformationText>{handleUserObject('username', user)}</UserInformationText>
+        </UserLabelAndInfoContainer>
+        <UserLabelAndInfoContainer>
+          <UserInformationLabel>Email</UserInformationLabel>
+          <UserInformationText>{handleUserObject('email', user)}</UserInformationText>
+        </UserLabelAndInfoContainer>
+        <PrivateProfileContainer>
+          <UserInformationLabel>Perfil privado</UserInformationLabel>
           {
-            !user.visibility
+            !handleUserObject('visibility', user)
               ? <TouchableOpacity onPress={async () => await handleProfileVisibility()}>
                 <ButtonOn />
               </TouchableOpacity>
@@ -55,15 +83,24 @@ const EditProfile = ({ route }) => {
                 <ButtonOff />
               </TouchableOpacity>
           }
-        </View>
-        <View style={styles.userLabelAndInfoContainer}>
-          <Text style={styles.userInformationText}>Alterar senha</Text>
-        </View>
-        <View style={styles.userLabelAndInfoContainer}>
-          <Text style={styles.userInformationText}>Sair</Text>
-        </View>
-      </View>
-    </View>
+        </PrivateProfileContainer>
+        <UserLabelAndInfoContainer>
+          <UserInformationText>Alterar senha</UserInformationText>
+        </UserLabelAndInfoContainer>
+        <UserLabelAndInfoContainer>
+          <TouchableOpacity onPress={() => setDeleteAccountModalOpen(true)}>
+            <ExcludeAccountText>Excluir conta</ExcludeAccountText>
+          </TouchableOpacity>
+        </UserLabelAndInfoContainer>
+        <UserLabelAndInfoContainer>
+          <TouchableOpacity onPress={async () => await signOut()}>
+            <UserInformationText>
+              Sair
+            </UserInformationText>
+        </TouchableOpacity>
+        </UserLabelAndInfoContainer>
+      </UserInformationContainer>
+    </Container>
   )
 }
 

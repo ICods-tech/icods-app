@@ -62,7 +62,7 @@ export const FollowingFollowersContainers = styled.View`
   display: flex;
   flexDirection: row;
   justifyContent: space-around;
-  marginTop: ${RFValue(24)}px;
+  marginTop: ${RFValue(18)}px;
 `
 
 export const Connections = styled.View`
