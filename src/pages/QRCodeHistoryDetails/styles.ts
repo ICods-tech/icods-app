@@ -5,7 +5,6 @@ import { colorsIconsProps } from '../../components/History/FilterModal';
 import { Colors } from '../../interfaces/colors';
 import { CardColors } from '../../components/History/HistoryCards';
 import QRCodeTemplate from '../../assets/images/qrCodeLargeTemplate.svg'
-import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
     flex: 1;

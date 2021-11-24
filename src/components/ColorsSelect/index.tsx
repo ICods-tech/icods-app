@@ -1,6 +1,4 @@
 import React from 'react';
-import { View } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
 import { colorsIconsProps } from '../History/FilterModal';
 
 import {
