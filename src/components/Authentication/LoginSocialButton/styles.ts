@@ -26,10 +26,13 @@ export const IconContainer = styled.View`
     padding: ${RFValue(8)}px;
 `;
 
-export const ButtonText = styled.Text`
-    /* flex: 1; */
-    /* text-align: left; */
-    color: ${({ theme }) => theme.colors.primary};
+interface ButtonTextProps {
+    textColor?: string;
+}
+
+export const ButtonText = styled.Text<ButtonTextProps>`
+    color: ${({ theme, textColor }) => 
+    textColor ? textColor : theme.colors.primary};
     font-size: ${RFValue(14)}px;
     font-family: ${({theme}) => theme.fonts.bold};
     letter-spacing: ${Dimensions.get('window').width*0.001}px;

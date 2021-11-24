@@ -31,6 +31,7 @@ import { SvgProps } from 'react-native-svg';
 import MonthSelectorCalendar from 'react-native-month-selector'; 
 import moment, { Moment } from 'moment';
 import { Text } from 'react-native';
+import { ColorsSelect } from '../../ColorsSelect';
 
 interface ModalInterface {
   visible: boolean,
@@ -120,24 +121,11 @@ export function FilterModal({
             <ColorOrderContainer>
               <ColorOrderText>Ordenar por cor</ColorOrderText>
             </ColorOrderContainer>
-            
-              <ColorsButtonList 
+
+              <ColorsSelect 
                 data={colorsIconsList}
-                keyExtractor={(item) => item.key}
-                renderItem={({item}) => {
-                  const {icon: Icon, key} = item;
-                  return (
-                    <ColorButton
-                      onPress={() => setSelectedColor(key as Colors)}
-                      selectedColor={selectedColor}
-                      color={key as Colors}
-                    >
-                    <Icon/>
-                  </ColorButton>
-                    )
-                  }
-                }
-                ItemSeparatorComponent={() => <Separator />}
+                selectedColor={selectedColor}
+                setSelectedColor={setSelectedColor}
               />
 
           </ColorsContainer>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from '@react-navigation/native';
-
 import SocialIcon from '../../assets/images/Icons/footer/socialDark.svg';
 import ActivatedHomeIcon from '../../assets/images/Icons/footer/activated-home.svg';
 import DeactivatedHomeIcon from '../../assets/images/Icons/footer/deactivated-home.svg';

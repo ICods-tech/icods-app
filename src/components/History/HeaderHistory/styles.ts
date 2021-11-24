@@ -12,8 +12,6 @@ export const Header = styled.View`
     flex-direction: row;
     align-items: center;
     margin-top: ${RFValue(getStatusBarHeight() + 3)}px;
-    background-color: ${({theme}) => theme.colors.shape};
-
 `;
 
 export const Title = styled.Text`
