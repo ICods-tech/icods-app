@@ -19,14 +19,15 @@ export const Container = styled.View`
 
 export const Content = styled.View`
     flex: 1;
-    margin-top: ${RFValue(27)}px;
     padding: 0 ${RFValue(15)}px;
+    margin-top: ${RFValue(8)}px;
 `;
 
 export const QRCodeTitleContainer = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    padding-top: ${RFValue(16)}px;
 `;
 
 export const QRCodeTitleDate = styled.Text`

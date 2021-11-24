@@ -82,7 +82,6 @@ const Register = () => {
     }
     
     try {
-      console.log('Dados do inputs:', data);
       for (let field of Object.keys(fields)) {
         setIsErrored((previousErrors) => ({
           ...previousErrors,
@@ -124,7 +123,7 @@ const Register = () => {
           <Header isInputFocus={isInputFocus} />
 
           <BackButtonContainer>
-            <BackButton navigationTo='SignIn' />
+            <BackButton navigationTo='SignIn' color='white' />
           </BackButtonContainer>
 
           <RegisterForm>

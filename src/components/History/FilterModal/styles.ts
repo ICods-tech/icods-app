@@ -15,8 +15,8 @@ import { RectButton } from 'react-native-gesture-handler';
 export const Container = styled.View``;
 
 export const ModalContainer = styled.View`
-    width: ${RFValue(320)}px;
-    height: ${RFValue(460)}px;
+    width: ${RFValue(360)}px;
+    height: ${RFValue(560)}px;
     background-color: ${({ theme }) => theme.colors.shape};
 
     justify-content: center;
@@ -26,7 +26,7 @@ export const ModalContainer = styled.View`
 export const ColorsContainer = styled.View`
     align-items: center;
     justify-content: center;
-    margin-top: ${RFValue(36)}px; 
+    margin-top: ${RFValue(16)}px; 
     margin-bottom: ${RFValue(12)}px;
 `;
 
@@ -47,12 +47,15 @@ export const ColorsButtonList = styled(
 ).attrs({
   showsHorizontalScrollIndicator: false,
   horizontal: true,
+  contentContainerStyle: {
+    flex: 1,
+    justifyContent: 'center',
+    AlignItems: 'center',
+  }
 })`
   height: ${RFValue(50)}px;
-  Width: 100%;
+  width: 100%;
 `;
-
-
 
 interface ColorButtonProps {
   selectedColor: Colors;

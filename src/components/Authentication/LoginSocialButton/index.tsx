@@ -12,9 +12,10 @@ import {
 interface LoginSocialButtonProps extends RectButtonProperties {
     title: string;
     icon: React.FC<SvgProps>;
+    textColor?: string;
 }
 
-export function LoginSocialButton({title, icon: Icon, ...rest}: LoginSocialButtonProps){
+export function LoginSocialButton({title, icon: Icon, textColor, ...rest}: LoginSocialButtonProps){
     return(
         <Container>
             <Button
@@ -27,7 +28,7 @@ export function LoginSocialButton({title, icon: Icon, ...rest}: LoginSocialButto
                     />
                 </IconContainer>
 
-                <ButtonText>{title}</ButtonText>
+                <ButtonText textColor={textColor}>{title}</ButtonText>
             </Button>
         </Container>
     );

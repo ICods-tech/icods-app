@@ -1,21 +1,35 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, SafeAreaView, ScrollView, Animated, TouchableOpacity } from 'react-native';
-import styles from './styles';
-import { HeaderHistory } from '../../components/History/HeaderHistory';
-import HistoryFooter from '../../components/LoggedFooter';
-import QRCodeTemplate from '../../assets/images/qrCodeLargeTemplate.svg'
-import { colorsIconsList } from '../../components/History/FilterModal'
-import api from '../../services/api';
 import { CardColors } from '../../components/History/HistoryCards';
-import PlayIcon from '../../assets/images/Icons/playIcon.svg'
-import ShareIcon from '../../assets/images/Icons/shareIcon.svg'
-import FavoritedIcon from '../../assets/images/Icons/favorited-line.svg'
-import NotFavoritedIcon from '../../assets/images/Icons/notFavorited-line.svg'
-import ButtonAuthentication from '../../components/Button';
-import Toast from 'react-native-toast-message';
 import { Colors } from '../../interfaces/colors';
-import { ColorButton, ColorsButtonList, Separator } from './newStyles';
+import { 
+  ColorButton, 
+  ColorsButtonList, 
+  Container, 
+  Content, 
+  Separator, 
+  TitleQRCode,
+  QRCodeContainer,
+  QRCodeImgContainer,
+  QRCodeTemplateImg,
+  ColorSelectContainer,
+  TitleColorSelect,
+  OptionsButtonsQRContainer,
+  ColorsSelectContainer,
+} from './styles';
+import { colorsIconsList } from '../../components/History/FilterModal'
+import { ColorsSelect } from '../../components/ColorsSelect';
+import { HeaderHistory } from '../../components/History/HeaderHistory';
+import { IconRectButton } from '../../components/IconRectButton';
+import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from '@react-navigation/native';
+import { useTheme } from 'styled-components/native';
+import api from '../../services/api';
+import FavoritedIcon from '../../assets/images/Icons/favorited-line.svg';
+import HistoryFooter from '../../components/LoggedFooter';
+import NotFavoritedIcon from '../../assets/images/Icons/notFavorited-line.svg';
+import PlayIcon from '../../assets/images/Icons/playIcon.svg';
+import ShareIcon from '../../assets/images/Icons/shareIcon.svg';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -37,21 +51,13 @@ interface RouteParams {
 
 const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const navigation = useNavigation()
-  const { id, color, creator, favorite, link } = route.params
+  const { id, color, creator, favorite, link } = route.params;
   const [updatedFavorite, setUpdatedFavorite] = useState<boolean>(favorite)
   const [updatedColor, setUpdatedColor] = useState<Colors>(color)
-
+  const theme = useTheme();
   const handleFavoriteQRCode = useCallback(async (id: string) => {
-    console.log('oiii, eu to aqui??')
     await api.patch(`received_qrcode/favorite/${id}`)
     setUpdatedFavorite(!updatedFavorite)
-    // !updatedFavorite && Toast.show({
-    //   type: 'success',
-    //   position: 'bottom',
-    //   text1: 'Você curtiu o iCod',
-    //   visibilityTime: 1200,
-    //   bottomOffset: 100,
-    // })
   }, [updatedFavorite])
 
   const handleChangeQRCodeColor = useCallback(async (color: Colors) => {
@@ -62,87 +68,75 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   }, [updatedColor])
 
   return (
-    <SafeAreaView style={styles.background}>
+    <Container>
       <HeaderHistory
         favorite={false}
         qrCodeDetails={true}
         setFavorite={() => { }}
         setColorAndDate={() => { }}
       />
-      <View style={styles.container}>
-        <View style={styles.codeContainer}>
-          <Text style={styles.headersText}>iCOD {id.substr(id.length - 8)}</Text>
-          <View style={{ borderWidth: 4, borderColor: (updatedColor !== 'noColor' && updatedColor !== 'noFilter') ? CardColors[updatedColor] : 'white', borderRadius: 6 }}>
-            <QRCodeTemplate />
-          </View>
-        </View>
-        <View style={styles.colorContainer}>
-          <Text style={styles.headersText}>Alterar cor</Text>
-          <View style={styles.colorIconsContainer}>
-          <ColorsButtonList 
-                data={colorsIconsList}
-                keyExtractor={(item) => item.key}
-                renderItem={({item}) => {
-                  const {icon: Icon, key} = item;
-                  return (
-                    <ColorButton
-                      onPress={() =>{ handleChangeQRCodeColor(key as Colors) }}
-                      selectedColor={updatedColor}
-                      color={key as Colors}
-                    >
-                    <Icon/>
-                  </ColorButton>
-                    )
-                  }
-                }
-                ItemSeparatorComponent={() => <Separator />}
-              />
-              </View> 
-        </View>
-        <View style={{
-          marginTop: 36,
-          display: 'flex',
-          justifyContent: 'space-between',
-          height: creator === 'Você' ? 90 : 140,
-        }}>
-          <ButtonAuthentication
-            pressed={() => {
+      <Content>
+        <QRCodeContainer>
+          <TitleQRCode>iCOD {id.substr(id.length - 8)}</TitleQRCode>
+          <QRCodeImgContainer updatedColor={updatedColor}>
+            <QRCodeTemplateImg />
+          </QRCodeImgContainer>
+        </QRCodeContainer>
+
+        <ColorSelectContainer>
+          <TitleColorSelect>Alterar cor</TitleColorSelect>
+            <ColorsSelect 
+              data={colorsIconsList}
+              selectedColor={updatedColor}
+              setSelectedColor={handleChangeQRCodeColor}
+            />
+        </ColorSelectContainer>
+        <OptionsButtonsQRContainer>
+        <IconRectButton 
+            onPress={() => {
               navigation.navigate('VideoPlayer', {
                 qrcode: {
                   link
-                }
-              })
+              }
+            })
             }}
             text="Visualizar Conteúdo"
-            icon={<PlayIcon style={{ marginRight: 8 }} />}
+            icon={PlayIcon}
           />
-          <ButtonAuthentication
-            pressed={() => { }}
+          <Separator />
+          <IconRectButton 
+            onPress={() => {}}
             text="Compartilhar"
-            icon={<ShareIcon style={{ marginRight: 8 }} />}
+            icon={ShareIcon}
           />
+          <Separator />   
+
+
           {creator !== 'Você' && (
             updatedFavorite ?
-              <ButtonAuthentication
-                pressed={() => handleFavoriteQRCode(id)}
-                text="Desfazer Curtida iCod"
-                icon={<FavoritedIcon style={{ marginRight: 8 }}
-                />}
+              <LoginSocialButton
+                title="Desfazer Curtida iCod"
+                style={{ width: RFValue(262),      
+                         backgroundColor: theme.colors.primary 
+                      }}
+                textColor={theme.colors.shape}
+                icon={FavoritedIcon}
+                onPress={() => handleFavoriteQRCode(id)}
               />
-              : <ButtonAuthentication
-                pressed={() => handleFavoriteQRCode(id)}
-                text="Curtir iCod"
-                notActivated
-                icon={<NotFavoritedIcon style={{ marginRight: 8 }}
-                />}
+              : 
+              <LoginSocialButton
+                title="Curtir iCod"
+                style={{ width: RFValue(260)}}
+                icon={NotFavoritedIcon}
+                onPress={() => handleFavoriteQRCode(id)}
               />
           )}
-        </View>
-      </View>
+        </OptionsButtonsQRContainer>
+      </Content>
       <HistoryFooter
         isHistory
       />
-    </SafeAreaView >
+    </Container >
   )
 }
 
