@@ -1,19 +1,30 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useState } from 'react';
-import { View, Text, Image, StatusBar, Button, SafeAreaView, TouchableOpacity, TouchableHighlight, Pressable, Modal, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import Header from '../../assets/images/header-profile.svg'
-import InfoAndEllipsis from '../../assets/images/info_and_ellipsis.svg'
-import InfoIcon from '../../assets/images/Icons/info_icon.svg'
+import React from 'react';
+import { View, TouchableOpacity } from 'react-native';
 import BackButtonWhite from '../../assets/images/back-button-white.svg'
-import EllipsisIcon from '../../assets/images/Icons/ellipsis.svg'
-import EllipsisDashboard from '../../assets/images/Icons/ellipsis-dashboard.svg'
 import ProfilePicture from '../../assets/images/profile-picture-edit.svg'
-import CloudLeft from '../../assets/images/cloud-profile-left.svg'
-import CloudRightTop from '../../assets/images/cloud-right-1.svg'
-import CloudRightBottomn from '../../assets/images/cloud-right-2.svg'
 import EditIcon from '../../assets/images/Icons/edit-icon.svg'
 import ButtonProfilePicture from '../../components/ButtonProfilePicture'
-import styles from './styles';
+import {
+  AccountText,
+  BackButtonContainer,
+  CloudLeftContainer,
+  Connections,
+  Container,
+  EditIconContainer,
+  FollowingFollowersContainers,
+  HeaderContainerBackground,
+  HeaderInformation,
+  LeftCloudsContainer,
+  MiddleProfileContainer,
+  ProfileContainer,
+  ProfilePictureContainer,
+  RightCloudsBottom,
+  RightCloudsContainer,
+  RightCloudsTop,
+  WhiteText,
+  WhiteTextName
+} from './styles';
 
 interface ProfileProps {
   avatar?: string;
@@ -28,80 +39,75 @@ const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPr
   const navigation = useNavigation()
   return (
     <>
-      <View style={styles.container}>
-        <Header style={styles.headerColor} />
-        <View style={styles.headerInformation}>
-          <View style={styles.backButtonContainer}>
+      <Container>
+        <HeaderContainerBackground />
+        <HeaderInformation>
+          <BackButtonContainer>
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <BackButtonWhite />
             </TouchableOpacity>
             {edit ?
-              <Text style={styles.accountText}>
+              <AccountText>
                 Editar
-              </Text>
-              : <Text style={styles.accountText}>
+              </AccountText>
+              : <AccountText>
                 Conta
-              </Text>}
-          </View>
+              </AccountText>}
+          </BackButtonContainer>
           <View>
-            <View style={styles.profileContainer}>
-              <View style={styles.leftCloudsContainer}>
-                <CloudLeft style={styles.cloudLeft} />
-              </View>
-              <View style={styles.middleProfileContainer}>
-                <View style={styles.profilePictureContainer}>
+            <ProfileContainer>
+              <LeftCloudsContainer>
+                <CloudLeftContainer />
+              </LeftCloudsContainer>
+              <MiddleProfileContainer>
+                <ProfilePictureContainer>
                   {!edit && (
-                    <TouchableOpacity style={styles.editIcon} onPress={() => navigation.navigate('EditProfile', { following, follower })}>
+                    <EditIconContainer onPress={() => navigation.navigate('EditProfile', { following, follower })}>
                       <EditIcon />
-                    </TouchableOpacity>
+                    </EditIconContainer>
                   )}
-
                   <ProfilePicture />
-                </View>
+                </ProfilePictureContainer>
                 {
                   edit ?
                     <ButtonProfilePicture
                       text={'Trocar sua foto de perfil'}
                     />
                     : (fullName
-                      ? <Text style={styles.whiteText}>
+                      ? <WhiteTextName>
                         {fullName}
-                      </Text>
-                      : <Text style={styles.whiteText}>
+                      </WhiteTextName>
+                      : <WhiteTextName>
                         Mucas Loreira
-                      </Text>)
+                      </WhiteTextName>)
                 }
-
-              </View>
-              <View style={styles.rightCloudsContainer}>
-                <CloudRightTop style={styles.rightCloudsTop} />
-                <CloudRightBottomn style={styles.rightCloudsBottomn} />
-              </View>
-            </View>
+              </MiddleProfileContainer>
+              <RightCloudsContainer>
+                <RightCloudsTop />
+                <RightCloudsBottom />
+              </RightCloudsContainer>
+            </ProfileContainer>
           </View>
-          <View style={styles.followingFollowersContainers}>
-            <View style={styles.connections}>
-              <Text style={styles.whiteText}>Seguidores</Text>
+          <FollowingFollowersContainers>
+            <Connections>
+              <WhiteText>Seguidores</WhiteText>
               {
                 follower
-                  ? <Text style={styles.whiteText}>{follower}</Text>
-                  : <Text style={styles.whiteText}>0</Text>
+                  ? <WhiteText>{follower}</WhiteText>
+                  : <WhiteText>0</WhiteText>
               }
-            </View>
-            <View style={styles.connections}>
-              <Text style={styles.whiteText}>Seguindo</Text>
+            </Connections>
+            <Connections>
+              <WhiteText>Seguindo</WhiteText>
               {
                 following
-                  ? <Text style={styles.whiteText}>{following}</Text>
-                  : <Text style={styles.whiteText}>0</Text>
+                  ? <WhiteText>{following}</WhiteText>
+                  : <WhiteText>0</WhiteText>
               }
-            </View>
-          </View>
-          {/* <TouchableOpacity onPress={ellipsisPressed}>
-            <EllipsisDashboard style={styles.moreStyle} />
-          </TouchableOpacity> */}
-        </View>
-      </View>
+            </Connections>
+          </FollowingFollowersContainers>
+        </HeaderInformation>
+      </Container>
     </>
   )
 }

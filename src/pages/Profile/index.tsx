@@ -1,10 +1,13 @@
-import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, StatusBar, Button, SafeAreaView } from 'react-native';
-import styles from './styles';
+import { StatusBar, SafeAreaView } from 'react-native';
 import HeaderProfile from '../../components/HeaderProfile'
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
+import { 
+  ActivitiesContainer, 
+  ActivitiesText, 
+  Container
+} from './styles';
 
 interface IFollowUsers {
   id: string;
@@ -36,7 +39,7 @@ const Profile = () => {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      }).then((response) => {
+      }).then((response: any) => {
         console.log(response)
         setFollowing(response.data)
       })
@@ -47,7 +50,7 @@ const Profile = () => {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      }).then((response) => {
+      }).then((response: any) => {
         setFollowers(response.data)
       })
     }
@@ -57,7 +60,7 @@ const Profile = () => {
   }, [token])
 
   return (
-    <View style={styles.background}>
+    <Container>
       <SafeAreaView style={{ backgroundColor: '#2b90d9' }} />
       <StatusBar
         backgroundColor="#2c92da"
@@ -69,10 +72,10 @@ const Profile = () => {
         follower={followers.followersCount}
         edit={false}
       />
-      <View style={styles.activitiesContainer}>
-        <Text style={styles.activitiesText}>Atividades</Text>
-      </View>
-    </View>
+      <ActivitiesContainer>
+        <ActivitiesText>Atividades</ActivitiesText>
+      </ActivitiesContainer>
+    </Container>
   )
 }
 

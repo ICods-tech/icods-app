@@ -1,12 +1,14 @@
 import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from '@react-navigation/native';
-import SocialIcon from '../../assets/images/Icons/footer/socialDark.svg';
+import DeactivatedSocialIcon from '../../assets/images/Icons/footer/socialDark.svg';
 import ActivatedHomeIcon from '../../assets/images/Icons/footer/activated-home.svg';
 import DeactivatedHomeIcon from '../../assets/images/Icons/footer/deactivated-home.svg';
 import ActivatedHistoryIcon from '../../assets/images/Icons/footer/activated-history.svg';
 import DeactivatedHistoryIcon from '../../assets/images/Icons/footer/deactivated-history.svg';
 import DeactivatedNotificationsIcon from '../../assets/images/Icons/footer/deactivated-bell.svg';
+import ActivatedNotificationsIcon from '../../assets/images/Icons/footer/activated-bell.svg';
+import ActivatedSocialIcon from '../../assets/images/Icons/footer/activated-social.svg';
 import ScannerImg from '../../assets/images/ícone-qr-code.svg';
 
 import { 
@@ -22,13 +24,18 @@ interface LoggedFooterProps {
   isHistory?: boolean;
   isDashboard?: boolean;
   isScanner?: boolean;
+  isNotification?: boolean;
+  isSocial?: boolean;
 }
 
 
 export default function LoggedFooter({
   isDashboard, 
   isHistory, 
-  isScanner}: LoggedFooterProps){
+  isScanner,
+  isNotification,
+  isSocial
+}: LoggedFooterProps) {
   const navigation = useNavigation()
   return (
     <Container>
@@ -79,29 +86,39 @@ export default function LoggedFooter({
         />
         
         <FooterButton
-          onPress={ () => navigation.navigate( 'Working' )}
+          onPress={ () => navigation.navigate( 'Working', { type: 'Notification' } )}
         >
           <BorderTop
-            selected={false}
+            selected={isNotification!}
           />
-          <DeactivatedNotificationsIcon 
+        {isNotification! ? 
+          (<ActivatedNotificationsIcon 
             width={RFValue(24)}
             height={RFValue(24)}
-          />
-          <FooterButtonTitle>Notificação</FooterButtonTitle>
+          />)
+          : (<DeactivatedNotificationsIcon 
+            width={RFValue(24)}
+            height={RFValue(24)}
+          />)}
+          <FooterButtonTitle selected={isNotification!}>Notificação</FooterButtonTitle>
         </FooterButton>
         
         <FooterButton
-          onPress={ () => navigation.navigate( 'Working' )}
+          onPress={ () => navigation.navigate( 'Working', { type: 'Social' } )}
         >
           <BorderTop
-            selected={false}
+            selected={isSocial!}
           />
-          <SocialIcon 
+        {isSocial! ?
+          (<ActivatedSocialIcon 
             width={RFValue(24)}
             height={RFValue(24)}
-          />
-          <FooterButtonTitle>Social</FooterButtonTitle>
+          />)
+          : (<DeactivatedSocialIcon 
+              width={RFValue(24)}
+              height={RFValue(24)}
+          />)}
+          <FooterButtonTitle selected={isSocial!}>Social</FooterButtonTitle>
         </FooterButton>
         
     </Container>
