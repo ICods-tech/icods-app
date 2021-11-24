@@ -41,7 +41,6 @@ const VideoPlayerFooter = ( { url }: VideoPlayerFooterProps ) =>
 
   const onSharePress = async () =>
   {
-
     const result = await Share.share( {
       message: `${ url } \n\nSending video to test `,
       url,
