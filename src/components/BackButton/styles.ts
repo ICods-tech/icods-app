@@ -10,7 +10,7 @@ interface ContainerProps {
 
 export const Container = styled.View<ContainerProps>`
   
-  border-radius: ${RFValue(32)}px;
+  border-radius: 999px;
   ${({color}) => color === 'white' && css`border:1.5px solid ${({theme})=> theme.colors.primary}`};
   align-items: center;
   justify-content: center;
