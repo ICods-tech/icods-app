@@ -18,6 +18,7 @@ import CloseIcon from '../../../assets/images/Icons/scanner/close_icon.svg';
 import CancelIcon from '../../../assets/images/Icons/scanner/cancel_icon.svg';
 import EdicionIcon from '../../../assets/images/Icons/scanner/edicion_icon.svg';
 import CloudSyncIcon from '../../../assets/images/Icons/scanner/cloud_sync_icon.svg';
+import EyeCloseIcon from '../../../assets/images/Icons/scanner/eye_close_icon.svg';
 import { QRCode } from '../../../types/QRCode';
 
 interface ScannerPopUPPros
@@ -62,6 +63,7 @@ const ScannerPopUP = ( {
             { icon === 'close' && <CloseIcon /> }
             { icon === 'edicion' && <EdicionIcon /> }
             { icon === 'cloud_sync' && <CloudSyncIcon /> }
+            { icon === 'eye_close' && <EyeCloseIcon /> }
           </ScannerPopUPSubContainerIconContainer>
 
           <ScannerPopUPSubContainerTitle>

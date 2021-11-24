@@ -15,6 +15,7 @@ import {
   HeaderUserNameText,
   HeaderUserPhoto,
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 interface HeaderProps {
   avatar?: string;
@@ -29,13 +30,15 @@ const HeaderDashboard = ({
   avatar, 
   ellipsisPressed 
 }: HeaderProps) => {
-  const [dropdownMenu, setDropdownMenu] = useState(false)
+  const [dropdownMenu, setDropdownMenu] = useState(false);
+  const navigation = useNavigation();
+
   return (
     <Gradient>
       <Container>
           <HeaderContainer>
             
-            <HeaderUserInfoContainer>
+            <HeaderUserInfoContainer onPress={() => navigation.navigate('Profile')}>
               {avatar
                 ? <></>
                 : <HeaderUserPhoto 

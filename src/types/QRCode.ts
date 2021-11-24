@@ -5,4 +5,11 @@ export interface QRCode {
   content: string;
   postId: string;
   user: string;
+  receivedUser: {
+    id: string;
+    name: string;
+    username: string;
+    email: string;
+    visibility: boolean;
+  };
 }
