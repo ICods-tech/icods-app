@@ -6,6 +6,7 @@ import ButtonOn from '../../assets/images/button-on.svg'
 import ButtonOff from '../../assets/images/button-off.svg'
 import { useAuth, User } from '../../hooks/auth'
 import { DeleteAccountModal } from '../../components/DeleteAccountModal';
+import { useNavigation } from '@react-navigation/native';
 
 interface EditProfileProps { 
   route: {
@@ -19,6 +20,7 @@ interface EditProfileProps {
 type UserFields = 'id'|'name'|'email'|'username'|'visibility'
 
 const EditProfile = ({ route }: EditProfileProps) => {
+  const navigation = useNavigation();
   const { user, token, alterProfileVisibility, signOut, deleteUser } = useAuth()
   const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false)
   const { following, follower } = route.params
@@ -93,7 +95,9 @@ const EditProfile = ({ route }: EditProfileProps) => {
           </TouchableOpacity>
         </UserLabelAndInfoContainer>
         <UserLabelAndInfoContainer>
-          <TouchableOpacity onPress={async () => await signOut()}>
+          <TouchableOpacity onPress={async () => {
+            await signOut()
+          }}>
             <UserInformationText>
               Sair
             </UserInformationText>
