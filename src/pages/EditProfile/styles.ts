@@ -50,8 +50,8 @@ export const ExcludeAccountText = styled.Text`
 
 export const PrivateProfileContainer = styled.View`
   display: flex;
-  flexDirection: row;
-  width: ${RFValue(320)}px;
+  flex-direction: row;
   justify-content: space-between;
-  margin-bottom: ${RFValue(20)}px;
+  width: ${RFValue(320)}px;
+  margin-bottom: ${RFValue(16)}px;
 `

@@ -38,7 +38,7 @@ export const ExcludeAccountTextContainer = styled.View`
   margin-top: ${RFValue(16)}px;
   display: flex;
   align-self: center;
-  width: ${RFPercentage(44.0)};
+  width: ${RFPercentage(44.0)}px;
   align-items: center;
   justify-content: center;
 `;

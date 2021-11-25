@@ -45,7 +45,7 @@ const EditProfile = ({ route }: EditProfileProps) => {
     <Container>
       <SafeAreaView style={{ backgroundColor: '#2b90d9' }} />
       <StatusBar
-        backgroundColor="#2c92da"
+        backgroundColor="#3097db"
         barStyle="light-content"
       />
       <HeaderProfile
