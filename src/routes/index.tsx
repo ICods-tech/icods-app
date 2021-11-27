@@ -20,11 +20,17 @@ import ProcessingICodsCircleProgress from '../pages/ProcessingICodsCircleProgres
 import ConnectionProblems from '../pages/ConnectionProblems';
 import Working from '../pages/Working';
 import { Animated } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
 
 const App = createStackNavigator()
 
+interface StyleInterpolatorProps {
+  current: any,
+  layouts: any 
+}
+
 const invertedHorizontalAnimation = {
-  cardStyleInterpolator: ({ current, layouts }: { current: any, layouts: any }) => {
+  cardStyleInterpolator: ({ current, layouts }: StyleInterpolatorProps) => {
     return cardStyleReturn(current, layouts, true);
   },
 };
@@ -43,11 +49,32 @@ const cardStyleReturn = (current: any, layouts: any, isInverted: boolean) => ({
   },
 });
 
+const cardStyleNoAnimationReturn = (current: any, layouts: any) => ({
+  cardStyle: {
+    transform: [
+      {
+        translateX: current.progress.interpolate({
+          inputRange: [0, 0],
+          outputRange: [-layouts.screen.width, 0]
+        }),
+      },
+    ],
+  },
+});
+
+
 const horizontalAnimation = {
-  cardStyleInterpolator: ({ current, layouts }: { current: any, layouts: any }) => {
+  cardStyleInterpolator: ({ current, layouts }: StyleInterpolatorProps) => {
     return cardStyleReturn(current, layouts, false);
   },
 };
+
+const noAnimation = {
+  cardStyleInterpolator: ({ current, layouts }: StyleInterpolatorProps) => {
+    return cardStyleNoAnimationReturn(current, layouts);
+  },
+};
+
 
 const Routes: React.FC = () => {
   const { user, token, isLoading } = useAuth()
@@ -68,25 +95,47 @@ const Routes: React.FC = () => {
         ) :
           user ? (
             <>
-              <App.Screen name='Dashboard' component={Dashboard} options={horizontalAnimation} />
+              <App.Screen name='Dashboard' component={Dashboard} options={((props: { route: RouteProp<Record<string, object | undefined>, "Dashboard">; navigation: any }) => (
+                props.route.key === 'DASHBOARD_FROM_FOOTER'
+                  ? noAnimation
+                  : horizontalAnimation)
+                )}
+              />
               <App.Screen name='Profile' component={Profile} options={horizontalAnimation}/>
               <App.Screen name='EditProfile' component={EditProfile} options={horizontalAnimation}/>
-              <App.Screen name='History' component={History} options={horizontalAnimation}/>
+              <App.Screen name='History' component={History} options={((props: { route: RouteProp<Record<string, object | undefined>, "History">; navigation: any }) => (
+                props.route.key === 'HISTORY_FROM_FOOTER'
+                  ? noAnimation
+                  : horizontalAnimation)
+                )}
+              />
               <App.Screen name='QRCodeHistoryDetails' component={QRCodeHistoryDetails} options={horizontalAnimation}/>
               <App.Screen name='Support' component={Support} options={horizontalAnimation}/>
               <App.Screen name='Editor' component={Editor} options={horizontalAnimation}/>
               <App.Screen name='ProcessingICodsCircleProgress' component={ ProcessingICodsCircleProgress } options={horizontalAnimation}/>
-              <App.Screen name='Scanner' component={ Scanner } options={horizontalAnimation}/>
+              <App.Screen name='Scanner' component={ Scanner } options={((props: { route: RouteProp<Record<string, object | undefined>, "Scanner">; navigation: any }) => (
+                props.route.key === 'SCANNER_FROM_FOOTER'
+                  ? noAnimation
+                  : horizontalAnimation)
+                )}/>
               <App.Screen name='VideoPlayer' component={ VideoPlayer } options={horizontalAnimation}/>
               <App.Screen name='Processing' component={ Processing } options={horizontalAnimation}/>
               <App.Screen name='ConnectionProblems' component={ConnectionProblems} options={horizontalAnimation}/>
-              <App.Screen name='Working' component={Working} options={horizontalAnimation}/>
+              <App.Screen name='Working' component={Working} options={((props: { route: RouteProp<Record<string, object | undefined>, "Working">; navigation: any }) => (
+                props.route.key === 'WORKING_FROM_FOOTER'
+                  ? noAnimation
+                  : horizontalAnimation)
+                )}/>
             </>
           ) : (
               <>
                 <App.Screen name='SignIn' component={ SignIn } options={invertedHorizontalAnimation}/>
                 <App.Screen name='Register' component={ Register } options={horizontalAnimation}/>
-                <App.Screen name='Scanner' component={ Scanner } options={horizontalAnimation}/>
+                <App.Screen name='Scanner' component={ Scanner } options={((props: { route: RouteProp<Record<string, object | undefined>, "Scanner">; navigation: any }) => (
+                  props.route.key === 'SCANNER_FROM_FOOTER'
+                    ? noAnimation
+                    : horizontalAnimation)
+                  )}/>
                 <App.Screen name='VideoPlayer' component={ VideoPlayer } options={horizontalAnimation}/>
                 <App.Screen name='GiftOpen' component={ GiftOpen } options={horizontalAnimation}/>
                 <App.Screen name='ConnectionProblems' component={ ConnectionProblems } options={horizontalAnimation}/>

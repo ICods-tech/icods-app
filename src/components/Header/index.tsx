@@ -22,7 +22,6 @@ const Header = ({page, navigate, color, isVideoPlayer}: HeaderProps): JSX.Elemen
           if (navigate === 'back') {
             navigation.goBack();
           } else {
-            console.log(`To indo: ${navigate}`);
             navigation.navigate(`${navigate}`);
           }
         }}>
