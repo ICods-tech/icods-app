@@ -40,7 +40,7 @@ export default function LoggedFooter({
   return (
     <Container>
         <FooterButton
-          onPress={() => navigation.navigate('Dashboard')}
+          onPress={() => navigation.navigate({name: 'Dashboard', key: 'DASHBOARD_FROM_FOOTER'})}
           >
 
           <BorderTop
@@ -57,12 +57,11 @@ export default function LoggedFooter({
               height={RFValue(24)}
             />
           }
-
           <FooterButtonTitle selected={isDashboard!}>Início</FooterButtonTitle>
         </FooterButton>
 
         <FooterButton
-          onPress={() => navigation.navigate('History')}
+          onPress={() => navigation.navigate({name: 'History', key: 'HISTORY_FROM_FOOTER'})}
         >
           <BorderTop
             selected={isHistory!}
@@ -81,12 +80,15 @@ export default function LoggedFooter({
         </FooterButton>
 
         <ScannerButton 
-          onPress={ () => navigation.navigate( 'Scanner' )} 
+          onPress={() => navigation.navigate({name: 'Scanner', key: 'SCANNER_FROM_FOOTER'})} 
           selected={isScanner}
         />
         
         <FooterButton
-          onPress={ () => navigation.navigate( 'Working', { type: 'Notification' } )}
+        onPress={() => navigation.navigate({
+          name: 'Working', key: 'WORKING_FROM_FOOTER', params: {
+            type: 'Notification'
+          }})}
         >
           <BorderTop
             selected={isNotification!}
@@ -104,7 +106,9 @@ export default function LoggedFooter({
         </FooterButton>
         
         <FooterButton
-          onPress={ () => navigation.navigate( 'Working', { type: 'Social' } )}
+          onPress={ () => navigation.navigate({name: 'Working', key: 'WORKING_FROM_FOOTER', params: {
+            type: 'Social'
+          }})}
         >
           <BorderTop
             selected={isSocial!}
