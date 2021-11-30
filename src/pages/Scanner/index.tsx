@@ -32,6 +32,10 @@ const Scanner = () =>
   const [ popUp, setPopUp ] = useState<PopUp>();
 
   const handleCloseButton = () => {
+    if(popUp?.press == 'Scanner') {
+      setQrCodeValidate( false );
+      setQrcode( undefined );
+    }
     navigation.navigate(popUp?.press || 'Scanner', {qrcode});
   }
 
