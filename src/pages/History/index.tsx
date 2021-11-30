@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import api from '../../services/api';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { SafeAreaView, Animated } from 'react-native';
+import { SafeAreaView, Animated, LogBox } from 'react-native';
 import { 
   CloudContainer, 
   CloudLeftLarge, 
@@ -29,6 +29,9 @@ import { HeaderHistory } from '../../components/History/HeaderHistory';
 import LoggedFooter  from '../../components/LoggedFooter';
 import formattedDate from '../../utils/formatDates';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { Moment } from 'moment';
+
+LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
 export interface FilteredQRCodes {
   id: string,
@@ -48,15 +51,15 @@ export interface FilteredQRCodesByDate {
 
 const History = () => {
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(filteredQRCodesByDatePlaceholder)
-  const [color, setColor] = useState<string>('noFilter')
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
+  const [color, setColor] = useState<Colors>('noFilter')
+  const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>(false)
   // console.log('lista', qrCodes);
   function handleFavoriteFilter() {
     setFavoriteFilter(!favoriteFilter);
   }
 
-  const loadQRCodes = useCallback(async () => {
+  const loadQRCodes = useCallback(async (color: String, selectedDate: Date | undefined, favoriteFilter: boolean) => {
     const response = await api.get('filtered_qrcodes/data', {
       params: {
         color,
@@ -67,13 +70,14 @@ const History = () => {
     })
     setQRCodes(response.data.data)
   }, [qrCodes])
+
   const handleFavoriteQRCodes = useCallback(async (id: string) => {
     await api.patch(`received_qrcode/favorite/${id}`)
   }, [])
 
   useEffect(() => {
-    loadQRCodes()
-  }, [loadQRCodes])
+    loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)
+  }, [])
 
   const RightActions = (
     progress: any, 
@@ -126,12 +130,18 @@ const History = () => {
     <SafeAreaView style={{flex: 1}}>
       <Container>
       <HeaderHistory
-        setColorAndDate={({ date, color: filteredColor }) => {
-          setColor(filteredColor)
-          setSelectedDate(date)
+        selectedColor={color}
+        setSelectedColor={setColor}
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        setColorAndDate={() => {
+          loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)
         }}
         favorite={favoriteFilter}
-        setFavorite={() => handleFavoriteFilter()}
+        setFavorite={() => {
+          handleFavoriteFilter()
+          loadQRCodes(color, selectedDate?.toDate(), !favoriteFilter)
+        }}
       />
       
       <Content>
