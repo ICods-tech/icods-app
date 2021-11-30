@@ -38,6 +38,7 @@ export const ScannerPopUPSubContainerTitle = styled.Text`
   font-size: 16px;
   font-weight: 800;
   line-height: 22px;
+  font-family: Manrope;
 
   letter-spacing: 0.002px;
   color: #282C37;
@@ -50,6 +51,7 @@ export const ScannerPopUPSubContainerText = styled.Text`
   font-size: 14px;
   font-weight: 600;
   line-height: 22px;
+  font-family: Manrope;
 
   letter-spacing: 0.002px;
   color: #282C37;
