@@ -37,7 +37,11 @@ interface ModalInterface {
   visible: boolean,
   pressedOut: () => void,
   confirmedFilter: (data: FilterData) => Promise<void>,
-  initialDateValue?: undefined
+  initialDateValue?: undefined,
+  setSelectedColor: (color: Colors) => void,
+  selectedColor: Colors,  
+  setSelectedDate: (date: Moment | undefined) => void,
+  selectedDate: Moment | undefined,
 }
 
 interface FilterData {
@@ -94,11 +98,15 @@ export const colorsIconsList = [
 export function FilterModal({
     visible, 
     pressedOut, 
-    confirmedFilter 
+    confirmedFilter,
+    setSelectedColor,
+    selectedColor,
+    setSelectedDate,
+    selectedDate
   }: ModalInterface){
-  const [selectedColor, setSelectedColor] = useState<Colors>('noFilter')
+  // const [selectedColor, setSelectedColor] = useState<Colors>('noFilter')
   const [calendarVisible, setCalendarVisible] = useState(false)
-  const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
+  // const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
 
   function handleOpenCalendar(){
     setCalendarVisible(true)

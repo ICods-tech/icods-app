@@ -15,12 +15,17 @@ import { FavoriteButton } from '../../FavoriteButton';
 import { FilterButton } from '../../FilterButton';
 import { Keyboard, Modal, TouchableWithoutFeedback, View } from 'react-native';
 import { FilterModal } from '../FilterModal';
+import { Moment } from 'moment';
 
 interface HeaderHistoryProps {
   favorite: boolean;
   qrCodeDetails?: boolean;
   setFavorite: () => void;
   setColorAndDate: ({ date, color }: ColorAndDateProps) => void;
+  setSelectedColor: (color: Colors) => void,
+  selectedColor: Colors,
+  setSelectedDate: (date: Moment | undefined) => void,
+  selectedDate: Moment | undefined,
 }
 
 interface ColorAndDateProps {
@@ -32,7 +37,12 @@ export function HeaderHistory({
   setColorAndDate, 
   setFavorite, 
   favorite, 
-  qrCodeDetails }: 
+  qrCodeDetails,
+  setSelectedColor,
+  selectedColor,
+  setSelectedDate,
+  selectedDate
+ }: 
   HeaderHistoryProps){
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false)
@@ -82,7 +92,11 @@ export function HeaderHistory({
               >
                 <FilterModal
                   visible={modalVisible}
+                  setSelectedColor={setSelectedColor}
+                  selectedColor={selectedColor}
                   pressedOut={() => setModalVisible(!modalVisible)}
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
                   confirmedFilter={async ({ date, color }) => {
                     
                     setModalVisible(false)
