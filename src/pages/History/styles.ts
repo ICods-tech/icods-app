@@ -111,7 +111,7 @@ export const QRCodeList = styled(
     showsVerticalScrollIndicator: false,
 })``;
 
-export const NotFountContainer = styled.View`
+export const NotFoundContainer = styled.View`
     margin-top: ${RFValue(98)}px;
     align-items: center;
     justify-content: center;
