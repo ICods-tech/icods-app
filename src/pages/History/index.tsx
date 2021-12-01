@@ -16,7 +16,7 @@ import {
   NoResultsFoundDescriptionText, 
   NoResultsFoundText, 
   NotFavoritedCardButtonIcon, 
-  NotFountContainer, 
+  NotFoundContainer,  
   QRCodeDateList, 
   QRCodeList, 
   QRCodeOptionsContainer, 
@@ -30,6 +30,8 @@ import LoggedFooter  from '../../components/LoggedFooter';
 import formattedDate from '../../utils/formatDates';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Moment } from 'moment';
+import * as Progress from 'react-native-progress';
+
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
@@ -52,6 +54,7 @@ export interface FilteredQRCodesByDate {
 const History = () => {
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(filteredQRCodesByDatePlaceholder)
   const [color, setColor] = useState<Colors>('noFilter')
+  const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>(false)
   // console.log('lista', qrCodes);
@@ -68,7 +71,9 @@ const History = () => {
         year: selectedDate ? selectedDate.getFullYear() : null
       }
     })
+
     setQRCodes(response.data.data)
+    setLoading(false)
   }, [qrCodes])
 
   const handleFavoriteQRCodes = useCallback(async (id: string) => {
@@ -198,18 +203,31 @@ const History = () => {
                   }                  
                   />
                 </>
-              )} else{
-                  return (
-                    <NotFountContainer>
-                      <LargeSearchIcon />
-                      <NoResultsFoundText>Nenhum resultado obtido</NoResultsFoundText>
-                      <NoResultsFoundDescriptionText>
-                        Tente realizar uma filtragem mais
-                        específica dos iCods 
-                      </NoResultsFoundDescriptionText>
-                    </NotFountContainer>
-                  )
-              };
+              )
+            } else if (!(qrCodes[0]["0"].length) && loading) {
+              return (
+                  <NotFoundContainer>
+                    <Progress.Circle
+                      size={RFValue(120)}
+                      indeterminate={true}
+                      borderWidth={16}
+                      thickness={8}
+                      color={"#2b90d9"}
+                    />
+                  </NotFoundContainer>
+                )
+            } else {
+              return (
+                <NotFoundContainer>
+                  <LargeSearchIcon />
+                  <NoResultsFoundText>Nenhum resultado obtido</NoResultsFoundText>
+                  <NoResultsFoundDescriptionText>
+                    Tente realizar uma filtragem mais
+                    específica dos iCods 
+                  </NoResultsFoundDescriptionText>
+                </NotFoundContainer>
+              )  
+            }
           }}
         />
       </Content>
