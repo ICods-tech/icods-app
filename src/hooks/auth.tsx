@@ -49,15 +49,14 @@ const AuthProvider: React.FC = ({ children }) => {
   useEffect(() => {
     async function loadStoredData(): Promise<void> {
       const [token, user] = await AsyncStorage.multiGet(['@ICods:token', '@ICods:user'])
-
       if (token[1] && user[1]) {
         setData({ token: JSON.parse(token[1]), user: JSON.parse(user[1]) })
       }
     }
-
+    
     loadStoredData()
     setTimeout( () => { setIsLoading( false ) }, 3000 );
-
+    
   }, [])
 
   const signIn = useCallback(async (credentials: SignInCredentials) => {
@@ -72,7 +71,7 @@ const AuthProvider: React.FC = ({ children }) => {
       const { token, user } = res.data
 
       await AsyncStorage.multiSet([
-        ['@ICods:token', token],
+        ['@ICods:token', JSON.stringify(token)],
         ['@ICods:user', JSON.stringify(user)],
       ])
       api.defaults.headers.authorization = `Bearer ${token}`

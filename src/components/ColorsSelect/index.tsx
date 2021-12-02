@@ -13,7 +13,7 @@ interface ColorsSelectProps {
     setSelectedColor: (key: Colors) => void;
     selectedColor: Colors;
 }
-export function ColorsSelect({data, setSelectedColor, selectedColor, }: ColorsSelectProps){
+export function ColorsSelect({data, setSelectedColor, selectedColor }: ColorsSelectProps){
     return (
         <Container>
             <ColorsButtonList 
