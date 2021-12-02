@@ -83,7 +83,7 @@ const AuthProvider: React.FC = ({ children }) => {
   }, [])
 
   const signUp = useCallback(async (credentials: SignUpCredentials) => {
-    try {
+    // try {
       const { name, username, email, password, passwordConfirmation } = credentials;
     
       await api.post('signup', {
@@ -93,9 +93,9 @@ const AuthProvider: React.FC = ({ children }) => {
         password,
         passwordConfirmation
       })
-    } catch (error) {
-      console.log(error)
-    }
+    // } catch (error) {
+    //   console.log(error)
+    // }
   }, [])
 
   const signOut = useCallback(async () => {
