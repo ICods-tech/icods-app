@@ -146,7 +146,8 @@ export const ModalCancelButtonText = styled.Text`
     font-size: ${RFValue(14)}px;
     letter-spacing: ${Dimensions.get('window').width * 0.001}px;
     
-    color: ${({ theme }) => theme.colors.attention};
+    color: ${({ theme }) => theme.colors.cancelButton};
+    opacity: 0.40;
 `;
 
 export const BlackIcon = styled(Black).attrs({
