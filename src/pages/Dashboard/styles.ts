@@ -9,16 +9,18 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-    height: ${RFValue(100)}px;
+    
 `;
 
 export const WelcomeContainer = styled.View`
-    margin-top: ${RFValue(28)}px;
+    margin-top: ${RFValue(36)}px;
+    margin-bottom: ${RFValue(10)}px;
     padding: 0 ${RFValue(24)}px;
 `;
 
 export const WelcomeTitleContainer = styled.View`
     flex-direction: row;
+    margin-bottom: ${RFValue(10)}px;
     align-items: center;
 `;
 
@@ -47,10 +49,12 @@ export const HighlightTitle = styled.Text`
     font-size: ${RFValue(14)}px;
     font-family: ${({theme}) => theme.fonts.regular};
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    
 `;
 
 export const HightLightListContainer = styled.View`
-    height: ${RFValue(160)}px;
+    height: ${RFValue(130)}px;
+    margin-top: ${RFValue(10)}px;
 `;
 
 export const HighlightButtonList = styled.ScrollView.attrs({
@@ -60,18 +64,20 @@ export const HighlightButtonList = styled.ScrollView.attrs({
         paddingHorizontal: RFValue(16),
     }
 })`
-    margin-top: ${RFValue(28)}px;
+    margin-top: ${RFValue(1)}px;
 `;
 
 export const FeedContainer = styled.View`
     margin-top: ${RFValue(43)}px;
     padding: 0 ${RFValue(24)}px;
     flex: 1;
+    margin-top: ${RFValue(36)}px;
 `;
 
 export const FeedHeader = styled.View`
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: ${RFValue(10)}px;
 `
 
 export const FeedTitle = styled.Text`
@@ -89,6 +95,7 @@ export const FeedOptionsTitleContainer = styled.View`
 
     height: ${RFValue(27)}px;   
     width: ${RFValue(177)}px;
+    margin-left: ${RFValue(12)}px;
 `;
 
 interface FeedOptionsTitleProps {
@@ -139,7 +146,7 @@ export const FeedOptionsTitleBorderMine = styled.View<FeedOptionsTitleProps>`
 `;
 
 export const FeedSubTitleContainer = styled.View`
-    margin-top: ${RFValue(13)}px;
+    
 `;
 
 export const FeedSubTitle = styled.Text`
