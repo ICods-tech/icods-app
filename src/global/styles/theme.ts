@@ -11,6 +11,8 @@ export default {
         attention: '#DF2C2C',
         // attention_light: 'rgba(232, 63, 91, 0.5)',
 
+        cancelButton: '#000',
+
         title: 'rgba(0, 0, 0, 0.87)',
         subtitle: 'rgba(0, 0, 0, 0.6)',
         text: 'rgba(0, 0, 0, 0.4)',

@@ -43,6 +43,7 @@ const Editor = ( { route, _ }: any ) =>
   const handleCancel = () =>
   {
     setModalVisible( false );
+    openEditor();
   }
 
   const handleConfirm = () =>
@@ -51,7 +52,6 @@ const Editor = ( { route, _ }: any ) =>
       return;
 
     setModalVisible( false );
-    console.log( "Confirmei" );
     navigation.navigate( 'Processing', { qrcode, video } );
   }
 
@@ -116,6 +116,7 @@ const Editor = ( { route, _ }: any ) =>
       const video = recordedData;
 
       const configuration: Configuration = {
+        
         // Configure sticker tool
         sticker: {
           // Enable personal stickers
@@ -138,6 +139,7 @@ const Editor = ( { route, _ }: any ) =>
           ],
         },
       };
+
 
       VESDK.openEditor( video, configuration ).then(
         async ( result ) =>

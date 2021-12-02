@@ -3,7 +3,7 @@ import api from '../services/api'
 import AsyncStorage from '@react-native-community/async-storage'
 import Toast from 'react-native-toast-message';
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -37,6 +37,7 @@ interface AuthContextData {
   signUp: (credentials: SignUpCredentials) => Promise<void>;
   signOut: () => Promise<void>;
   updateUser(user: User): void;
+  deleteUser: (token: string) => Promise<void>;
   alterProfileVisibility: (id: string, token: string) => Promise<void>;
 }
 
@@ -60,9 +61,8 @@ const AuthProvider: React.FC = ({ children }) => {
   }, [])
 
   const signIn = useCallback(async (credentials: SignInCredentials) => {
-    
+    try {
       const { email, password } = credentials;
-      console.log('login: ', credentials);
     
       const res = await api.post('signin', {
         email,
@@ -77,12 +77,15 @@ const AuthProvider: React.FC = ({ children }) => {
       api.defaults.headers.authorization = `Bearer ${token}`
 
       setData({ token, user })
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   const signUp = useCallback(async (credentials: SignUpCredentials) => {
+    try {
       const { name, username, email, password, passwordConfirmation } = credentials;
-      console.log(credentials);
-      
+    
       await api.post('signup', {
         name,
         username,
@@ -90,10 +93,12 @@ const AuthProvider: React.FC = ({ children }) => {
         password,
         passwordConfirmation
       })
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
 
   const signOut = useCallback(async () => {
-    console.log('signing out')
     await AsyncStorage.multiRemove(['@ICods:token', '@ICods:user'])
 
     setData({} as AuthState)
@@ -106,24 +111,25 @@ const AuthProvider: React.FC = ({ children }) => {
           Authorization: `Bearer ${token}`
         }
       })
-
       const user = res.data
-
       await updateUser(user)
-    } catch (err: any) {
-      if (err.response) {
-        console.log(err.response.data);
-        throw new Error(err)
-      }  else if (err.request) {
-        console.log('2:', err.request);
-        throw new Error(err)
-        
-      } else {
-        console.log('3:', err.message );
-        throw new Error(err )
-      }
-      }
+    } catch (error) {
+      console.log(error)
+    }
   }, [])
+
+  const deleteUser = useCallback(async (token: string) => {
+    try {
+      await api.delete('delete-user', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+    } catch (error) {
+      console.log(error)
+    }
+}, [])
+  
 
   const updateUser = useCallback(async (updatedUser: User) => {
     AsyncStorage.setItem('@ICods:user', JSON.stringify(updatedUser));
@@ -134,8 +140,6 @@ const AuthProvider: React.FC = ({ children }) => {
         ...updatedUser
       }
     })
-
-    console.log(data)
   }, [data])
 
   return (
@@ -147,6 +151,7 @@ const AuthProvider: React.FC = ({ children }) => {
       signOut,
       isLoading,
       updateUser,
+      deleteUser,
       alterProfileVisibility
     }}>
       {children}

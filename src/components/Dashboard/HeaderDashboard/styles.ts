@@ -44,7 +44,7 @@ export const HeaderContainer = styled.View`
     align-items: center;
 `;
 
-export const HeaderUserInfoContainer = styled.View`
+export const HeaderUserInfoContainer = styled.TouchableOpacity`
     flex: 1;
     flex-direction: row;
     align-items: center;

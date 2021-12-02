@@ -45,11 +45,6 @@ const Processing = ( { route, _ }: any ) =>
         },
       } );
 
-
-      await api.patch('/add_qrcode', {
-        qrcode_id: qrcode.id
-      })
-
       navigation.navigate( 'Dashboard' );
     } catch ( error )
     {

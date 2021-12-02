@@ -32,6 +32,10 @@ const Scanner = () =>
   const [ popUp, setPopUp ] = useState<PopUp>();
 
   const handleCloseButton = () => {
+    if(popUp?.press == 'Scanner') {
+      setQrCodeValidate( false );
+      setQrcode( undefined );
+    }
     navigation.navigate(popUp?.press || 'Scanner', {qrcode});
   }
 
@@ -55,7 +59,6 @@ const Scanner = () =>
     if (user)  {
       await api.post(`/received_qrcode/${id}`, {});
     }
-
   }
 
   const qrCodeisNotBelongsIcods = () => {
@@ -64,6 +67,15 @@ const Scanner = () =>
       label: 'Tente escanear um QR Code da iCods',
       icon: 'close',
       press: 'Scanner',
+    });
+  }
+
+  const qrCodeIsAssociated = () => {
+    setPopUp( {
+      title: 'QR Code já associado',
+      label: 'Esse QR Code já foi lido por algum outro usuário',
+      icon: 'eye_close',
+      press: page,
     });
   }
 
@@ -96,9 +108,15 @@ const Scanner = () =>
       return;
     }
 
-    if ( qrCode.status === 'ACTIVE' ) {
+    if ( qrCode.status === 'ACTIVE' ){
       const {id} = qrCode;
-      qrCodeContainsGift(id);
+      if (qrCode.receivedUser === null || qrCode.receivedUser.id === user?.id) {
+        qrCodeContainsGift(id);
+      }
+      else {
+        qrCodeIsAssociated();
+      }
+      
       return;
     } else {
       qrCodeIsEditable();

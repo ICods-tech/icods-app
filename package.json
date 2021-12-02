@@ -1,5 +1,5 @@
 {
-  "name": "icodsMobile",
+  "name": "iCods",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -40,6 +40,7 @@
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-month-selector": "^1.4.0",
     "react-native-month-year-picker": "^1.8.0",
+    "react-native-progress": "^5.0.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-responsive-fontsize": "^0.5.1",
     "react-native-safe-area-context": "^3.1.9",

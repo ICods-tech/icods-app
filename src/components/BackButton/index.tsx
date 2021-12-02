@@ -20,7 +20,7 @@ export function BackButton({ navigationTo, color }: BackButtonProps){
             color={color}
         >
             <Button
-                onPress={() => { navigation.navigate(navigationTo)}}
+                onPress={() => { navigation.goBack()}}
                 >
                     {color === 'white' ?
                         <BackWhiteIcon />

@@ -12,6 +12,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 2, },
     shadowColor: 'rgba(0, 0, 0, 0.25)',
     shadowOpacity: 1.0,
+    marginTop: -10
   },
   textStyling: {
     color: '#282C37',
