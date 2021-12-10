@@ -29,13 +29,14 @@ const Processing = ( { route, _ }: any ) =>
     setProcessedError( false );
 
     let formData = new FormData();
+    const name = (Math.random().toString(36)+'00000000000000000').slice(2, 5+2)
     formData.append( 'file', {
       uri: video,
       type: 'video/mp4',
-      name: `${ Date.now() }_${ user.id }.mp4`
+      name
     } );
 
-    console.log( { formData, user, qrcode, video } );
+    console.log( { formData, user, qrcode, video, name } );
 
     try
     {

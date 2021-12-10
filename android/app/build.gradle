@@ -140,8 +140,8 @@ android {
         applicationId "com.icodsmobile"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 8
+        versionName "1.0.6"
         missingDimensionStrategy 'react-native-camera', 'general'
         multiDexEnabled true // ADD THIS LINE
     }
@@ -244,14 +244,14 @@ apply plugin: "kotlin-android"
 // Comment out the modules you don't need, to save size.
 imglyConfig {
     modules {
-        include 'ui:text'
-        include 'ui:focus'
+        // include 'ui:text'
+        // include 'ui:focus'
         include 'ui:frame'
-        include 'ui:brush'
+        // include 'ui:brush'
         include 'ui:filter'
-        include 'ui:sticker'
+        // include 'ui:sticker'
         include 'ui:overlay'
-        include 'ui:transform'
+        // include 'ui:transform'
         include 'ui:adjustment'
         include 'ui:text-design'
 
