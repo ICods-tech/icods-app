@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CardStyleInterpolators, createStackNavigator, HeaderStyleInterpolators, TransitionSpecs } from '@react-navigation/stack'
-import Register from '../pages/register';
+import Register from '../pages/Register';
 import SignIn from '../pages/SignIn'
 import Dashboard from '../pages/Dashboard'
 import Profile from '../pages/Profile'
