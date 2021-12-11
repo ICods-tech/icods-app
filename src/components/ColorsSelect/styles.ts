@@ -6,6 +6,7 @@ import { colorsIconsProps } from '../History/FilterModal';
 export const Container = styled.View`
     height: ${RFValue(36)}px;
 `;
+
 export const ColorsButtonList = styled(
     FlatList as new () => FlatList<colorsIconsProps>
     ).attrs({

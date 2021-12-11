@@ -57,7 +57,6 @@ const SignIn = () => {
   const handleLogin = useCallback(async () => {
     try {
       console.log({ email, password })
-      console.log("BATATINHAS?")
       await signIn({ email, password })
       setErrored(false)
     } catch (error: any) {
