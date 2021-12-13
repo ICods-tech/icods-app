@@ -18,6 +18,7 @@ interface ModalInterface {
   pressedOut: () => void,
   profilePage: () => void,
   supportPage: () => void,
+  aboutPage: () => void,
   signOut: () => Promise<void>
 }
 
@@ -25,6 +26,7 @@ const ModalMoreDashboard = ({
   visible, 
   pressedOut, 
   supportPage, 
+  aboutPage,
   profilePage, 
   signOut 
 }: ModalInterface) => {
@@ -45,20 +47,20 @@ const ModalMoreDashboard = ({
               />
               <Text style={styles.dropdownOptionsText}>Conta</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.dropdownOptionContainer}>
+            <TouchableOpacity style={styles.dropdownOptionContainer} onPress={supportPage}>
               <ReportProblemIcon 
                 width={RFValue(16)}
                 height={RFValue(16)}
               />
-              <Text style={styles.dropdownOptionsText} onPress={supportPage}>Suporte</Text>
+              <Text style={styles.dropdownOptionsText}>Suporte</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.dropdownOptionContainer}>
+            <TouchableOpacity style={styles.dropdownOptionContainer} onPress={aboutPage}>
               <Paper 
                 color={'#000'}
                 width={RFValue(16)}
                 height={RFValue(16)}
               />
-              <Text style={styles.dropdownOptionsText} onPress={supportPage}>Sobre</Text>
+              <Text style={styles.dropdownOptionsText}>Sobre</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.dropdownOptionContainer} onPress={signOut}>
             <SignOutIcon

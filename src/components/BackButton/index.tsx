@@ -23,7 +23,7 @@ export function BackButton({ navigationTo, color }: BackButtonProps){
                 onPress={() => { navigation.goBack()}}
                 >
                     {color === 'white' ?
-                        <BackWhiteIcon />
+                        <BackWhiteIcon/>
                         :
                         <BackBlueIcon/>
                     }

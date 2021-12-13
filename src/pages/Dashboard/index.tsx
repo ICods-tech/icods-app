@@ -65,6 +65,10 @@ const Dashboard = () => {
             setModalVisible(false)
             navigation.navigate('Profile')
           }}
+          aboutPage={() => {
+            setModalVisible(false)
+            navigation.navigate('About')
+          }}
           signOut={async () => {
             setModalVisible(false)
             await signOut()
