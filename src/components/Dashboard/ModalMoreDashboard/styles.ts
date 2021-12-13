@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 
@@ -9,22 +8,18 @@ const styles = StyleSheet.create({
     right: 0,
     zIndex: 2,
     backgroundColor: '#fff',
-    paddingLeft: RFValue(16),
     paddingTop: RFValue(18),
-    paddingBottom: RFValue(21),
+    paddingBottom: RFValue(18),
     width: RFValue(132),
-    height: RFValue(129),
+    height: RFValue(144),
     borderRadius: RFValue(20)
   },
-  dropdownSecondOption: {
+  dropdownOptionContainer: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: RFValue(21),
-    marginBottom: RFValue(21),
-  },
-  dropdownEdgeOptions: {
-    display: 'flex',
-    flexDirection: 'row',
+    height: RFValue(32), 
+    paddingLeft: RFValue(16),
+    alignItems: 'center',
   },
   dropdownOptionsText: {
     fontSize: RFValue(10),
