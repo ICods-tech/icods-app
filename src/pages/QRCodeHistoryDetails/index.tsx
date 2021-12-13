@@ -116,9 +116,13 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
             updatedFavorite ?
               <LoginSocialButton
                 title="Desfazer Curtida iCod"
-                style={{ width: RFValue(262),      
-                         backgroundColor: theme.colors.primary 
-                      }}
+                background={'Blue'}
+                style={{
+                    width: RFValue(262),  
+                    borderColor: theme.colors.primary,
+                    backgroundColor: theme.colors.primary,
+                    borderRadius: RFValue(131),
+                  }}
                 textColor={theme.colors.shape}
                 icon={FavoritedIcon}
                 onPress={() => handleFavoriteQRCode(id)}
@@ -126,7 +130,12 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
               : 
               <LoginSocialButton
                 title="Curtir iCod"
-                style={{ width: RFValue(260)}}
+                style={{
+                  width: RFValue(260),
+                  borderRadius: RFValue(131),
+                  borderWidth: 2,
+                  borderColor: 'black',
+                }}
                 icon={NotFavoritedIcon}
                 onPress={() => handleFavoriteQRCode(id)}
               />

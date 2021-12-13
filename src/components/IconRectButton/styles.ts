@@ -12,7 +12,7 @@ export const Button = styled(RectButton)`
     align-items: center;
     justify-content: center;
 
-    border-radius: 4px;
+    border-radius: 116px;
 `;
 
 export const IconContainer = styled.View`

@@ -82,7 +82,7 @@ export function HeaderHistory({
                 <FavoriteButton 
                   onPress={() => setFavorite()}
                   favorite={favorite}
-                  />
+                />
                 <FilterButton 
                   onPress={() => setModalVisible(!modalVisible)}
                   />

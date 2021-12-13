@@ -77,8 +77,8 @@ const AuthProvider: React.FC = ({ children }) => {
       api.defaults.headers.authorization = `Bearer ${token}`
 
       setData({ token, user })
-    } catch (error) {
-      console.log(error)
+    } catch (error: any) {
+      throw new Error(error.message);
     }
   }, [])
 
