@@ -7,6 +7,7 @@ import React, {
 import { Keyboard, TextInput, TextInputProps, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { SvgProps } from 'react-native-svg';
+import { Show, Hide } from 'react-native-iconly'
 import { 
     ButtonEye, 
     ClosedEyeIcon, 
@@ -81,13 +82,9 @@ const NewInput: React.ForwardRefRenderFunction<InputRef, InputTextProps> = ({
                     onPress={() => handleToggleSecure()}
                     >
                         { toggleEye ?
-                            <ClosedEyeIcon 
-                                activate={passwordStyleInput}
-                            />
+                            <Hide color='rgba(0, 0, 0, 0.3)'/>
                         :
-                            <OpenEyeIcon  
-                                activate={passwordStyleInput}
-                            />
+                            <Show color='rgba(0, 0, 0, 0.3)'/>
                         }
                 </ButtonEye>
         </Container>

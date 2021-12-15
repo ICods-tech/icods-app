@@ -62,7 +62,6 @@ export function HeaderHistory({
           />
           <Title>Histórico</Title>
         </Header>
-
         {!qrCodeDetails && 
         (
           <SearchContainer>
@@ -76,13 +75,13 @@ export function HeaderHistory({
                   submitFunction={() => SearchInputSubmitTest()}
                   value={searchEntry}
                   returnKeyType='send'
-                  />
+                />
 
               <OptionalButtonsContainer>
                 <FavoriteButton 
                   onPress={() => setFavorite()}
                   favorite={favorite}
-                  />
+                />
                 <FilterButton 
                   onPress={() => setModalVisible(!modalVisible)}
                   />

@@ -147,7 +147,7 @@ const Register = () => {
                   returnKeyType="next"
                 />
 
-                <SpacingLine  isErrored={attention}/>
+                <SpacingLine isErrored={attention}/>
 
                 <NewInput
                   ref={userNameInputRef}

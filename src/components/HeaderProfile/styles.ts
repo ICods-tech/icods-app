@@ -5,6 +5,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import Header from '../../assets/images/header-profile.svg'
 import styled from 'styled-components/native'
 import { Dimensions } from 'react-native';
+import { Edit } from 'react-native-iconly';
 
 export const Container = styled.View`
   display: flex;
@@ -127,4 +128,10 @@ export const HeaderContainerBackground = styled(Header)`
 export const CloudLeftContainer = styled(CloudLeft)`
   display: flex;
   margin-left: ${RFValue(18)}px;
+`
+
+export const EditIcon = styled(Edit)`
+  color: #2B90D9;
+  background: white;
+  border-radius: ${RFValue(16)}px;
 `

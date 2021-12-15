@@ -12,12 +12,17 @@ import {
 interface LoginSocialButtonProps extends RectButtonProperties {
     title: string;
     icon: React.FC<SvgProps>;
+    background?: 'White' | 'Blue';
     textColor?: string;
 }
 
-export function LoginSocialButton({title, icon: Icon, textColor, ...rest}: LoginSocialButtonProps){
+export function LoginSocialButton({title, icon: Icon, background, textColor, ...rest}: LoginSocialButtonProps){
     return(
-        <Container>
+        <Container
+            style={{
+                borderWidth: background === 'Blue' ? 0 : 2
+            }}
+        >
             <Button
                 {...rest}
             >

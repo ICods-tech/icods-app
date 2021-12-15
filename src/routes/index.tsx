@@ -21,6 +21,8 @@ import ConnectionProblems from '../pages/ConnectionProblems';
 import Working from '../pages/Working';
 import { Animated } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
+import About from '../pages/About';
+import Version from '../pages/Version';
 
 const App = createStackNavigator()
 
@@ -111,7 +113,9 @@ const Routes: React.FC = () => {
               />
               <App.Screen name='QRCodeHistoryDetails' component={QRCodeHistoryDetails} options={horizontalAnimation}/>
               <App.Screen name='Support' component={Support} options={horizontalAnimation}/>
-              <App.Screen name='Editor' component={Editor} options={horizontalAnimation}/>
+              <App.Screen name='Editor' component={Editor} options={horizontalAnimation} />
+              <App.Screen name='About' component={About} options={horizontalAnimation} />
+              <App.Screen name='Version' component={Version} options={horizontalAnimation} />
               <App.Screen name='ProcessingICodsCircleProgress' component={ ProcessingICodsCircleProgress } options={horizontalAnimation}/>
               <App.Screen name='Scanner' component={ Scanner } options={((props: { route: RouteProp<Record<string, object | undefined>, "Scanner">; navigation: any }) => (
                 props.route.key === 'SCANNER_FROM_FOOTER'

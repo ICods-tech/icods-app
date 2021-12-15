@@ -56,14 +56,11 @@ const SignIn = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const handleLogin = useCallback(async () => {
     try {
-      console.log({ email, password })
       await signIn({ email, password })
       setErrored(false)
     } catch (error: any) {
-      console.log('Error catched! ')
-      console.log(error);
-      
       setErrored(true)
+
       Toast.show({
         type: 'error',
         position: 'bottom',
@@ -72,7 +69,6 @@ const SignIn = () => {
         visibilityTime: 1000,
         bottomOffset: 100,
       })
-      throw new Error(error.message);
     }
   }, [email, password]);
 

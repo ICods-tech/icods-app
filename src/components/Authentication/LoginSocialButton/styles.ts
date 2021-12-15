@@ -1,14 +1,13 @@
 import { Dimensions } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
-import { RFValue } from 'react-native-responsive-fontsize';
+import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
     height: ${RFValue(36)}px;
-    
     background-color: ${({ theme }) => theme.colors.shape};
     border: 2px solid ${({ theme }) => theme.colors.primary};
-    border-radius: 4px;
+    border-radius: ${RFValue(116)}px;
 `;
 
 export const Button = styled(RectButton)`

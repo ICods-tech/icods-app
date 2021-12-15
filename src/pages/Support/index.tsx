@@ -5,6 +5,7 @@ import BackButton from '../../assets/images/back.svg'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, Image, StatusBar, SafeAreaView, TouchableWithoutFeedback, TouchableOpacity, TextInput, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native'
+import { SubmitButton } from '../../components/Authentication/SubmitButton'
 import Toast from 'react-native-toast-message'
 
 const Support = () => {
@@ -56,8 +57,8 @@ const Support = () => {
           />
         </View>
         <View style={styles.buttonContainer}>
-          <Button
-            pressed={() => handleEmail()}
+          <SubmitButton
+            onPress={() => handleEmail()}
             text={'Enviar'}
           />
         </View>

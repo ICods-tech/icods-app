@@ -1,9 +1,10 @@
 import React from 'react';
 import { BorderlessButtonProperties } from 'react-native-gesture-handler';
-
+import { Filter } from 'react-native-iconly'
 import {
     Container, 
-    FilterIcon, 
+    FilterIcon,
+    FilterItemContainer, 
 } from './styles';
 
 interface FilterButtonProps extends BorderlessButtonProperties{
@@ -14,7 +15,9 @@ export function FilterButton({...rest}: FilterButtonProps){
         <Container
             {...rest}
         >
-            <FilterIcon />
+            <FilterItemContainer>
+                <Filter color='#fff' size={16} />
+            </FilterItemContainer>
         </Container>
     );
 }

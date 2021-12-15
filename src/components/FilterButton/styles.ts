@@ -8,6 +8,15 @@ export const Container = styled(BorderlessButton)`
     width: ${RFValue(32)}px;
 `;
 
+export const FilterItemContainer = styled.View`
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    width: ${RFValue(32)}px;
+    height: ${RFValue(32)}px;
+    border-radius: ${RFValue(16)}px;
+    background: #4790d3;
+`
 
 export const FilterIcon = styled(Filter).attrs({
     width: RFValue(32),
