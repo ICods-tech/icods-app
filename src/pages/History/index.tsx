@@ -176,16 +176,6 @@ const History = () => {
                       const { id, color, content, comparisonDate, favorited, qrCodeCreatorName, link  } = item
                       return(
                         <>
-                          <Swipeable
-                            key={id}
-                            renderRightActions={(progress: any, dragX: any) => RightActions(
-                              progress,
-                              dragX,
-                              id,
-                              qrCodeCreatorName === 'Você',
-                              favorited
-                            )}
-                          >
                             <HistoryCards
                               key={id}
                               id={id}
@@ -196,7 +186,6 @@ const History = () => {
                               favorite={favorited}
                               privacy="Público"
                             />
-                          </Swipeable>
                         </>
                       )
                     }    
