@@ -7,6 +7,14 @@ import AppProvider from './hooks'
 import Routes from './routes'
 import Toast, { BaseToast } from 'react-native-toast-message';
 import theme from './global/styles/theme';
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: "https://611e5dfbf7e5455b8d5185826ec3aaba@o1079135.ingest.sentry.io/6112876",
+  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  // We recommend adjusting this value in production.
+  tracesSampleRate: 1.0,
+});
 
 const toastConfig = {
   success: ({ text1, text2, ...rest }: {text1: string, text2: string}) => (
@@ -64,4 +72,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default Sentry.wrap(App);
