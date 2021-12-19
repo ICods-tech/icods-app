@@ -69,6 +69,8 @@ const SignIn = () => {
         visibilityTime: 1000,
         bottomOffset: 100,
       })
+
+      console.log(error.message)
     }
   }, [email, password]);
 

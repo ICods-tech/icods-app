@@ -2,6 +2,8 @@ import React, { createContext, useCallback, useState, useContext, useEffect } fr
 import api from '../services/api'
 import AsyncStorage from '@react-native-community/async-storage'
 import Toast from 'react-native-toast-message';
+import analytics from '@react-native-firebase/analytics';
+
 
 export interface User {
   id: string;
@@ -78,7 +80,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
       setData({ token, user })
     } catch (error: any) {
-      throw new Error(error.message);
+      throw new Error(error.response.data);
     }
   }, [])
 
