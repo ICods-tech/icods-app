@@ -154,7 +154,7 @@ const Register = () => {
                   autoCorrect
                   autoCapitalize="none"
                   defaultValue={username}
-                  placeholder='Digite seu username'
+                  placeholder='Nome de usuário'
                   placeholderTextColor={theme.colors.subtitle}
                   onChangeText={(username: string) => setUsername(username)}
                   onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
@@ -170,7 +170,7 @@ const Register = () => {
                   autoCorrect={false}
                   autoCapitalize="none"
                   defaultValue={email}
-                  placeholder='Digite seu email principal'
+                  placeholder='Digite seu e-mail'
                   placeholderTextColor={theme.colors.subtitle}
                   onChangeText={(email: string) => setEmail(email)}
                   onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
