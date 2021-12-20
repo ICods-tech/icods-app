@@ -12,7 +12,7 @@ const Support = () => {
 
   const handleEmail = useCallback(() => {
     if (Platform.OS !== 'ios') {
-      const emailTo = 'contato@icods.com.br'
+      const emailTo = 'icods.tech@gmail.com'
       email(emailTo, {
           subject: 'Mensagem de suporte de usuário iCods',
           body: supportMessage
