@@ -1,4 +1,33 @@
+import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import {Dimensions, StyleSheet} from 'react-native';
+
+export const PopUpButton = styled.TouchableOpacity`
+    padding: ${RFValue(6)}px ${RFValue(8)}px;
+    margin-left: ${RFValue(8)}px;
+    
+    align-items: center;
+    justify-content: center;
+`;
+
+export const ModalConfirmButtonText = styled.Text`
+    text-transform: uppercase;
+    font-family: ${({ theme }) => theme.fonts.medium};
+    font-size: ${RFValue(14)}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.001}px;
+    
+    color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const ModalCancelButtonText = styled.Text`
+    text-transform: uppercase;
+    font-family: ${({ theme }) => theme.fonts.medium};
+    font-size: ${RFValue(14)}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.001}px;
+    
+    color: ${({ theme }) => theme.colors.cancelButton};
+    opacity: 0.40;
+`;
 
 const { width, height } = Dimensions.get( 'window' );
 
@@ -63,7 +92,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#f00',
     width: width * 0.8 * 0.8,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
   }
 });
 
