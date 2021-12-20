@@ -1,4 +1,26 @@
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
 import { StyleSheet, Platform, Dimensions } from 'react-native'
+
+export const Header = styled.View`
+    padding: 0px ${RFValue(15)}px;
+    flex-direction: row;
+    align-items: center;
+    margin-top: ${RFValue(getStatusBarHeight() + 3)}px;
+`;
+
+export const Title = styled.Text`
+    font-size: ${RFValue(26)}px;
+
+    font-family: ${({theme}) => theme.fonts.extra_bold};
+    color: ${({theme}) => theme.colors.title};
+    
+    letter-spacing: ${Dimensions.get('window').width*0.001}px;
+    
+    margin-left: ${RFValue(17)}px;
+    margin-bottom: 4px;
+`;
 
 const styles = StyleSheet.create({
   container: {
@@ -10,7 +32,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#282C37',
-    // fontFamily: 'Manrope',
+    fontFamily: 'Manrope',
     fontSize: 25.89,
     fontStyle: 'normal',
     fontWeight: '700',
@@ -21,36 +43,38 @@ const styles = StyleSheet.create({
   },
   helpTextContainer: {
     alignSelf: 'flex-start',
+    marginTop: 38,
+    marginBottom: 38,
     marginLeft: 16
   },
   helpText: {
-    // fontFamily: Manrope;
+    fontFamily: 'Manrope',
     fontStyle: 'normal',
     fontWeight: '600',
     fontSize: 16,
     lineHeight: 22,
     letterSpacing: 0.02,
-    color: '#282C37'
+    color: '#282C37',
   },
   helpInput: {
     marginLeft: 24,
     marginRight: 24,
     width: '85%',
     lineHeight: 20,
-    marginTop: 18
   },
   inputContainer: {
     width: '90%',
     height: 232,
     backgroundColor: '#F2F2F2',
     marginLeft: 16,
-    marginTop: 40,
     borderRadius: 4
   },
   buttonContainer: {
     alignSelf: 'center',
-    marginTop: 40,
-    width: '60%',
+    marginTop: 38,
+    width: '70%',
+    height: 40,
+    fontFamily: 'Manrope',
   }
 });
 export default styles;

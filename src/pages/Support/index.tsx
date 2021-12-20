@@ -1,20 +1,18 @@
-import styles from './styles'
+import styles, { Header, Title } from './styles'
 import email from 'react-native-email'
-import Button from '../../components/Button'
-import BackButton from '../../assets/images/back.svg'
 import { useNavigation } from '@react-navigation/native'
-import React, { useState, useEffect, useCallback } from 'react'
-import { View, Text, Image, StatusBar, SafeAreaView, TouchableWithoutFeedback, TouchableOpacity, TextInput, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native'
+import React, { useState,  useCallback } from 'react'
+import { View, Text, StatusBar, SafeAreaView, TouchableWithoutFeedback, TouchableOpacity, TextInput, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native'
 import { SubmitButton } from '../../components/Authentication/SubmitButton'
 import Toast from 'react-native-toast-message'
+import { BackButton } from '../../components/BackButton'
 
 const Support = () => {
   const [supportMessage, setSupportMessage] = useState<string>('')
-  const navigation = useNavigation();
 
   const handleEmail = useCallback(() => {
     if (Platform.OS !== 'ios') {
-      const emailTo = 'icods.tech@gmail.com'
+      const emailTo = 'contato@icods.com.br'
       email(emailTo, {
           subject: 'Mensagem de suporte de usuário iCods',
           body: supportMessage
@@ -36,12 +34,10 @@ const Support = () => {
         barStyle="dark-content"
       />
       <View style={styles.container}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => { navigation.goBack() }}>
-            <BackButton />
-          </TouchableOpacity>
-          <Text style={styles.title}>Suporte</Text>
-        </View>
+        <Header>
+          <BackButton navigationTo='Dashboard'/>
+          <Title>Suporte</Title>          
+        </Header>
         <View style={styles.helpTextContainer}>
           <Text style={styles.helpText}>Escreva sobre o problema ocorrido para que
           possamos ajuda-lo:</Text>
