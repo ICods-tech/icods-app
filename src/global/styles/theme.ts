@@ -1,6 +1,7 @@
 export default {
     colors: {
         primary: '#2B90D9',
+        profilePic: '8EFFEB',
         
         secundary: '#FF872C',
         // secundary_light: 'rgba(255, 135, 44, 0.3)',

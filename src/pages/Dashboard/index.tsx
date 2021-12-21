@@ -28,7 +28,7 @@ import { HighlightButton } from '../../components/Dashboard/HighlightButton';
 import { useAuth } from '../../hooks/auth'
 
 import HeaderDashboard from '../../components/Dashboard/HeaderDashboard'
-import extracNameAndSurname from '../../utils/extractNameAndSurname'
+import extractNameAndSurname from '../../utils/extractNameAndSurname'
 import LoggedFooter from '../../components/LoggedFooter'
 import ModalMoreDashboard from '../../components/Dashboard/ModalMoreDashboard'
 
@@ -37,14 +37,18 @@ import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg'
 import SocialIcon from '../../assets/images/Icons/social.svg';
 import HistoryIcon from '../../assets/images/Icons/history.svg';
 import ScanIcon from '../../assets/images/Icons/qrcode_scan.svg';
+import { useTheme } from 'styled-components';
 
 
 const Dashboard = () => {
+  const theme = useTheme();
   const navigation = useNavigation()
   const [choosenActivityScope, setChoosenActivityScope] = useState<'all' | 'mine'>('all')
   const [modalVisible, setModalVisible] = useState(false)
   const { user, signOut } = useAuth()
-  const { name, surname } = user ? extracNameAndSurname(user.name) : { name: '', surname: '' }
+  const { name, surname } = user ? extractNameAndSurname(user.name) : { name: '', surname: '' }
+  const nameAndSurname = `${name} ${surname ? surname : ''}`;
+  const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndSurname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
 
   return (
     <Container>
@@ -52,6 +56,7 @@ const Dashboard = () => {
         <HeaderDashboard
           name={name}
           surname={surname}
+          avatar={avatar}
           ellipsisPressed={() => setModalVisible(!modalVisible)}
         />
         <ModalMoreDashboard
@@ -134,7 +139,6 @@ const Dashboard = () => {
                       active={choosenActivityScope}>
                       Minhas</FeedOptionTitleMine>
                     <FeedOptionsTitleBorderMine active={choosenActivityScope}></FeedOptionsTitleBorderMine>
-                    
                 </FeedOptionTitleButton>
               </FeedOptionsTitleContainer>
             </FeedHeader>

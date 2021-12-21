@@ -60,7 +60,9 @@ export const HeaderUserPhoto = styled.Image.attrs({
     margin-right:${RFValue(13)}px;
 `;
 
-export const HeaderUserNameContainer = styled.View``;
+export const HeaderUserNameContainer = styled.View`
+    flex-direction: row;
+`;
 
 export const HeaderUserNameText = styled.Text`
     font-size: ${RFValue(18)}px;
