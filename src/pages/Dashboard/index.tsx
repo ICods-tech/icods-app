@@ -46,16 +46,16 @@ const Dashboard = () => {
   const [choosenActivityScope, setChoosenActivityScope] = useState<'all' | 'mine'>('all')
   const [modalVisible, setModalVisible] = useState(false)
   const { user, signOut } = useAuth()
-  const { name, surname } = user ? extractNameAndSurname(user.name) : { name: '', surname: '' }
-  const nameAndSurname = `${name} ${surname ? surname : ''}`;
-  const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndSurname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
+  const { name, lastname } = user ? extractNameAndSurname(user.name) : { name: '', lastname: '' }
+  const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
+  const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
 
   return (
     <Container>
       <Header>
         <HeaderDashboard
           name={name}
-          surname={surname}
+          surname={lastname}
           avatar={avatar}
           ellipsisPressed={() => setModalVisible(!modalVisible)}
         />

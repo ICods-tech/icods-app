@@ -4,13 +4,10 @@ export default {
         profilePic: '8EFFEB',
         
         secundary: '#FF872C',
-        // secundary_light: 'rgba(255, 135, 44, 0.3)',
         
         success: '#6DFF73',
-        // success_light: 'rgba(18, 164, 84, 0.5)',
 
         attention: '#DF2C2C',
-        // attention_light: 'rgba(232, 63, 91, 0.5)',
 
         cancelButton: '#000',
 
