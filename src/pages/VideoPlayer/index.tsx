@@ -14,7 +14,7 @@ const VideoPlayer = ( { route, _ }: any ) => {
 
   return (
     <Container>
-      <Header page="" navigate={user ? 'Dashboard': 'SignIn'} color="#FFFFFF" isVideoPlayer/>
+      <Header page="" navigate={'back'} color="#FFFFFF" isVideoPlayer/>
       <VideoContainer>
         <Video 
           video={{ uri: qrcode.link ? qrcode.link : url}}

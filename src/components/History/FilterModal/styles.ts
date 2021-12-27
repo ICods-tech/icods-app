@@ -151,43 +151,43 @@ export const ModalCancelButtonText = styled.Text`
 `;
 
 export const BlackIcon = styled(Black).attrs({
-  width: RFValue(24),
-  height: RFValue(24),
+  width: RFValue(19),
+  height: RFValue(19),
 })``;
 
 export const BlueIcon = styled(Blue).attrs({
-  width: RFValue(24),
-  height: RFValue(24),
+  width: RFValue(19),
+  height: RFValue(19),
 })``;
 
 export const CyanIcon = styled(Cyan).attrs({
-  width: RFValue(24),
-  height: RFValue(24),
+  width: RFValue(19),
+  height: RFValue(19),
 })``;
 
 export const GreenIcon = styled(Green).attrs({
-  width: RFValue(24),
-  height: RFValue(24),
+  width: RFValue(19),
+  height: RFValue(19),
 })``;
 
 export const RedIcon = styled(Red).attrs({
-  width: RFValue(24),
-  height: RFValue(24),
+  width: RFValue(19),
+  height: RFValue(19),
 })``;
 
 export const PinkIcon = styled(Pink).attrs({
-  width: RFValue(24),
-  height: RFValue(24),
+  width: RFValue(19),
+  height: RFValue(19),
 })``;
 
 export const YellowIcon = styled(Yellow).attrs({
-  width: RFValue(24),
-  height: RFValue(24),
+  width: RFValue(19),
+  height: RFValue(19),
 })``;
 
 export const NoColorIcon = styled(NoColor).attrs({
-  width: RFValue(24),
-  height: RFValue(24),
+  width: RFValue(19),
+  height: RFValue(19),
 })``;
 
 export const calendarStyles = StyleSheet.create({

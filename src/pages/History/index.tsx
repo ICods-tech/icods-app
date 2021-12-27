@@ -31,6 +31,7 @@ import formattedDate from '../../utils/formatDates';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Moment } from 'moment';
 import * as Progress from 'react-native-progress';
+import { useNavigation } from '@react-navigation/native';
 
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
@@ -51,18 +52,32 @@ export interface FilteredQRCodesByDate {
   [date: string]: FilteredQRCodes[];
 }
 
-const History = () => {
+interface RouteParams {
+  route: {
+    params: {
+      reload: boolean,
+    }
+  }
+}
+
+const History = ({ route }: RouteParams) => {
+  const navigation = useNavigation();
+  const reload = (route.params && route.params.reload) ? route.params.reload : false;
+
+  const [reloadState, setReloadState] = useState(reload);
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(filteredQRCodesByDatePlaceholder)
   const [color, setColor] = useState<Colors>('noFilter')
   const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
+  const [reloadAfterDetails, setReloadAfterDetails] = useState(false)
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>(false)
-  // console.log('lista', qrCodes);
+
   function handleFavoriteFilter() {
     setFavoriteFilter(!favoriteFilter);
   }
 
   const loadQRCodes = useCallback(async (color: String, selectedDate: Date | undefined, favoriteFilter: boolean) => {
+    console.log('to casrregando de novo')
     const response = await api.get('filtered_qrcodes/data', {
       params: {
         color,
@@ -74,62 +89,12 @@ const History = () => {
 
     setQRCodes(response.data.data)
     setLoading(false)
-  }, [qrCodes])
-
-  const handleFavoriteQRCodes = useCallback(async (id: string) => {
-    await api.patch(`received_qrcode/favorite/${id}`)
-  }, [])
+    setReloadState(false)
+  }, [reloadState])
 
   useEffect(() => {
     loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)
-  }, [])
-
-  const RightActions = (
-    progress: any, 
-    dragX: any, 
-    id: string, 
-    qrCodeBelongsToUser: boolean, 
-    favorited: boolean
-    ) => {
-    const scale = dragX.interpolate({
-      inputRange: qrCodeBelongsToUser ? [-RFValue(120), 0] : [-RFValue(90), 0],
-      outputRange: qrCodeBelongsToUser ? [2, 0] : [0.8, 0]
-    })
-    return (
-      <QRCodeOptionsContainer>
-        {!qrCodeBelongsToUser && (
-          <>
-            <Animated.Text
-              style={{
-                transform: [{ scale }],
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-              <FavoritedButton 
-                onPress={() => handleFavoriteQRCodes(id)}
-                activeOpacity={0.8}
-                >
-                {
-                  favorited
-                    ? (<FavoriteCardButtonIcon  />)
-                    : (<NotFavoritedCardButtonIcon />)
-                }
-              </FavoritedButton>
-            </Animated.Text>
-          </>
-        )}
-          <DeleteButton>
-            <Animated.Text
-              style={{
-                transform: [{ scale }]
-              }}>
-              <DeleteButtonIcon />
-            </Animated.Text>
-          </DeleteButton>
-      </QRCodeOptionsContainer>
-    )
-  }
+  }, [reloadState])
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -176,7 +141,16 @@ const History = () => {
                       const { id, color, content, comparisonDate, favorited, qrCodeCreatorName, link  } = item
                       return(
                         <>
-                            <HistoryCards
+                          <HistoryCards
+                              pressed={() => {
+                                navigation.navigate('QRCodeHistoryDetails', {
+                                  id, 
+                                  color, 
+                                  creator: qrCodeCreatorName, 
+                                  favorite: favorited, 
+                                  link
+                                })
+                              }}
                               key={id}
                               id={id}
                               creator={qrCodeCreatorName}

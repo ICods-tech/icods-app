@@ -9,18 +9,19 @@ import {
 } from './styles';
 
 interface BackButtonProps extends BorderlessButtonProperties {
-    navigationTo: string;
+    navigationTo: any;
+    customFunction?: () => void;
     color?: 'blue' | 'white';
 }
 
-export function BackButton({ navigationTo, color }: BackButtonProps){
+export function BackButton({ navigationTo, customFunction, color }: BackButtonProps){
     const navigation = useNavigation();
     return(
         <Container
             color={color}
         >
             <Button
-                onPress={() => { navigation.goBack()}}
+                onPress={navigationTo === 'WAIT' ? customFunction : (() => navigation.goBack())}
                 >
                     {color === 'white' ?
                         <BackWhiteIcon/>
