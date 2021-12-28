@@ -154,7 +154,7 @@ const Register = () => {
                   autoCorrect
                   autoCapitalize="none"
                   defaultValue={username}
-                  placeholder='Nome de usuário'
+                  placeholder='Digite seu nome de usuário'
                   placeholderTextColor={theme.colors.subtitle}
                   onChangeText={(username: string) => setUsername(username)}
                   onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
