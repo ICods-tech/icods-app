@@ -8,11 +8,10 @@ import Routes from './routes'
 import Toast, { BaseToast } from 'react-native-toast-message';
 import theme from './global/styles/theme';
 import * as Sentry from '@sentry/react-native';
+const {SENTRY_KEY} = process.env;
 
 Sentry.init({
-  dsn: "https://611e5dfbf7e5455b8d5185826ec3aaba@o1079135.ingest.sentry.io/6112876",
-  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
-  // We recommend adjusting this value in production.
+  dsn: `${SENTRY_KEY}`,
   tracesSampleRate: 1.0,
 });
 
