@@ -7,6 +7,13 @@ import AppProvider from './hooks'
 import Routes from './routes'
 import Toast, { BaseToast } from 'react-native-toast-message';
 import theme from './global/styles/theme';
+import * as Sentry from '@sentry/react-native';
+const {SENTRY_KEY} = process.env;
+
+Sentry.init({
+  dsn: `${SENTRY_KEY}`,
+  tracesSampleRate: 1.0,
+});
 
 const toastConfig = {
   success: ({ text1, text2, ...rest }: {text1: string, text2: string}) => (
@@ -64,4 +71,4 @@ const App = () => {
   )
 }
 
-export default App;
+export default Sentry.wrap(App);
