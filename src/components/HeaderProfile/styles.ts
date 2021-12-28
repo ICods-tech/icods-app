@@ -31,6 +31,13 @@ export const MiddleProfileContainer = styled.View`
   alignItems: center;
   justifyContent: center;
 `
+export const ProfilePicture = styled.Image.attrs({
+  resizeMode: "contain"
+})`
+  width: ${RFValue(166)}px;
+  height: ${RFValue(166)}px;
+`;
+
 
 export const WhiteText = styled.Text`
   color: #fff;
@@ -46,7 +53,7 @@ export const WhiteTextName = styled.Text`
   font-weight: 700;
   font-size: ${RFValue(16)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  margin-top: ${RFValue(-10)}px;
+  margin-top: ${RFValue(10)}px;
 `
 
 export const WhiteTextNumbers = styled.Text`

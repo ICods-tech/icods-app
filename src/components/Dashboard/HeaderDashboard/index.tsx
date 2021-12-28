@@ -39,16 +39,15 @@ const HeaderDashboard = ({
           <HeaderContainer>
             
             <HeaderUserInfoContainer onPress={() => navigation.navigate('Profile')}>
-              {avatar
-                ? <></>
-                : <HeaderUserPhoto 
-                    source={profilePictureDashboard}
+                  {
+                    <HeaderUserPhoto
+                      source={ avatar ? { uri: avatar } : profilePictureDashboard }
                     />
                   }
               
               <HeaderUserNameContainer>
-                <HeaderUserNameText>{name ? name : 'Unknown'}</HeaderUserNameText>
-                <HeaderUserNameText>{surname ? surname : 'Surname'}</HeaderUserNameText>
+                <HeaderUserNameText>{name ? name + '  ' : ''}</HeaderUserNameText>
+                <HeaderUserNameText>{surname ? surname : ''}</HeaderUserNameText>
               </HeaderUserNameContainer>
             
             </HeaderUserInfoContainer>
