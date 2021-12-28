@@ -1,25 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import api from '../../services/api';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { SafeAreaView, Animated, LogBox } from 'react-native';
+import { SafeAreaView, LogBox } from 'react-native';
 import { 
   CloudContainer, 
   CloudLeftLarge, 
   CloudRightSmall, 
   Container, 
   Content, 
-  DeleteButton, 
-  DeleteButtonIcon, 
-  FavoriteCardButtonIcon, 
-  FavoritedButton, 
   LargeSearchIcon, 
   NoResultsFoundDescriptionText, 
   NoResultsFoundText, 
-  NotFavoritedCardButtonIcon, 
   NotFoundContainer,  
   QRCodeDateList, 
   QRCodeList, 
-  QRCodeOptionsContainer, 
   QRCodeTitleContainer, 
   QRCodeTitleDate
 } from './styles';
@@ -52,24 +45,13 @@ export interface FilteredQRCodesByDate {
   [date: string]: FilteredQRCodes[];
 }
 
-interface RouteParams {
-  route: {
-    params: {
-      reload: boolean,
-    }
-  }
-}
-
-const History = ({ route }: RouteParams) => {
+const History = () => {
   const navigation = useNavigation();
-  const reload = (route.params && route.params.reload) ? route.params.reload : false;
-
-  const [reloadState, setReloadState] = useState(reload);
+  const [reloadState, setReloadState] = useState(false);
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(filteredQRCodesByDatePlaceholder)
   const [color, setColor] = useState<Colors>('noFilter')
   const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
-  const [reloadAfterDetails, setReloadAfterDetails] = useState(false)
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>(false)
 
   function handleFavoriteFilter() {
@@ -77,7 +59,6 @@ const History = ({ route }: RouteParams) => {
   }
 
   const loadQRCodes = useCallback(async (color: String, selectedDate: Date | undefined, favoriteFilter: boolean) => {
-    console.log('to casrregando de novo')
     const response = await api.get('filtered_qrcodes/data', {
       params: {
         color,
@@ -143,12 +124,15 @@ const History = ({ route }: RouteParams) => {
                         <>
                           <HistoryCards
                               pressed={() => {
-                                navigation.navigate('QRCodeHistoryDetails', {
+                                  navigation.navigate('QRCodeHistoryDetails', {
+                                    onGoBack: (changed: boolean) => {
+                                      changed && setReloadState(!reloadState)
+                                    },
                                   id, 
                                   color, 
                                   creator: qrCodeCreatorName, 
                                   favorite: favorited, 
-                                  link
+                                  link,
                                 })
                               }}
                               key={id}

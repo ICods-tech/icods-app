@@ -46,14 +46,15 @@ interface RouteParams {
       color: Colors,
       favorite: boolean,
       creator: string,
-      link: string
+      link: string,
+      onGoBack: (changed: boolean) => void
     }
   }
 }
 
 const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const navigation = useNavigation()
-  const { id, color: initialColorState, creator, favorite: initialFavoriteState, link } = route.params;
+  const { id, color: initialColorState, creator, favorite: initialFavoriteState, link, onGoBack } = route.params;
 
   const [changesWereMade, setChangesWereMade] = useState(false);
   const [updatedFavorite, setUpdatedFavorite] = useState<boolean>(initialFavoriteState)
@@ -94,9 +95,8 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
           if (colorIsDifferent || favoriteIsDifferent) {
             setSaveChangesModalOpen(true)
           } else {
-            changesWereMade
-              ? navigation.navigate('History', { reload: 'RELOAD' })
-              : navigation.goBack()
+            onGoBack(changesWereMade)
+            navigation.goBack()
           }
         }}
         setFavorite={() => { }}
@@ -111,12 +111,11 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         confirmText='Salvar'
         pressedOut={() => setSaveChangesModalOpen(!saveChangesModalOpen)}
         confirmed={async () => {
-          updatedColor !== lastSavedColor && handleChangeQRCodeColor(updatedColor)
-          updatedFavorite !== lastSavedFavorite && handleFavoriteQRCode(id)
-          setChangesWereMade(true)
+          updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)
+          updatedFavorite !== lastSavedFavorite && await handleFavoriteQRCode(id)
           setSaveChangesModalOpen(false)
-          
-          navigation.navigate('History', { reload: 'RELOAD' })
+          onGoBack(true)
+          navigation.goBack()
         }}
       />
       <Content>
