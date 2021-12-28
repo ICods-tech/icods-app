@@ -61,8 +61,8 @@ export const ScannerPopUPSubContainerText = styled.Text`
 export const ScannerPopUPSubContainerCloseButton = styled.TouchableOpacity`
   position: absolute;
 
-  width: 25px;
-  height: 25px;
+  width: 32px;
+  height: 32px;
 
   right: 15px;
   top: 15px;
