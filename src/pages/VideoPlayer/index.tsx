@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import Video from 'react-native-video-player';
 import { Container, IconsContainer, VideoContainer } from './styles';
 import VideoPlayerFooter from '../../components/VideoPlayer/VideoPlayerFooter';
 import { useAuth } from '../../hooks/auth';
 import Header from '../../components/Header';
-import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
 
 const VideoPlayer = ( { route, _ }: any ) => {
   const { user } = useAuth();
@@ -14,7 +13,7 @@ const VideoPlayer = ( { route, _ }: any ) => {
 
   return (
     <Container>
-      <Header page="" navigate={'back'} color="#FFFFFF" isVideoPlayer/>
+      <Header page="" navigate={user ? 'Dashboard': 'SignIn'} color="#FFFFFF" isVideoPlayer/>
       <VideoContainer>
         <Video 
           video={{ uri: qrcode.link ? qrcode.link : url}}

@@ -11,6 +11,7 @@ import { colorsIconsProps } from '.';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
 
+
 export const Container = styled.View``;
 
 export const ModalContainer = styled.View`
