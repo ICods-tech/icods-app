@@ -22,10 +22,11 @@ interface HeaderHistoryProps {
   qrCodeDetails?: boolean;
   setFavorite: () => void;
   setColorAndDate: ({ date, color }: ColorAndDateProps) => void;
-  setSelectedColor: (color: Colors) => void,
-  selectedColor: Colors,
-  setSelectedDate: (date: Moment | undefined) => void,
-  selectedDate: Moment | undefined,
+  setSelectedColor?: (color: Colors) => void,
+  selectedColor?: Colors,
+  backButtonPressed?: () => void;
+  setSelectedDate?: (date: Moment | undefined) => void,
+  selectedDate?: Moment | undefined,
 }
 
 interface ColorAndDateProps {
@@ -39,6 +40,7 @@ export function HeaderHistory({
   favorite, 
   qrCodeDetails,
   setSelectedColor,
+  backButtonPressed,
   selectedColor,
   setSelectedDate,
   selectedDate
@@ -58,7 +60,8 @@ export function HeaderHistory({
       <Container>
         <Header>
           <BackButton 
-            navigationTo={qrCodeDetails ? 'History' : 'Dashboard'}
+            customFunction={backButtonPressed}
+            navigationTo={backButtonPressed ? 'WAIT' : ''}
           />
           <Title>Histórico</Title>
         </Header>
@@ -91,11 +94,11 @@ export function HeaderHistory({
               >
                 <FilterModal
                   visible={modalVisible}
-                  setSelectedColor={setSelectedColor}
-                  selectedColor={selectedColor}
+                  setSelectedColor={setSelectedColor!}
+                  selectedColor={selectedColor!}
                   pressedOut={() => setModalVisible(!modalVisible)}
                   selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate}
+                  setSelectedDate={setSelectedDate!}
                   confirmedFilter={async ({ date, color }) => {
                     
                     setModalVisible(false)

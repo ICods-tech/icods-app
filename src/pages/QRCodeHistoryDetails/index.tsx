@@ -1,35 +1,37 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { CardColors } from '../../components/History/HistoryCards';
+import React, { useCallback, useState } from 'react';
 import { Colors } from '../../interfaces/colors';
-import { 
-  ColorButton, 
-  ColorsButtonList, 
-  Container, 
-  Content, 
-  Separator, 
+import {
+  Container,
+  Content,
+  Separator,
   TitleQRCode,
+  IconsContainer,
   QRCodeContainer,
   QRCodeImgContainer,
   QRCodeTemplateImg,
   ColorSelectContainer,
+  QRCodeInfoTopContainer,
   TitleColorSelect,
   OptionsButtonsQRContainer,
-  ColorsSelectContainer,
+  QRCodeInfoContainer,
+  SaveChangesContainer,
 } from './styles';
 import { colorsIconsList } from '../../components/History/FilterModal'
 import { ColorsSelect } from '../../components/ColorsSelect';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
 import { IconRectButton } from '../../components/IconRectButton';
-import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 import api from '../../services/api';
-import FavoritedIcon from '../../assets/images/Icons/favorited-line.svg';
+import { FavoriteButton } from '../../components/FavoriteButton';
 import HistoryFooter from '../../components/LoggedFooter';
-import NotFavoritedIcon from '../../assets/images/Icons/notFavorited-line.svg';
-import PlayIcon from '../../assets/images/Icons/playIcon.svg';
-import ShareIcon from '../../assets/images/Icons/shareIcon.svg';
+import SaveIcon from '../../assets/images/Icons/save-icon.svg';
+import SaveIconModal from '../../assets/images/Icons/save-changes-icon.svg';
+import { Play, Unlock } from 'react-native-iconly'
+import { ShareButton } from '../../components/ShareButton';
+import { ChangeInfoModal } from '../../components/ChangeInfoModal';
+import Toast from 'react-native-toast-message';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -44,104 +46,161 @@ interface RouteParams {
       color: Colors,
       favorite: boolean,
       creator: string,
-      link: string
+      link: string,
+      onGoBack: (changed: boolean) => void
     }
   }
 }
 
 const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const navigation = useNavigation()
-  const { id, color, creator, favorite, link } = route.params;
-  const [updatedFavorite, setUpdatedFavorite] = useState<boolean>(favorite)
-  const [updatedColor, setUpdatedColor] = useState<Colors>(color)
+  const { id, color: initialColorState, creator, favorite: initialFavoriteState, link, onGoBack } = route.params;
+
+  const [changesWereMade, setChangesWereMade] = useState(false);
+  const [updatedFavorite, setUpdatedFavorite] = useState<boolean>(initialFavoriteState)
+  const [updatedColor, setUpdatedColor] = useState<Colors>(initialColorState)
+  const [lastSavedFavorite, setLastSavedFavorite] = useState<boolean>(initialFavoriteState)
+  const [lastSavedColor, setLastSavedColor] = useState<Colors>(initialColorState)
+
+  const [saveChangesModalOpen, setSaveChangesModalOpen] = useState(false)
   const theme = useTheme();
+  
   const handleFavoriteQRCode = useCallback(async (id: string) => {
     await api.patch(`received_qrcode/favorite/${id}`)
-    setUpdatedFavorite(!updatedFavorite)
-  }, [updatedFavorite])
+    setLastSavedFavorite(updatedFavorite)
+  }, [updatedFavorite, lastSavedFavorite])
 
+  
   const handleChangeQRCodeColor = useCallback(async (color: Colors) => {
     await api.patch(`received_qrcode/color/${id}`, {
       color: (color === 'noFilter') ? 'noColor' : color
     })
-    setUpdatedColor(color)
-  }, [updatedColor])
+    setLastSavedColor(updatedColor)
+  }, [updatedColor, lastSavedColor])
 
+  
+  const PlayIcon = () => <Play set={'bulk'} style={{ borderColor: theme.colors.primary, borderWidth: RFValue(2), borderRadius: RFValue(16) }} filled={false} primaryColor={theme.colors.primary} secondaryColor={'white'} />
+  const UnlockIcon = () => <Unlock set={'bold'} color={theme.colors.primary} />
+
+  
   return (
     <Container>
       <HeaderHistory
         favorite={false}
         qrCodeDetails={true}
+        backButtonPressed={() => {
+          const colorIsDifferent = updatedColor !== lastSavedColor
+          const favoriteIsDifferent = updatedFavorite !== lastSavedFavorite
+
+          if (colorIsDifferent || favoriteIsDifferent) {
+            setSaveChangesModalOpen(true)
+          } else {
+            onGoBack(changesWereMade)
+            navigation.goBack()
+          }
+        }}
         setFavorite={() => { }}
         setColorAndDate={() => { }}
       />
+      <ChangeInfoModal
+        title={'Você precisa salvar as alterações'}
+        description={'Você realizou alterações no QR Code e está saindo sem salva-las'}
+        icon={<SaveIconModal />}
+        iconBackgroundColor={'#ebad3e'}
+        visible={saveChangesModalOpen}
+        confirmText='Salvar'
+        pressedOut={() => setSaveChangesModalOpen(!saveChangesModalOpen)}
+        confirmed={async () => {
+          updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)
+          updatedFavorite !== lastSavedFavorite && await handleFavoriteQRCode(id)
+          setSaveChangesModalOpen(false)
+          onGoBack(true)
+          navigation.goBack()
+        }}
+      />
       <Content>
-        <QRCodeContainer>
-          <TitleQRCode>iCOD {id.substr(id.length - 8)}</TitleQRCode>
-          <QRCodeImgContainer updatedColor={updatedColor}>
-            <QRCodeTemplateImg />
-          </QRCodeImgContainer>
-        </QRCodeContainer>
-
-        <ColorSelectContainer>
-          <TitleColorSelect>Alterar cor</TitleColorSelect>
-            <ColorsSelect 
+        <QRCodeInfoContainer>
+          <QRCodeInfoTopContainer>
+            <QRCodeContainer>
+              <TitleQRCode>iCOD {id.substr(id.length - 8)}</TitleQRCode>
+              <QRCodeImgContainer updatedColor={updatedColor}>
+                <QRCodeTemplateImg />
+              </QRCodeImgContainer>
+            </QRCodeContainer>
+            <IconsContainer>
+              {creator !== 'Você'
+                ? <FavoriteButton 
+                    style={{ marginBottom: RFValue(16) }}
+                    onPress={() => setUpdatedFavorite(!updatedFavorite)}
+                    background='WHITE'
+                    favorite={updatedFavorite}
+                  /> : <></>}
+              <ShareButton 
+                onPress={() => {}}
+                background='WHITE'
+              />
+            </IconsContainer>
+          </QRCodeInfoTopContainer>
+          <ColorSelectContainer>
+            <TitleColorSelect>Alterar cor</TitleColorSelect>
+            <ColorsSelect
               data={colorsIconsList}
               selectedColor={updatedColor}
-              setSelectedColor={handleChangeQRCodeColor}
+              setSelectedColor={(color: Colors) => setUpdatedColor(color)}
             />
-        </ColorSelectContainer>
-        <OptionsButtonsQRContainer>
-        <IconRectButton 
-            onPress={() => {
-              navigation.navigate('VideoPlayer', {
-                qrcode: {
-                  link
-              }
-            })
-            }}
-            text="Visualizar Conteúdo"
-            icon={PlayIcon}
-          />
-          <Separator />
-          <IconRectButton 
-            onPress={() => {}}
-            text="Compartilhar"
-            icon={ShareIcon}
-          />
-          <Separator />   
-
-
-          {creator !== 'Você' && (
-            updatedFavorite ?
-              <LoginSocialButton
-                title="Desfazer Curtida iCod"
-                background={'Blue'}
-                style={{
-                    width: RFValue(262),  
-                    borderColor: theme.colors.primary,
-                    backgroundColor: theme.colors.primary,
-                    borderRadius: RFValue(131),
-                  }}
-                textColor={theme.colors.shape}
-                icon={FavoritedIcon}
-                onPress={() => handleFavoriteQRCode(id)}
-              />
-              : 
-              <LoginSocialButton
-                title="Curtir iCod"
-                style={{
-                  width: RFValue(260),
-                  borderRadius: RFValue(131),
-                  borderWidth: 2,
-                  borderColor: 'black',
-                }}
-                icon={NotFavoritedIcon}
-                onPress={() => handleFavoriteQRCode(id)}
-              />
-          )}
-        </OptionsButtonsQRContainer>
+          </ColorSelectContainer>
+          <OptionsButtonsQRContainer>
+            <IconRectButton
+              color={'White'}
+              onPress={() => { }}
+              style={{ width: RFValue(212)}}
+              text="Público"
+              icon={UnlockIcon}
+            />
+            <Separator />
+            <IconRectButton
+              color={'White'}
+              onPress={() => {
+                if (link) {
+                  navigation.navigate('VideoPlayer', {
+                    qrcode: {
+                      link
+                    }
+                  })
+                }
+              }}
+              style={{ width: RFValue(212) }}
+              text="Visualizar Conteúdo"
+              icon={PlayIcon}
+            />
+          </OptionsButtonsQRContainer>
+        </QRCodeInfoContainer>
       </Content>
+      <SaveChangesContainer>
+        <IconRectButton
+          onPress={() => {
+            const colorsAreDifferent = updatedColor !== lastSavedColor
+            const favoritesAreDifferent = updatedFavorite !== lastSavedFavorite
+
+            if (colorsAreDifferent || favoritesAreDifferent) { 
+              colorsAreDifferent && handleChangeQRCodeColor(updatedColor)
+              favoritesAreDifferent && handleFavoriteQRCode(id)
+              Toast.show({
+                type: 'success',
+                position: 'bottom',
+                text1: 'As alterações foram salvas com sucesso',
+                visibilityTime: 1200,
+                bottomOffset: 100,
+              })
+
+              setChangesWereMade(true)
+            }
+          }}
+          style={{ width: RFValue(212) }}
+          text="Salvar alterações"
+          icon={SaveIcon}
+        />
+      </SaveChangesContainer>
       <HistoryFooter
         isHistory
       />

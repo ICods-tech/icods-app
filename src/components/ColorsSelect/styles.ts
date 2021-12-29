@@ -28,14 +28,14 @@ interface ColorButtonProps {
 }
 
 export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
-    width: ${RFValue(24)}px;
-    height: ${RFValue(24)}px;
+    width: ${RFValue(20)}px;
+    height: ${RFValue(20)}px;
     align-items: center;
     justify-content: center;
     ${({selectedColor, color}) => selectedColor === color && css`
-        width: ${RFValue(36)}px;
-        height: ${RFValue(36)}px;
-        border-width: ${RFValue(1)}px;
+        width: ${RFValue(30)}px;
+        height: ${RFValue(30)}px;
+        border-width: ${RFValue(2)}px;
         border-radius: ${RFValue(4)}px;
         border-color: ${({theme}) => theme.colors.title};
     `};

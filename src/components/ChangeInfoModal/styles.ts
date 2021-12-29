@@ -6,12 +6,11 @@ import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View``;
 
-export const DeleteAccountIconContainer = styled.View`
+export const IconContainer = styled.View`
   display: flex;
   width: ${RFValue(52)}px;
   height: ${RFValue(52)}px;
   border-radius: ${RFValue(30)}px;
-  background: #ce3e36;
   align-self: center;
   align-items: center;
   justify-content: center;
@@ -34,7 +33,7 @@ export const ModalContainer = styled.View`
   border-radius: ${RFValue(8)}px;
 `;
 
-export const ExcludeAccountTextContainer = styled.View`
+export const ChangeInfoTextContainer = styled.View`
   margin-top: ${RFValue(16)}px;
   display: flex;
   align-self: center;
@@ -43,7 +42,7 @@ export const ExcludeAccountTextContainer = styled.View`
   justify-content: center;
 `;
 
-export const ExcludeAccountTitle = styled.Text`
+export const ChangeInfoTitle = styled.Text`
   font-family: Manrope;
   font-style: normal;
   font-weight: 800;
@@ -53,7 +52,7 @@ export const ExcludeAccountTitle = styled.Text`
   color: #282C37;
 `
 
-export const ExcludeAccountDescription = styled.Text`
+export const ChangeInfoDescription = styled.Text`
   font-family: Manrope;
   font-style: normal;
   text-align: center;
