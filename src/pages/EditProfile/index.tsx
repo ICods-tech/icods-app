@@ -9,6 +9,8 @@ import { useAuth, User } from '../../hooks/auth'
 import { ChangeInfoModal } from '../../components/ChangeInfoModal';
 import { useNavigation } from '@react-navigation/native';
 import theme from '../../global/styles/theme';
+import extractNameAndSurname from '../../utils/extractNameAndSurname';
+import { useTheme } from 'styled-components';
 
 interface EditProfileProps {
   route: {
@@ -23,10 +25,14 @@ type UserFields = 'id' | 'name' | 'email' | 'username' | 'visibility'
 
 const EditProfile = ({ route }: EditProfileProps) => {
   const navigation = useNavigation();
+  const theme = useTheme();
   const { user, token, alterProfileVisibility, signOut, deleteUser } = useAuth()
   const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false)
-  const { following, follower } = route.params
+  const { following, follower } = route.params;
+  const { name, lastname } = user ? extractNameAndSurname(user.name) : { name: '', lastname: '' }
+  const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
 
+  const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
   const handleUserObject = (field: UserFields, user: User | undefined) => {
     if (user === undefined) {
       return 'Placeholder'
@@ -57,6 +63,7 @@ const EditProfile = ({ route }: EditProfileProps) => {
         following={following}
         follower={follower}
         edit
+        avatar={avatar}
       />
       <ChangeInfoModal
         title={'Você está prestes a excluir a conta'}

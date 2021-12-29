@@ -4,7 +4,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { colorsIconsProps } from '../../components/History/FilterModal';
 import { Colors } from '../../interfaces/colors';
 import { CardColors } from '../../components/History/HistoryCards';
-import QRCodeTemplate from '../../assets/images/qrCodeLargeTemplate.svg'
+import QRCodeTemplate from '../../assets/images/qrCodeLargeTemplate.svg';
 
 export const Container = styled.View`
     flex: 1;

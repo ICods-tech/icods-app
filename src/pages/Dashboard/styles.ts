@@ -92,10 +92,8 @@ export const FeedOptionsTitleContainer = styled.View`
     flex-direction: row;
     align-self: flex-end;
     justify-content: center;
-
     height: ${RFValue(27)}px;   
-    width: ${RFValue(177)}px;
-    margin-left: ${RFValue(12)}px;
+    margin-left: ${RFValue(26)}px;
 `;
 
 interface FeedOptionsTitleProps {
@@ -105,7 +103,8 @@ interface FeedOptionsTitleProps {
 export const FeedOptionTitleButton = styled(RectButton)`
     align-items: center;
     justify-content: space-between;
-    width: ${RFValue(89)}px;
+    width: ${RFValue(70)}px;
+
 `;
 
 export const FeedOptionTitleAll = styled.Text<FeedOptionsTitleProps>`
