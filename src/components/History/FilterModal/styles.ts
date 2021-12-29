@@ -10,7 +10,6 @@ import NoColor from '../../../assets/images/Icons/colors/none.svg'
 import { colorsIconsProps } from '.';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View``;
 
@@ -151,43 +150,43 @@ export const ModalCancelButtonText = styled.Text`
 `;
 
 export const BlackIcon = styled(Black).attrs({
-  width: RFValue(19),
-  height: RFValue(19),
+  width: RFValue(20),
+  height: RFValue(20),
 })``;
 
 export const BlueIcon = styled(Blue).attrs({
-  width: RFValue(19),
-  height: RFValue(19),
+  width: RFValue(20),
+  height: RFValue(20),
 })``;
 
 export const CyanIcon = styled(Cyan).attrs({
-  width: RFValue(19),
-  height: RFValue(19),
+  width: RFValue(20),
+  height: RFValue(20),
 })``;
 
 export const GreenIcon = styled(Green).attrs({
-  width: RFValue(19),
-  height: RFValue(19),
+  width: RFValue(20),
+  height: RFValue(20),
 })``;
 
 export const RedIcon = styled(Red).attrs({
-  width: RFValue(19),
-  height: RFValue(19),
+  width: RFValue(20),
+  height: RFValue(20),
 })``;
 
 export const PinkIcon = styled(Pink).attrs({
-  width: RFValue(19),
-  height: RFValue(19),
+  width: RFValue(20),
+  height: RFValue(20),
 })``;
 
 export const YellowIcon = styled(Yellow).attrs({
-  width: RFValue(19),
-  height: RFValue(19),
+  width: RFValue(20),
+  height: RFValue(20),
 })``;
 
 export const NoColorIcon = styled(NoColor).attrs({
-  width: RFValue(19),
-  height: RFValue(19),
+  width: RFValue(20),
+  height: RFValue(20),
 })``;
 
 export const calendarStyles = StyleSheet.create({
