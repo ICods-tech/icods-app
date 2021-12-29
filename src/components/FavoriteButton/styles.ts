@@ -1,9 +1,8 @@
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import NotFavorited from '../../assets/images/Icons/favorite_search.svg';
 import Favorited from '../../assets/images/Icons/favorited_search.svg';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { View } from 'react-native';
 
 interface FavoriteItemContainerProps { 
     background: 'WHITE' | 'BLUE'
