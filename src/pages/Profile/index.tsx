@@ -31,10 +31,10 @@ interface IFollowerUsers {
 const Profile = () => {
   const theme = useTheme();
   const { user, token } = useAuth()
-  const { name, surname } = user ? extractNameAndSurname(user.name) : { name: '', surname: '' }
-  const nameAndSurname = `${name} ${surname ? surname : ''}`;
+  const { name, lastname } = user ? extractNameAndSurname(user.name) : { name: '', lastname: '' }
+  const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
 
-  const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndSurname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
+  const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
 
   const [following, setFollowing] = useState<IFollowingUsers>({ followingCount: 0, followingUsers: [] })
   const [followers, setFollowers] = useState<IFollowerUsers>({ followersCount: 0, followerUsers: [] })
