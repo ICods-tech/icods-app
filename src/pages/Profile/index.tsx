@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar, SafeAreaView } from 'react-native';
+import { useTheme } from 'styled-components';
 import HeaderProfile from '../../components/HeaderProfile'
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
+import extractNameAndSurname from '../../utils/extractNameAndSurname';
 import { 
   ActivitiesContainer, 
   ActivitiesText, 
@@ -27,7 +29,12 @@ interface IFollowerUsers {
 }
 
 const Profile = () => {
+  const theme = useTheme();
   const { user, token } = useAuth()
+  const { name, lastname } = user ? extractNameAndSurname(user.name) : { name: '', lastname: '' }
+  const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
+
+  const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
 
   const [following, setFollowing] = useState<IFollowingUsers>({ followingCount: 0, followingUsers: [] })
   const [followers, setFollowers] = useState<IFollowerUsers>({ followersCount: 0, followerUsers: [] })
@@ -71,6 +78,7 @@ const Profile = () => {
         following={following.followingCount}
         follower={followers.followersCount}
         edit={false}
+        avatar={avatar}
       />
       <ActivitiesContainer>
         <ActivitiesText>Atividades</ActivitiesText>

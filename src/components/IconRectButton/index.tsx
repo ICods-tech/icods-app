@@ -4,23 +4,33 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { SvgProps } from 'react-native-svg';
 
 import {
-    Button, IconContainer, Title,
+    Button, Container, IconContainer, Title,
 } from './styles';
 
 interface IconRectButtonProps extends RectButtonProps{
     text: string;
-    icon: React.FC<SvgProps>;
+    icon: any;
+    color?: 'White' | 'Blue';
 }
-export function IconRectButton({text, icon: Icon, ...rest}: IconRectButtonProps){
-    return (
-        <Button {...rest}>
-            <IconContainer>
-                <Icon 
+
+
+export function IconRectButton({ text, icon: Icon, color, ...rest }: IconRectButtonProps) {
+    const content = (
+        <Button color={color!} {...rest}>
+                    <IconContainer>
+                <Icon  
                     width={RFValue(16)}
                     height={RFValue(16)}
                 />
             </IconContainer>
-            <Title>{text}</Title>
+            <Title color={color!}>{text}</Title>
         </Button>
+    )
+    return (
+        color === 'White' ? (
+            <Container>
+                {content}
+            </Container>
+        ) : (content)
     );
 }

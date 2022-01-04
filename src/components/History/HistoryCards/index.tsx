@@ -35,6 +35,7 @@ interface HistoryCardsProps extends RectButtonProperties{
   color: Colors;
   date: string;
   favorite: boolean;
+  pressed: () => void;
   link: string;
   privacy: "Público" | "Privado";
 }
@@ -65,6 +66,7 @@ export function HistoryCards({
   creator, 
   date, 
   color, 
+  pressed,
   favorite,
   privacy,
   link,
@@ -74,8 +76,7 @@ export function HistoryCards({
   const navigation = useNavigation()
   return (
     <Button
-      onPress={
-        () => navigation.navigate('QRCodeHistoryDetails', { id, color, creator, favorite, link })}
+      onPress={pressed}
         {...rest}
         >
           <Container color={color}>
