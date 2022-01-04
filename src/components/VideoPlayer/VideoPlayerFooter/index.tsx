@@ -34,15 +34,13 @@ const VideoPlayerFooter = ( { url }: VideoPlayerFooterProps ) =>
       headers: headers
     }
 
-    const response = await RNFS.downloadFile( options );
-    console.log( response );
-    // Se job id 1 = download e ele se encontra na pasta de pictures
+    const response = RNFS.downloadFile(options);
   }
 
   const onSharePress = async () =>
   {
     const result = await Share.share( {
-      message: `${ url } \n\nSending video to test `,
+      message: `${ url } \n\nConfira essa recordação enviada para mim através do iCods. `,
       url,
     } );
   };
