@@ -30,7 +30,7 @@ export const Title = styled.Text`
     fontFamily: Manrope;
     fontStyle: normal;
     fontWeight: 800;
-    fontSize: 16px;
+    fontSize: 14px;
     lineHeight: 22px;
     margin: 16px 0;
     color: rgba(0, 0, 0, 0.87);
@@ -46,16 +46,18 @@ export const TextContainerTitle = styled.Text`
     fontStyle: normal;
     fontWeight: 800;
     fontSize: 14px;
-    lineHeight: 22px;
+    lineHeight: 19px;
     marginTop: 8px;
     color: rgba(0, 0, 0, 0.87);
 `;
 
 export const TextContainerText = styled.Text`
+    width: 95%;
     fontFamily: Manrope;
     fontStyle: normal;
     fontWeight: 400;
-    fontSize: 12px;
+    fontSize: 14px;
+    lineHeight: 19px;
     color: rgba(0, 0, 0, 0.87);
 `;
 

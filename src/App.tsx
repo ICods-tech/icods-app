@@ -8,10 +8,9 @@ import Routes from './routes'
 import Toast, { BaseToast } from 'react-native-toast-message';
 import theme from './global/styles/theme';
 import * as Sentry from '@sentry/react-native';
-const {SENTRY_KEY} = process.env;
 
 Sentry.init({
-  dsn: `${SENTRY_KEY}`,
+  dsn: `${process.env.SENTRY_KEY}`,
   tracesSampleRate: 1.0,
 });
 
