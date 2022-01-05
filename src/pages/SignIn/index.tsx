@@ -64,7 +64,7 @@ const SignIn = () => {
       Toast.show({
         type: 'error',
         position: 'bottom',
-        text1: 'Email/Username ou senha incorretos',
+        text1: 'Email/Password ou senha incorretos',
         text2: '',
         visibilityTime: 1000,
         bottomOffset: 100,
@@ -93,7 +93,7 @@ const SignIn = () => {
                   autoCapitalize="none"
                   icon={UserIcon}
                   keyboardType="email-address"
-                  placeholder="Email/Username"
+                  placeholder="E-mail"
                   placeholderTextColor={theme.colors.subtitle}
                   defaultValue={email}
                   onChangeText={(email: string) => setEmail(email)}
