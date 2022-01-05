@@ -29,6 +29,7 @@ import NewInput from '../../components/NewInput'
 import { SpacingLine } from '../SignIn/styles'
 import { useTheme } from 'styled-components'
 import { SubmitButton } from '../../components/Authentication/SubmitButton'
+import ModalUseTerms from '../../components/ModalUseTerms';
 
 export interface IRouteErrors {
   name: boolean;
@@ -71,6 +72,7 @@ const Register = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
+  const [useTerms, setUseTerms] = useState(false);
 
   const handleSignUp = useCallback(async () => {
     const data = {
@@ -90,6 +92,8 @@ const Register = () => {
       }
 
       await signUp({ name, username, email, password, passwordConfirmation })
+      
+      setUseTerms(false);
       Toast.show({
         type: 'success',
         position: 'bottom',
@@ -101,6 +105,7 @@ const Register = () => {
       await signIn({ email, password })
       setAttention(false);  
     } catch (errorResponse: any) {
+      setUseTerms(false);
       const errors = errorResponse.response.data
       console.log('Não conseguiu cadastras:', data);
       console.log(errors);
@@ -108,13 +113,24 @@ const Register = () => {
       if ('message' in errors) await handleRegisterRouteErrors(errors, setIsErrored)
       else await handleFieldAlreadyExistsErrors(errors, setIsErrored)
     }
-  }, [name, username, email, password, passwordConfirmation])
+
+    
+  }, [name, username, email, password, passwordConfirmation, useTerms])
   
   useEffect(() => {
     Keyboard.addListener('keyboardDidHide', () => {
       setIsInputFocus(false);
     })  
   }, [inputFocusObserver])
+
+
+  const handleRegister = () => {
+    setUseTerms(true);    
+  }
+
+  const handleCancel = () => {
+    setUseTerms(false);
+  }
   
   return (
     <SafeAreaView>
@@ -218,13 +234,14 @@ const Register = () => {
 
             <SubmitButtonContainer>
               <SubmitButton
-                  onPress={() => handleSignUp()}
+                  onPress={() => handleRegister()}
                   text='Cadastrar'
                 />
             </SubmitButtonContainer>
           </RegisterForm>
         </Container>
       </TouchableWithoutFeedback>
+      { useTerms && <ModalUseTerms handleSignUp={() => handleSignUp()} handleCancel={() => handleCancel()}/> }
     </SafeAreaView>
 
   )
