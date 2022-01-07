@@ -23,7 +23,6 @@ const VideoPlayerFooter = ( { url, updatedFavorite, setUpdatedFavorite }: VideoP
   const path = `${ RNFS.PicturesDirectoryPath }/${ Date.now() }.mp4`;
   const [favoriteButton, setFavoritedButton] = useState<boolean>(updatedFavorite);
   
-  console.log('ANTES: ', favoriteButton);
   const onDownloadPress = async () =>
   {
     const headers = {
@@ -53,7 +52,6 @@ const VideoPlayerFooter = ( { url, updatedFavorite, setUpdatedFavorite }: VideoP
     if( user ){
       setFavoritedButton(!favoriteButton)
       setUpdatedFavorite(!updatedFavorite)
-      console.log('DEPOIS: ', favoriteButton)
     }else{
       navigation.navigate( "GiftOpen" );
     }
