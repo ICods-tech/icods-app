@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Share } from 'react-native';
 import styles from './styles';
 import RNFS from 'react-native-fs';
-
 import IconDownload from '../../../assets/images/icon_download.svg';
-import IconLike from '../../../assets/images/icon_like.svg';
+import HeartVideoIcon from '../../../assets/images/heartvideoicon.svg';
+import HeartVideoIconFilled from '../../../assets/images/heartvideoiconfilled.svg';
 import IconShare from '../../../assets/images/icon_share.svg';
 import { useAuth } from '../../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -12,15 +12,18 @@ import { useNavigation } from '@react-navigation/native';
 interface VideoPlayerFooterProps
 {
   url: string;
+  updatedFavorite: boolean;
+  setUpdatedFavorite: (updatedFavorite: boolean) => void;
 }
 
-const VideoPlayerFooter = ( { url }: VideoPlayerFooterProps ) =>
+const VideoPlayerFooter = ( { url, updatedFavorite, setUpdatedFavorite }: VideoPlayerFooterProps ) =>
 {
-
   const { user } = useAuth();
   const navigation = useNavigation();
-  const path = `${ RNFS.PicturesDirectoryPath }/${ Date.now() }.mp4`
-
+  const path = `${ RNFS.PicturesDirectoryPath }/${ Date.now() }.mp4`;
+  const [favoriteButton, setFavoritedButton] = useState<boolean>(updatedFavorite);
+  
+  console.log('ANTES: ', favoriteButton);
   const onDownloadPress = async () =>
   {
     const headers = {
@@ -47,12 +50,11 @@ const VideoPlayerFooter = ( { url }: VideoPlayerFooterProps ) =>
 
   const onLikePress = async () =>
   {
-    if ( user )
-    {
-
-    }
-    else
-    {
+    if( user ){
+      setFavoritedButton(!favoriteButton)
+      setUpdatedFavorite(!updatedFavorite)
+      console.log('DEPOIS: ', favoriteButton)
+    }else{
       navigation.navigate( "GiftOpen" );
     }
   };
@@ -62,9 +64,15 @@ const VideoPlayerFooter = ( { url }: VideoPlayerFooterProps ) =>
       <TouchableOpacity onPress={ onDownloadPress }>
         <IconDownload />
       </TouchableOpacity>
+      
       <TouchableOpacity onPress={ onLikePress }>
-        <IconLike />
+        { favoriteButton ? 
+            <HeartVideoIconFilled />
+            : 
+            <HeartVideoIcon/>
+          }
       </TouchableOpacity>
+      
       <TouchableOpacity onPress={ onSharePress }>
         <IconShare />
       </TouchableOpacity>

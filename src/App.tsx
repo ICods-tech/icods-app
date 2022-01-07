@@ -9,9 +9,8 @@ import Toast, { BaseToast } from 'react-native-toast-message';
 import theme from './global/styles/theme';
 import * as Sentry from '@sentry/react-native';
 
-console.log('iniciando app');
 Sentry.init({
-  dsn: 'https://611e5dfbf7e5455b8d5185826ec3aaba@o1079135.ingest.sentry.io/6112876',
+  dsn: `${process.env.SENTRY_KEY}`,
   tracesSampleRate: 1.0,
 });
 

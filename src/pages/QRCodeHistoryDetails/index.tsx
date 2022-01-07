@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Colors } from '../../interfaces/colors';
 import {
   Container,
@@ -21,7 +21,7 @@ import { ColorsSelect } from '../../components/ColorsSelect';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
 import { IconRectButton } from '../../components/IconRectButton';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
 import api from '../../services/api';
 import { FavoriteButton } from '../../components/FavoriteButton';
@@ -39,7 +39,7 @@ export interface QRCodeHistoryDetailsProps {
   favorited?: boolean;
 }
 
-interface RouteParams {
+export interface RouteParams {
   route: {
     params: {
       id: string,
@@ -66,8 +66,8 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const theme = useTheme();
   
   const handleFavoriteQRCode = useCallback(async (id: string) => {
-    await api.patch(`received_qrcode/favorite/${id}`)
-    setLastSavedFavorite(updatedFavorite)
+      await api.patch(`received_qrcode/favorite/${id}`,  {favorited: updatedFavorite})
+      setLastSavedFavorite(updatedFavorite)
   }, [updatedFavorite, lastSavedFavorite])
 
   
@@ -82,7 +82,9 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const PlayIcon = () => <Play set={'bulk'} style={{ borderColor: theme.colors.primary, borderWidth: RFValue(2), borderRadius: RFValue(16) }} filled={false} primaryColor={theme.colors.primary} secondaryColor={'white'} />
   const UnlockIcon = () => <Unlock set={'bold'} color={theme.colors.primary} />
 
-  
+  // useEffect(() => { 
+  //   handleFavoriteQRCode(id);
+  // }, [updatedFavorite]);
   return (
     <Container>
       <HeaderHistory
@@ -164,8 +166,11 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
                 if (link) {
                   navigation.navigate('VideoPlayer', {
                     qrcode: {
-                      link
-                    }
+                      link,
+                      updatedFavorite,
+                      setUpdatedFavorite,
+                    },
+                    isHistoryDetails: true
                   })
                 }
               }}

@@ -36,7 +36,7 @@ const Scanner = () =>
       setQrCodeValidate( false );
       setQrcode( undefined );
     }
-    navigation.navigate(popUp?.press || 'Scanner', {qrcode});
+    navigation.navigate(popUp?.press || 'Scanner', {qrcode, isHistoryDetails: false});
   }
 
   const qrCodeIsEditable = () => {

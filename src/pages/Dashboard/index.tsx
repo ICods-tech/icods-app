@@ -46,12 +46,7 @@ const Dashboard = () => {
   const [choosenActivityScope, setChoosenActivityScope] = useState<'all' | 'mine'>('all')
   const [modalVisible, setModalVisible] = useState(false)
   const { user, signOut } = useAuth()
-  console.log('user', user);
-  
   const { name, lastname } = user ? extractNameAndSurname(user.name) : { name: '', lastname: '' }
-  console.log('name:', name);
-  console.log('lastname:', lastname);
-
   const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
   const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
 
