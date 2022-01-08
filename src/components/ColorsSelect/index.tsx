@@ -23,11 +23,11 @@ export function ColorsSelect({data, setSelectedColor, selectedColor }: ColorsSel
                     const {icon: Icon, key} = item;
                     return (
                         <ColorButton
-                        onPress={() => setSelectedColor(key as Colors)}
-                        selectedColor={selectedColor}
-                        color={key as Colors}
+                            onPress={() => setSelectedColor(key as Colors)}
+                            selectedColor={selectedColor}
+                            color={key as Colors}
                         >
-                        <Icon/>
+                            <Icon />
                     </ColorButton>
                 )
             }

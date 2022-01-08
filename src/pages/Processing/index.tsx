@@ -10,7 +10,6 @@ import ErrorProcessing from '../../assets/images/Icons/editor/error_processing.s
 
 const Processing = ( { route, _ }: any ) =>
 {
-
   const navigation = useNavigation();
   const { user } = useAuth();
   const { qrcode, video } = route.params;
@@ -29,7 +28,7 @@ const Processing = ( { route, _ }: any ) =>
     setProcessedError( false );
 
     let formData = new FormData();
-    const name = (Math.random().toString(36)+'00000000000000000').slice(2, 5+2)
+    const name = (Math.random().toString(36)+'00000000000000000').slice(2, 8+2);
     formData.append( 'file', {
       uri: video,
       type: 'video/mp4',
@@ -52,7 +51,7 @@ const Processing = ( { route, _ }: any ) =>
       console.log( error );
       setColor( '#DF2C2C' );
       setTextTitle( 'Erro no Processamento' );
-      setText( 'Identificamos um problema relacionad ao processamento do seu iCod, verifique sua conexão e tente novamente' );
+      setText( 'Identificamos um problema relacionado ao processamento do seu iCod, verifique sua conexão e tente novamente.' );
       setProcessedError( true );
     }
   }

@@ -7,20 +7,25 @@ import {
   ModalConfirmButtonText,
   ModalCancelButtonText,
   BottomButton,
-  DeleteAccountIconContainer,
+  IconContainer,
   CloseButtonContainer,
-  ExcludeAccountTitle,
-  ExcludeAccountDescription,
-  ExcludeAccountTextContainer,
+  ChangeInfoTitle,
+  ChangeInfoDescription,
+  ChangeInfoTextContainer,
 } from './styles';
 import { SvgProps } from 'react-native-svg';
-import DeleteAccountIcon from '../../assets/images/Icons/Profile/delete-account-icon.svg'
 import CloseModalIcon from '../../assets/images/Icons/Profile/close-modal-icon.svg'
 
 interface ModalInterface {
   visible: boolean,
+  title: string,
+  description: string,
+  iconBackgroundColor: string,
+  confirmText?: string,
   pressedOut: () => void,
-  confirmedDeletion: () => Promise<void>,
+  cancelButtonPressed?: () => void,
+  confirmed: () => Promise<void>,
+  icon: any,
   initialDateValue?: undefined
 }
 
@@ -29,10 +34,16 @@ export interface colorsIconsProps {
   icon:  React.FC<SvgProps>;
 }
 
-export function DeleteAccountModal({
+export function ChangeInfoModal({
+    icon,
+    iconBackgroundColor,
+    title,
+    description,
     visible, 
     pressedOut, 
-    confirmedDeletion 
+    confirmText,
+    cancelButtonPressed,
+    confirmed
   }: ModalInterface){
   return (
     <Container>
@@ -44,34 +55,39 @@ export function DeleteAccountModal({
         onBackdropPress={pressedOut}
       >
         <ModalContainer>
-          <CloseButtonContainer>
-            <CloseModalIcon />
+          <CloseButtonContainer
+          >
+            <CloseModalIcon onPress={() => {
+                pressedOut()
+            }}/>
           </CloseButtonContainer>
-          <DeleteAccountIconContainer>
-            <DeleteAccountIcon />
-          </DeleteAccountIconContainer>
-          <ExcludeAccountTextContainer>
-            <ExcludeAccountTitle>
-              Você está prestes a excluir a conta
-            </ExcludeAccountTitle>
-            <ExcludeAccountDescription>
-              Ao confirmar, seus dados serão excluidos e será necessário fazer outro cadastro
-            </ExcludeAccountDescription>
-          </ExcludeAccountTextContainer>
+          <IconContainer
+            style={{ backgroundColor: iconBackgroundColor }}
+          >
+            { icon }
+          </IconContainer>
+          <ChangeInfoTextContainer>
+            <ChangeInfoTitle>
+              { title }
+            </ChangeInfoTitle>
+            <ChangeInfoDescription>
+              { description}
+            </ChangeInfoDescription>
+          </ChangeInfoTextContainer>
           <Footer>
             <BottomButton 
-              onPress={() => {
+              onPress={cancelButtonPressed ? cancelButtonPressed : (() => {
                 pressedOut()
-            }}>
+            })}>
               <ModalCancelButtonText>cancelar</ModalCancelButtonText>
             </BottomButton>
             
             <BottomButton
               onPress={() => {
-                confirmedDeletion()
+                confirmed()
               }}
               >
-              <ModalConfirmButtonText>confirmar</ModalConfirmButtonText>
+              <ModalConfirmButtonText>{ confirmText! ? confirmText : 'confirmar' }</ModalConfirmButtonText>
             </BottomButton>
           </Footer>
         </ModalContainer>

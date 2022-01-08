@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, SafeAreaView, ColorValue, StyleSheet, Dimensions, Alert, Modal } from 'react-native';
+import { View, Text, SafeAreaView } from 'react-native';
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
 import Header from '../../components/Header';
 import Mask from '../../components/Scanner/Mask';
@@ -36,7 +36,7 @@ const Scanner = () =>
       setQrCodeValidate( false );
       setQrcode( undefined );
     }
-    navigation.navigate(popUp?.press || 'Scanner', {qrcode});
+    navigation.navigate(popUp?.press || 'Scanner', {qrcode, isHistoryDetails: false});
   }
 
   const qrCodeIsEditable = () => {

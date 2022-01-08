@@ -1,14 +1,18 @@
 import React, { useCallback, useState } from 'react';
-import {  StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
 import { Container, ExcludeAccountText, PrivateProfileContainer, UserInformationContainer, UserInformationLabel, UserInformationText, UserLabelAndInfoContainer } from './styles';
 import HeaderProfile from '../../components/HeaderProfile'
 import ButtonOn from '../../assets/images/button-on.svg'
 import ButtonOff from '../../assets/images/button-off.svg'
+import DeleteAccountIcon from '../../assets/images/Icons/Profile/delete-account-icon.svg'
 import { useAuth, User } from '../../hooks/auth'
-import { DeleteAccountModal } from '../../components/DeleteAccountModal';
+import { ChangeInfoModal } from '../../components/ChangeInfoModal';
 import { useNavigation } from '@react-navigation/native';
+import theme from '../../global/styles/theme';
+import extractNameAndSurname from '../../utils/extractNameAndSurname';
+import { useTheme } from 'styled-components';
 
-interface EditProfileProps { 
+interface EditProfileProps {
   route: {
     params: {
       following: number,
@@ -17,22 +21,26 @@ interface EditProfileProps {
   }
 }
 
-type UserFields = 'id'|'name'|'email'|'username'|'visibility'
+type UserFields = 'id' | 'name' | 'email' | 'username' | 'visibility'
 
 const EditProfile = ({ route }: EditProfileProps) => {
   const navigation = useNavigation();
+  const theme = useTheme();
   const { user, token, alterProfileVisibility, signOut, deleteUser } = useAuth()
   const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false)
-  const { following, follower } = route.params
+  const { following, follower } = route.params;
+  const { name, lastname } = user ? extractNameAndSurname(user.name) : { name: '', lastname: '' }
+  const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
 
+  const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
   const handleUserObject = (field: UserFields, user: User | undefined) => {
     if (user === undefined) {
       return 'Placeholder'
     }
-    
+
     return field !== 'visibility'
-            ? user[field].toString()
-            : user[field]
+      ? user[field].toString()
+      : user[field]
   }
 
   const handleProfileVisibility = useCallback(async () => {
@@ -55,11 +63,16 @@ const EditProfile = ({ route }: EditProfileProps) => {
         following={following}
         follower={follower}
         edit
+        avatar={avatar}
       />
-      <DeleteAccountModal
+      <ChangeInfoModal
+        title={'Você está prestes a excluir a conta'}
+        description={'Ao confirmar, seus dados serão excluidos e será necessário fazer outro cadastro'}
+        icon={<DeleteAccountIcon />}
+        iconBackgroundColor={'#ce3e36'}
         visible={deleteAccountModalOpen}
         pressedOut={() => setDeleteAccountModalOpen(!deleteAccountModalOpen)}
-        confirmedDeletion={async () => {
+        confirmed={async () => {
           setDeleteAccountModalOpen(false)
           await signOut()
           await deleteUser(token)
@@ -101,7 +114,7 @@ const EditProfile = ({ route }: EditProfileProps) => {
             <UserInformationText>
               Sair
             </UserInformationText>
-        </TouchableOpacity>
+          </TouchableOpacity>
         </UserLabelAndInfoContainer>
       </UserInformationContainer>
     </Container>

@@ -4,22 +4,15 @@ import
   SafeAreaView,
   Text,
   TouchableWithoutFeedback,
-  Dimensions,
   View,
   Modal,
   Alert,
 } from 'react-native';
-import styles from './styles';
+import styles, { ModalCancelButtonText, ModalConfirmButtonText, PopUpButton } from './styles';
 import { RNCamera } from 'react-native-camera';
 import Header from '../../components/Header';
 import Menu from '../../components/Editor/Menu';
-import RNFS from 'react-native-fs';
 import { VESDK, Configuration } from 'react-native-videoeditorsdk';
-// import path from 'path';
-import { require } from 'yargs';
-import api from '../../services/api';
-import { QRCode } from '../../types/QRCode';
-import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
 import DangerIcon from '../../assets/images/Icons/danger_icon.svg';
 
@@ -149,24 +142,6 @@ const Editor = ( { route, _ }: any ) =>
           setModalVisible( true );
 
           setVideo( video );
-
-          // console.log( `/qrcodes/${ qrcode.id }` );
-
-          // let formData = new FormData();
-          // formData.append( 'file', {
-          //   uri: video,
-          //   type: 'video/mp4',
-          //   name: `${ Date.now() }_${ user.id }.mp4`
-          // } );
-
-          // await api.post( `/qrcodes/${ qrcode.id }`, formData, {
-          //   headers: {
-          //     "Content-Type": "multipart/form-data",
-          //   },
-          // } );
-
-          // navigation.navigate( 'Dashboard' );
-
         },
         ( error ) =>
         {
@@ -250,12 +225,12 @@ const Editor = ( { route, _ }: any ) =>
             <Text style={ styles.modalTitle }>Você confirma a edição do iCod?</Text>
             <Text style={ styles.modalText }>Caso confirme, não será mais permitido a edição desse iCod</Text>
             <View style={ styles.modalButtonsContainer }>
-              <TouchableWithoutFeedback onPress={ handleCancel }>
-                <Text style={ { color: '#DF2C2C' } }>CANCELAR</Text>
-              </TouchableWithoutFeedback>
-              <TouchableWithoutFeedback onPress={ handleConfirm }>
-                <Text style={ { color: '#2B90D9' } }>CONFIRMAR</Text>
-              </TouchableWithoutFeedback>
+              <PopUpButton onPress={ handleCancel }>
+                <ModalCancelButtonText>CANCELAR</ModalCancelButtonText>
+              </PopUpButton>
+              <PopUpButton onPress={ handleConfirm }>
+                <ModalConfirmButtonText>CONFIRMAR</ModalConfirmButtonText>
+              </PopUpButton>
             </View>
           </View>
         </View>

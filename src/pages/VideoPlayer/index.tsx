@@ -1,23 +1,25 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import Video from 'react-native-video-player';
 import { Container, IconsContainer, VideoContainer } from './styles';
 import VideoPlayerFooter from '../../components/VideoPlayer/VideoPlayerFooter';
 import { useAuth } from '../../hooks/auth';
 import Header from '../../components/Header';
-import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
 
 const VideoPlayer = ( { route, _ }: any ) => {
   const { user } = useAuth();
-  const { qrcode } = route.params;
-  console.log('oier ', qrcode.link)
+  const { qrcode:{
+    updatedFavorite, 
+    link, 
+    setUpdatedFavorite,
+  }, isHistoryDetails } = route.params;
   const url = 'https://bucket-nodejs.s3.amazonaws.com/LOGOVETOR_1.mp4';
-
+  const page = isHistoryDetails ? "back" : user ? 'Dashboard': 'SignIn';
   return (
     <Container>
-      <Header page="" navigate={user ? 'Dashboard': 'SignIn'} color="#FFFFFF" isVideoPlayer/>
+      <Header page="" navigate={page} color="#FFFFFF" isVideoPlayer/>
       <VideoContainer>
         <Video 
-          video={{ uri: qrcode.link ? qrcode.link : url}}
+          video={{ uri: link ? link : url}}
           videoWidth={1600}
           videoHeight={900}
           autoplay={true}
@@ -30,7 +32,11 @@ const VideoPlayer = ( { route, _ }: any ) => {
         />
       </VideoContainer>
       <IconsContainer>
-        <VideoPlayerFooter url={ qrcode.link ? qrcode.link : url } />
+        <VideoPlayerFooter 
+          url={ link ? link : url } 
+          updatedFavorite={updatedFavorite}
+          setUpdatedFavorite={setUpdatedFavorite}
+        />
       </IconsContainer>
     </Container>
   );

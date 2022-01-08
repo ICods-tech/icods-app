@@ -2,9 +2,10 @@ import { useNavigation } from '@react-navigation/native'
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import BackButtonWhite from '../../assets/images/back-button-white.svg'
-import ProfilePicture from '../../assets/images/profile-picture-edit.svg'
 import EditIcon from '../../assets/images/Icons/edit-icon.svg'
 import ButtonProfilePicture from '../../components/ButtonProfilePicture'
+import profilePictureDashboard from '../../assets/images/photo-perfil.png';
+
 import {
   AccountText,
   BackButtonContainer,
@@ -18,6 +19,7 @@ import {
   LeftCloudsContainer,
   MiddleProfileContainer,
   ProfileContainer,
+  ProfilePicture,
   ProfilePictureContainer,
   RightCloudsBottom,
   RightCloudsContainer,
@@ -66,7 +68,9 @@ const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPr
                       <EditIcon />
                     </EditIconContainer>
                   )}
-                  <ProfilePicture />
+                  <ProfilePicture
+                      source={ avatar ? { uri: avatar } : profilePictureDashboard }
+                    />
                 </ProfilePictureContainer>
                 {
                   edit ?

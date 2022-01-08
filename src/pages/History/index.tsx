@@ -1,25 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import api from '../../services/api';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
-import { SafeAreaView, Animated, LogBox } from 'react-native';
+import { SafeAreaView, LogBox } from 'react-native';
 import { 
   CloudContainer, 
   CloudLeftLarge, 
   CloudRightSmall, 
   Container, 
   Content, 
-  DeleteButton, 
-  DeleteButtonIcon, 
-  FavoriteCardButtonIcon, 
-  FavoritedButton, 
   LargeSearchIcon, 
   NoResultsFoundDescriptionText, 
   NoResultsFoundText, 
-  NotFavoritedCardButtonIcon, 
   NotFoundContainer,  
   QRCodeDateList, 
   QRCodeList, 
-  QRCodeOptionsContainer, 
   QRCodeTitleContainer, 
   QRCodeTitleDate
 } from './styles';
@@ -31,6 +24,7 @@ import formattedDate from '../../utils/formatDates';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Moment } from 'moment';
 import * as Progress from 'react-native-progress';
+import { useNavigation } from '@react-navigation/native';
 
 
 LogBox.ignoreLogs(["EventEmitter.removeListener"]);
@@ -52,12 +46,14 @@ export interface FilteredQRCodesByDate {
 }
 
 const History = () => {
+  const navigation = useNavigation();
+  const [reloadState, setReloadState] = useState(false);
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(filteredQRCodesByDatePlaceholder)
   const [color, setColor] = useState<Colors>('noFilter')
   const [loading, setLoading] = useState(true)
   const [selectedDate, setSelectedDate] = useState<Moment | undefined>(undefined)
   const [favoriteFilter, setFavoriteFilter] = useState<boolean>(false)
-  // console.log('lista', qrCodes);
+
   function handleFavoriteFilter() {
     setFavoriteFilter(!favoriteFilter);
   }
@@ -70,66 +66,16 @@ const History = () => {
         month: selectedDate ? selectedDate.getMonth() : null,
         year: selectedDate ? selectedDate.getFullYear() : null
       }
+      
     })
-
     setQRCodes(response.data.data)
     setLoading(false)
-  }, [qrCodes])
-
-  const handleFavoriteQRCodes = useCallback(async (id: string) => {
-    await api.patch(`received_qrcode/favorite/${id}`)
-  }, [])
+    setReloadState(false)
+  }, [reloadState])
 
   useEffect(() => {
     loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)
-  }, [])
-
-  const RightActions = (
-    progress: any, 
-    dragX: any, 
-    id: string, 
-    qrCodeBelongsToUser: boolean, 
-    favorited: boolean
-    ) => {
-    const scale = dragX.interpolate({
-      inputRange: qrCodeBelongsToUser ? [-RFValue(120), 0] : [-RFValue(90), 0],
-      outputRange: qrCodeBelongsToUser ? [2, 0] : [0.8, 0]
-    })
-    return (
-      <QRCodeOptionsContainer>
-        {!qrCodeBelongsToUser && (
-          <>
-            <Animated.Text
-              style={{
-                transform: [{ scale }],
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}>
-              <FavoritedButton 
-                onPress={() => handleFavoriteQRCodes(id)}
-                activeOpacity={0.8}
-                >
-                {
-                  favorited
-                    ? (<FavoriteCardButtonIcon  />)
-                    : (<NotFavoritedCardButtonIcon />)
-                }
-              </FavoritedButton>
-            </Animated.Text>
-          </>
-        )}
-          <DeleteButton>
-            <Animated.Text
-              style={{
-                transform: [{ scale }]
-              }}>
-              <DeleteButtonIcon />
-            </Animated.Text>
-          </DeleteButton>
-      </QRCodeOptionsContainer>
-    )
-  }
+  }, [reloadState])
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -176,17 +122,19 @@ const History = () => {
                       const { id, color, content, comparisonDate, favorited, qrCodeCreatorName, link  } = item
                       return(
                         <>
-                          <Swipeable
-                            key={id}
-                            renderRightActions={(progress: any, dragX: any) => RightActions(
-                              progress,
-                              dragX,
-                              id,
-                              qrCodeCreatorName === 'Você',
-                              favorited
-                            )}
-                          >
-                            <HistoryCards
+                          <HistoryCards
+                              pressed={() => {
+                                  navigation.navigate('QRCodeHistoryDetails', {
+                                    onGoBack: (changed: boolean) => {
+                                      changed && setReloadState(!reloadState)
+                                    },
+                                  id, 
+                                  color, 
+                                  creator: qrCodeCreatorName, 
+                                  favorite: favorited, 
+                                  link,
+                                })
+                              }}
                               key={id}
                               id={id}
                               creator={qrCodeCreatorName}
@@ -196,7 +144,6 @@ const History = () => {
                               favorite={favorited}
                               privacy="Público"
                             />
-                          </Swipeable>
                         </>
                       )
                     }    
