@@ -51,7 +51,7 @@ const Processing = ( { route, _ }: any ) =>
       console.log( error );
       setColor( '#DF2C2C' );
       setTextTitle( 'Erro no Processamento' );
-      setText( 'Identificamos um problema relacionad ao processamento do seu iCod, verifique sua conexão e tente novamente' );
+      setText( 'Identificamos um problema relacionado ao processamento do seu iCod, verifique sua conexão e tente novamente.' );
       setProcessedError( true );
     }
   }
