@@ -66,8 +66,8 @@ const History = () => {
         month: selectedDate ? selectedDate.getMonth() : null,
         year: selectedDate ? selectedDate.getFullYear() : null
       }
+      
     })
-
     setQRCodes(response.data.data)
     setLoading(false)
     setReloadState(false)
