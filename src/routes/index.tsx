@@ -80,7 +80,7 @@ const noAnimation = {
 
 const Routes: React.FC = () => {
   const { user, token, isLoading } = useAuth()
-
+  console.log('To carregando, ou não?', isLoading)
   return (
     <App.Navigator mode='card' screenOptions={{
       headerShown: false,

@@ -7,6 +7,7 @@ import AppProvider from './hooks'
 import Routes from './routes'
 import Toast, { BaseToast } from 'react-native-toast-message';
 import theme from './global/styles/theme';
+import { linking } from './Linking'
 import * as Sentry from '@sentry/react-native';
 
 Sentry.init({
@@ -57,7 +58,7 @@ const toastConfig = {
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
+      <NavigationContainer linking={linking}>
         <StatusBar barStyle='light-content' backgroundColor={theme.colors.primary}/>
         <View style={{ flex: 1, backgroundColor: '#312e38' }}>
           <AppProvider>
