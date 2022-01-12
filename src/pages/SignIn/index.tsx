@@ -56,7 +56,8 @@ const SignIn = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const handleLogin = useCallback(async () => {
     try {
-      await signIn({ email, password })
+      await signIn({ email, password }) 
+      navigation.navigate('Dashboard')
       setErrored(false)
     } catch (error: any) {
       setErrored(true)

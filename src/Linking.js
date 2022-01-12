@@ -4,7 +4,7 @@ const config = {
     Scanner: {
       path: 'scanner/:id',
       parse: {
-        id: (id) => `${id}`
+        deepLinkQrcodeUrl: (deepLinkQrcodeUrl) => `${deepLinkQrcodeUrl}`
       }
     }
   }
