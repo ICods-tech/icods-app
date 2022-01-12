@@ -27,7 +27,7 @@ interface ScannerProps {
 }
 
 const Scanner = (props: ScannerProps) => {
-  const qrCodeIdFromDeeplink = props.route.path ? props.route.path.split('/')[2] : '';
+  const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
   const navigation = useNavigation();
   const { user } = useAuth();
   const page = user ? 'Dashboard' : 'SignIn';
@@ -133,6 +133,8 @@ const Scanner = (props: ScannerProps) => {
   };
 
   const handleQRCode = async (data: string) => {
+    const splittedData = data.split('/');
+    let qrCodeId = splittedData[splittedData.length - 1];
     if (qrCodeValidate) return;
 
     const connection = await checkConnection();
@@ -141,9 +143,8 @@ const Scanner = (props: ScannerProps) => {
       return;
     }
     await api
-      .get(`qrcodes/${data}`)
+      .get(`qrcodes/${qrCodeId}`)
       .then((response: any) => {
-        console.log('fui chamado porra', data)
         const qrCode: QRCode = response.data;
         setQrcode(qrCode);
         verifyQRCodeContent(qrCode);
