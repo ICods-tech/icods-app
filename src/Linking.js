@@ -1,8 +1,7 @@
 const config = {
   screens: {
-    Register: "register",
-    Scanner: {
-      path: 'scanner/:id',
+    Deeplink: {
+      path: 'deeplink/:id',
       parse: {
         deepLinkQrcodeUrl: (deepLinkQrcodeUrl) => `${deepLinkQrcodeUrl}`
       }

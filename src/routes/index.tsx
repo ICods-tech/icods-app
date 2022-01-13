@@ -23,6 +23,7 @@ import { Animated } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import About from '../pages/About';
 import Version from '../pages/Version';
+import Deeplink from '../pages/Deeplink';
 
 const App = createStackNavigator()
 
@@ -134,7 +135,8 @@ const Routes: React.FC = () => {
           ) : (
               <>
                 <App.Screen name='SignIn' component={ SignIn } options={invertedHorizontalAnimation}/>
-                <App.Screen name='Register' component={ Register } options={horizontalAnimation}/>
+                <App.Screen name='Register' component={Register} options={horizontalAnimation} />
+                <App.Screen name='Deeplink' component={Deeplink} options={horizontalAnimation}/>
                 <App.Screen name='Scanner' component={ Scanner } options={((props: { route: RouteProp<Record<string, object | undefined>, "Scanner">; navigation: any }) => (
                   props.route.key === 'SCANNER_FROM_FOOTER'
                     ? noAnimation
