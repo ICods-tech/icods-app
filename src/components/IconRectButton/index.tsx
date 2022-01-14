@@ -9,20 +9,21 @@ import {
 
 interface IconRectButtonProps extends RectButtonProps{
     text: string;
-    icon: any;
+    noIcon?: boolean;
+    icon?: any;
     color?: 'White' | 'Blue';
 }
 
 
-export function IconRectButton({ text, icon: Icon, color, ...rest }: IconRectButtonProps) {
+export function IconRectButton({ text, noIcon, icon: Icon, color, ...rest }: IconRectButtonProps) {
     const content = (
         <Button color={color!} {...rest}>
-                    <IconContainer>
+            {noIcon ? <IconContainer>
                 <Icon  
                     width={RFValue(16)}
                     height={RFValue(16)}
                 />
-            </IconContainer>
+            </IconContainer> : <></>}
             <Title color={color!}>{text}</Title>
         </Button>
     )
