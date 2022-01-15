@@ -11,7 +11,7 @@ interface IconRectButtonProps extends RectButtonProps{
     text: string;
     noIcon?: boolean;
     icon?: any;
-    color?: 'White' | 'Blue';
+    color?: 'White' | 'Blue' | 'Gray';
 }
 
 

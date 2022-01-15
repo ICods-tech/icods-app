@@ -11,6 +11,8 @@ import { BackStringContainer, BackStringText, Container, ContentContainer, Descr
 import { Edit, Play, CloseSquare, Hide, Login } from 'react-native-iconly'
 import { IconRectButton } from '../../components/IconRectButton';
 import Pulse from '../../assets/images/Icons/editor/pulse.svg';
+import CloudSyncIcon from '../../assets/images/Icons/cloud_sync_icon_lg.svg';
+import theme from '../../global/styles/theme';
 
 interface PopUp {
   title: string;
@@ -44,14 +46,14 @@ const DeepLink = (props: DeepLinkProps) => {
   const [qrCodeValidate, setQrCodeValidate] = useState(false);
   const [qrcode, setQrcode] = useState<QRCode>();
   const [deeplinkStatus, setDeeplinkStatus] = useState<IDeeplinkStatus>('Verifying');
-  const [qrcodeText, setQrcodeText] = useState('Seu iCod está sendo verificado...')
+  const [notProcessedTimer, setNotProcessedTimer] = useState(20);
 
   const DeeplinkQrCode = ({title, description, icon, iconBackgroundColor, button, backString}: DeeplinkQrCodeProps) => {
     return (
       <Container> 
         <ContentContainer>
           <IconBackground
-            style={{backgroundColor: iconBackgroundColor === 'BLUE' ? '#2B90D9' : '#DF2C2C'}}
+            style={{backgroundColor: iconBackgroundColor === 'BLUE' ? theme.colors.primary : theme.colors.attention}}
           >
             {icon}
           </IconBackground>
@@ -130,8 +132,8 @@ const DeepLink = (props: DeepLinkProps) => {
     }),
 
     NotLogged: () => DeeplinkQrCode({
-      title: 'Necessidade de Login',
-      description: 'Percebemos que você não está logado em sua conta, para prosseguir é necessário a realização do login',
+      title: 'Aguarde um momento',
+      description: 'Estamos processando o vídeo para que ele fique pronto para visualização',
       icon: <Login size={RFPercentage(8)} set="bold" primaryColor='white'/>,
       iconBackgroundColor: 'BLUE',
       button: <IconRectButton
@@ -156,8 +158,18 @@ const DeepLink = (props: DeepLinkProps) => {
     NotProcessed: () => DeeplinkQrCode({
       title: 'Aguarde um momento',
       description: 'Estamos processando seu iCod e garantimos que será rapido! Assim que concluído, você ja pode presenteá-lo!',
-      icon: <Pulse />,
-      iconBackgroundColor: 'BLUE'
+      icon: <CloudSyncIcon />,
+      iconBackgroundColor: 'BLUE',
+      button: <IconRectButton
+                text={notProcessedTimer === 0  ? 'Tentar novamente' : `Aguarde ${notProcessedTimer} seg`}
+                color={notProcessedTimer === 0 ?  'Blue' : 'Gray'}
+                onPress={() => {
+                  if (notProcessedTimer === 0) { 
+                    handleQRCode(qrCodeIdFromDeeplink)
+                  }
+                }}
+                icon={() => <Play size={RFPercentage(3)} set="light" primaryColor=""/>}
+              />,
     }), 
   } as {[key in IDeeplinkStatus]: () => JSX.Element}
 
@@ -187,6 +199,7 @@ const DeepLink = (props: DeepLinkProps) => {
 
     if (qrCode.status === 'IN_PROGRESS') {
       qrCodeContainsGiftButIsNotProcessed();
+      setNotProcessedTimer(20);
       return;
     }
 
@@ -236,6 +249,16 @@ const DeepLink = (props: DeepLinkProps) => {
   useEffect(() => {
     handleQRCode(qrCodeIdFromDeeplink)
   }, [])
+
+  useEffect(() => {
+    if (notProcessedTimer !== 0) {
+      const timer = setTimeout(() => {
+        setNotProcessedTimer(notProcessedTimer - 1);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [qrCodeIdFromDeeplink, deeplinkStatus, notProcessedTimer])
 
   return possibleQrCodeStatus[deeplinkStatus]()
 };
