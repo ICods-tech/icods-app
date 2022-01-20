@@ -90,7 +90,6 @@ interface IProp {
 const Routes = ({deeplink}: IProp) => {
   const navigation = useNavigation();
   if (deeplink.length) {
-    console.log('ehhh');
     navigation.navigate('Deeplink', {url: deeplink});
   }
 
@@ -121,6 +120,11 @@ const Routes = ({deeplink}: IProp) => {
                 ? noAnimation
                 : horizontalAnimation
             }
+            />
+            <App.Screen
+            name="Deeplink"
+            component={Deeplink}
+            options={horizontalAnimation}
           />
           <App.Screen
             name="Profile"

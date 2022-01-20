@@ -56,20 +56,20 @@ const toastConfig = {
 };
 
 const App = () => {
-
   const [deeplink, setDeeplink] = useState('');
   const handleDynamicLink = (link: any) => {
-    console.log(link);
+    console.log('the deeplink', link);
     if (link && String(link.url).includes('https://icods.com.br')) {
       setDeeplink(link.url);
     }
   };
 
   useEffect(() => {
+    console.log('deeplink link', deeplink)
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     // When the component is unmounted, remove the listener
     return () => unsubscribe();
-  }, []);
+  }, [deeplink]);
 
   return (
     <ThemeProvider theme={theme}>

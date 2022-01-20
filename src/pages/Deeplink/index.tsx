@@ -158,9 +158,9 @@ const DeepLink = ({ route, _ }: any) => {
       button: <IconRectButton
                 text={notProcessedTimer === 0  ? 'Tentar novamente' : `Aguarde ${notProcessedTimer} seg`}
                 color={notProcessedTimer === 0 ?  'Blue' : 'Gray'}
-                onPress={() => {
+                onPress={async () => {
                   if (notProcessedTimer === 0) { 
-                    handleQRCode(qrCodeIdFromDeeplink)
+                    await handleQRCode({url: `=${qrCodeIdFromDeeplink.url}`})
                   }
                 }}
                 icon={() => <Play size={RFPercentage(3)} set="light" primaryColor=""/>}
@@ -170,8 +170,8 @@ const DeepLink = ({ route, _ }: any) => {
 
   const qrCodeIsEditable = () => setDeeplinkStatus('IsEditable')
 
-  const qrCodeContainsGift = async (id: string) => {
-    if (user) {
+  const qrCodeContainsGift = async (id: string, receivedUserAlreadyExists: boolean) => {
+    if (user && !receivedUserAlreadyExists) {
       await api.post(`/received_qrcode/${id}`, {});
     }
 
@@ -186,7 +186,8 @@ const DeepLink = ({ route, _ }: any) => {
 
   const qrCodeContainsGiftButIsNotProcessed = () => setDeeplinkStatus('NotProcessed')
 
-  const verifyQRCodeContent = (qrCode: QRCode) => {
+  const verifyQRCodeContent = async (qrCode: QRCode) => {
+    console.log('amigo, estou aqui')
     if (qrCode.status === 'INACTIVE' && !user) {
       qrCodeIsNotActiveBecauseUserIsNotLogged();
       return;
@@ -201,7 +202,8 @@ const DeepLink = ({ route, _ }: any) => {
     if (qrCode.status === 'ACTIVE') {
       const { id } = qrCode;
       if (qrCode.receivedUser === null || qrCode.receivedUser.id === user?.id) {
-        qrCodeContainsGift(id);
+        console.log('oier')
+        await qrCodeContainsGift(id, !!qrCode.receivedUser);
       }
       else {
         qrCodeAlreadyAssociated();
@@ -214,10 +216,9 @@ const DeepLink = ({ route, _ }: any) => {
   }
 
 
-  const handleQRCode = async (data: string) => {
-    const splittedData = data.split('=');
-    let qrCodeId = splittedData[1];
-    if (qrCodeValidate) return;
+  const handleQRCode = async (data: { url: string }) => {
+    const splittedData = data.url.split('=');
+    let qrCodeId = splittedData[splittedData.length - 1];
 
     const connection = await checkConnection();
     if (!connection) {
@@ -226,19 +227,17 @@ const DeepLink = ({ route, _ }: any) => {
     }
     console.log('Vou chamar a API', qrCodeId);
     
-    await api
-      .get(`qrcodes/${qrCodeId}`)
-      .then((response: any) => {
-        const qrCode: QRCode = response.data;
-        setQrcode(qrCode);
-        verifyQRCodeContent(qrCode);
-      })
-      .catch((error: any) => {
-        console.log(error.message);
-        qrCodeDoesNotBelongToICods();
-      });
-
-    setQrCodeValidate(true);
+    try {
+      const response = await api.get(`qrcodes/${qrCodeId}`)
+      const qrCode: QRCode = response.data;
+      setQrcode(qrCode);
+      await verifyQRCodeContent(qrCode);
+    } catch(error: any) {
+      console.log('aqui, eu, o error', error)
+      console.log(error.message);
+      qrCodeDoesNotBelongToICods();
+    }
+    // setQrCodeValidate(true);
   } 
 
   useEffect(() => {
