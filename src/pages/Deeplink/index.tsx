@@ -38,8 +38,8 @@ interface DeeplinkQrCodeProps {
 
 type IDeeplinkStatus = 'IsEditable'|'ContainsGift'|'DoesNotBelongToIcods'|'AlreadyAssociated'|'NotLogged'|'NotProcessed'|'Verifying'
 
-const DeepLink = (props: DeepLinkProps) => {
-  const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
+const DeepLink = (url: string) => {
+  const qrCodeIdFromDeeplink = url ? url : '';
   const navigation = useNavigation();
   const { user } = useAuth();
   const userConditionalPage = (user ? 'Dashboard' : 'SignIn') as never;
