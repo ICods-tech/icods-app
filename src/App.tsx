@@ -1,7 +1,7 @@
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {NavigationContainer, useNavigation} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StatusBar, View} from 'react-native';
 import 'react-native-gesture-handler';
 import Toast, {BaseToast} from 'react-native-toast-message';
@@ -56,11 +56,12 @@ const toastConfig = {
 };
 
 const App = () => {
-  var deeplink: string = "";
+
+  const [deeplink, setDeeplink] = useState('');
   const handleDynamicLink = (link: any) => {
     console.log(link);
     if (link && String(link.url).includes('https://icods.com.br')) {
-      deeplink = link.url;
+      setDeeplink(link.url);
     }
   };
 

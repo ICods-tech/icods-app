@@ -21,12 +21,6 @@ interface PopUp {
   press: string;
 }
 
-interface DeepLinkProps {
-  route: {
-    path: string
-  }
-}
-
 interface DeeplinkQrCodeProps {
   title: string; 
   description: string; 
@@ -38,7 +32,8 @@ interface DeeplinkQrCodeProps {
 
 type IDeeplinkStatus = 'IsEditable'|'ContainsGift'|'DoesNotBelongToIcods'|'AlreadyAssociated'|'NotLogged'|'NotProcessed'|'Verifying'
 
-const DeepLink = (url: string) => {
+const DeepLink = ({ route, _ }: any) => {
+  const url = route.params;
   const qrCodeIdFromDeeplink = url ? url : '';
   const navigation = useNavigation();
   const { user } = useAuth();
@@ -220,8 +215,8 @@ const DeepLink = (url: string) => {
 
 
   const handleQRCode = async (data: string) => {
-    const splittedData = data.split('/');
-    let qrCodeId = splittedData[splittedData.length - 1];
+    const splittedData = data.split('=');
+    let qrCodeId = splittedData[1];
     if (qrCodeValidate) return;
 
     const connection = await checkConnection();
@@ -229,7 +224,7 @@ const DeepLink = (url: string) => {
       navigation.navigate('ConnectionProblems' as never);
       return;
     }
-    console.log('Vou chamar a API', data);
+    console.log('Vou chamar a API', qrCodeId);
     
     await api
       .get(`qrcodes/${qrCodeId}`)

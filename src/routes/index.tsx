@@ -89,7 +89,11 @@ interface IProp {
 
 const Routes = ({deeplink}: IProp) => {
   const navigation = useNavigation();
-  if (deeplink.length) navigation.navigate('Deeplink', deeplink);
+  if (deeplink.length) {
+    console.log('ehhh');
+    navigation.navigate('Deeplink', {url: deeplink});
+  }
+
   const {user, token, isLoading} = useAuth();
   return (
     <App.Navigator
