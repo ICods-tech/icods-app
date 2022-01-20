@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "311386065646",
+    "project_id": "icods-ea904",
+    "storage_bucket": "icods-ea904.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311386065646:android:221252e6a38e81d68e81ff",
+        "android_client_info": {
+          "package_name": "com.icodsmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311386065646-51b348sgeoa1pt6i6a6q3v9ufsild7rg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.icodsmobile",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "311386065646-huv4f0rq685licn1oo98anme1gfv73n1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7jvyyrFuHA-mJDDwtQKjQRMRkzEiucUk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311386065646-huv4f0rq685licn1oo98anme1gfv73n1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
