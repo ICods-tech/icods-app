@@ -1,5 +1,5 @@
 import dynamicLinks from '@react-native-firebase/dynamic-links';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {NavigationContainer, NavigationContainerRefContext, useNavigation} from '@react-navigation/native';
 import * as Sentry from '@sentry/react-native';
 import React, {useEffect, useState} from 'react';
 import {StatusBar, View} from 'react-native';
@@ -10,6 +10,7 @@ import theme from './global/styles/theme';
 import AppProvider from './hooks';
 import {linking} from './Linking';
 import Routes from './routes';
+import analytics from '@react-native-firebase/analytics';
 
 Sentry.init({
   dsn: `${process.env.SENTRY_KEY}`,
@@ -56,6 +57,8 @@ const toastConfig = {
 };
 
 const App = () => {
+  const routeNameRef = React.useRef();
+  const navigationRef = React.useRef();
   const [deeplink, setDeeplink] = useState('');
   const handleDynamicLink = (link: any) => {
     console.log('the deeplink', link);
@@ -73,7 +76,25 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer linking={linking}>
+      <NavigationContainer 
+        ref={navigationRef}
+        linking={linking}
+        onReady={() => {
+          routeNameRef.current = navigationRef.current?.getCurrentRoute().name;       
+        }}
+        onStateChange={async () => {
+          const previousRouteName = routeNameRef.current;
+          const currentRouteName = navigationRef.current?.getCurrentRoute().name;
+
+          if (previousRouteName !== currentRouteName) {
+            await analytics().logScreenView({
+              screen_name: currentRouteName,
+              screen_class: currentRouteName,
+            });
+          }
+          routeNameRef.current = currentRouteName;
+        }}
+      >
         <StatusBar
           barStyle="light-content"
           backgroundColor={theme.colors.primary}

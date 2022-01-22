@@ -7,6 +7,7 @@ import styles from './styles';
 
 import Pulse from '../../assets/images/Icons/editor/pulse.svg';
 import ErrorProcessing from '../../assets/images/Icons/editor/error_processing.svg';
+import analytics from '@react-native-firebase/analytics';
 
 const Processing = ( { route, _ }: any ) =>
 {
@@ -45,6 +46,11 @@ const Processing = ( { route, _ }: any ) =>
         },
       } );
 
+      await analytics().logEvent('send_video', {
+        id: qrcode.id,
+        user_id: user.id,
+        video: name
+      });
       navigation.navigate( 'Dashboard' );
     } catch ( error )
     {

@@ -38,6 +38,7 @@ import SocialIcon from '../../assets/images/Icons/social.svg';
 import HistoryIcon from '../../assets/images/Icons/history.svg';
 import ScanIcon from '../../assets/images/Icons/qrcode_scan.svg';
 import { useTheme } from 'styled-components';
+import analytics from '@react-native-firebase/analytics';
 
 
 const Dashboard = () => {
@@ -77,6 +78,7 @@ const Dashboard = () => {
           signOut={async () => {
             setModalVisible(false)
             await signOut()
+            await analytics().resetAnalyticsData();
           }}
         />
       </Header>

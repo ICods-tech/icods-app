@@ -133,8 +133,9 @@ const Scanner = (props: ScannerProps) => {
   };
 
   const handleQRCode = async (data: string) => {
-    const splittedData = data.split('/');
-    let qrCodeId = splittedData[splittedData.length - 1];
+    let splittedData = data.split('=');
+    splittedData = splittedData[2].split('&');
+    let qrCodeId = splittedData[0];
     if (qrCodeValidate) return;
 
     const connection = await checkConnection();

@@ -1610,10 +1610,10 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-6.2.0.tgz#8c9079cde509e2482c9953ebd1da24693ef039f3"
   integrity sha512-oEGwqYlDN2Ofbhf7W6NncKijEiPjp+1PzguqTmECncsB3IIVt0mLAqZDyT2Bw3Njxeeh4MhGsKqB5kzaXpqcxw==
 
-"@react-native-firebase/analytics@^14.1.0":
-  version "14.1.0"
-  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-14.1.0.tgz#ed239b01a379e84e8cb872ef71842e01774d0ed6"
-  integrity sha512-z1BkBx6c1/eynOcyMknezuC+zwLyGVc4qz3gvWOLiokLbqaneXiYVNPe6D/hhM0HIxSLM6JCptvkpAlUi0G7Pg==
+"@react-native-firebase/analytics@^14.2.3":
+  version "14.2.3"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-14.2.3.tgz#d88a4681420922685cf8363313c8f7e0ec55ed48"
+  integrity sha512-QxgN214X+cxCyrzm+lIA+76+P+UI/pfVXVSD1qd7z1AzGZ5WR9pmgHw8hK/KkxKkx5XWEHPV59X2eIHAMtm7Ug==
 
 "@react-native-firebase/app@^14.2.2":
   version "14.2.2"
@@ -3371,13 +3371,6 @@ debug@^4.0.1, debug@^4.1.0, debug@^4.1.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.1.tgz"
   integrity sha512-doEwdvm4PCeK4K3RQN2ZC2BYUBaxwLARCqZmMjtF8a51J2Rb0xpVloFRnCODwqjpwnAoao4pelN8l3RJdv3gRQ==
-  dependencies:
-    ms "2.1.2"
-
-debug@^4.3.1:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
-  integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
   dependencies:
     ms "2.1.2"
 

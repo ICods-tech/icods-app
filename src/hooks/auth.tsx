@@ -77,6 +77,8 @@ const AuthProvider: React.FC = ({ children }) => {
       ])
       api.defaults.headers.authorization = `Bearer ${token}`
 
+      await analytics().setUserId(user.id);
+
       setData({ token, user })
     } catch (error: any) {
       throw new Error(error.response.data);
