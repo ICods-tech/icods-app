@@ -30,6 +30,7 @@ import { SpacingLine } from '../SignIn/styles'
 import { useTheme } from 'styled-components'
 import { SubmitButton } from '../../components/Authentication/SubmitButton'
 import ModalUseTerms from '../../components/ModalUseTerms';
+import analytics from '@react-native-firebase/analytics';
 
 export interface IRouteErrors {
   name: boolean;
@@ -92,7 +93,11 @@ const Register = () => {
       }
 
       await signUp({ name, username, email, password, passwordConfirmation })
-      
+
+      await analytics().logSignUp({
+        method: 'api',
+      });
+
       setUseTerms(false);
       Toast.show({
         type: 'success',

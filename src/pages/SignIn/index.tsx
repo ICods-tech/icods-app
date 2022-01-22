@@ -31,6 +31,7 @@ import { useAuth } from '../../hooks/auth'
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { AuthFooter } from '../../components/Authentication/AuthFooter';
+import analytics from '@react-native-firebase/analytics';
 import { Header } from '../../components/Authentication/Header';
 import { SubmitButton } from '../../components/Authentication/SubmitButton';
 import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
@@ -56,8 +57,9 @@ const SignIn = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const handleLogin = useCallback(async () => {
     try {
-      await signIn({ email, password }) 
+      await signIn({ email, password })
       navigation.navigate('Dashboard')
+      await analytics().logLogin({method: 'api'});
       setErrored(false)
     } catch (error: any) {
       setErrored(true)
@@ -70,6 +72,8 @@ const SignIn = () => {
         visibilityTime: 1000,
         bottomOffset: 100,
       })
+
+      console.log(error.message)
     }
   }, [email, password]);
 
