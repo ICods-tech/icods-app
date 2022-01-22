@@ -4,8 +4,21 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions } from 'react-native';
 import theme from '../../global/styles/theme';
 
+type IColors = 'White' | 'Blue' | 'Gray'
 interface ButtonProps {
-    color?: 'White' | 'Blue';
+    color?: IColors;
+}
+
+const backgroundColor = {
+  White: '#FFF',
+  Blue: theme.colors.primary,
+  Gray: theme.colors.gray
+}
+
+const textColor = {
+  White: theme.colors.primary,
+  Blue: '#FFF',
+  Gray: '#FFF'
 }
 
 export const Container = styled.View<ButtonProps>`
@@ -21,7 +34,7 @@ export const Button = styled(RectButton)<ButtonProps>`
     flex-direction: row;
     width: ${RFValue(266)}px;
     height: ${RFValue(36)}px;
-    background-color: ${({ color }) => color === 'White' ? '#FFF' : theme.colors.primary };
+    background-color: ${({ color }) => backgroundColor[color || 'Blue']};
     border-radius: 116px;
     align-items: center;
     justify-content: center;
@@ -39,6 +52,6 @@ export const Title = styled.Text<ButtonProps>`
     font-size: ${RFValue(14)}px;
     margin-bottom: ${RFValue(2)}px;
     letter-spacing: ${Dimensions.get('window').width * 0.001}px;
-    color: ${({ color }) => color === 'White' ? theme.colors.primary : '#FFF'};
+    color: ${({ color }) => textColor[color || 'Blue']};
 `;
 

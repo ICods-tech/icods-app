@@ -47,7 +47,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState)
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   useEffect(() => {
     async function loadStoredData(): Promise<void> {
@@ -58,8 +58,7 @@ const AuthProvider: React.FC = ({ children }) => {
     }
     
     loadStoredData()
-    setTimeout( () => { setIsLoading( false ) }, 3000 );
-    
+    // setTimeout( () => { setIsLoading( false ) }, 3000 );
   }, [])
 
   const signIn = useCallback(async (credentials: SignInCredentials) => {
