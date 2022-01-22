@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
 import Header from '../../components/Header';
@@ -13,56 +13,61 @@ import { useNavigation } from '@react-navigation/native';
 import { checkConnection } from '../../utils/checkConnection';
 
 
-interface PopUp
-{
+interface PopUp {
   title: string;
   label: string;
   icon: string;
   press: string;
 }
 
-const Scanner = () =>
-{
+interface ScannerProps {
+  route: {
+    path: string
+  }
+}
+
+const Scanner = (props: ScannerProps) => {
+  const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
   const navigation = useNavigation();
   const { user } = useAuth();
   const page = user ? 'Dashboard' : 'SignIn';
-  const [ camera, setCamera ] = useState<RNCamera>();
-  const [ qrCodeValidate, setQrCodeValidate ] = useState( false );
-  const [ qrcode, setQrcode ] = useState<QRCode>();
-  const [ popUp, setPopUp ] = useState<PopUp>();
+  const [camera, setCamera] = useState<RNCamera>();
+  const [qrCodeValidate, setQrCodeValidate] = useState(false);
+  const [qrcode, setQrcode] = useState<QRCode>();
+  const [popUp, setPopUp] = useState<PopUp>();
 
   const handleCloseButton = () => {
-    if(popUp?.press == 'Scanner') {
-      setQrCodeValidate( false );
-      setQrcode( undefined );
+    if (popUp?.press == 'Scanner') {
+      setQrCodeValidate(false);
+      setQrcode(undefined);
     }
-    navigation.navigate(popUp?.press || 'Scanner', {qrcode, isHistoryDetails: false});
+    navigation.navigate(popUp?.press || 'Scanner', { qrcode, isHistoryDetails: false });
   }
 
   const qrCodeIsEditable = () => {
-    setPopUp( {
+    setPopUp({
       title: 'QR Code lido com sucesso',
       label: 'Agora é a vez de você editar',
       icon: 'check',
       press: 'Editor',
-    } );
+    });
   }
 
   const qrCodeContainsGift = async (id: string) => {
-    setPopUp( {
+    setPopUp({
       title: 'Você tem um presente iCods',
       label: 'Agora é a vez de você visualiza-lo',
       icon: 'gift',
       press: 'VideoPlayer',
-    } );
+    });
 
-    if (user)  {
+    if (user) {
       await api.post(`/received_qrcode/${id}`, {});
     }
   }
 
   const qrCodeisNotBelongsIcods = () => {
-    setPopUp( {
+    setPopUp({
       title: 'O QR Code não pertence ao iCods',
       label: 'Tente escanear um QR Code da iCods',
       icon: 'close',
@@ -71,7 +76,7 @@ const Scanner = () =>
   }
 
   const qrCodeIsAssociated = () => {
-    setPopUp( {
+    setPopUp({
       title: 'QR Code já associado',
       label: 'Esse QR Code já foi lido por algum outro usuário',
       icon: 'eye_close',
@@ -80,7 +85,7 @@ const Scanner = () =>
   }
 
   const qrCodeBelongsToIcodsButIsNotActive = () => {
-    setPopUp( {
+    setPopUp({
       title: 'Necessidade de Login',
       label: 'Para prosseguir, você precisa está conectado com uma conta ativa',
       icon: 'edicion',
@@ -89,100 +94,105 @@ const Scanner = () =>
   }
 
   const qrCodeContainsGiftButIsNotProcessed = () => {
-    setPopUp( {
+    setPopUp({
       title: 'Seu vídeo está indo para a nuvem',
       label: 'Estamos processando o vídeo para que ele fique pronto para a visualização em alguns minutos',
       icon: 'cloud_sync',
       press: page,
-    } );
+    });
   }
 
   const verifyQRCodeContent = (qrCode: QRCode) => {
-    if (qrCode.status === 'INACTIVE' && !user ){
+    if (qrCode.status === 'INACTIVE' && !user) {
       qrCodeBelongsToIcodsButIsNotActive();
       return;
     }
-    
+
     if (qrCode.status === 'IN_PROGRESS') {
       qrCodeContainsGiftButIsNotProcessed();
       return;
     }
 
-    if ( qrCode.status === 'ACTIVE' ){
-      const {id} = qrCode;
+    if (qrCode.status === 'ACTIVE') {
+      const { id } = qrCode;
       if (qrCode.receivedUser === null || qrCode.receivedUser.id === user?.id) {
         qrCodeContainsGift(id);
       }
       else {
         qrCodeIsAssociated();
       }
-      
+
       return;
     } else {
       qrCodeIsEditable();
     }
   }
 
-  const barcodeRecognized = async ( { data }: BarCodeReadEvent ) =>
-  {
-    if ( qrCodeValidate ) return;
-    
+  const barcodeRecognized = async ({ data }: BarCodeReadEvent) => {
+    await handleQRCode(data)
+  };
+
+  const handleQRCode = async (data: string) => {
+    const splittedData = data.split('/');
+    let qrCodeId = splittedData[splittedData.length - 1];
+    if (qrCodeValidate) return;
+
     const connection = await checkConnection();
     if (!connection) {
       navigation.navigate('ConnectionProblems');
       return;
-    } 
-    
+    }
     await api
-    .get( `qrcodes/${ data }` )
-    .then( ( response: any ) =>
-    {
-      const qrCode: QRCode = response.data;
-      setQrcode( qrCode );
-      verifyQRCodeContent(qrCode);
-    })
-    .catch( ( error: any ) =>
-    {
-      console.log(error.message);
-      qrCodeisNotBelongsIcods();
-    });
-    
-    setQrCodeValidate( true );
-  };
+      .get(`qrcodes/${qrCodeId}`)
+      .then((response: any) => {
+        const qrCode: QRCode = response.data;
+        setQrcode(qrCode);
+        verifyQRCodeContent(qrCode);
+      })
+      .catch((error: any) => {
+        console.log(error.message);
+        qrCodeisNotBelongsIcods();
+      });
+
+    setQrCodeValidate(true);
+  }
+
+  useEffect(() => {
+    qrCodeIdFromDeeplink.length && handleQRCode(qrCodeIdFromDeeplink);
+  }, [qrCodeIdFromDeeplink])
 
 
   return (
-    
-    <SafeAreaView style={ styles.container }>
-      <RNCamera
-        ref={ ( camera: RNCamera ) =>
-        {
-          setCamera( camera );
-        } }
-        style={ { flex: 1 } }
-        onBarCodeRead={ barcodeRecognized }>
-        <Mask read={ qrCodeValidate } />
 
-        <View style={ styles.textContainer }>
-          <Header page="Escanear" navigate={ page } color="#FFFFFF" />
-          <View style={ { alignItems: 'center', justifyContent: 'center' } }>
-            <Text style={ styles.textParagraph }>
+    <SafeAreaView style={styles.container}>
+      <RNCamera
+        ref={(camera: RNCamera) => {
+          setCamera(camera);
+        }}
+        style={{ flex: 1 }}
+        onBarCodeRead={barcodeRecognized}>
+        <Mask read={qrCodeValidate} />
+
+        <View style={styles.textContainer}>
+          <Header page="Escanear" navigate={page} color="#FFFFFF" />
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={styles.textParagraph}>
               Aponte o QR CODE para região abaixo
             </Text>
           </View>
         </View>
 
-        { qrCodeValidate && (
+        {qrCodeValidate && (
           <ScannerPopUP
-            press={ handleCloseButton }
-            title={ popUp?.title }
-            subtitle={ popUp?.label }
-            icon={ popUp?.icon }
+            press={handleCloseButton}
+            title={popUp?.title}
+            subtitle={popUp?.label}
+            icon={popUp?.icon}
           />
-        ) }
+        )}
 
-        { user &&
-          <LoggedFooter 
+        {user &&
+          <LoggedFooter
             isScanner={true}
           />
         }

@@ -125,8 +125,6 @@ export const LargeSearchIcon = styled(LargeSearch).attrs({
 export const NoResultsFoundText = styled.Text`
     font-size: ${RFValue(24)}px;
     font-family: ${({theme}) => theme.fonts.bold};
-
-
     color: ${({theme}) => theme.colors.title};
     text-align: center;
     letter-spacing: ${RFValue(0.18)}px;

@@ -12,6 +12,7 @@ import theme from '../../global/styles/theme';
 import extractNameAndSurname from '../../utils/extractNameAndSurname';
 import { useTheme } from 'styled-components';
 
+
 interface EditProfileProps {
   route: {
     params: {
