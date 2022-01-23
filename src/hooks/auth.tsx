@@ -3,7 +3,8 @@ import api from '../services/api'
 import AsyncStorage from '@react-native-community/async-storage'
 import Toast from 'react-native-toast-message';
 import analytics from '@react-native-firebase/analytics';
-
+import {LOG} from '../config';
+const log = LOG.extend("Auth");
 
 export interface User {
   id: string;
@@ -86,7 +87,6 @@ const AuthProvider: React.FC = ({ children }) => {
   }, [])
 
   const signUp = useCallback(async (credentials: SignUpCredentials) => {
-    // try {
       const { name, username, email, password, passwordConfirmation } = credentials;
     
       await api.post('signup', {
@@ -96,9 +96,6 @@ const AuthProvider: React.FC = ({ children }) => {
         password,
         passwordConfirmation
       })
-    // } catch (error) {
-    //   console.log(error)
-    // }
   }, [])
 
   const signOut = useCallback(async () => {
@@ -117,7 +114,7 @@ const AuthProvider: React.FC = ({ children }) => {
       const user = res.data
       await updateUser(user)
     } catch (error) {
-      console.log(error)
+      log.error(error)
     }
   }, [])
 
@@ -129,7 +126,7 @@ const AuthProvider: React.FC = ({ children }) => {
         }
       })
     } catch (error) {
-      console.log(error)
+      log.error(error)
     }
 }, [])
   

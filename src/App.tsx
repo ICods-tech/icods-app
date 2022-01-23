@@ -1,6 +1,5 @@
 import dynamicLinks from '@react-native-firebase/dynamic-links';
 import {NavigationContainer, NavigationContainerRefContext, useNavigation} from '@react-navigation/native';
-import * as Sentry from '@sentry/react-native';
 import React, {useEffect, useState} from 'react';
 import {StatusBar, View} from 'react-native';
 import 'react-native-gesture-handler';
@@ -11,11 +10,9 @@ import AppProvider from './hooks';
 import {linking} from './Linking';
 import Routes from './routes';
 import analytics from '@react-native-firebase/analytics';
+import {Sentry, LOG} from './config';
+const log = LOG.extend("App")
 
-Sentry.init({
-  dsn: `${process.env.SENTRY_KEY}`,
-  tracesSampleRate: 1.0,
-});
 
 const toastConfig = {
   success: ({text1, text2, ...rest}: {text1: string; text2: string}) => (
@@ -61,14 +58,14 @@ const App = () => {
   const navigationRef = React.useRef();
   const [deeplink, setDeeplink] = useState('');
   const handleDynamicLink = (link: any) => {
-    console.log('the deeplink', link);
+    log.info('the deeplink', link);
     if (link && String(link.url).includes('https://icods.com.br')) {
       setDeeplink(link.url);
     }
   };
 
   useEffect(() => {
-    console.log('deeplink link', deeplink)
+    log.info('deeplink link', deeplink)
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     // When the component is unmounted, remove the listener
     return () => unsubscribe();

@@ -42,6 +42,8 @@ import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
 import KeyIcon from '../../assets/images/Icons/signIn-password.svg';
 import UserIcon from '../../assets/images/Icons/signIn-user.svg';
 import Toast from 'react-native-toast-message';
+import { LOG } from '../../config';
+const log = LOG.extend('Signin');
 
 const SignIn = () => {
   const theme = useTheme();
@@ -73,7 +75,7 @@ const SignIn = () => {
         bottomOffset: 100,
       })
 
-      console.log(error.message)
+      log.error(error.message)
     }
   }, [email, password]);
 

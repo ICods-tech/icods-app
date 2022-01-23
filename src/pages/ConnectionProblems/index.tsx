@@ -9,7 +9,6 @@ const ConnectionProblems = () => {
     const {user} = useAuth();
 
     const handleButton = () => {
-        console.log('handleButton');
         if (user) {
             navigation.navigate('Dashboard');
         }
