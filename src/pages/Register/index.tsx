@@ -31,6 +31,8 @@ import { useTheme } from 'styled-components'
 import { SubmitButton } from '../../components/Authentication/SubmitButton'
 import ModalUseTerms from '../../components/ModalUseTerms';
 import analytics from '@react-native-firebase/analytics';
+import { LOG } from '../../config';
+const log = LOG.extend('Register');
 
 export interface IRouteErrors {
   name: boolean;
@@ -112,8 +114,7 @@ const Register = () => {
     } catch (errorResponse: any) {
       setUseTerms(false);
       const errors = errorResponse.response.data
-      console.log('Não conseguiu cadastras:', data);
-      console.log(errors);
+      log.error(errors);
       setAttention(true);
       if ('message' in errors) await handleRegisterRouteErrors(errors, setIsErrored)
       else await handleFieldAlreadyExistsErrors(errors, setIsErrored)

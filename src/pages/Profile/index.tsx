@@ -41,13 +41,11 @@ const Profile = () => {
 
   useEffect(() => {
     async function loadFollowing(): Promise<void> {
-      console.log(token)
       await api.get('follow', {
         headers: {
           Authorization: `Bearer ${token}`
         }
       }).then((response: any) => {
-        console.log(response)
         setFollowing(response.data)
       })
     }

@@ -15,6 +15,8 @@ import Menu from '../../components/Editor/Menu';
 import { VESDK, Configuration } from 'react-native-videoeditorsdk';
 import { useNavigation } from '@react-navigation/native';
 import DangerIcon from '../../assets/images/Icons/danger_icon.svg';
+import { LOG } from '../../config';
+const log = LOG.extend('Editor');
 
 const Editor = ( { route, _ }: any ) =>
 {
@@ -64,7 +66,7 @@ const Editor = ( { route, _ }: any ) =>
     {
       try
       {
-        console.log( 'Iniciando a gravação' );
+        log.info( 'Iniciando a gravação' );
         setIsRecording( true );
         const data = await camera.recordAsync( {
           quality: RNCamera.Constants.VideoQuality[ '1080p' ],
@@ -75,13 +77,12 @@ const Editor = ( { route, _ }: any ) =>
           // path: `${RNFS.TemporaryDirectoryPath}/${ Date.now() }.mkv`
         } );
 
-        console.log(data);
+        log.debug(data);
 
         setRecordedData( data.uri );
-        console.log( 'Iniciando a gravação' );
       } catch ( err )
       {
-        console.log( err );
+        log.error( err );
       }
     }
   };
@@ -89,7 +90,7 @@ const Editor = ( { route, _ }: any ) =>
   const onRecordEnd = () =>
   {
     setIsRecording( false );
-    console.log( 'Parando a gravação' );
+    log.info( 'Parando a gravação' );
   };
 
   const stopVideo = () =>
@@ -98,7 +99,7 @@ const Editor = ( { route, _ }: any ) =>
     {
       camera.stopRecording();
       setIsRecording( false );
-      console.log( 'Parando a gravação' );
+      log.info( 'Parando a gravação' );
     }
   };
 
@@ -137,7 +138,7 @@ const Editor = ( { route, _ }: any ) =>
       VESDK.openEditor( video, configuration ).then(
         async ( result ) =>
         {
-          console.log( result );
+          log.debug( result );
           const { video } = result;
           setModalVisible( true );
 
@@ -145,7 +146,7 @@ const Editor = ( { route, _ }: any ) =>
         },
         ( error ) =>
         {
-          console.log( error );
+          log.error( error );
         },
       );
     }

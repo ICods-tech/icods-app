@@ -8,6 +8,9 @@ import styles from './styles';
 import Pulse from '../../assets/images/Icons/editor/pulse.svg';
 import ErrorProcessing from '../../assets/images/Icons/editor/error_processing.svg';
 import analytics from '@react-native-firebase/analytics';
+import { LOG } from '../../config';
+
+const log = LOG.extend('Processing');
 
 const Processing = ( { route, _ }: any ) =>
 {
@@ -36,8 +39,6 @@ const Processing = ( { route, _ }: any ) =>
       name
     } );
 
-    console.log( { formData, user, qrcode, video, name } );
-
     try
     {
       await api.post( `/qrcodes/${ qrcode.id }`, formData, {
@@ -54,7 +55,7 @@ const Processing = ( { route, _ }: any ) =>
       navigation.navigate( 'Dashboard' );
     } catch ( error )
     {
-      console.log( error );
+      log.error( error );
       setColor( '#DF2C2C' );
       setTextTitle( 'Erro no Processamento' );
       setText( 'Identificamos um problema relacionado ao processamento do seu iCod, verifique sua conexão e tente novamente.' );

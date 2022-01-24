@@ -11,7 +11,8 @@ import { useAuth } from '../../hooks/auth';
 import LoggedFooter from '../../components/LoggedFooter';
 import { useNavigation } from '@react-navigation/native';
 import { checkConnection } from '../../utils/checkConnection';
-
+import { LOG } from '../../config';
+const log = LOG.extend('Scanner');
 
 interface PopUp {
   title: string;
@@ -151,7 +152,7 @@ const Scanner = (props: ScannerProps) => {
         verifyQRCodeContent(qrCode);
       })
       .catch((error: any) => {
-        console.log(error.message);
+        log.error(error.message);
         qrCodeisNotBelongsIcods();
       });
 

@@ -13,6 +13,9 @@ import { IconRectButton } from '../../components/IconRectButton';
 import Pulse from '../../assets/images/Icons/editor/pulse.svg';
 import CloudSyncIcon from '../../assets/images/Icons/cloud_sync_icon_lg.svg';
 import theme from '../../global/styles/theme';
+import {LOG} from '../../config';
+
+const log = LOG.extend('Deeplink');
 
 interface PopUp {
   title: string;
@@ -187,7 +190,6 @@ const DeepLink = ({ route, _ }: any) => {
   const qrCodeContainsGiftButIsNotProcessed = () => setDeeplinkStatus('NotProcessed')
 
   const verifyQRCodeContent = async (qrCode: QRCode) => {
-    console.log('amigo, estou aqui')
     if (qrCode.status === 'INACTIVE' && !user) {
       qrCodeIsNotActiveBecauseUserIsNotLogged();
       return;
@@ -202,7 +204,6 @@ const DeepLink = ({ route, _ }: any) => {
     if (qrCode.status === 'ACTIVE') {
       const { id } = qrCode;
       if (qrCode.receivedUser === null || qrCode.receivedUser.id === user?.id) {
-        console.log('oier')
         await qrCodeContainsGift(id, !!qrCode.receivedUser);
       }
       else {
@@ -225,7 +226,7 @@ const DeepLink = ({ route, _ }: any) => {
       navigation.navigate('ConnectionProblems' as never);
       return;
     }
-    console.log('Vou chamar a API', qrCodeId);
+    log.info('Chamando a API', qrCodeId);
     
     try {
       const response = await api.get(`qrcodes/${qrCodeId}`)
@@ -233,8 +234,7 @@ const DeepLink = ({ route, _ }: any) => {
       setQrcode(qrCode);
       await verifyQRCodeContent(qrCode);
     } catch(error: any) {
-      console.log('aqui, eu, o error', error)
-      console.log(error.message);
+      log.error(error.message);
       qrCodeDoesNotBelongToICods();
     }
     // setQrCodeValidate(true);
