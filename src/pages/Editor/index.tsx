@@ -134,6 +134,7 @@ const Editor = ( { route, _ }: any ) =>
         },
       };
 
+      VESDK.unlockWithLicense(require ('./vesdk_license.json'))
 
       VESDK.openEditor( video, configuration ).then(
         async ( result ) =>

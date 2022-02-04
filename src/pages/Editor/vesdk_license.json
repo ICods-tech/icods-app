@@ -1,0 +1,34 @@
+{
+    "api_token": "TSSO6415boqEquojSa_8eQ",
+    "app_identifiers": [
+        "com.icodsmobile"
+    ],
+    "available_actions": [],
+    "domains": [
+        "https://api.photoeditorsdk.com"
+    ],
+    "enterprise_license": false,
+    "expires_at": null,
+    "features": [
+        "camera",
+        "library",
+        "export",
+        "whitelabel",
+        "customassets",
+        "adjustment",
+        "filter",
+        "focus",
+        "overlay",
+        "sticker",
+        "textdesign"
+    ],
+    "issued_at": 1643471466,
+    "minimum_sdk_version": "1.0",
+    "owner": "iCods Tech",
+    "platform": "Android",
+    "products": [
+        "vesdk"
+    ],
+    "version": "2.4",
+    "signature": "ltP1ZlQVgXGwHPLir8o0DawjI/WzNTARJpfBBcogpUjJBBH1pt/gBDYrS8L+GZukpr/bI8e1by4DEE6D4QQJmEFBcZOVSP+Qm1eLzwnqGuIQ1rC5P5f4IlFykwhxgFcONsh6YxZ651+m7vjkjRUi+k12cRjdysSDvH10BaNpFlXc9iD29yHtXkZLoGVKnsTUDOOwXYMTTzl7jfckLb1/1yqsjTgzv4Yjt9ADWbj5encPHBxSeN00SWcX8YyeugBAvarNBMtsdn3Gei9vX2+6hOlWyHKl2Y2aeRZo1qaVb7LFrxNb5gD2WNV5OLnHMFXvlLy3QszU2ngqovI+V+OYYt4AMjW50hoxGxQbqqvxdYczbA3LIar0Ylp37QCCbYBGmRE8YvtGyZsI3f1tm0qB16jyyhAAe0wUXILpRlyzOP95SR14UoSPszNV5r1FZLekIrQ++p1ybsDQkANfSKXkRZtWMSa9OH6T1ENbAs5/NpE4BsQR97Vpz92QVKm2Lh6vuB9sgqftDbKaocdbq/ZkjPW5GVkkLB3AV3sbyUaDfNNZ8UEOxf0Tgn7bSdoobckClDm1Z435vyakzaaik1w7WX92XoA/wG/KLYwFJJm8QEBUgRQjTskEpUa18midsprYpanO16iI4apdP85mor4A6hsZc97E0yLecwJvjHSTm9w="
+}

@@ -252,11 +252,11 @@ apply plugin: "kotlin-android"
 imglyConfig {
     modules {
         // include 'ui:text'
-        // include 'ui:focus'
+        include 'ui:focus'
         include 'ui:frame'
         // include 'ui:brush'
         include 'ui:filter'
-        // include 'ui:sticker'
+        include 'ui:sticker'
         include 'ui:overlay'
         // include 'ui:transform'
         include 'ui:adjustment'
