@@ -8,14 +8,16 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   TextInput,
+  View,
+  SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import {
   BackButtonContainer,
-  Container,
+  Form,
   InputContainer,
-  RegisterForm,
   RegisterTitle,
-  SafeAreaView,
+  ScrollRegister,
   SubmitButtonContainer
 } from './styles';
 import { useAuth } from '../../hooks/auth'
@@ -32,6 +34,7 @@ import { SubmitButton } from '../../components/Authentication/SubmitButton'
 import ModalUseTerms from '../../components/ModalUseTerms';
 import analytics from '@react-native-firebase/analytics';
 import { LOG } from '../../config';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 const log = LOG.extend('Register');
 
 export interface IRouteErrors {
@@ -67,15 +70,16 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   
   const [attention, setAttention] = useState(false);
-  const [isInputFocus, setIsInputFocus] = useState(false);
-  const [inputFocusObserver, setInputFocusObserver] = useState(false);
   const [secure, setSecure] = useState(true);
   const [secureConfirmation, setSecureConfirmation] = useState(true);
+  const [useTerms, setUseTerms] = useState(false);
+
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
   const userNameInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
-  const [useTerms, setUseTerms] = useState(false);
 
   const handleSignUp = useCallback(async () => {
     const data = {
@@ -123,11 +127,20 @@ const Register = () => {
     
   }, [name, username, email, password, passwordConfirmation, useTerms])
   
+
   useEffect(() => {
-    Keyboard.addListener('keyboardDidHide', () => {
-      setIsInputFocus(false);
-    })  
-  }, [inputFocusObserver])
+    const  keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsKeyboardVisible(true);
+    });
+    const  keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setIsKeyboardVisible(false);
+    });
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    }
+  }, [Keyboard])
 
 
   const handleRegister = () => {
@@ -140,114 +153,118 @@ const Register = () => {
   
   return (
     <SafeAreaView>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <Header isInputFocus={isInputFocus} />
+      
+      <StatusBar
+          barStyle="light-content"
+          backgroundColor={isKeyboardVisible ? theme.colors.primary : 'transparent'}
+          translucent
+      />
+      
+      <ScrollRegister keyboardShouldPersistTaps="handled" >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View>
+            <Header isKeyboardVisible={isKeyboardVisible} />
 
-          <BackButtonContainer>
-            <BackButton navigationTo='SignIn' color='white' />
-          </BackButtonContainer>
+            <BackButtonContainer isKeyboardVisible= {isKeyboardVisible}>
+              <BackButton navigationTo='SignIn' color='white' />
+            </BackButtonContainer>
 
-          <RegisterForm>
-            <RegisterTitle>
-              Fazer uma conta no iCODS é simples e
-              rápido, basta preencher os campos!
-            </RegisterTitle>
-            <InputContainer 
-              isErrored={attention}>
+            <Form isKeyboardVisible= {isKeyboardVisible}>
+                <RegisterTitle>
+                  Fazer uma conta no iCODS é simples e
+                  rápido, basta preencher os campos!
+                </RegisterTitle>
+                <InputContainer 
+                  isErrored={attention}>
 
-                <NewInput
-                  autoCorrect
-                  autoCapitalize="words"
-                  defaultValue={name}
-                  placeholder='Digite seu nome completo'
-                  placeholderTextColor={theme.colors.subtitle}
-                  onChangeText={(name: string) => setName(name)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
-                  onSubmitEditing={() => userNameInputRef.current?.focus()}
-                  value={name}
-                  returnKeyType="next"
-                />
+                    <NewInput
+                      autoCorrect
+                      autoCapitalize="words"
+                      defaultValue={name}
+                      placeholder='Digite seu nome completo'
+                      placeholderTextColor={theme.colors.subtitle}
+                      onChangeText={(name: string) => setName(name)}
+                      onSubmitEditing={() => userNameInputRef.current?.focus()}
+                      value={name}
+                      returnKeyType="next"
+                    />
 
-                <SpacingLine isErrored={attention}/>
+                    <SpacingLine isErrored={attention}/>
 
-                <NewInput
-                  ref={userNameInputRef}
-                  autoCorrect
-                  autoCapitalize="none"
-                  defaultValue={username}
-                  placeholder='Digite seu nome de usuário'
-                  placeholderTextColor={theme.colors.subtitle}
-                  onChangeText={(username: string) => setUsername(username)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
-                  onSubmitEditing={() => emailInputRef.current?.focus()}
-                  value={username}
-                  returnKeyType="next"
-                />
+                    <NewInput
+                      ref={userNameInputRef}
+                      autoCorrect
+                      autoCapitalize="none"
+                      defaultValue={username}
+                      placeholder='Digite seu nome de usuário'
+                      placeholderTextColor={theme.colors.subtitle}
+                      onChangeText={(username: string) => setUsername(username)}
+                      onSubmitEditing={() => emailInputRef.current?.focus()}
+                      value={username}
+                      returnKeyType="next"
+                    />
 
-                <SpacingLine isErrored={attention}/>
+                    <SpacingLine isErrored={attention}/>
 
-                <NewInput
-                  ref={emailInputRef}
-                  autoCorrect={false}
-                  autoCapitalize="none"
-                  defaultValue={email}
-                  placeholder='Digite seu e-mail'
-                  placeholderTextColor={theme.colors.subtitle}
-                  onChangeText={(email: string) => setEmail(email)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
-                  onSubmitEditing={() => passwordInputRef.current?.focus()}
-                  value={email}
-                  returnKeyType="next"
-                />
+                    <NewInput
+                      ref={emailInputRef}
+                      autoCorrect={false}
+                      autoCapitalize="none"
+                      defaultValue={email}
+                      placeholder='Digite seu e-mail'
+                      placeholderTextColor={theme.colors.subtitle}
+                      onChangeText={(email: string) => setEmail(email)}
+                      onSubmitEditing={() => passwordInputRef.current?.focus()}
+                      value={email}
+                      returnKeyType="next"
+                    />
 
-                <SpacingLine isErrored={attention}/>
+                    <SpacingLine isErrored={attention}/>
 
-                <NewInput
-                  ref={passwordInputRef}
-                  passwordStyleInput
-                  placeholder="Digite uma senha"
-                  placeholderTextColor={theme.colors.subtitle}
-                  secure={secure}
-                  secureTextEntry={secure}
-                  setSecure={setSecure}
-                  defaultValue={password}
-                  onChangeText={(password: string) => setPassword(password)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
-                  onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
-                  value={password}
-                  returnKeyType="next"
-                />
+                    <NewInput
+                      ref={passwordInputRef}
+                      passwordStyleInput
+                      placeholder="Digite uma senha"
+                      placeholderTextColor={theme.colors.subtitle}
+                      secure={secure}
+                      secureTextEntry={secure}
+                      setSecure={setSecure}
+                      defaultValue={password}
+                      onChangeText={(password: string) => setPassword(password)}
+                      onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
+                      value={password}
+                      returnKeyType="next"
+                    />
 
-                <SpacingLine isErrored={attention}/>
+                    <SpacingLine isErrored={attention}/>
 
-                <NewInput
-                  ref={passwordConfirmationInputRef}
-                  passwordStyleInput
-                  placeholder="Digite novamente a senha"
-                  placeholderTextColor={theme.colors.subtitle}
-                  secure={secureConfirmation}
-                  secureTextEntry={secureConfirmation}
-                  setSecure={setSecureConfirmation}
-                  defaultValue={passwordConfirmation}
-                  onChangeText={(passwordConfirmation: string) => setPasswordConfirmation(passwordConfirmation)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
-                  onSubmitEditing={() => handleSignUp()}
-                  value={passwordConfirmation}
-                  returnKeyType="send"
-                />  
-            </InputContainer>
+                    <NewInput
+                      ref={passwordConfirmationInputRef}
+                      passwordStyleInput
+                      placeholder="Digite novamente a senha"
+                      placeholderTextColor={theme.colors.subtitle}
+                      secure={secureConfirmation}
+                      secureTextEntry={secureConfirmation}
+                      setSecure={setSecureConfirmation}
+                      defaultValue={passwordConfirmation}
+                      onChangeText={(passwordConfirmation: string) => setPasswordConfirmation(passwordConfirmation)}
+                      onSubmitEditing={() => handleSignUp()}
+                      value={passwordConfirmation}
+                      returnKeyType="send"
+                    />  
+                </InputContainer>
 
-            <SubmitButtonContainer>
-              <SubmitButton
-                  onPress={() => handleRegister()}
-                  text='Cadastrar'
-                />
-            </SubmitButtonContainer>
-          </RegisterForm>
-        </Container>
-      </TouchableWithoutFeedback>
+                <SubmitButtonContainer>
+                  <SubmitButton
+                      onPress={() => handleRegister()}
+                      text='Cadastrar'
+                    />
+                </SubmitButtonContainer>
+            </Form>
+          </View>
+        </TouchableWithoutFeedback>
       { useTerms && <ModalUseTerms handleSignUp={() => handleSignUp()} handleCancel={() => handleCancel()}/> }
+      </ScrollRegister>
     </SafeAreaView>
 
   )

@@ -3,9 +3,10 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '../../../assets/images/logo-home.svg';
 import { Dimensions, Platform } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 interface ContainerProps {
-    isInputFocus: boolean;
+    isKeyboardVisible: boolean;
 }
 
 export const Gradient = styled(LinearGradient).attrs({ 
@@ -14,8 +15,8 @@ export const Gradient = styled(LinearGradient).attrs({
       colors:['#2B90D9', '#53C4E8'],
       style:{ flex: 1 }
 })<ContainerProps>`
-    display: ${({isInputFocus}) => isInputFocus ? 'none' : 'flex'};
-    height: ${Dimensions.get('window').height*0.25}px;
+    display: ${({isKeyboardVisible}) => isKeyboardVisible ? 'none' : 'flex'};
+    height: ${Dimensions.get('window').height*0.3 + getStatusBarHeight()}px;
 `;
 export const Container = styled.View`
     height: 100%;

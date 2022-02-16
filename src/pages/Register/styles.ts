@@ -1,44 +1,45 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
-export const SafeAreaView = styled.SafeAreaView`
-    flex: 1;
-`;
+interface Props {
+    isKeyboardVisible: boolean;
+}
 
-export const Container = styled.View`
-    flex: 1;
-    flex-direction: column;
-`;
+const backButtonMarginTop = RFValue(21) + getStatusBarHeight();
 
-export const BackButtonContainer = styled.View`
-    position: absolute;
-    top: ${RFValue(21)}px;
-    left: ${RFValue(16)}px;
-
-`;
-
-export const RegisterForm = styled.ScrollView.attrs(
+export const ScrollRegister = styled.ScrollView.attrs(
     {
-        showsHorizontalScrollIndicator: false,
         showsVerticalScrollIndicator: false,
-
+        contentContainerStyle: {
+            flexGrow: 1,
+        },
     }
 )`
+`;
+
+export const BackButtonContainer = styled.View<Props>`
+    position: absolute;
+    top: ${({isKeyboardVisible}) => isKeyboardVisible ?  RFValue(21) +  backButtonMarginTop : backButtonMarginTop }px;
+    left: ${RFValue(16)}px;
+    
+`;
+
+export const Form = styled.View<Props>`
     width: 100%;
     padding: 0 ${RFValue(55)}px;
+    margin-top: ${({isKeyboardVisible}) => isKeyboardVisible ? RFValue(70) : RFValue(35)}px;
 `;
 
 export const RegisterTitle = styled.Text`
     text-align: center;
     font-size: ${RFValue(16)}px;
     font-family: ${({theme}) => theme.fonts.regular};
-
     margin-bottom: ${RFValue(17)}px;
-    margin-top: ${RFValue(35)}px;
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
     color: ${({theme}) => theme.colors.title};
-`;
+    `;
 
 interface ErrorStyleProps {
     isErrored: boolean;
@@ -47,8 +48,8 @@ interface ErrorStyleProps {
 export const InputContainer = styled.View<ErrorStyleProps>`
     border: 1px solid ${({isErrored, theme }) => isErrored ? theme.colors.attention : theme.colors.light_line};
     border-radius: 4px;
-`;
+    `;
 
 export const SubmitButtonContainer = styled.View`
     margin-top: ${RFValue(39)}px;
-`;
+    `;
