@@ -2,7 +2,8 @@ import React, {
     forwardRef, 
     useRef, 
     useState, 
-    useImperativeHandle 
+    useImperativeHandle, 
+    useEffect
 } from 'react';
 import { Keyboard, TextInput, TextInputProps, View } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
@@ -22,6 +23,7 @@ interface InputTextProps extends TextInputProps{
     passwordStyleInput?: boolean;
     setSecure?: (secure: boolean) => void;
     secure?: boolean;
+    isErrored?: boolean;
 }
 
 interface InputRef {
@@ -32,7 +34,8 @@ const NewInput: React.ForwardRefRenderFunction<InputRef, InputTextProps> = ({
     icon: Icon, 
     passwordStyleInput, 
     secure, 
-    setSecure, 
+    setSecure,
+    isErrored = false,
     ...rest
 }, ref ) => {
     
@@ -54,8 +57,9 @@ const NewInput: React.ForwardRefRenderFunction<InputRef, InputTextProps> = ({
         }
     }));
 
+
     return(
-        <Container>
+        <Container isErrored={isErrored}>
                 {
                     Icon ? 
                             <View>

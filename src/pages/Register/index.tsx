@@ -69,7 +69,6 @@ const Register = () => {
   })
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   
-  const [attention, setAttention] = useState(false);
   const [secure, setSecure] = useState(true);
   const [secureConfirmation, setSecureConfirmation] = useState(true);
   const [useTerms, setUseTerms] = useState(false);
@@ -80,6 +79,16 @@ const Register = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
+
+  function handleResetIsErrored(){
+    setIsErrored({
+      name: false,
+      email: false,
+      username: false,
+      password: false,
+      passwordConfirmation: false
+    })
+  }
 
   const handleSignUp = useCallback(async () => {
     const data = {
@@ -103,7 +112,6 @@ const Register = () => {
       await analytics().logSignUp({
         method: 'api',
       });
-
       setUseTerms(false);
       Toast.show({
         type: 'success',
@@ -114,14 +122,12 @@ const Register = () => {
       })
       await delay(1250)
       await signIn({ email, password })
-      setAttention(false);  
     } catch (errorResponse: any) {
       setUseTerms(false);
-      const errors = errorResponse.response.data
+      const errors = errorResponse.response.data;
       log.error(errors);
-      setAttention(true);
       if ('message' in errors) await handleRegisterRouteErrors(errors, setIsErrored)
-      else await handleFieldAlreadyExistsErrors(errors, setIsErrored)
+      else await handleFieldAlreadyExistsErrors(errors, setIsErrored);
     }
 
     
@@ -144,7 +150,7 @@ const Register = () => {
 
 
   const handleRegister = () => {
-    setUseTerms(true);    
+    setUseTerms(true); 
   }
 
   const handleCancel = () => {
@@ -157,7 +163,7 @@ const Register = () => {
       <StatusBar
           barStyle="light-content"
           backgroundColor={isKeyboardVisible ? theme.colors.primary : 'transparent'}
-          translucent
+          translucent={isKeyboardVisible ? false : true}
       />
       
       <ScrollRegister keyboardShouldPersistTaps="handled" >
@@ -166,7 +172,11 @@ const Register = () => {
             <Header isKeyboardVisible={isKeyboardVisible} />
 
             <BackButtonContainer isKeyboardVisible= {isKeyboardVisible}>
-              <BackButton navigationTo='SignIn' color='white' />
+              <BackButton 
+                isKeyboardVisible={isKeyboardVisible}
+                navigationTo='SignIn' 
+                color='white' 
+              />
             </BackButtonContainer>
 
             <Form isKeyboardVisible= {isKeyboardVisible}>
@@ -174,54 +184,66 @@ const Register = () => {
                   Fazer uma conta no iCODS é simples e
                   rápido, basta preencher os campos!
                 </RegisterTitle>
-                <InputContainer 
-                  isErrored={attention}>
 
+                <InputContainer>
                     <NewInput
-                      autoCorrect
+                      autoCorrect 
                       autoCapitalize="words"
                       defaultValue={name}
+                      isErrored={isErrored.name}
                       placeholder='Digite seu nome completo'
                       placeholderTextColor={theme.colors.subtitle}
                       onChangeText={(name: string) => setName(name)}
+                      onFocus={() =>     
+                        setIsErrored((isErrored) => ({
+                          ...isErrored,
+                          name: false
+                        }))}
                       onSubmitEditing={() => userNameInputRef.current?.focus()}
                       value={name}
                       returnKeyType="next"
                     />
-
-                    <SpacingLine isErrored={attention}/>
 
                     <NewInput
                       ref={userNameInputRef}
                       autoCorrect
                       autoCapitalize="none"
                       defaultValue={username}
+                      isErrored={isErrored.username}
                       placeholder='Digite seu nome de usuário'
                       placeholderTextColor={theme.colors.subtitle}
                       onChangeText={(username: string) => setUsername(username)}
+                      onFocus={() =>     
+                        setIsErrored((isErrored) => ({
+                          ...isErrored,
+                          username: false
+                        }))}
                       onSubmitEditing={() => emailInputRef.current?.focus()}
                       value={username}
                       returnKeyType="next"
                     />
-
-                    <SpacingLine isErrored={attention}/>
 
                     <NewInput
                       ref={emailInputRef}
                       autoCorrect={false}
                       autoCapitalize="none"
                       defaultValue={email}
+                      isErrored={isErrored.email}
                       placeholder='Digite seu e-mail'
                       placeholderTextColor={theme.colors.subtitle}
                       onChangeText={(email: string) => setEmail(email)}
+                      onFocus={() =>     
+                        setIsErrored((isErrored) => ({
+                          ...isErrored,
+                          email: false
+                        }))}
                       onSubmitEditing={() => passwordInputRef.current?.focus()}
                       value={email}
                       returnKeyType="next"
                     />
 
-                    <SpacingLine isErrored={attention}/>
-
                     <NewInput
+                      isErrored={isErrored.password}
                       ref={passwordInputRef}
                       passwordStyleInput
                       placeholder="Digite uma senha"
@@ -231,14 +253,18 @@ const Register = () => {
                       setSecure={setSecure}
                       defaultValue={password}
                       onChangeText={(password: string) => setPassword(password)}
+                      onFocus={() =>     
+                        setIsErrored((isErrored) => ({
+                          ...isErrored,
+                          password: false
+                        }))}
                       onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
                       value={password}
                       returnKeyType="next"
                     />
 
-                    <SpacingLine isErrored={attention}/>
-
                     <NewInput
+                      isErrored={isErrored.passwordConfirmation}
                       ref={passwordConfirmationInputRef}
                       passwordStyleInput
                       placeholder="Digite novamente a senha"
@@ -248,6 +274,11 @@ const Register = () => {
                       setSecure={setSecureConfirmation}
                       defaultValue={passwordConfirmation}
                       onChangeText={(passwordConfirmation: string) => setPasswordConfirmation(passwordConfirmation)}
+                      onFocus={() =>     
+                        setIsErrored((isErrored) => ({
+                          ...isErrored,
+                          passwordConfirmation: false
+                        }))}
                       onSubmitEditing={() => handleSignUp()}
                       value={passwordConfirmation}
                       returnKeyType="send"
@@ -256,7 +287,7 @@ const Register = () => {
 
                 <SubmitButtonContainer>
                   <SubmitButton
-                      onPress={() => handleRegister()}
+                      onPress={() => {handleRegister(), handleResetIsErrored()}}
                       text='Cadastrar'
                     />
                 </SubmitButtonContainer>

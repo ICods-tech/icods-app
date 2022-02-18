@@ -12,9 +12,10 @@ interface BackButtonProps extends BorderlessButtonProperties {
     navigationTo: any;
     customFunction?: () => void;
     color?: 'blue' | 'white';
+    isKeyboardVisible?: boolean;
 }
 
-export function BackButton({ navigationTo, customFunction, color }: BackButtonProps){
+export function BackButton({ navigationTo, customFunction, color, isKeyboardVisible = false }: BackButtonProps){
     const navigation = useNavigation();
     return(
         <Container
@@ -22,12 +23,12 @@ export function BackButton({ navigationTo, customFunction, color }: BackButtonPr
         >
             <Button
                 onPress={navigationTo === 'WAIT' ? customFunction : (() => navigation.goBack())}
-                >
-                    {color === 'white' ?
-                        <BackWhiteIcon/>
-                        :
-                        <BackBlueIcon/>
-                    }
+            >
+                {color === 'white' ?
+                    <BackWhiteIcon/>
+                    :
+                    <BackBlueIcon/>
+                }
             </Button>
         </Container>
     );

@@ -10,8 +10,8 @@ interface ContainerProps {
 
 export const Container = styled.View<ContainerProps>`
   
-  border-radius: 999px;
-  ${({color}) => color === 'white' && css`border:1.5px solid ${({theme})=> theme.colors.primary}`};
+  border-radius: 16px;
+  ${({color}) => color === 'white' && css`border: 1px solid ${({theme})=> theme.colors.primary}`};
   align-items: center;
   justify-content: center;
 `;
@@ -21,7 +21,6 @@ export const Button = styled(BorderlessButton)`
   justify-content: center;
   height: ${RFValue(32)}px;
   width: ${RFValue(32)}px; 
-
 `;
 
 export const BackWhiteIcon = styled(Back).attrs({

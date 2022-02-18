@@ -26,17 +26,17 @@ export const Container = styled.View`
 `;
 
 export const IcodsLogo = styled(Logo).attrs({
-    width: RFValue(249),
-    height: RFValue(140)
+    width: RFValue(289),
+    height: RFValue(170)
 })`
 `;
 
 export const Title = styled.Text`
-   font-size: ${RFValue(14)}px;
+   font-size: ${RFValue(16)}px;
    font-family: ${({theme}) => theme.fonts.medium};
 
    text-align: center;
-   margin-top: ${RFValue(4)}px;
+   margin-top: ${RFValue(6)}px;
 
    color: ${({theme}) => theme.colors.shape};
    letter-spacing: ${Dimensions.get('window').width*0.002}px;

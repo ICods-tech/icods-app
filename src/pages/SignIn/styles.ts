@@ -56,7 +56,7 @@ export const SpacingContainer = styled.View`
 `;
 
 export const SpacingLine = styled.View<ErrorStyleProps>`
-    height: 1px;
+    height: ${RFValue(1)}px;
     background-color: ${({isErrored, theme }) => isErrored ? theme.colors.attention : theme.colors.light_line};
 `;
 

@@ -5,12 +5,22 @@ import styled, { css } from 'styled-components/native';
 import OpenEye from '../../assets/images/eye_open.svg';
 import ClosedEye from '../../assets/images/eye_closed.svg';
 
-export const Container = styled.View`
+interface Props {
+    isErrored: boolean;
+}
+
+export const Container = styled.View<Props>`
     width: 100%;
-    height: ${RFValue(43)}px;
+    height: ${RFValue(48)}px;
 
     flex-direction: row;
     align-items: center;
+
+    border: 0.5px solid ${({theme}) => theme.colors.light_line};
+
+    ${({isErrored}) => isErrored && css`
+        border: 0.5px solid ${({theme}) => theme.colors.attention};
+    `} */
 `;
 
 export const InputText = styled(TextInput)`
@@ -20,7 +30,7 @@ export const InputText = styled(TextInput)`
     padding-left: ${RFValue(10)}px;
     color: ${({theme}) => theme.colors.dark};
     letter-spacing: ${Dimensions.get('window').width*0.002}px;
-    /* background-color: #f3a; */
+    
 `;
 
 export const IconContainer = styled.TouchableOpacity.attrs({
@@ -29,7 +39,6 @@ export const IconContainer = styled.TouchableOpacity.attrs({
     height: 100%;
     justify-content: center;
     padding: 0 ${RFValue(19)}px 0 ${RFValue(10)}px;
-    /* background-color: #ba4; */
 `;
 
 interface ButtonEyeProps {
