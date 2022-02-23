@@ -1,8 +1,8 @@
-import React, { 
-  useState, 
-  useCallback, 
-  useRef, 
-  useEffect 
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect
 } from 'react';
 import {
   TouchableWithoutFeedback,
@@ -82,7 +82,7 @@ const SignIn = () => {
   useEffect(() => {
     Keyboard.addListener('keyboardDidHide', () => {
       setIsInputFocus(false);
-    })  
+    })
   }, [inputFocusObserver])
 
   return (
@@ -136,13 +136,18 @@ const SignIn = () => {
                     navigation.navigate('Register')
                   }}
                 >
-                  <HelpButtonText 
+                  <HelpButtonText
                     textColor={theme.colors.primary}
                     >Cadastre-se
                     </HelpButtonText>
                 </HelpButtonContainer>
 
-                <HelpButtonContainer>
+                <HelpButtonContainer
+                  onPress={() => {
+                    setErrored(false);
+                    navigation.navigate('ForgotPassword')
+                  }}
+                >
                   <HelpButtonText
                     textColor={theme.colors.text}
                     >Esqueceu a senha?

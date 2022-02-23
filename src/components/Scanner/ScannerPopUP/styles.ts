@@ -14,6 +14,7 @@ export const ScannerPopUPContainer = styled.View`
   width: 100%;
   height: 100%;
   background-color: #f0000000;
+  
   align-items: center;
   justify-content: center;
 `;

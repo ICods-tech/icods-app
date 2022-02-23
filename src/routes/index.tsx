@@ -29,6 +29,8 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import About from '../pages/About';
 import Version from '../pages/Version';
 import Deeplink from '../pages/Deeplink';
+import { ForgotPassword } from '../pages/ForgotPassword';
+import RedefinePassword from '../pages/RedefinePassword';
 
 const App = createStackNavigator();
 
@@ -261,6 +263,16 @@ const Routes = ({deeplink}: IProp) => {
             name="ConnectionProblems"
             component={ConnectionProblems}
             options={horizontalAnimation}
+          />
+          <App.Screen
+            name="ForgotPassword"
+            component={ForgotPassword}
+            options={horizontalAnimation}
+          />
+          <App.Screen
+            name="RedefinePassword"
+            component={RedefinePassword}
+            options={invertedHorizontalAnimation}
           />
         </>
       )}

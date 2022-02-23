@@ -2,9 +2,9 @@ export default {
     colors: {
         primary: '#2B90D9',
         profilePic: '8EFFEB',
-        
+
         secundary: '#FF872C',
-        
+
         success: '#6DFF73',
 
         attention: '#DF2C2C',
@@ -12,6 +12,7 @@ export default {
         cancelButton: '#000',
 
         gray: 'rgba(143, 146, 156, 0.5)',
+        gray2: '#8F828C',
 
         title: 'rgba(0, 0, 0, 0.87)',
         subtitle: 'rgba(0, 0, 0, 0.6)',
@@ -22,11 +23,12 @@ export default {
 
         background: '#F0F2F5',
         cloudly: '#F2F2F2',
-        cloudly_strong: '#E2E2E2', 
-        
+        cloudly_strong: '#E2E2E2',
+
         shape: '#FFFFFF',
         dark: '#000000',
-        transparent: 'rgba(0, 0, 0, 0.0)'
+        transparent: 'rgba(0, 0, 0, 0.0)',
+        darkOpacity04: 'rgba(0, 0, 0, 0.4)'
     },
 
     fonts: {
