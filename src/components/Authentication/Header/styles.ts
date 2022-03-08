@@ -3,9 +3,10 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import LinearGradient from 'react-native-linear-gradient';
 import Logo from '../../../assets/images/logo-home.svg';
 import { Dimensions, Platform } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 interface ContainerProps {
-    isInputFocus: boolean;
+    isKeyboardVisible: boolean;
 }
 
 export const Gradient = styled(LinearGradient).attrs({ 
@@ -14,8 +15,8 @@ export const Gradient = styled(LinearGradient).attrs({
       colors:['#2B90D9', '#53C4E8'],
       style:{ flex: 1 }
 })<ContainerProps>`
-    display: ${({isInputFocus}) => isInputFocus ? 'none' : 'flex'};
-    height: ${Dimensions.get('window').height*0.25}px;
+    display: ${({isKeyboardVisible}) => isKeyboardVisible ? 'none' : 'flex'};
+    height: ${Dimensions.get('window').height*0.3 + getStatusBarHeight()}px;
 `;
 export const Container = styled.View`
     height: 100%;
@@ -25,17 +26,17 @@ export const Container = styled.View`
 `;
 
 export const IcodsLogo = styled(Logo).attrs({
-    width: RFValue(249),
-    height: RFValue(140)
+    width: RFValue(289),
+    height: RFValue(170)
 })`
 `;
 
 export const Title = styled.Text`
-   font-size: ${RFValue(14)}px;
+   font-size: ${RFValue(16)}px;
    font-family: ${({theme}) => theme.fonts.medium};
 
    text-align: center;
-   margin-top: ${RFValue(4)}px;
+   margin-top: ${RFValue(6)}px;
 
    color: ${({theme}) => theme.colors.shape};
    letter-spacing: ${Dimensions.get('window').width*0.002}px;

@@ -1,6 +1,6 @@
+import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View`
     height: ${RFValue(48)}px;
