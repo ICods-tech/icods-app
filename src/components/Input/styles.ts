@@ -1,68 +1,41 @@
-import React from 'react';
-import { Dimensions, StyleSheet } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {Dimensions, TextInput} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import styled, {css} from 'styled-components/native';
 
-const {width, height} = Dimensions.get('window');
+interface Props {
+  isErrored: boolean;
+}
 
-const styles = StyleSheet.create({ 
-  divStyleBottomRadius: {
-    borderColor: 'rgba(0, 0, 0, 0.12)',
-    borderWidth: 0.5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-    borderTopWidth: 0,
-    width: '100%',
-    height: RFValue(43),
-    display: 'flex',
-    flexDirection: 'row',
-    // backgroundColor: '#f35',
-  },
-  divStyleTopRadius: {
-    borderColor: 'rgba(0, 0, 0, 0.12)',
-    borderWidth: 0.5,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    width: '100%',
-    flexDirection: 'row',
-    height: RFValue(43),
-    // backgroundColor: '#f39',
-    // alignItems: 'center'
-  },
-  divStylePlain: {
-    borderColor: 'rgba(0, 0, 0, 0.12)',
-    borderWidth: 0.5,
-    borderTopWidth: 0,
-    width: '100%',
-    height: RFValue(43),
-    display: 'flex',
-    flexDirection: 'row',
-    // backgroundColor: '#a3f',
-  },
-  inputStyle: {
-    // margin: 10,
-    display: 'flex',
-    fontSize: RFValue(14),
-    color: '#000',
-  },
-  inputStylePassword: {
-    // margin: 10,
-    display: 'flex',
-    width: '79%',
-    fontSize: RFValue(14),
-    color: '#000'
+export const Container = styled.View<Props>`
+  width: 100%;
+  height: ${RFValue(48)}px;
 
-  },
-  eyes: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  loginEyes: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    // marginLeft: -RFValue(10)
-  }
-})
+  flex-direction: row;
+  align-items: center;
 
-export default styles;
+  border: 0.8px solid ${({theme}) => theme.colors.light_line};
+
+  ${({isErrored}) =>
+    isErrored &&
+    css`
+      border: 0.8px solid ${({theme}) => theme.colors.attention_light};
+    `}
+`;
+
+export const InputText = styled(TextInput)<Props>`
+  flex: 1;
+  font-size: ${RFValue(14)}px;
+  font-family: ${({theme}) => theme.fonts.regular};
+  color: ${({theme, isErrored}) =>
+    isErrored ? theme.colors.attention : theme.colors.dark};
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
+`;
+
+export const IconContainer = styled.TouchableOpacity.attrs({
+  activeOpacity: 1,
+})`
+  /* height: 100%; */
+  justify-content: center;
+  align-items: center;
+  padding: 0 ${RFValue(10)}px 0 ${RFValue(10)}px;
+`;

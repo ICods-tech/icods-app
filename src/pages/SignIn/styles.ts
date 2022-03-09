@@ -42,7 +42,7 @@ export const SpacingContainer = styled.View`
   justify-content: center;
 `;
 
-export const SpacingLine = styled.View<ErrorStyleProps>`
+export const SpacingLine = styled.View`
   height: ${RFValue(1)}px;
   background-color: ${({theme}) => theme.colors.light_line};
 `;

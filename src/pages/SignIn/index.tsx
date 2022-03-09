@@ -27,12 +27,14 @@ import {SubmitButton} from '../../components/Authentication/SubmitButton';
 import {LoginSocialButton} from '../../components/Authentication/LoginSocialButton';
 
 import GoogleIcon from '../../assets/images/Icons/google_icon.svg';
-import NewInput from '../../components/NewInput';
 import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
-import KeyIcon from '../../assets/images/Icons/signIn-password.svg';
-import UserIcon from '../../assets/images/Icons/signIn-user.svg';
-import Toast from 'react-native-toast-message';
 import {LOG} from '../../config';
+import {Password, User} from 'react-native-iconly';
+
+import Toast from 'react-native-toast-message';
+import PasswordInput from '../../components/PasswordInput';
+import Input from '../../components/Input';
+
 const log = LOG.extend('Signin');
 
 const SignIn = () => {
@@ -42,7 +44,6 @@ const SignIn = () => {
   const [email, setEmail] = useState<string>(''); //jorgeoreidafloresta@gmail.com'
   const [password, setPassword] = useState<string>(''); // 'jorgeorei'
   const [errored, setErrored] = useState<boolean>(false);
-  const [secure, setSecure] = useState(true);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   const emailRef = useRef<TextInput>(null);
@@ -97,35 +98,33 @@ const SignIn = () => {
 
           <ScrollContainer>
             <SignInOptions>
-              <NewInput
+              <Input
                 ref={emailRef}
                 autoCorrect={false}
                 autoCapitalize="none"
-                icon={UserIcon}
+                iconly={User}
                 isErrored={errored}
-                keyboardType="email-address"
-                placeholder="E-mail"
                 defaultValue={email}
-                onChangeText={(email: string) => setEmail(email)}
+                keyboardType="email-address"
+                onChangeText={setEmail}
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
+                placeholder="E-mail"
                 returnKeyType="next"
-                onFocus={() => setErrored(false)}
+                setIsSignInErrored={setErrored}
+                value={email}
               />
 
-              <NewInput
+              <PasswordInput
                 ref={passwordInputRef}
-                icon={KeyIcon}
+                iconly={Password}
                 isErrored={errored}
-                passwordStyleInput
-                placeholder="Senha"
-                secure={secure}
-                secureTextEntry={secure}
-                setSecure={setSecure}
                 defaultValue={password}
-                onChangeText={(password: string) => setPassword(password)}
-                onSubmitEditing={() => handleLogin()}
+                placeholder="Senha"
+                onChangeText={setPassword}
+                onSubmitEditing={handleLogin}
                 returnKeyType="send"
-                onFocus={() => setErrored(false)}
+                setIsSignInErrored={setErrored}
+                value={password}
               />
 
               <RegisterAndPassowordForgotContainer>
