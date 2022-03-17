@@ -1,18 +1,28 @@
 import React from 'react';
-import { RectButtonProperties } from 'react-native-gesture-handler';
-import { 
-    Button, 
-    Text 
-} from './styles';
+import {ActivityIndicator} from 'react-native';
+import {RectButtonProperties} from 'react-native-gesture-handler';
+import {useTheme} from 'styled-components/native';
+import {Button, Text} from './styles';
 
 interface SubmitButtonProps extends RectButtonProperties {
-    text: string;
+  text: string;
+  loading?: boolean;
 }
 
-export function SubmitButton({text, ...rest }: SubmitButtonProps) {
-    return(
-        <Button {...rest}>
-            <Text>{text}</Text>
-        </Button>
-    );
+export function SubmitButton({
+  text,
+  loading = false,
+  enabled = true,
+  ...rest
+}: SubmitButtonProps) {
+  const theme = useTheme();
+  return (
+    <Button enabled={enabled} style={{opacity: enabled ? 1 : 0.5}} {...rest}>
+      {loading ? (
+        <ActivityIndicator color={theme.colors.shape} size={24} />
+      ) : (
+        <Text>{text}</Text>
+      )}
+    </Button>
+  );
 }

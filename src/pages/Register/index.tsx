@@ -27,7 +27,8 @@ import {SubmitButton} from '../../components/Authentication/SubmitButton';
 import ModalUseTerms from '../../components/ModalUseTerms';
 import analytics from '@react-native-firebase/analytics';
 import {LOG} from '../../config';
-import {AddUser, Message, Password, User} from 'react-native-iconly';
+import {Message, Password, User} from 'react-native-iconly';
+import UserNameSvg from '../../assets/images/Icons/user_name.svg';
 import Input from '../../components/Input';
 import PasswordInput from '../../components/PasswordInput';
 const log = LOG.extend('Register');
@@ -65,7 +66,7 @@ const Register = () => {
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const [useTerms, setUseTerms] = useState(false);
-
+  const [isLoading, setIsLoading] = useState(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   const userNameInputRef = useRef<TextInput>(null);
@@ -84,6 +85,7 @@ const Register = () => {
   }
 
   const handleSignUp = useCallback(async () => {
+    setIsLoading(true);
     const data = {
       name,
       username,
@@ -122,6 +124,7 @@ const Register = () => {
       if ('message' in errors)
         await handleRegisterRouteErrors(errors, setIsErrored);
       else await handleFieldAlreadyExistsErrors(errors, setIsErrored);
+      setIsLoading(false);
     }
   }, [name, username, email, password, passwordConfirmation, useTerms]);
 
@@ -187,13 +190,13 @@ const Register = () => {
                   autoCorrect
                   autoCapitalize="words"
                   defaultValue={name}
-                  iconly={AddUser}
+                  iconSvg={UserNameSvg}
                   isErrored={isErrored.name}
                   isSignUpErrored={{
                     ...isErrored,
                     name: false,
                   }}
-                  placeholder="Digite seu nome completo"
+                  placeholder="Nome completo"
                   onChangeText={setName}
                   onSubmitEditing={() => userNameInputRef.current?.focus()}
                   setIsSignUpErrored={setIsErrored}
@@ -212,7 +215,7 @@ const Register = () => {
                     ...isErrored,
                     username: false,
                   }}
-                  placeholder="Digite seu nome de usuário"
+                  placeholder="Nome de usuário"
                   onChangeText={setUsername}
                   onSubmitEditing={() => emailInputRef.current?.focus()}
                   setIsSignUpErrored={setIsErrored}
@@ -231,7 +234,7 @@ const Register = () => {
                     ...isErrored,
                     email: false,
                   }}
-                  placeholder="Digite seu e-mail"
+                  placeholder="E-mail"
                   onChangeText={setEmail}
                   onSubmitEditing={() => passwordInputRef.current?.focus()}
                   setIsSignUpErrored={setIsErrored}
@@ -247,7 +250,7 @@ const Register = () => {
                     ...isErrored,
                     password: false,
                   }}
-                  placeholder="Digite uma senha"
+                  placeholder="Senha"
                   defaultValue={password}
                   onChangeText={setPassword}
                   onSubmitEditing={() =>
@@ -266,7 +269,7 @@ const Register = () => {
                     ...isErrored,
                     passwordConfirmation: false,
                   }}
-                  placeholder="Digite novamente a senha"
+                  placeholder="Confirmar senha"
                   defaultValue={passwordConfirmation}
                   onChangeText={setPasswordConfirmation}
                   onSubmitEditing={handleSignUp}
@@ -278,6 +281,15 @@ const Register = () => {
 
               <SubmitButtonContainer>
                 <SubmitButton
+                  enabled={
+                    !!name &&
+                    !!username &&
+                    !!email &&
+                    !!password &&
+                    !!passwordConfirmation &&
+                    !isLoading
+                  }
+                  loading={isLoading}
                   onPress={() => {
                     handleRegister(), handleResetIsErrored();
                   }}

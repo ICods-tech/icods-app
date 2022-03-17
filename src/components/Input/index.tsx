@@ -11,9 +11,11 @@ import {Container, IconContainer, InputText} from './styles';
 import {useTheme} from 'styled-components/native';
 import {User as IconProps} from 'react-native-iconly';
 import {IRouteErrors} from '../../pages/Register';
+import {SvgProps} from 'react-native-svg';
 
 interface InputTextProps extends TextInputProps {
-  iconly: typeof IconProps;
+  iconSvg?: React.FC<SvgProps>;
+  iconly?: typeof IconProps;
   isErrored?: boolean;
   value: string;
   isSignUpErrored?: IRouteErrors;
@@ -27,7 +29,8 @@ interface InputRef {
 
 const Input: React.ForwardRefRenderFunction<InputRef, InputTextProps> = (
   {
-    iconly: Icon,
+    iconSvg: IconSvg,
+    iconly: Iconly,
     isErrored = false,
     isSignUpErrored,
     setIsSignInErrored = () => {},
@@ -76,12 +79,21 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputTextProps> = (
   return (
     <Container isErrored={isErrored}>
       <IconContainer onPress={() => inputRef.current?.focus()}>
-        <Icon
-          width={RFValue(16)}
-          height={RFValue(16)}
-          color={iconColor}
-          set="bold"
-        />
+        {(Iconly && (
+          <Iconly
+            width={RFValue(16)}
+            height={RFValue(16)}
+            color={iconColor}
+            set="bold"
+          />
+        )) ||
+          (IconSvg && (
+            <IconSvg
+              width={RFValue(16)}
+              height={RFValue(16)}
+              fill={iconColor}
+            />
+          ))}
       </IconContainer>
 
       <InputText

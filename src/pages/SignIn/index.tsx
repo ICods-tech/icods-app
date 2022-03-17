@@ -45,10 +45,12 @@ const SignIn = () => {
   const [password, setPassword] = useState<string>(''); // 'jorgeorei'
   const [errored, setErrored] = useState<boolean>(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const emailRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const handleLogin = useCallback(async () => {
+    setIsLoading(true);
     try {
       await signIn({email, password});
       navigation.navigate('Dashboard');
@@ -65,7 +67,7 @@ const SignIn = () => {
         visibilityTime: 1000,
         bottomOffset: 100,
       });
-
+      setIsLoading(false);
       log.error(error.message);
     }
   }, [email, password]);
@@ -145,7 +147,12 @@ const SignIn = () => {
                 </HelpButtonContainer>
               </RegisterAndPassowordForgotContainer>
 
-              <SubmitButton onPress={() => handleLogin()} text="Entrar" />
+              <SubmitButton
+                enabled={!!email && !!password && !isLoading}
+                loading={isLoading}
+                onPress={() => handleLogin()}
+                text="Entrar"
+              />
               <SpacingContainer>
                 <SpacingLine style={{width: '40%'}}></SpacingLine>
                 <SpacingText>Ou</SpacingText>
