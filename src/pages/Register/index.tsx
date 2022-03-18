@@ -163,7 +163,7 @@ const Register = () => {
         backgroundColor={
           isKeyboardVisible ? theme.colors.primary : 'transparent'
         }
-        translucent={isKeyboardVisible ? false : true}
+        translucent={!isKeyboardVisible}
       />
 
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -172,9 +172,8 @@ const Register = () => {
 
           <BackButtonContainer isKeyboardVisible={isKeyboardVisible}>
             <BackButton
-              isKeyboardVisible={isKeyboardVisible}
               navigationTo="SignIn"
-              color="white"
+              color={isKeyboardVisible ? 'blue' : 'white'}
             />
           </BackButtonContainer>
 

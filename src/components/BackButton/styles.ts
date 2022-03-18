@@ -1,4 +1,4 @@
-import {BorderlessButton} from 'react-native-gesture-handler';
+import {BorderlessButton, RectButton} from 'react-native-gesture-handler';
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled, {css} from 'styled-components/native';
 import Back from '../../assets/images/new-back-button-white.svg';
@@ -10,16 +10,11 @@ interface ContainerProps {
 
 export const Container = styled.View<ContainerProps>`
   border-radius: ${RFValue(32)}px;
-  ${({color}) =>
-    color === 'white' &&
-    css`
-      border: 1px solid ${({theme}) => theme.colors.primary};
-    `};
   align-items: center;
   justify-content: center;
 `;
 
-export const Button = styled(BorderlessButton)`
+export const Button = styled(RectButton)`
   align-items: center;
   justify-content: center;
   height: ${RFValue(32)}px;

@@ -112,9 +112,19 @@ const PasswordInput: React.ForwardRefRenderFunction<
 
       <ButtonEye onPress={() => handleChangeEye()}>
         {toggleEye ? (
-          <Hide color={theme.colors.medium_line} set="light" />
+          <Hide
+            width={RFValue(16)}
+            height={RFValue(16)}
+            color={theme.colors.medium_line}
+            set="light"
+          />
         ) : (
-          <Show color={theme.colors.medium_line} set="light" />
+          <Show
+            width={RFValue(16)}
+            height={RFValue(16)}
+            color={theme.colors.medium_line}
+            set="light"
+          />
         )}
       </ButtonEye>
     </Container>

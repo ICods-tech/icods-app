@@ -17,7 +17,7 @@ export function SubmitButton({
 }: SubmitButtonProps) {
   const theme = useTheme();
   return (
-    <Button enabled={enabled} style={{opacity: enabled ? 1 : 0.5}} {...rest}>
+    <Button enabled={enabled} loading={loading} {...rest}>
       {loading ? (
         <ActivityIndicator color={theme.colors.shape} size={24} />
       ) : (
