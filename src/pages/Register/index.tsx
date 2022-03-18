@@ -158,14 +158,6 @@ const Register = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor={
-          isKeyboardVisible ? theme.colors.primary : 'transparent'
-        }
-        translucent={!isKeyboardVisible}
-      />
-
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
           <Header isKeyboardVisible={isKeyboardVisible} />
