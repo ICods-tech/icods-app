@@ -20,6 +20,7 @@ export const Button = styled(RectButton)<Props>`
   ${({enabled, loading}) =>
     !enabled || loading
       ? css`
+          background-color: ${({theme}) => theme.colors.gray};
           opacity: 0.5;
         `
       : css`
