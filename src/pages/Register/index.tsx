@@ -4,7 +4,6 @@ import {
   TouchableWithoutFeedback,
   TextInput,
   SafeAreaView,
-  StatusBar,
 } from 'react-native';
 import {
   BackButtonContainer,
@@ -14,6 +13,12 @@ import {
   RegisterTitle,
   ScrollRegister,
   SubmitButtonContainer,
+  UseTermsButtonText,
+  UseTermsChecked,
+  UseTermsText,
+  UseTermsConfirmedButton,
+  UseTermsContainer,
+  UseTermsShowButton,
 } from './styles';
 import {useAuth} from '../../hooks/auth';
 import Toast from 'react-native-toast-message';
@@ -65,6 +70,7 @@ const Register = () => {
   });
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
+  const [useTermsPressed, setUseTermsPressed] = useState(false);
   const [useTerms, setUseTerms] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
@@ -148,12 +154,22 @@ const Register = () => {
     };
   }, [Keyboard]);
 
-  const handleRegister = () => {
-    setUseTerms(true);
+  const handleUseTerms = () => {
+    setUseTerms(!useTerms);
   };
 
-  const handleCancel = () => {
+  const handleUseTermsPressed = () => {
+    setUseTermsPressed(!useTermsPressed);
+  };
+
+  const handleUseTermsModalConfirmed = () => {
+    setUseTerms(true);
+    setUseTermsPressed(false);
+  };
+
+  const handleUseTermsModalCancel = () => {
     setUseTerms(false);
+    setUseTermsPressed(false);
   };
 
   return (
@@ -270,6 +286,17 @@ const Register = () => {
                 />
               </InputContainer>
 
+              <UseTermsContainer>
+                <UseTermsConfirmedButton onPress={handleUseTerms}>
+                  <UseTermsChecked useTermsPressed={useTerms} />
+                  <UseTermsText>Li e estou de acordo com os </UseTermsText>
+                </UseTermsConfirmedButton>
+
+                <UseTermsShowButton onPress={handleUseTermsPressed}>
+                  <UseTermsButtonText>Termos de Uso</UseTermsButtonText>
+                </UseTermsShowButton>
+              </UseTermsContainer>
+
               <SubmitButtonContainer>
                 <SubmitButton
                   enabled={
@@ -278,11 +305,12 @@ const Register = () => {
                     !!email &&
                     !!password &&
                     !!passwordConfirmation &&
+                    useTerms &&
                     !isLoading
                   }
                   loading={isLoading}
                   onPress={() => {
-                    handleRegister(), handleResetIsErrored();
+                    handleSignUp(), handleResetIsErrored();
                   }}
                   text="Cadastrar"
                 />
@@ -291,12 +319,11 @@ const Register = () => {
           </ScrollRegister>
         </Container>
       </TouchableWithoutFeedback>
-      {useTerms && (
-        <ModalUseTerms
-          handleSignUp={() => handleSignUp()}
-          handleCancel={() => handleCancel()}
-        />
-      )}
+      <ModalUseTerms
+        handleUseTermsModalConfirmed={() => handleUseTermsModalConfirmed()}
+        handleUseTermsModalCancel={() => handleUseTermsModalCancel()}
+        visible={useTermsPressed}
+      />
     </SafeAreaView>
   );
 };
