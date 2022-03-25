@@ -155,7 +155,7 @@ const Register = () => {
     setUseTerms(!useTerms);
   };
 
-  const handleIsKeyboardDosentVisible = () => {
+  const handleKeyboardDosentVisible = () => {
     setIsKeyboardVisible(false);
   };
 
@@ -176,7 +176,7 @@ const Register = () => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <TouchableWithoutFeedback
-        onPress={() => (Keyboard.dismiss, handleIsKeyboardDosentVisible())}>
+        onPress={() => (Keyboard.dismiss, handleKeyboardDosentVisible())}>
         <Container>
           <Header isKeyboardVisible={isKeyboardVisible} />
 
@@ -281,12 +281,10 @@ const Register = () => {
                   placeholder="Confirmar senha"
                   defaultValue={passwordConfirmation}
                   onChangeText={setPasswordConfirmation}
-                  onSubmitEditing={() => (
-                    handleUseTerms(), handleIsKeyboardDosentVisible()
-                  )}
+                  onSubmitEditing={handleKeyboardDosentVisible}
                   setIsSignUpErrored={setIsErrored}
                   value={passwordConfirmation}
-                  returnKeyType="send"
+                  returnKeyType="next"
                 />
               </InputContainer>
 
