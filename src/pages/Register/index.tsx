@@ -141,21 +141,22 @@ const Register = () => {
         setIsKeyboardVisible(true);
       },
     );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setIsKeyboardVisible(false);
-      },
-    );
+
+    if (useTerms) {
+      setIsKeyboardVisible(false);
+    }
 
     return () => {
       keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
     };
-  }, [Keyboard]);
+  }, [Keyboard, useTerms]);
 
   const handleUseTerms = () => {
     setUseTerms(!useTerms);
+  };
+
+  const handleIsKeyboardDosentVisible = () => {
+    setIsKeyboardVisible(false);
   };
 
   const handleUseTermsPressed = () => {
@@ -174,7 +175,8 @@ const Register = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <TouchableWithoutFeedback
+        onPress={() => (Keyboard.dismiss, handleIsKeyboardDosentVisible())}>
         <Container>
           <Header isKeyboardVisible={isKeyboardVisible} />
 
@@ -279,7 +281,9 @@ const Register = () => {
                   placeholder="Confirmar senha"
                   defaultValue={passwordConfirmation}
                   onChangeText={setPasswordConfirmation}
-                  onSubmitEditing={handleSignUp}
+                  onSubmitEditing={() => (
+                    handleUseTerms(), handleIsKeyboardDosentVisible()
+                  )}
                   setIsSignUpErrored={setIsErrored}
                   value={passwordConfirmation}
                   returnKeyType="send"
