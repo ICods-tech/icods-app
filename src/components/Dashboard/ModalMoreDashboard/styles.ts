@@ -10,7 +10,7 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   position: absolute;
   top: 0;
-  right: -6px;
+  right: -4px;
   width: ${RFValue(132)}px;
   height: ${RFValue(160)}px;
   z-index: 2;
