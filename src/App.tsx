@@ -1,4 +1,5 @@
 import dynamicLinks from '@react-native-firebase/dynamic-links';
+import 'react-native-gesture-handler';
 import {
   NavigationContainer,
   NavigationContainerRefContext,
@@ -6,7 +7,6 @@ import {
 } from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StatusBar, View} from 'react-native';
-import 'react-native-gesture-handler';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import {ThemeProvider} from 'styled-components';
 import theme from './global/styles/theme';

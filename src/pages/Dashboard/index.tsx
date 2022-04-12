@@ -24,25 +24,24 @@ import {
   WelcomeTitleContainer,
 } from './styles';
 
-import {HighlightButton} from '../../components/Dashboard/HighlightButton';
 import {useAuth} from '../../hooks/auth';
+import {useTheme} from 'styled-components';
+import {HighlightButton} from '../../components/Dashboard/HighlightButton';
+import {ModalMoreDashboard} from '../../components/Dashboard/ModalMoreDashboard';
 
 import HeaderDashboard from '../../components/Dashboard/HeaderDashboard';
 import extractNameAndSurname from '../../utils/extractNameAndSurname';
 import LoggedFooter from '../../components/LoggedFooter';
-import ModalMoreDashboard from '../../components/Dashboard/ModalMoreDashboard';
-
 import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
 import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
 import SocialIcon from '../../assets/images/Icons/social.svg';
 import HistoryIcon from '../../assets/images/Icons/history.svg';
 import ScanIcon from '../../assets/images/Icons/qrcode_scan.svg';
-import {useTheme} from 'styled-components';
 import analytics from '@react-native-firebase/analytics';
 
 const Dashboard = () => {
   const theme = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [choosenActivityScope, setChoosenActivityScope] = useState<
     'all' | 'mine'
   >('all');
@@ -54,6 +53,30 @@ const Dashboard = () => {
   const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
   const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
 
+  function handleOpenDashboardModal() {
+    setModalVisible(true);
+  }
+  function handleCloseDashBoardModal() {
+    setModalVisible(false);
+  }
+  function handleOpenSupportPage() {
+    setModalVisible(false);
+    navigation.navigate('Support');
+  }
+  function handleOpenProfilePage() {
+    setModalVisible(false);
+    navigation.navigate('Profile');
+  }
+  function handleOpenAboutPage() {
+    setModalVisible(false);
+    navigation.navigate('About');
+  }
+  async function handleSignOut() {
+    setModalVisible(false);
+    await signOut();
+    await analytics().resetAnalyticsData();
+  }
+
   return (
     <Container>
       <Header>
@@ -61,28 +84,15 @@ const Dashboard = () => {
           name={name}
           surname={lastname}
           avatar={avatar}
-          ellipsisPressed={() => setModalVisible(!modalVisible)}
+          ellipsisPressed={handleOpenDashboardModal}
         />
         <ModalMoreDashboard
           visible={modalVisible}
-          pressedOut={() => setModalVisible(!modalVisible)}
-          supportPage={() => {
-            setModalVisible(false);
-            navigation.navigate('Support');
-          }}
-          profilePage={() => {
-            setModalVisible(false);
-            navigation.navigate('Profile');
-          }}
-          aboutPage={() => {
-            setModalVisible(false);
-            navigation.navigate('About');
-          }}
-          signOut={async () => {
-            setModalVisible(false);
-            await signOut();
-            await analytics().resetAnalyticsData();
-          }}
+          pressedOut={handleCloseDashBoardModal}
+          supportPage={handleOpenSupportPage}
+          profilePage={handleOpenProfilePage}
+          aboutPage={handleOpenAboutPage}
+          signOut={handleSignOut}
         />
       </Header>
 
