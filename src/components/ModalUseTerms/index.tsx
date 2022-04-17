@@ -26,11 +26,7 @@ const ModalUseTerms = ({
   visible,
 }: ModalUseTermsProps) => {
   return (
-    <ModalContainer
-      animationType="slide"
-      transparent={true}
-      visible={visible}
-      onRequestClose={() => {}}>
+    <ModalContainer animationType="slide" transparent={true} visible={visible}>
       <ScreenContainer>
         <SubContainer>
           <Title>Termos e Condições</Title>
@@ -198,10 +194,12 @@ const ModalUseTerms = ({
             </TextContainerText>
             <TextContainerText />
           </TextContainer>
+
           <ButtonsContainer>
             <BottomButton onPress={handleUseTermsModalCancel}>
               <ButtonLabelCancel>CANCELAR</ButtonLabelCancel>
             </BottomButton>
+
             <BottomButton onPress={handleUseTermsModalConfirmed}>
               <ButtonLabelConfirm>CONFIRMAR</ButtonLabelConfirm>
             </BottomButton>

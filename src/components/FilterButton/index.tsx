@@ -1,23 +1,18 @@
 import React from 'react';
-import { BorderlessButtonProperties } from 'react-native-gesture-handler';
-import { Filter } from 'react-native-iconly'
-import {
-    Container, 
-    FilterIcon,
-    FilterItemContainer, 
-} from './styles';
+import {BorderlessButtonProps} from 'react-native-gesture-handler';
+import {Filter} from 'react-native-iconly';
+import {useTheme} from 'styled-components/native';
+import {Container, FilterItemContainer} from './styles';
 
-interface FilterButtonProps extends BorderlessButtonProperties{
-}
+interface FilterButtonProps extends BorderlessButtonProps {}
 
-export function FilterButton({...rest}: FilterButtonProps){
-    return (
-        <Container
-            {...rest}
-        >
-            <FilterItemContainer>
-                <Filter color='#fff' size={16} />
-            </FilterItemContainer>
-        </Container>
-    );
+export function FilterButton({...rest}: FilterButtonProps) {
+  const theme = useTheme();
+  return (
+    <Container {...rest}>
+      <FilterItemContainer>
+        <Filter color={theme.colors.shape} size={16} />
+      </FilterItemContainer>
+    </Container>
+  );
 }

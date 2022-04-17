@@ -1,35 +1,34 @@
 'use strict';
 import React from 'react';
-import Swipeable from 'react-native-gesture-handler/Swipeable'
 import QrCodeImg from '../../../assets/images/qr_code.svg';
 
-import { useNavigation } from '@react-navigation/native';
-import { RectButtonProperties } from 'react-native-gesture-handler';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {useNavigation} from '@react-navigation/native';
+import {RectButtonProps} from 'react-native-gesture-handler';
+import {RFValue} from 'react-native-responsive-fontsize';
 
-import { 
+import {
   BlackMarker,
-  BlueMarker, 
-  Button, 
-  Container, 
-  Content, 
-  CyanMarker, 
-  Favorited, 
-  GreenMarker, 
-  MainContainer, 
-  OptionsButton, 
-  OptionsButtonIcon, 
-  PinkMarker, 
-  QRCodeCardOptions, 
-  QRCodeInfo, 
-  QRCodeInfoPrivacy, 
+  BlueMarker,
+  Button,
+  Container,
+  Content,
+  CyanMarker,
+  Favorited,
+  GreenMarker,
+  MainContainer,
+  OptionsButton,
+  OptionsButtonIcon,
+  PinkMarker,
+  QRCodeCardOptions,
+  QRCodeInfo,
+  QRCodeInfoPrivacy,
   QRCodeInfoText,
-  QRCodePrivacyText, 
-  RedMarker, 
-  YellowMarker
+  QRCodePrivacyText,
+  RedMarker,
+  YellowMarker,
 } from './styles';
 
-interface HistoryCardsProps extends RectButtonProperties{
+interface HistoryCardsProps extends RectButtonProps {
   id: string;
   creator: string;
   color: Colors;
@@ -37,77 +36,74 @@ interface HistoryCardsProps extends RectButtonProperties{
   favorite: boolean;
   pressed: () => void;
   link: string;
-  privacy: "Público" | "Privado";
+  privacy: 'Público' | 'Privado';
 }
 
 const CardMarker = {
-  'black': <BlackMarker />,
-  'blue': <BlueMarker />,
-  'cyan': <CyanMarker />,
-  'green': <GreenMarker />,
-  'pink': <PinkMarker />,
-  'red': <RedMarker />,
-  'yellow': <YellowMarker />,
-}
+  black: <BlackMarker />,
+  blue: <BlueMarker />,
+  cyan: <CyanMarker />,
+  green: <GreenMarker />,
+  pink: <PinkMarker />,
+  red: <RedMarker />,
+  yellow: <YellowMarker />,
+};
 
 export const CardColors = {
-  'red': '#ff6d6d',
-  'green': '#6dff73',
-  'blue': '#2b90d9',
-  'yellow': '#ffb600',
-  'cyan': '#68f6ff',
-  'pink': '#ff68c3',
-  'black': '#000'
-} 
+  red: '#ff6d6d',
+  green: '#6dff73',
+  blue: '#2b90d9',
+  yellow: '#ffb600',
+  cyan: '#68f6ff',
+  pink: '#ff68c3',
+  black: '#000',
+};
 
-
-export function HistoryCards({ 
-  id, 
-  creator, 
-  date, 
-  color, 
+export function HistoryCards({
+  id,
+  creator,
+  date,
+  color,
   pressed,
   favorite,
   privacy,
   link,
   ...rest
-}: HistoryCardsProps)
-{
-  const navigation = useNavigation()
+}: HistoryCardsProps) {
+  const navigation = useNavigation();
   return (
-    <Button
-      onPress={pressed}
-        {...rest}
-        >
-          <Container color={color}>
-            {( color in CardColors && 
-            (color !== 'noFilter' && color !== 'noColor'))
-            && CardMarker[color]}
+    <Button onPress={pressed} {...rest}>
+      <Container color={color}>
+        {color in CardColors &&
+          color !== 'noFilter' &&
+          color !== 'noColor' &&
+          CardMarker[color]}
 
-            <Content>
-              <QrCodeImg width={RFValue(82)} height={RFValue(82)}/>
-              <MainContainer>
-              <QRCodeInfo>
-                <QRCodeInfoText>Código: {id.substr(id.length - 8)}</QRCodeInfoText>
-                <QRCodeInfoPrivacy>
-                  <QRCodeInfoText>Conteúdo: </QRCodeInfoText> 
-                  <QRCodePrivacyText >{privacy}</QRCodePrivacyText>
-                </QRCodeInfoPrivacy>
-                <QRCodeInfoText>Feito por: {creator}</QRCodeInfoText>
-                <QRCodeInfoText>Data: {date}</QRCodeInfoText>
-              </QRCodeInfo>
+        <Content>
+          <QrCodeImg width={RFValue(82)} height={RFValue(82)} />
+          <MainContainer>
+            <QRCodeInfo>
+              <QRCodeInfoText>
+                Código: {id.substr(id.length - 8)}
+              </QRCodeInfoText>
+              <QRCodeInfoPrivacy>
+                <QRCodeInfoText>Conteúdo: </QRCodeInfoText>
+                <QRCodePrivacyText>{privacy}</QRCodePrivacyText>
+              </QRCodeInfoPrivacy>
+              <QRCodeInfoText>Feito por: {creator}</QRCodeInfoText>
+              <QRCodeInfoText>Data: {date}</QRCodeInfoText>
+            </QRCodeInfo>
 
-              <QRCodeCardOptions>
-                <OptionsButton>
-                  <OptionsButtonIcon />
-                </OptionsButton>
-              </QRCodeCardOptions>
-              </MainContainer>
-            </Content>
+            <QRCodeCardOptions>
+              <OptionsButton>
+                <OptionsButtonIcon />
+              </OptionsButton>
+            </QRCodeCardOptions>
+          </MainContainer>
+        </Content>
 
-
-          {favorite && (<Favorited />)}
-          </Container>
-      </Button>
-  )
+        {favorite && <Favorited />}
+      </Container>
+    </Button>
+  );
 }

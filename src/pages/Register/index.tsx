@@ -29,10 +29,11 @@ import {Header} from '../../components/Authentication/Header';
 import {BackButton} from '../../components/BackButton';
 import {useTheme} from 'styled-components';
 import {SubmitButton} from '../../components/Authentication/SubmitButton';
-import ModalUseTerms from '../../components/ModalUseTerms';
-import analytics from '@react-native-firebase/analytics';
 import {LOG} from '../../config';
 import {Message, Password, User} from 'react-native-iconly';
+
+import ModalUseTerms from '../../components/ModalUseTerms';
+import analytics from '@react-native-firebase/analytics';
 import UserNameSvg from '../../assets/images/Icons/user_name.svg';
 import Input from '../../components/Input';
 import PasswordInput from '../../components/PasswordInput';
@@ -157,6 +158,7 @@ const Register = () => {
 
   const handleKeyboardDosentVisible = () => {
     setIsKeyboardVisible(false);
+    Keyboard.dismiss();
   };
 
   const handleUseTermsPressed = () => {
@@ -175,8 +177,7 @@ const Register = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <TouchableWithoutFeedback
-        onPress={() => (Keyboard.dismiss, handleKeyboardDosentVisible())}>
+      <TouchableWithoutFeedback onPress={handleKeyboardDosentVisible}>
         <Container>
           <Header isKeyboardVisible={isKeyboardVisible} />
 

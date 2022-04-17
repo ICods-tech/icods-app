@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  BorderlessButtonProperties,
-  RectButtonProperties,
-} from 'react-native-gesture-handler';
 import {useNavigation} from '@react-navigation/native';
 import {BackBlueIcon, BackWhiteIcon, Button, Container} from './styles';
+import {TouchableOpacityProps} from 'react-native';
 
-interface BackButtonProps extends RectButtonProperties {
+interface BackButtonProps extends TouchableOpacityProps {
   navigationTo: any;
   customFunction?: () => void;
   color?: 'blue' | 'white';

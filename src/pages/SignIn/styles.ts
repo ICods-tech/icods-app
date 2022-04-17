@@ -1,10 +1,7 @@
 import styled from 'styled-components/native';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {Dimensions} from 'react-native';
-
-// export const SignInOptions = styled.KeyboardAvoidingView.attrs({
-//     behavior: "height"
-// })`
+import {RectButton} from 'react-native-gesture-handler';
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -12,6 +9,7 @@ export const SafeAreaView = styled.SafeAreaView`
 
 export const Container = styled.View`
   flex: 1;
+  background-color: ${({theme}) => theme.colors.shape};
 `;
 
 export const ScrollContainer = styled.ScrollView.attrs({
@@ -23,6 +21,7 @@ export const ScrollContainer = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
   margin-top: ${RFValue(25)}px;
+  background-color: ${({theme}) => theme.colors.shape};
 `;
 
 export const SignInOptions = styled.View`
@@ -72,10 +71,15 @@ export const HelpContainer = styled.View`
   margin: ${RFValue(12)}px 0 ${RFValue(24)}px 0;
 
   flex-direction: row;
+  align-items: center;
   justify-content: center;
 `;
 
-export const HelpButtonContainer = styled.TouchableOpacity``;
+export const HelpButtonContainer = styled(RectButton)`
+  padding: ${RFValue(4)}px;
+  background-color: ${({theme}) => theme.colors.shape};
+  border-radius: ${RFValue(16)}px;
+`;
 
 interface HelpButtonTextProps {
   textColor: string;

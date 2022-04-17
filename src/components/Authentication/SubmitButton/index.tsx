@@ -1,10 +1,10 @@
 import React from 'react';
 import {ActivityIndicator} from 'react-native';
-import {RectButtonProperties} from 'react-native-gesture-handler';
+import {RectButtonProps} from 'react-native-gesture-handler';
 import {useTheme} from 'styled-components/native';
 import {Button, Text} from './styles';
 
-interface SubmitButtonProps extends RectButtonProperties {
+interface SubmitButtonProps extends RectButtonProps {
   text: string;
   loading?: boolean;
 }

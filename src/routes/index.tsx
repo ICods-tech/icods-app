@@ -1,10 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {
-  CardStyleInterpolators,
-  createStackNavigator,
-  HeaderStyleInterpolators,
-  TransitionSpecs,
-} from '@react-navigation/stack';
+import React from 'react';
+import {createStackNavigator} from '@react-navigation/stack';
 import Register from '../pages/Register';
 import SignIn from '../pages/SignIn';
 import Dashboard from '../pages/Dashboard';
@@ -29,6 +24,7 @@ import {RouteProp, useNavigation} from '@react-navigation/native';
 import About from '../pages/About';
 import Version from '../pages/Version';
 import Deeplink from '../pages/Deeplink';
+import {useTheme} from 'styled-components/native';
 
 const App = createStackNavigator();
 
@@ -88,18 +84,19 @@ interface IProp {
 }
 
 const Routes = ({deeplink}: IProp) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   if (deeplink.length) {
     navigation.navigate('Deeplink', {url: deeplink});
   }
 
   const {user, token, isLoading} = useAuth();
+  const theme = useTheme();
   return (
     <App.Navigator
       mode="card"
       screenOptions={{
         headerShown: false,
-        cardStyle: {backgroundColor: '#fff'},
+        cardStyle: {backgroundColor: theme.colors.shape},
       }}>
       {isLoading ? (
         <App.Screen
@@ -120,8 +117,8 @@ const Routes = ({deeplink}: IProp) => {
                 ? noAnimation
                 : horizontalAnimation
             }
-            />
-            <App.Screen
+          />
+          <App.Screen
             name="Deeplink"
             component={Deeplink}
             options={horizontalAnimation}
