@@ -1,17 +1,18 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { Container, Title } from './styles';
-import { ScannerButton } from '../../ScannerButton';
-import { Text } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Container} from './styles';
+import {ScannerButton} from '../../ScannerButton';
 
-export function AuthFooter(){
-  const navigation = useNavigation()
-   
+export function AuthFooter() {
+  const navigation = useNavigation<any>();
+
   return (
     <Container>
-        <ScannerButton 
-          onPress={() => navigation.navigate({ name: 'Scanner', key: 'SCANNER_FROM_FOOTER' })}
-        />
+      <ScannerButton
+        onPress={() =>
+          navigation.navigate({name: 'Scanner', key: 'SCANNER_FROM_FOOTER'})
+        }
+      />
     </Container>
-  )
+  );
 }

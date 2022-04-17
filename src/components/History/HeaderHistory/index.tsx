@@ -1,56 +1,54 @@
-import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../../hooks/auth';
-import { 
-  Container, 
-  Header, 
-  OptionalButtonsContainer, 
-  SearchContainer, 
-  Title 
+import React, {useState} from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {
+  Container,
+  Header,
+  OptionalButtonsContainer,
+  SearchContainer,
+  Title,
 } from './styles';
-import { BackButton } from '../../BackButton';
-import { SearchInput } from '../../SearchInput';
-import { useTheme } from 'styled-components';
-import { FavoriteButton } from '../../FavoriteButton';
-import { FilterButton } from '../../FilterButton';
-import { Keyboard, Modal, TouchableWithoutFeedback, View } from 'react-native';
-import { FilterModal } from '../FilterModal';
-import { Moment } from 'moment';
+import {BackButton} from '../../BackButton';
+import {SearchInput} from '../../SearchInput';
+import {useTheme} from 'styled-components';
+import {FavoriteButton} from '../../FavoriteButton';
+import {FilterButton} from '../../FilterButton';
+import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {FilterModal} from '../FilterModal';
+import {Moment} from 'moment';
 
 interface HeaderHistoryProps {
   favorite: boolean;
   qrCodeDetails?: boolean;
   setFavorite: () => void;
-  setColorAndDate: ({ date, color }: ColorAndDateProps) => void;
-  setSelectedColor?: (color: Colors) => void,
-  selectedColor?: Colors,
+  setColorAndDate: ({date, color}: ColorAndDateProps) => void;
+  setSelectedColor?: (color: Colors) => void;
+  selectedColor?: Colors;
   backButtonPressed?: () => void;
-  setSelectedDate?: (date: Moment | undefined) => void,
-  selectedDate?: Moment | undefined,
+  setSelectedDate?: (date: Moment | undefined) => void;
+  selectedDate?: Moment | undefined;
 }
 
 interface ColorAndDateProps {
-  color: string,
-  date: Date | undefined,
+  color: string;
+  date: Date | undefined;
 }
 
-export function HeaderHistory({ 
-  setColorAndDate, 
-  setFavorite, 
-  favorite, 
+export function HeaderHistory({
+  setColorAndDate,
+  setFavorite,
+  favorite,
   qrCodeDetails,
   setSelectedColor,
   backButtonPressed,
   selectedColor,
   setSelectedDate,
-  selectedDate
- }: 
-  HeaderHistoryProps){
+  selectedDate,
+}: HeaderHistoryProps) {
   const navigation = useNavigation();
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false);
   const theme = useTheme();
   const [searchEntry, setSearchEntry] = useState('');
-  
+
   function SearchInputSubmitTest() {
     setSearchEntry('Input do Histórico funcionando');
   }
@@ -59,58 +57,48 @@ export function HeaderHistory({
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
         <Header>
-          <BackButton 
+          <BackButton
             customFunction={backButtonPressed}
             navigationTo={backButtonPressed ? 'WAIT' : ''}
           />
           <Title>Histórico</Title>
         </Header>
-        {!qrCodeDetails && 
-        (
+        {!qrCodeDetails && (
           <SearchContainer>
-                <SearchInput 
-                  autoCorrect
-                  autoCapitalize='none'
-                  placeholder='Procurar'
-                  placeholderTextColor={theme.colors.subtitle}
-                  onChangeText={text => setSearchEntry(text)} 
-                  onSubmitEditing={() => SearchInputSubmitTest()}
-                  submitFunction={() => SearchInputSubmitTest()}
-                  value={searchEntry}
-                  returnKeyType='send'
-                />
+            <SearchInput
+              autoCorrect
+              autoCapitalize="none"
+              placeholder="Procurar"
+              placeholderTextColor={theme.colors.subtitle}
+              onChangeText={(text) => setSearchEntry(text)}
+              onSubmitEditing={() => SearchInputSubmitTest()}
+              submitFunction={() => SearchInputSubmitTest()}
+              value={searchEntry}
+              returnKeyType="send"
+            />
 
-              <OptionalButtonsContainer>
-                <FavoriteButton 
-                  onPress={() => setFavorite()}
-                  favorite={favorite}
-                />
-                <FilterButton 
-                  onPress={() => setModalVisible(!modalVisible)}
-                  />
-              <Modal
+            <OptionalButtonsContainer>
+              <FavoriteButton
+                onPress={() => setFavorite()}
+                favorite={favorite}
+              />
+              <FilterButton onPress={() => setModalVisible(!modalVisible)} />
+              <FilterModal
                 visible={modalVisible}
-                transparent
-              >
-                <FilterModal
-                  visible={modalVisible}
-                  setSelectedColor={setSelectedColor!}
-                  selectedColor={selectedColor!}
-                  pressedOut={() => setModalVisible(!modalVisible)}
-                  selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate!}
-                  confirmedFilter={async ({ date, color }) => {
-                    
-                    setModalVisible(false)
-                    setColorAndDate({ date, color })
-                  }}
-                />
-              </Modal>
-              </OptionalButtonsContainer>
-            </SearchContainer >
+                setSelectedColor={setSelectedColor!}
+                selectedColor={selectedColor!}
+                pressedOut={() => setModalVisible(!modalVisible)}
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate!}
+                confirmedFilter={async ({date, color}) => {
+                  setModalVisible(false);
+                  setColorAndDate({date, color});
+                }}
+              />
+            </OptionalButtonsContainer>
+          </SearchContainer>
         )}
-
       </Container>
-      </TouchableWithoutFeedback>
+    </TouchableWithoutFeedback>
   );
 }

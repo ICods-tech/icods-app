@@ -6,12 +6,9 @@ import {
   Container,
   FeedContainer,
   FeedHeader,
-  FeedOptionsTitleBorderAll,
-  FeedOptionsTitleBorderMine,
   FeedOptionsTitleContainer,
-  FeedOptionTitleAll,
+  FeedOptionTitle,
   FeedOptionTitleButton,
-  FeedOptionTitleMine,
   FeedSubTitle,
   FeedSubTitleContainer,
   FeedTitle,
@@ -48,7 +45,7 @@ const Dashboard = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const {user, signOut} = useAuth();
   const {name, lastname} = user
-    ? extractNameAndSurname(user.name)
+    ? extractNameAndSurname(user.username)
     : {name: '', lastname: ''};
   const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
   const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
@@ -140,23 +137,19 @@ const Dashboard = () => {
 
           <FeedOptionsTitleContainer>
             <FeedOptionTitleButton
-              onPress={() => setChoosenActivityScope('all')}>
-              <>
-                <FeedOptionTitleAll active={choosenActivityScope}>
-                  Todas
-                </FeedOptionTitleAll>
-                <FeedOptionsTitleBorderAll
-                  active={choosenActivityScope}></FeedOptionsTitleBorderAll>
-              </>
+              onPress={() => setChoosenActivityScope('all')}
+              active={choosenActivityScope === 'all'}>
+              <FeedOptionTitle active={choosenActivityScope === 'all'}>
+                Todas
+              </FeedOptionTitle>
             </FeedOptionTitleButton>
 
             <FeedOptionTitleButton
-              onPress={() => setChoosenActivityScope('mine')}>
-              <FeedOptionTitleMine active={choosenActivityScope}>
+              onPress={() => setChoosenActivityScope('mine')}
+              active={choosenActivityScope === 'mine'}>
+              <FeedOptionTitle active={choosenActivityScope === 'mine'}>
                 Minhas
-              </FeedOptionTitleMine>
-              <FeedOptionsTitleBorderMine
-                active={choosenActivityScope}></FeedOptionsTitleBorderMine>
+              </FeedOptionTitle>
             </FeedOptionTitleButton>
           </FeedOptionsTitleContainer>
         </FeedHeader>

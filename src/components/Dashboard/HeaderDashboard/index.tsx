@@ -1,14 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import profilePictureDashboard from '../../../assets/images/photo-perfil.png';
 import EllipsisDashboard from '../../../assets/images/Icons/ellipsis-dashboard.svg';
-import HeaderDashboardBackgroundImage from '../../../assets/images/background-header-dashboard.png';
 
 import {
   Container,
   Gradient,
   HeaderContainer,
-  HeaderDashboardBackground,
-  HeaderDashboardImageContainer,
   HeaderMenuButton,
   HeaderUserInfoContainer,
   HeaderUserNameContainer,

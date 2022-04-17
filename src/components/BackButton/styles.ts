@@ -1,6 +1,5 @@
-import {BorderlessButton, RectButton} from 'react-native-gesture-handler';
 import {RFValue} from 'react-native-responsive-fontsize';
-import styled, {css} from 'styled-components/native';
+import styled from 'styled-components/native';
 import Back from '../../assets/images/new-back-button-white.svg';
 import BackBlue from '../../assets/images/back-button-blue.svg';
 
@@ -14,7 +13,9 @@ export const Container = styled.View<ContainerProps>`
   justify-content: center;
 `;
 
-export const Button = styled(RectButton)`
+export const Button = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.6,
+})`
   align-items: center;
   justify-content: center;
   height: ${RFValue(32)}px;
