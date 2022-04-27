@@ -292,7 +292,7 @@ const Register = () => {
               <UseTermsContainer>
                 <UseTermsConfirmedButton onPress={handleUseTerms}>
                   <UseTermsChecked useTermsPressed={useTerms} />
-                  <UseTermsText>Li e estou de acordo com os </UseTermsText>
+                  <UseTermsText>Li e estou de acordo com os</UseTermsText>
                 </UseTermsConfirmedButton>
 
                 <UseTermsShowButton onPress={handleUseTermsPressed}>
