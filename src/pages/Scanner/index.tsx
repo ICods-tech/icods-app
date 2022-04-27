@@ -29,7 +29,7 @@ interface ScannerProps {
 
 const Scanner = (props: ScannerProps) => {
   const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { user } = useAuth();
   const page = user ? 'Dashboard' : 'SignIn';
   const [camera, setCamera] = useState<RNCamera>();
@@ -90,7 +90,7 @@ const Scanner = (props: ScannerProps) => {
       title: 'Necessidade de Login',
       label: 'Para prosseguir, você precisa está conectado com uma conta ativa',
       icon: 'edicion',
-      press: 'Register',
+      press: 'SignIn',
     });
   }
 

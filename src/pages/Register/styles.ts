@@ -60,7 +60,7 @@ export const UseTermsContainer = styled.View`
 export const UseTermsConfirmedButton = styled(RectButton)`
   display: flex;
   flex-direction: row;
-  padding: ${RFValue(4)}px;
+  padding: ${RFValue(2)}px;
   background-color: ${({theme}) => theme.colors.shape};
   border-radius: ${RFValue(16)}px;
 `;
@@ -96,7 +96,7 @@ export const UseTermsText = styled.Text`
 `;
 
 export const UseTermsShowButton = styled(RectButton)`
-  padding: ${RFValue(4)}px;
+  padding: ${RFValue(2)}px;
   background-color: ${({theme}) => theme.colors.shape};
   border-radius: ${RFValue(16)}px;
 `;
