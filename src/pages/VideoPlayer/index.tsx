@@ -1,34 +1,52 @@
-import React, { useCallback } from 'react';
-import Video from 'react-native-video-player';
-import { Container, IconsContainer, VideoContainer } from './styles';
+import React, { useRef } from 'react';
+import Video, {LoadError} from 'react-native-video';
+import { Container, IconsContainer, TouchableOpacity, VideoContainer, VideoContainerHeader } from './styles';
 import VideoPlayerFooter from '../../components/VideoPlayer/VideoPlayerFooter';
 import { useAuth } from '../../hooks/auth';
-import Header from '../../components/Header';
+import {LOG} from '../../config';
+import ChevronLeft from '../../assets/images/Icons/chevron-left.svg'
+import { useNavigation } from '@react-navigation/native';
+
+const log = LOG.extend('Register');
 
 const VideoPlayer = ( { route, _ }: any ) => {
   const { user } = useAuth();
+  const navigation = useNavigation();
+
   const { qrcode:{
     updatedFavorite, 
     link, 
     setUpdatedFavorite,
   }, isHistoryDetails } = route.params;
-  const url = 'https://bucket-nodejs.s3.amazonaws.com/LOGOVETOR_1.mp4';
-  const page = isHistoryDetails ? "back" : user ? 'Dashboard': 'SignIn';
+  const page = false ? "back" : user ? 'Dashboard': 'SignIn';
+  const player = useRef(null);
+  const url = 'https://s3.amazonaws.com/video.icods-api.com.br/g14yy_2022_04_27_1651099951625.mp4';
+  const videoError = (err: LoadError) => {
+    log.error(err);
+  }
+
   return (
     <Container>
-      <Header page="" navigate={page} color="#FFFFFF" isVideoPlayer/>
-      <VideoContainer>
-        <Video 
-          video={{ uri: link ? link : url}}
-          videoWidth={1600}
-          videoHeight={900}
-          autoplay={true}
-          loop={true}
-          customStyles={{
-            video:{
-              height: '100%',
+      <VideoContainerHeader>
+        <TouchableOpacity
+          onPress={() => {
+            if (page === 'back') {
+              navigation.goBack();
+            } else {
+              navigation.navigate(`${page}`);
             }
-          }}
+          }}>
+          <ChevronLeft />
+        </TouchableOpacity>
+      </VideoContainerHeader>
+      <VideoContainer>
+        <Video
+          source={{uri: link || url}}
+          ref={player}
+          style={{width: '100%', height: '100%'}}
+          controls={true}
+          resizeMode={'cover'}
+          onError={videoError} // Callback when video cannot be loaded
         />
       </VideoContainer>
       <IconsContainer>
