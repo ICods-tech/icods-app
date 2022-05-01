@@ -20,7 +20,7 @@ const VideoPlayer = ( { route, _ }: any ) => {
   }, isHistoryDetails } = route.params;
   const page = false ? "back" : user ? 'Dashboard': 'SignIn';
   const player = useRef(null);
-  const url = 'https://s3.amazonaws.com/video.icods-api.com.br/g14yy_2022_04_27_1651099951625.mp4';
+  const url = 'https://icods-studio.s3.amazonaws.com/icods.mp4';
   const videoError = (err: LoadError) => {
     log.error(err);
   }
