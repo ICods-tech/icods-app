@@ -10,7 +10,7 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const VideoContainerHeader = styled.View`
-  padding: ${RFValue(25)}px 0 0 ${RFValue(20)}px;
+  padding: ${RFValue(50)}px 0 0 ${RFValue(20)}px;
 `;
 
 export const TouchableOpacity = styled.TouchableOpacity``;
