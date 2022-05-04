@@ -55,7 +55,6 @@ export function ChangeInfoModal({
         isVisible={visible}
         onBackdropPress={pressedOut}
         useNativeDriver
-        coverScreen={false}
       >
         <ModalContainer>
           <CloseButtonContainer
