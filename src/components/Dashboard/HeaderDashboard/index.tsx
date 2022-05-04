@@ -12,7 +12,7 @@ import {
   HeaderUserNameText,
   HeaderUserPhoto,
 } from './styles';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 interface HeaderProps {
   avatar?: string;
@@ -37,14 +37,13 @@ const HeaderDashboard = ({
             onPress={() => navigation.navigate('Profile')}>
             {
               <HeaderUserPhoto
-                source={avatar ? {uri: avatar} : profilePictureDashboard}
+                source={avatar ? { uri: avatar } : profilePictureDashboard}
               />
             }
 
             <HeaderUserNameContainer>
-              <HeaderUserNameText>{name ? name + '  ' : ''}</HeaderUserNameText>
-              <HeaderUserNameText>{surname ? surname : ''}</HeaderUserNameText>
-            </HeaderUserNameContainer>
+              <HeaderUserNameText>{name}</HeaderUserNameText>
+              {!!surname && <HeaderUserNameText>{surname}</HeaderUserNameText>}</HeaderUserNameContainer>
           </HeaderUserInfoContainer>
 
           <HeaderMenuButton onPress={ellipsisPressed}>

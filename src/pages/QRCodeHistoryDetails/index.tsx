@@ -53,7 +53,7 @@ export interface RouteParams {
 }
 
 const QRCodeHistoryDetails = ({ route }: RouteParams) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation<any>()
   const { id, color: initialColorState, creator, favorite: initialFavoriteState, link, onGoBack } = route.params;
 
   const [changesWereMade, setChangesWereMade] = useState(false);
@@ -64,13 +64,13 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
 
   const [saveChangesModalOpen, setSaveChangesModalOpen] = useState(false)
   const theme = useTheme();
-  
+
   const handleFavoriteQRCode = useCallback(async (id: string) => {
-      await api.patch(`received_qrcode/favorite/${id}`,  {favorited: updatedFavorite})
-      setLastSavedFavorite(updatedFavorite)
+    await api.patch(`received_qrcode/favorite/${id}`, { favorited: updatedFavorite })
+    setLastSavedFavorite(updatedFavorite)
   }, [updatedFavorite, lastSavedFavorite])
 
-  
+
   const handleChangeQRCodeColor = useCallback(async (color: Colors) => {
     await api.patch(`received_qrcode/color/${id}`, {
       color: (color === 'noFilter') ? 'noColor' : color
@@ -78,7 +78,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
     setLastSavedColor(updatedColor)
   }, [updatedColor, lastSavedColor])
 
-  
+
   const PlayIcon = () => <Play set={'bulk'} style={{ borderColor: theme.colors.primary, borderWidth: RFValue(2), borderRadius: RFValue(16) }} filled={false} primaryColor={theme.colors.primary} secondaryColor={'white'} />
   const UnlockIcon = () => <Unlock set={'bold'} color={theme.colors.primary} />
 
@@ -108,11 +108,11 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         title={'Você precisa salvar as alterações'}
         description={'Você realizou alterações no QR Code e está saindo sem salva-las'}
         icon={<SaveIconModal />}
-        iconBackgroundColor={'#ebad3e'}
+        iconBackgroundColor={theme.colors.warning}
         visible={saveChangesModalOpen}
         confirmText='Salvar'
         pressedOut={() => setSaveChangesModalOpen(!saveChangesModalOpen)}
-        confirmed={async () => {
+        handleSaveUpdatesconfirmed={async () => {
           updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)
           updatedFavorite !== lastSavedFavorite && await handleFavoriteQRCode(id)
           setSaveChangesModalOpen(false)
@@ -131,14 +131,14 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
             </QRCodeContainer>
             <IconsContainer>
               {creator !== 'Você'
-                ? <FavoriteButton 
-                    style={{ marginBottom: RFValue(16) }}
-                    onPress={() => setUpdatedFavorite(!updatedFavorite)}
-                    background='WHITE'
-                    favorite={updatedFavorite}
-                  /> : <></>}
-              <ShareButton 
-                onPress={() => {}}
+                ? <FavoriteButton
+                  style={{ marginBottom: RFValue(16) }}
+                  onPress={() => setUpdatedFavorite(!updatedFavorite)}
+                  background='WHITE'
+                  favorite={updatedFavorite}
+                /> : <></>}
+              <ShareButton
+                onPress={() => { }}
                 background='WHITE'
               />
             </IconsContainer>
@@ -155,7 +155,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
             <IconRectButton
               color={'White'}
               onPress={() => { }}
-              style={{ width: RFValue(212)}}
+              style={{ width: RFValue(212) }}
               text="Público"
               icon={UnlockIcon}
             />
@@ -187,7 +187,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
             const colorsAreDifferent = updatedColor !== lastSavedColor
             const favoritesAreDifferent = updatedFavorite !== lastSavedFavorite
 
-            if (colorsAreDifferent || favoritesAreDifferent) { 
+            if (colorsAreDifferent || favoritesAreDifferent) {
               colorsAreDifferent && handleChangeQRCodeColor(updatedColor)
               favoritesAreDifferent && handleFavoriteQRCode(id)
               Toast.show({

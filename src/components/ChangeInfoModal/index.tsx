@@ -1,9 +1,9 @@
 import React from 'react';
 import Modal from 'react-native-modal';
-import { 
-  Container, 
-  Footer, 
-  ModalContainer, 
+import {
+  Container,
+  Footer,
+  ModalContainer,
   ModalConfirmButtonText,
   ModalCancelButtonText,
   BottomButton,
@@ -17,77 +17,79 @@ import { SvgProps } from 'react-native-svg';
 import CloseModalIcon from '../../assets/images/Icons/Profile/close-modal-icon.svg'
 
 interface ModalInterface {
-  visible: boolean,
-  title: string,
-  description: string,
-  iconBackgroundColor: string,
   confirmText?: string,
-  pressedOut: () => void,
-  cancelButtonPressed?: () => void,
-  confirmed: () => Promise<void>,
+  handleCancelled?: () => void,
+  handleConfirmed?: () => void,
+  handleSaveUpdatesconfirmed: () => Promise<void>,
+  description: string,
   icon: any,
+  iconBackgroundColor: string,
   initialDateValue?: undefined
+  pressedOut: () => void,
+  title: string,
+  visible: boolean,
 }
 
 export interface colorsIconsProps {
   key: string;
-  icon:  React.FC<SvgProps>;
+  icon: React.FC<SvgProps>;
 }
 
 export function ChangeInfoModal({
-    icon,
-    iconBackgroundColor,
-    title,
-    description,
-    visible, 
-    pressedOut, 
-    confirmText,
-    cancelButtonPressed,
-    confirmed
-  }: ModalInterface){
+  confirmText,
+  description,
+  icon,
+  iconBackgroundColor,
+  handleCancelled,
+  handleConfirmed,
+  handleSaveUpdatesconfirmed,
+  pressedOut,
+  title,
+  visible,
+}: ModalInterface) {
   return (
     <Container>
       <Modal
-        style={{alignSelf: 'center'}}
         animationIn={"fadeIn"}
         animationOut={"fadeOut"}
         isVisible={visible}
         onBackdropPress={pressedOut}
+        useNativeDriver
+        coverScreen={false}
       >
         <ModalContainer>
           <CloseButtonContainer
           >
             <CloseModalIcon onPress={() => {
-                pressedOut()
-            }}/>
+              pressedOut()
+            }} />
           </CloseButtonContainer>
           <IconContainer
             style={{ backgroundColor: iconBackgroundColor }}
           >
-            { icon }
+            {icon}
           </IconContainer>
           <ChangeInfoTextContainer>
             <ChangeInfoTitle>
-              { title }
+              {title}
             </ChangeInfoTitle>
             <ChangeInfoDescription>
-              { description}
+              {description}
             </ChangeInfoDescription>
           </ChangeInfoTextContainer>
           <Footer>
-            <BottomButton 
-              onPress={cancelButtonPressed ? cancelButtonPressed : (() => {
+            <BottomButton
+              onPress={handleCancelled ? handleCancelled : (() => {
                 pressedOut()
-            })}>
+              })}>
               <ModalCancelButtonText>cancelar</ModalCancelButtonText>
             </BottomButton>
-            
+
             <BottomButton
-              onPress={() => {
-                confirmed()
-              }}
-              >
-              <ModalConfirmButtonText>{ confirmText! ? confirmText : 'confirmar' }</ModalConfirmButtonText>
+              onPress={handleConfirmed ? handleConfirmed : (() => {
+                handleSaveUpdatesconfirmed()
+              })}>
+              <ModalConfirmButtonText>{confirmText! ? confirmText : 'confirmar'}</ModalConfirmButtonText>
             </BottomButton>
           </Footer>
         </ModalContainer>

@@ -1,5 +1,5 @@
 import {Dimensions} from 'react-native';
-import {RectButton} from 'react-native-gesture-handler';
+import {GestureHandlerRootView, RectButton} from 'react-native-gesture-handler';
 import {RFValue} from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
@@ -16,6 +16,8 @@ export const Container = styled.View`
   padding: ${RFValue(19)}px 0 ${RFValue(16)}px 0;
   justify-content: space-between;
 `;
+
+export const ButtonsContainer = styled(GestureHandlerRootView)``;
 
 export const NavigationButton = styled(RectButton)`
   width: 100%;
