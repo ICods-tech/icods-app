@@ -4,17 +4,19 @@ import {
   Container,
   Footer,
   ModalContainer,
-  ModalConfirmButtonText,
-  ModalCancelButtonText,
   BottomButton,
   IconContainer,
-  CloseButtonContainer,
   ChangeInfoTitle,
   ChangeInfoDescription,
   ChangeInfoTextContainer,
+  CloseButton,
+  FooterButtonText,
+  CloseButtonContainer,
 } from './styles';
-import { SvgProps } from 'react-native-svg';
-import CloseModalIcon from '../../assets/images/Icons/Profile/close-modal-icon.svg'
+import { CloseSquare } from 'react-native-iconly';
+import { useTheme } from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { User as IconProps } from 'react-native-iconly';
 
 interface ModalInterface {
   confirmText?: string,
@@ -22,7 +24,7 @@ interface ModalInterface {
   handleConfirmed?: () => void,
   handleSaveUpdatesconfirmed: () => Promise<void>,
   description: string,
-  icon: any,
+  icon: typeof IconProps,
   iconBackgroundColor: string,
   initialDateValue?: undefined
   pressedOut: () => void,
@@ -30,15 +32,10 @@ interface ModalInterface {
   visible: boolean,
 }
 
-export interface colorsIconsProps {
-  key: string;
-  icon: React.FC<SvgProps>;
-}
-
 export function ChangeInfoModal({
   confirmText,
   description,
-  icon,
+  icon: Icon,
   iconBackgroundColor,
   handleCancelled,
   handleConfirmed,
@@ -47,6 +44,7 @@ export function ChangeInfoModal({
   title,
   visible,
 }: ModalInterface) {
+  const theme = useTheme();
   return (
     <Container>
       <Modal
@@ -57,17 +55,26 @@ export function ChangeInfoModal({
         useNativeDriver
       >
         <ModalContainer>
-          <CloseButtonContainer
-          >
-            <CloseModalIcon onPress={() => {
-              pressedOut()
-            }} />
+          <CloseButtonContainer>
+            <CloseButton onPress={() => { pressedOut(), console.log('teste') }}>
+              <CloseSquare color={theme.colors.title}
+                height={RFValue(24)}
+                width={RFValue(24)}
+              />
+            </CloseButton>
           </CloseButtonContainer>
+
           <IconContainer
-            style={{ backgroundColor: iconBackgroundColor }}
+            backgroundColor={iconBackgroundColor}
           >
-            {icon}
+            <Icon
+              set='bold'
+              color={theme.colors.shape}
+              width={RFValue(24)}
+              height={RFValue(24)}
+            />
           </IconContainer>
+
           <ChangeInfoTextContainer>
             <ChangeInfoTitle>
               {title}
@@ -76,21 +83,19 @@ export function ChangeInfoModal({
               {description}
             </ChangeInfoDescription>
           </ChangeInfoTextContainer>
+
           <Footer>
             <BottomButton
-              onPress={handleCancelled ? handleCancelled : (() => {
-                pressedOut()
-              })}>
-              <ModalCancelButtonText>cancelar</ModalCancelButtonText>
+              onPress={handleCancelled ? handleCancelled : (() => { pressedOut() })}>
+              <FooterButtonText color="cancel">cancelar</FooterButtonText>
             </BottomButton>
 
             <BottomButton
-              onPress={handleConfirmed ? handleConfirmed : (() => {
-                handleSaveUpdatesconfirmed()
-              })}>
-              <ModalConfirmButtonText>{confirmText! ? confirmText : 'confirmar'}</ModalConfirmButtonText>
+              onPress={handleConfirmed ? handleConfirmed : (() => { handleSaveUpdatesconfirmed() })}>
+              <FooterButtonText color="save">{confirmText ? confirmText : 'confirmar'}</FooterButtonText>
             </BottomButton>
           </Footer>
+
         </ModalContainer>
       </Modal>
     </Container>

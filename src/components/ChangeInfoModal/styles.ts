@@ -1,36 +1,47 @@
 import styled, { css, } from 'styled-components/native';
-import { colorsIconsProps } from '.';
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import { Dimensions, FlatList, StyleSheet } from 'react-native';
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton, GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
 
-export const Container = styled.View``;
+export const Container = styled.View``
 
-export const IconContainer = styled.View`
-  display: flex;
-  width: ${RFValue(52)}px;
-  height: ${RFValue(52)}px;
+export const ModalContainer = styled.View`
+  width: ${RFValue(308)}px;
+  /* height: ${RFValue(271)}px; */
+  background-color: ${({ theme }) => theme.colors.shape};
+  padding: ${RFValue(16)}px;
+
+  justify-content: center;
+  border-radius: ${RFValue(4)}px;
+`;
+
+
+export const CloseButtonContainer = styled(GestureHandlerRootView)`
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
+export const CloseButton = styled(BorderlessButton)`
+  align-items: center;
+  justify-content: center;
+  height: ${RFValue(36)}px;
+  width: ${RFValue(36)}px;
+`;
+
+interface IIcontainerProps {
+  backgroundColor: string;
+}
+
+export const IconContainer = styled.View<IIcontainerProps>`
+  margin-top: ${RFValue(14)}
+
+  width: ${RFValue(48)}px;
+  height: ${RFValue(48)}px;
   border-radius: ${RFValue(30)}px;
   align-self: center;
   align-items: center;
   justify-content: center;
-  margin-top: ${RFValue(8)}px;
-`;
-
-export const CloseButtonContainer = styled.View`
-  margin-top: ${RFValue(12)}px;
-  margin-right: ${RFValue(16)}px;
-  display: flex;
-  align-items: flex-end;
-`;
-
-export const ModalContainer = styled.View`
-  width: ${RFValue(320)}px;
-  height: ${RFValue(270)}px;
-  background-color: ${({ theme }) => theme.colors.shape};
-
-  justify-content: center;
-  border-radius: ${RFValue(8)}px;
 `;
 
 export const ChangeInfoTextContainer = styled.View`
@@ -43,60 +54,50 @@ export const ChangeInfoTextContainer = styled.View`
 `;
 
 export const ChangeInfoTitle = styled.Text`
-  font-family: Manrope;
-  font-style: normal;
-  font-weight: 800;
+  font-family: ${({ theme }) => theme.fonts.bold};
   font-size: ${RFValue(16)}px;
-  line-height: ${RFValue(22)}px;
-  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  color: #282C37;
-`
-
-export const ChangeInfoDescription = styled.Text`
-  font-family: Manrope;
-  font-style: normal;
   text-align: center;
-  font-weight: 600;
-  font-size: ${RFValue(14)}px;
   line-height: ${RFValue(22)}px;
-  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  align-self: center;
-  margin-top: ${RFValue(12)}px;
-  color: rgba(0, 0, 0, 0.4);
+  letter-spacing: ${Dimensions.get('window').width * 0.001}px;
+  color: ${({ theme }) => theme.colors.title};
 `
-
-export const Footer = styled.View`
-  flex: 1;
+export const ChangeInfoDescription = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.semi_bold};
+  font-size: ${RFValue(14)}px;
+  line-height: ${RFValue(20)}px;
+  color: ${({ theme }) => theme.colors.text};
+  text-align: center;
+  align-self: center;
+  margin-top: ${RFValue(14)}px;
+  letter-spacing: ${Dimensions.get('window').width * 0.001}px;
+`
+export const Footer = styled(GestureHandlerRootView)`
   flex-direction: row;
   align-self: flex-end;
   align-items: flex-end;
 
-  padding-bottom: ${RFValue(8)}px;
-  padding-right: ${RFValue(8)}px;
-  margin-bottom: ${RFValue(8)}px;
+  margin-top: ${RFValue(36)}px;
 `;
 
-export const BottomButton = styled.TouchableOpacity`
-  padding: ${RFValue(6)}px ${RFValue(8)}px;
+export const BottomButton = styled(RectButton)`
+  height: ${RFValue(36)}px;
   margin-left: ${RFValue(8)}px;
-  
   align-items: center;
   justify-content: center;
+  padding: 0 ${RFValue(4)}px;
+
+  background-color: ${({theme}) => theme.colors.shape};
+  border-radius: ${RFValue(32)}px;
 `;
 
-export const ModalConfirmButtonText = styled.Text`
-  text-transform: uppercase;
-  font-family: ${({ theme }) => theme.fonts.medium};
-  font-size: ${RFValue(14)}px;
-  letter-spacing: ${Dimensions.get('window').width * 0.001}px;
-  
-  color: ${({ theme }) => theme.colors.primary};
-`;
+interface IFooterButtonTextProps {
+  color: "save" | "cancel";
+}
 
-export const ModalCancelButtonText = styled.Text`
+export const FooterButtonText = styled.Text<IFooterButtonTextProps>`
   text-transform: uppercase;
-  font-family: ${({ theme }) => theme.fonts.medium};
+  font-family: ${({theme}) => theme.fonts.medium};
   font-size: ${RFValue(14)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
-  color: rgba(0, 0, 0, 0.4);
+  color: ${({color, theme}) => color === 'save' ? theme.colors.primary : theme.colors.cancelButton};
 `;

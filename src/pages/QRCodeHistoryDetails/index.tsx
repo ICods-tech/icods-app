@@ -32,6 +32,7 @@ import { Play, Unlock } from 'react-native-iconly'
 import { ShareButton } from '../../components/ShareButton';
 import { ChangeInfoModal } from '../../components/ChangeInfoModal';
 import Toast from 'react-native-toast-message';
+import { Danger } from 'react-native-iconly';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -107,7 +108,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
       <ChangeInfoModal
         title={'Você precisa salvar as alterações'}
         description={'Você realizou alterações no QR Code e está saindo sem salva-las'}
-        icon={<SaveIconModal />}
+        icon={Danger}
         iconBackgroundColor={theme.colors.warning}
         visible={saveChangesModalOpen}
         confirmText='Salvar'
