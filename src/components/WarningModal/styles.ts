@@ -5,12 +5,17 @@ import { BorderlessButton, GestureHandlerRootView, RectButton } from 'react-nati
 
 export const Container = styled.View``
 
-export const ModalContainer = styled.View`
+interface IModalContainter {
+  isFooterButtonsActived: boolean;
+}
+
+export const ModalContainer = styled.View<IModalContainter>`
   width: ${RFValue(308)}px;
   /* height: ${RFValue(271)}px; */
   background-color: ${({ theme }) => theme.colors.shape};
-  padding: ${RFValue(16)}px;
-
+  ${({isFooterButtonsActived}) => isFooterButtonsActived ?
+   css`padding: ${RFValue(16)}px` :
+   css`padding: ${RFValue(16)}px ${RFValue(16)}px  ${RFValue(47)}px ${RFValue(16)}px;`}
   justify-content: center;
   border-radius: ${RFValue(4)}px;
 `;
@@ -45,10 +50,9 @@ export const IconContainer = styled.View<IIcontainerProps>`
 `;
 
 export const ChangeInfoTextContainer = styled.View`
-  margin-top: ${RFValue(16)}px;
-  display: flex;
+  margin-top: ${RFValue(23)}px;
   align-self: center;
-  width: ${RFPercentage(44.0)}px;
+  /* width: ${RFPercentage(44.0)}px; */
   align-items: center;
   justify-content: center;
 `;
@@ -67,7 +71,6 @@ export const ChangeInfoDescription = styled.Text`
   line-height: ${RFValue(20)}px;
   color: ${({ theme }) => theme.colors.text};
   text-align: center;
-  align-self: center;
   margin-top: ${RFValue(14)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
 `

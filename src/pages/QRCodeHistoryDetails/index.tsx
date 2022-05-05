@@ -30,9 +30,10 @@ import SaveIcon from '../../assets/images/Icons/save-icon.svg';
 import SaveIconModal from '../../assets/images/Icons/save-changes-icon.svg';
 import { Play, Unlock } from 'react-native-iconly'
 import { ShareButton } from '../../components/ShareButton';
-import { ChangeInfoModal } from '../../components/ChangeInfoModal';
+import { WarningModal } from '../../components/WarningModal';
 import Toast from 'react-native-toast-message';
 import { Danger } from 'react-native-iconly';
+import { BackHandler } from 'react-native';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -83,6 +84,11 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const PlayIcon = () => <Play set={'bulk'} style={{ borderColor: theme.colors.primary, borderWidth: RFValue(2), borderRadius: RFValue(16) }} filled={false} primaryColor={theme.colors.primary} secondaryColor={'white'} />
   const UnlockIcon = () => <Unlock set={'bold'} color={theme.colors.primary} />
 
+
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => true);
+  }, []);
   // useEffect(() => { 
   //   handleFavoriteQRCode(id);
   // }, [updatedFavorite]);
@@ -105,15 +111,16 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         setFavorite={() => { }}
         setColorAndDate={() => { }}
       />
-      <ChangeInfoModal
+      <WarningModal
         title={'Você precisa salvar as alterações'}
         description={'Você realizou alterações no QR Code e está saindo sem salva-las'}
-        icon={Danger}
+        iconly={Danger}
         iconBackgroundColor={theme.colors.warning}
+        isFooterButtonsActived
         visible={saveChangesModalOpen}
         confirmText='Salvar'
         pressedOut={() => setSaveChangesModalOpen(!saveChangesModalOpen)}
-        handleSaveUpdatesconfirmed={async () => {
+        handleSaveUpdates={async () => {
           updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)
           updatedFavorite !== lastSavedFavorite && await handleFavoriteQRCode(id)
           setSaveChangesModalOpen(false)

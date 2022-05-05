@@ -17,29 +17,34 @@ import { CloseSquare } from 'react-native-iconly';
 import { useTheme } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { User as IconProps } from 'react-native-iconly';
+import { SvgProps } from 'react-native-svg';
 
 interface ModalInterface {
   confirmText?: string,
   handleCancelled?: () => void,
   handleConfirmed?: () => void,
-  handleSaveUpdatesconfirmed: () => Promise<void>,
+  handleSaveUpdates?: () => Promise<void>,
   description: string,
-  icon: typeof IconProps,
+  iconly?: typeof IconProps,
+  icon?: React.FC<SvgProps>,
   iconBackgroundColor: string,
   initialDateValue?: undefined
+  isFooterButtonsActived?: boolean,
   pressedOut: () => void,
   title: string,
   visible: boolean,
 }
 
-export function ChangeInfoModal({
+export function WarningModal({
   confirmText,
   description,
+  iconly: Iconly,
   icon: Icon,
   iconBackgroundColor,
+  isFooterButtonsActived = false,
   handleCancelled,
   handleConfirmed,
-  handleSaveUpdatesconfirmed,
+  handleSaveUpdates,
   pressedOut,
   title,
   visible,
@@ -54,7 +59,7 @@ export function ChangeInfoModal({
         onBackdropPress={pressedOut}
         useNativeDriver
       >
-        <ModalContainer>
+        <ModalContainer isFooterButtonsActived={isFooterButtonsActived}>
           <CloseButtonContainer>
             <CloseButton onPress={() => { pressedOut(), console.log('teste') }}>
               <CloseSquare color={theme.colors.title}
@@ -67,12 +72,17 @@ export function ChangeInfoModal({
           <IconContainer
             backgroundColor={iconBackgroundColor}
           >
-            <Icon
-              set='bold'
-              color={theme.colors.shape}
-              width={RFValue(24)}
-              height={RFValue(24)}
-            />
+            {
+              (Iconly && (<Iconly
+                set='bold'
+                color={theme.colors.shape}
+                width={RFValue(24)}
+                height={RFValue(24)}
+              />)) ||
+
+              (Icon && (<Icon />))
+            }
+
           </IconContainer>
 
           <ChangeInfoTextContainer>
@@ -84,18 +94,22 @@ export function ChangeInfoModal({
             </ChangeInfoDescription>
           </ChangeInfoTextContainer>
 
-          <Footer>
-            <BottomButton
-              onPress={handleCancelled ? handleCancelled : (() => { pressedOut() })}>
-              <FooterButtonText color="cancel">cancelar</FooterButtonText>
-            </BottomButton>
+          {isFooterButtonsActived && (
+            <Footer>
+              <BottomButton
+                onPress={handleCancelled ? handleCancelled :
+                  (() => { pressedOut() })}>
+                <FooterButtonText color="cancel">cancelar</FooterButtonText>
+              </BottomButton>
 
-            <BottomButton
-              onPress={handleConfirmed ? handleConfirmed : (() => { handleSaveUpdatesconfirmed() })}>
-              <FooterButtonText color="save">{confirmText ? confirmText : 'confirmar'}</FooterButtonText>
-            </BottomButton>
-          </Footer>
-
+              <BottomButton
+                onPress={handleConfirmed ? handleConfirmed :
+                  (() => { handleSaveUpdates!() })}>
+                <FooterButtonText color="save">{confirmText ? confirmText : 'confirmar'}</FooterButtonText>
+              </BottomButton>
+            </Footer>
+          )
+          }
         </ModalContainer>
       </Modal>
     </Container>
