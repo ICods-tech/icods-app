@@ -18,21 +18,21 @@ import {
 } from './styles';
 import { colorsIconsList } from '../../components/History/FilterModal'
 import { ColorsSelect } from '../../components/ColorsSelect';
+import { Danger } from 'react-native-iconly';
+import { FavoriteButton } from '../../components/FavoriteButton';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
 import { IconRectButton } from '../../components/IconRectButton';
+import { Play, Unlock } from 'react-native-iconly'
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { ShareButton } from '../../components/ShareButton';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'styled-components/native';
+import { WarningModal } from '../../components/WarningModal';
 import api from '../../services/api';
-import { FavoriteButton } from '../../components/FavoriteButton';
 import HistoryFooter from '../../components/LoggedFooter';
 import SaveIcon from '../../assets/images/Icons/save-icon.svg';
-import SaveIconModal from '../../assets/images/Icons/save-changes-icon.svg';
-import { Play, Unlock } from 'react-native-iconly'
-import { ShareButton } from '../../components/ShareButton';
-import { ChangeInfoModal } from '../../components/ChangeInfoModal';
 import Toast from 'react-native-toast-message';
-import { Danger } from 'react-native-iconly';
+import { BackHandler } from 'react-native';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -86,6 +86,11 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   // useEffect(() => { 
   //   handleFavoriteQRCode(id);
   // }, [updatedFavorite]);
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => true);
+  }, []);
+
   return (
     <Container>
       <HeaderHistory
@@ -105,13 +110,14 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         setFavorite={() => { }}
         setColorAndDate={() => { }}
       />
-      <ChangeInfoModal
+      <WarningModal
         title={'Você precisa salvar as alterações'}
         description={'Você realizou alterações no QR Code e está saindo sem salva-las'}
-        icon={Danger}
+        confirmText='Salvar'
+        iconly={Danger}
+        isFooterButtonsActived
         iconBackgroundColor={theme.colors.warning}
         visible={saveChangesModalOpen}
-        confirmText='Salvar'
         pressedOut={() => setSaveChangesModalOpen(!saveChangesModalOpen)}
         handleSaveUpdatesconfirmed={async () => {
           updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)

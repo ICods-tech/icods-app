@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, SafeAreaView } from 'react-native';
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
+import { QRCode } from '../../types/QRCode';
+import { checkConnection } from '../../utils/checkConnection';
+import { useAuth } from '../../hooks/auth';
+import { useNavigation } from '@react-navigation/native';
+import { LOG } from '../../config';
+import { WarningModal } from '../../components/WarningModal';
+import { useTheme } from 'styled-components/native';
+import { CloseSquare } from 'react-native-iconly';
+import api from '../../services/api';
 import Header from '../../components/Header';
+import LoggedFooter from '../../components/LoggedFooter';
 import Mask from '../../components/Scanner/Mask';
 import styles from './styles';
 import ScannerPopUP from '../../components/Scanner/ScannerPopUP';
-import api from '../../services/api';
-import { QRCode } from '../../types/QRCode';
-import { useAuth } from '../../hooks/auth';
-import LoggedFooter from '../../components/LoggedFooter';
-import { useNavigation } from '@react-navigation/native';
-import { checkConnection } from '../../utils/checkConnection';
-import { LOG } from '../../config';
+
 const log = LOG.extend('Scanner');
 
 interface PopUp {
@@ -29,6 +33,7 @@ interface ScannerProps {
 
 const Scanner = (props: ScannerProps) => {
   const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
+  const theme = useTheme();
   const navigation = useNavigation<any>();
   const { user } = useAuth();
   const page = user ? 'Dashboard' : 'SignIn';
@@ -134,6 +139,7 @@ const Scanner = (props: ScannerProps) => {
   };
 
   const handleQRCode = async (data: string) => {
+
     let splittedData = data.split('=');
     splittedData = splittedData[2].split('&');
     let qrCodeId = splittedData[0];
@@ -163,7 +169,9 @@ const Scanner = (props: ScannerProps) => {
     qrCodeIdFromDeeplink.length && handleQRCode(qrCodeIdFromDeeplink);
   }, [qrCodeIdFromDeeplink])
 
-
+  // useEffect(() => {
+  //   qrCodeBelongsToIcodsButIsNotActive()
+  // }, [])
   return (
 
     <SafeAreaView style={styles.container}>
@@ -185,12 +193,30 @@ const Scanner = (props: ScannerProps) => {
         </View>
 
         {qrCodeValidate && (
-          <ScannerPopUP
-            press={handleCloseButton}
-            title={popUp?.title}
-            subtitle={popUp?.label}
-            icon={popUp?.icon}
-          />
+          <>
+            {/* <ScannerPopUP
+              press={handleCloseButton}
+              title={popUp?.title}
+              subtitle={popUp?.label}
+              icon={popUp?.icon}
+            /> */}
+            <WarningModal
+              title={popUp?.title!}
+              description={popUp?.label!}
+              confirmText='Salvar'
+              iconly={CloseSquare}
+              iconBackgroundColor={theme.colors.attention}
+              visible={qrCodeValidate}
+              pressedOut={handleCloseButton}
+            // handleSaveUpdatesconfirmed={async () => {
+            //   updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)
+            //   updatedFavorite !== lastSavedFavorite && await handleFavoriteQRCode(id)
+            //   setSaveChangesModalOpen(false)
+            //   onGoBack(true)
+            //   navigation.goBack()
+            // }}
+            />
+          </>
         )}
 
         {user &&

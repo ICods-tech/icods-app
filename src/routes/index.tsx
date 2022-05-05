@@ -1,12 +1,12 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Register from '../pages/Register';
 import SignIn from '../pages/SignIn';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 import EditProfile from '../pages/EditProfile';
 import Splash from '../pages/Splash';
-import {useAuth} from '../hooks/auth';
+import { useAuth } from '../hooks/auth';
 import History from '../pages/History';
 import Support from '../pages/Support';
 import QRCodeHistoryDetails from '../pages/QRCodeHistoryDetails';
@@ -19,12 +19,12 @@ import ProcessingICods from '../pages/ProcessingICodsCircleProgress';
 import ProcessingICodsCircleProgress from '../pages/ProcessingICodsCircleProgress';
 import ConnectionProblems from '../pages/ConnectionProblems';
 import Working from '../pages/Working';
-import {Animated} from 'react-native';
-import {RouteProp, useNavigation} from '@react-navigation/native';
+import { Animated } from 'react-native';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 import About from '../pages/About';
 import Version from '../pages/Version';
 import Deeplink from '../pages/Deeplink';
-import {useTheme} from 'styled-components/native';
+import { useTheme } from 'styled-components/native';
 
 const App = createStackNavigator();
 
@@ -34,7 +34,7 @@ interface StyleInterpolatorProps {
 }
 
 const invertedHorizontalAnimation = {
-  cardStyleInterpolator: ({current, layouts}: StyleInterpolatorProps) => {
+  cardStyleInterpolator: ({ current, layouts }: StyleInterpolatorProps) => {
     return cardStyleReturn(current, layouts, true);
   },
 };
@@ -68,13 +68,14 @@ const cardStyleNoAnimationReturn = (current: any, layouts: any) => ({
 });
 
 const horizontalAnimation = {
-  cardStyleInterpolator: ({current, layouts}: StyleInterpolatorProps) => {
+  cardStyleInterpolator: ({ current, layouts }: StyleInterpolatorProps) => {
     return cardStyleReturn(current, layouts, false);
   },
+  gestureEnebled: false
 };
 
 const noAnimation = {
-  cardStyleInterpolator: ({current, layouts}: StyleInterpolatorProps) => {
+  cardStyleInterpolator: ({ current, layouts }: StyleInterpolatorProps) => {
     return cardStyleNoAnimationReturn(current, layouts);
   },
 };
@@ -83,20 +84,20 @@ interface IProp {
   deeplink: string;
 }
 
-const Routes = ({deeplink}: IProp) => {
+const Routes = ({ deeplink }: IProp) => {
   const navigation = useNavigation<any>();
   if (deeplink.length) {
-    navigation.navigate('Deeplink', {url: deeplink});
+    navigation.navigate('Deeplink', { url: deeplink });
   }
 
-  const {user, token, isLoading} = useAuth();
+  const { user, token, isLoading } = useAuth();
   const theme = useTheme();
   return (
     <App.Navigator
       mode="card"
       screenOptions={{
         headerShown: false,
-        cardStyle: {backgroundColor: theme.colors.shape},
+        cardStyle: { backgroundColor: theme.colors.shape },
       }}>
       {isLoading ? (
         <App.Screen

@@ -1,13 +1,12 @@
 import React from 'react';
 import { RectButtonProps } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { SvgProps } from 'react-native-svg';
 
 import {
     Button, Container, IconContainer, Title,
 } from './styles';
 
-interface IconRectButtonProps extends RectButtonProps{
+interface IconRectButtonProps extends RectButtonProps {
     text: string;
     noIcon?: boolean;
     icon?: any;
@@ -19,7 +18,7 @@ export function IconRectButton({ text, noIcon, icon: Icon, color, ...rest }: Ico
     const content = (
         <Button color={color!} {...rest}>
             {noIcon ? <IconContainer>
-                <Icon  
+                <Icon
                     width={RFValue(16)}
                     height={RFValue(16)}
                 />
