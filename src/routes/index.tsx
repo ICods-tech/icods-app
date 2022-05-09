@@ -1,29 +1,30 @@
-import { RouteProp, useNavigation } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { useAuth } from '../hooks/auth';
-import About from '../pages/About';
-import ConnectionProblems from '../pages/ConnectionProblems';
-import Dashboard from '../pages/Dashboard';
-import Deeplink from '../pages/Deeplink';
-import Editor from '../pages/Editor';
-import EditProfile from '../pages/EditProfile';
-import { ForgotPassword } from '../pages/ForgotPassword';
-import GiftOpen from '../pages/GiftOpen';
-import History from '../pages/History';
-import Processing from '../pages/Processing';
-import ProcessingICodsCircleProgress from '../pages/ProcessingICodsCircleProgress';
-import Profile from '../pages/Profile';
-import QRCodeHistoryDetails from '../pages/QRCodeHistoryDetails';
-import RedefinePassword from '../pages/RedefinePassword';
+import {createStackNavigator} from '@react-navigation/stack';
 import Register from '../pages/Register';
-import Scanner from '../pages/Scanner';
 import SignIn from '../pages/SignIn';
+import Dashboard from '../pages/Dashboard';
+import Profile from '../pages/Profile';
+import EditProfile from '../pages/EditProfile';
 import Splash from '../pages/Splash';
+import {useAuth} from '../hooks/auth';
+import History from '../pages/History';
 import Support from '../pages/Support';
-import Version from '../pages/Version';
+import QRCodeHistoryDetails from '../pages/QRCodeHistoryDetails';
 import VideoPlayer from '../pages/VideoPlayer';
+import Scanner from '../pages/Scanner';
+import Editor from '../pages/Editor';
+import GiftOpen from '../pages/GiftOpen';
+import Processing from '../pages/Processing';
+import ProcessingICods from '../pages/ProcessingICodsCircleProgress';
+import ProcessingICodsCircleProgress from '../pages/ProcessingICodsCircleProgress';
+import ConnectionProblems from '../pages/ConnectionProblems';
 import Working from '../pages/Working';
+import {Animated} from 'react-native';
+import {RouteProp, useNavigation} from '@react-navigation/native';
+import About from '../pages/About';
+import Version from '../pages/Version';
+import Deeplink from '../pages/Deeplink';
+import {useTheme} from 'styled-components/native';
 
 const App = createStackNavigator();
 
@@ -257,16 +258,6 @@ const Routes = ({deeplink}: IProp) => {
             name="ConnectionProblems"
             component={ConnectionProblems}
             options={horizontalAnimation}
-          />
-          <App.Screen
-            name="ForgotPassword"
-            component={ForgotPassword}
-            options={horizontalAnimation}
-          />
-          <App.Screen
-            name="RedefinePassword"
-            component={RedefinePassword}
-            options={invertedHorizontalAnimation}
           />
         </>
       )}
