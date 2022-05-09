@@ -1,70 +1,63 @@
 import React, {
-  useState,
-  useCallback,
-  useRef,
-  useEffect
+  useCallback, useEffect, useRef, useState
 } from 'react';
 import {
-  TouchableWithoutFeedback,
   Keyboard,
-  TextInput
-} from 'react-native'
+  TextInput, TouchableWithoutFeedback
+} from 'react-native';
 import {
   Container,
   HelpButtonContainer,
   HelpButtonText,
   HelpContainer,
-  HelpContainerTexts,
-  InputContainer,
-  LoginButtonContainer,
-  RegisterAndPassowordForgotContainer,
+  HelpContainerTexts, RegisterAndPassowordForgotContainer,
   SafeAreaView,
   ScrollContainer,
   SignInOptions,
   SpacingContainer,
   SpacingLine,
-  SpacingText,
+  SpacingText
 } from './styles';
 
+import analytics from '@react-native-firebase/analytics';
 import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../hooks/auth'
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { AuthFooter } from '../../components/Authentication/AuthFooter';
-import analytics from '@react-native-firebase/analytics';
 import { Header } from '../../components/Authentication/Header';
 import { SubmitButton } from '../../components/Authentication/SubmitButton';
-import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
+import { useAuth } from '../../hooks/auth';
 
-import GoogleIcon from '../../assets/images/Icons/google_icon.svg'
-import NewInput from '../../components/NewInput';
-import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
-import KeyIcon from '../../assets/images/Icons/signIn-password.svg';
-import UserIcon from '../../assets/images/Icons/signIn-user.svg';
-import Toast from 'react-native-toast-message';
+import { Password, User } from 'react-native-iconly';
 import { LOG } from '../../config';
+
+import Toast from 'react-native-toast-message';
+import Input from '../../components/Input';
+import PasswordInput from '../../components/PasswordInput';
+
 const log = LOG.extend('Signin');
 
 const SignIn = () => {
   const theme = useTheme();
-  const { signIn, user } = useAuth()
-  const navigation = useNavigation()
-  const [email, setEmail] = useState<string>('') //jorgeoreidafloresta@gmail.com'
-  const [password, setPassword] = useState<string>('') // 'jorgeorei'
-  const [errored, setErrored] = useState<boolean>(false)
-  const [secure, setSecure] = useState(true);
-  const [isInputFocus, setIsInputFocus] = useState(false);
-  const [inputFocusObserver, setInputFocusObserver] = useState(false);
+  const {signIn, user} = useAuth();
+  const navigation = useNavigation<any>();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [errored, setErrored] = useState<boolean>(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const emailRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const handleLogin = useCallback(async () => {
+    setIsLoading(true);
     try {
-      await signIn({ email, password })
-      navigation.navigate('Dashboard')
+      await signIn({email, password});
+      navigation.navigate('Dashboard');
       await analytics().logLogin({method: 'api'});
-      setErrored(false)
+      setErrored(false);
     } catch (error: any) {
-      setErrored(true)
+      setErrored(true);
 
       Toast.show({
         type: 'error',
@@ -73,61 +66,68 @@ const SignIn = () => {
         text2: '',
         visibilityTime: 1000,
         bottomOffset: 100,
-      })
-
-      log.error(error.message)
+      });
+      setIsLoading(false);
+      log.error(error.message);
     }
   }, [email, password]);
 
   useEffect(() => {
-    Keyboard.addListener('keyboardDidHide', () => {
-      setIsInputFocus(false);
-    })
-  }, [inputFocusObserver])
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, [Keyboard]);
 
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-          <Header isInputFocus={isInputFocus}/>
+          <Header isKeyboardVisible={isKeyboardVisible} />
 
           <ScrollContainer>
-            <SignInOptions >
-              <InputContainer isErrored={errored}>
-                <NewInput
-                  ref={emailRef}
-                  autoCorrect={false}
-                  autoCapitalize="none"
-                  icon={UserIcon}
-                  keyboardType="email-address"
-                  placeholder="E-mail"
-                  placeholderTextColor={theme.colors.subtitle}
-                  defaultValue={email}
-                  onChangeText={(email: string) => setEmail(email)}
-                  onSubmitEditing={() => passwordInputRef.current?.focus()}
-                  returnKeyType="next"
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
-                />
+            <SignInOptions>
+              <Input
+                ref={emailRef}
+                autoCorrect={false}
+                autoCapitalize="none"
+                iconly={User}
+                isErrored={errored}
+                defaultValue={email}
+                keyboardType="email-address"
+                onChangeText={setEmail}
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
+                placeholder="E-mail"
+                returnKeyType="next"
+                setIsSignInErrored={setErrored}
+                value={email}
+              />
 
-                <SpacingLine isErrored={errored} />
-
-                <NewInput
-                  ref={passwordInputRef}
-                  icon={KeyIcon}
-                  passwordStyleInput
-                  placeholder="Senha"
-                  placeholderTextColor={theme.colors.subtitle}
-                  secure={secure}
-                  secureTextEntry={secure}
-                  setSecure={setSecure}
-                  defaultValue={password}
-                  onChangeText={(password: string) => setPassword(password)}
-                  onSubmitEditing={() => handleLogin()}
-                  returnKeyType="send"
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(false)}}
-                />
-              </InputContainer>
-
+              <PasswordInput
+                ref={passwordInputRef}
+                iconly={Password}
+                isErrored={errored}
+                defaultValue={password}
+                placeholder="Senha"
+                onChangeText={setPassword}
+                onSubmitEditing={handleLogin}
+                returnKeyType="send"
+                setIsSignInErrored={setErrored}
+                value={password}
+              />
 
               <RegisterAndPassowordForgotContainer>
                 <HelpButtonContainer
@@ -156,13 +156,15 @@ const SignIn = () => {
               </RegisterAndPassowordForgotContainer>
 
               <SubmitButton
+                enabled={!!email && !!password && !isLoading}
+                loading={isLoading}
                 onPress={() => handleLogin()}
-                text='Entrar'
+                text="Entrar"
               />
               <SpacingContainer>
-                <SpacingLine style={{ width: '40%' }}></SpacingLine>
+                <SpacingLine style={{width: '40%'}}></SpacingLine>
                 <SpacingText>Ou</SpacingText>
-                <SpacingLine style={{ width: '40%' }}></SpacingLine>
+                <SpacingLine style={{width: '40%'}}></SpacingLine>
               </SpacingContainer>
 
               {/* <LoginButtonContainer>
@@ -181,26 +183,23 @@ const SignIn = () => {
               </LoginButtonContainer> */}
 
               <HelpContainer>
-                <HelpContainerTexts
-                  style={{ marginRight: RFValue(2) }}
-                >Algum problema no login?
+                <HelpContainerTexts style={{marginRight: RFValue(2)}}>
+                  Algum problema no login?
                 </HelpContainerTexts>
 
                 <HelpButtonContainer>
-                  <HelpButtonText
-                  textColor={theme.colors.primary}
-                  >Contate-nos</HelpButtonText>
+                  <HelpButtonText textColor={theme.colors.primary}>
+                    Contate-nos
+                  </HelpButtonText>
                 </HelpButtonContainer>
               </HelpContainer>
-
             </SignInOptions>
             <AuthFooter />
-
           </ScrollContainer>
         </Container>
       </TouchableWithoutFeedback>
     </SafeAreaView>
-  )
-}
+  );
+};
 
 export default SignIn;

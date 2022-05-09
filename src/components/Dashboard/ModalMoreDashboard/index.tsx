@@ -1,83 +1,74 @@
 import React from 'react';
 import Modal from 'react-native-modal';
-import UserIcon from '../../../assets/images/Icons/user_icon.svg'
-import ReportProblemIcon from '../../../assets/images/Icons/report_problem_icon.svg'
-import { RFValue } from 'react-native-responsive-fontsize';
-import styles from './styles'
-import { 
-  View, 
-  Text, 
-  TouchableOpacity, 
-  TouchableWithoutFeedback 
-} from 'react-native'
-import { User, Login as SignOutIcon, Paper } from 'react-native-iconly'
- 
+import ReportProblemIcon from '../../../assets/images/Icons/report_problem_icon.svg';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {User, Logout, Paper} from 'react-native-iconly';
+import {Container, NavigationButton, NavigationButtonText} from './styles';
+import {useTheme} from 'styled-components/native';
 
 interface ModalInterface {
-  visible: boolean,
-  pressedOut: () => void,
-  profilePage: () => void,
-  supportPage: () => void,
-  aboutPage: () => void,
-  signOut: () => Promise<void>
+  visible: boolean;
+  pressedOut: () => void;
+  profilePage: () => void;
+  supportPage: () => void;
+  aboutPage: () => void;
+  signOut: () => Promise<void>;
 }
 
-const ModalMoreDashboard = ({ 
-  visible, 
-  pressedOut, 
-  supportPage, 
+export function ModalMoreDashboard({
+  visible,
+  pressedOut,
+  supportPage,
   aboutPage,
-  profilePage, 
-  signOut 
-}: ModalInterface) => {
+  profilePage,
+  signOut,
+}: ModalInterface) {
+  const theme = useTheme();
   return (
     <Modal
-      style={styles.dropdownStyle}
-      animationIn={"fadeIn"}
-      animationOut={"fadeOut"}
+      animationIn={'fadeIn'}
+      animationOut={'fadeOut'}
       isVisible={visible}
       onBackdropPress={pressedOut}
-    >
-          <View>
-            <TouchableOpacity style={styles.dropdownOptionContainer} onPress={profilePage}>
-              <User
-                color={'#000'}
-                width={RFValue(16)}
-                height={RFValue(16)}
-              />
-              <Text style={styles.dropdownOptionsText}>Conta</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.dropdownOptionContainer} onPress={supportPage}>
-              <ReportProblemIcon 
-                width={RFValue(16)}
-                height={RFValue(16)}
-              />
-              <Text style={styles.dropdownOptionsText}>Suporte</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.dropdownOptionContainer} onPress={aboutPage}>
-              <Paper 
-                color={'#000'}
-                width={RFValue(16)}
-                height={RFValue(16)}
-              />
-              <Text style={styles.dropdownOptionsText}>Sobre</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.dropdownOptionContainer} onPress={signOut}>
-            <SignOutIcon
-                color={'#000'}
-                style={{
-                  transform: [
-                    { scaleX: -1 }
-                  ]
-                }}
-                width={RFValue(16)}
-                height={RFValue(16)}
-              />
-              <Text style={styles.dropdownOptionsText}>Sair</Text>
-            </TouchableOpacity>
-          </View>
-    </Modal>
-  )
-}
+      useNativeDriver
+      coverScreen={false}>
+      <Container>
+        <NavigationButton onPress={profilePage}>
+          <User
+            color={theme.colors.dark}
+            width={RFValue(16)}
+            height={RFValue(16)}
+          />
+          <NavigationButtonText>Conta</NavigationButtonText>
+        </NavigationButton>
 
-export default ModalMoreDashboard
+        <NavigationButton onPress={supportPage}>
+          <ReportProblemIcon
+            color={theme.colors.dark}
+            width={RFValue(16)}
+            height={RFValue(16)}
+          />
+          <NavigationButtonText>Suporte</NavigationButtonText>
+        </NavigationButton>
+
+        <NavigationButton onPress={aboutPage}>
+          <Paper
+            color={theme.colors.dark}
+            width={RFValue(16)}
+            height={RFValue(16)}
+          />
+          <NavigationButtonText>Sobre</NavigationButtonText>
+        </NavigationButton>
+
+        <NavigationButton onPress={signOut}>
+          <Logout
+            color={theme.colors.dark}
+            width={RFValue(16)}
+            height={RFValue(16)}
+          />
+          <NavigationButtonText>Sair</NavigationButtonText>
+        </NavigationButton>
+      </Container>
+    </Modal>
+  );
+}

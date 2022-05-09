@@ -1,8 +1,12 @@
 import dynamicLinks from '@react-native-firebase/dynamic-links';
-import {NavigationContainer, NavigationContainerRefContext, useNavigation} from '@react-navigation/native';
+import 'react-native-gesture-handler';
+import {
+  NavigationContainer,
+  NavigationContainerRefContext,
+  useNavigation,
+} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {StatusBar, View} from 'react-native';
-import 'react-native-gesture-handler';
 import Toast, {BaseToast} from 'react-native-toast-message';
 import {ThemeProvider} from 'styled-components';
 import theme from './global/styles/theme';
@@ -11,8 +15,7 @@ import {linking} from './Linking';
 import Routes from './routes';
 import analytics from '@react-native-firebase/analytics';
 import {Sentry, LOG} from './config';
-const log = LOG.extend("App")
-
+const log = LOG.extend('App');
 
 const toastConfig = {
   success: ({text1, text2, ...rest}: {text1: string; text2: string}) => (
@@ -65,7 +68,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    log.info('deeplink link', deeplink)
+    log.info('deeplink link', deeplink);
     const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
     // When the component is unmounted, remove the listener
     return () => unsubscribe();
@@ -73,15 +76,16 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer 
+      <NavigationContainer
         ref={navigationRef}
         linking={linking}
         onReady={() => {
-          routeNameRef.current = navigationRef.current?.getCurrentRoute().name;       
+          routeNameRef.current = navigationRef.current?.getCurrentRoute().name;
         }}
         onStateChange={async () => {
           const previousRouteName = routeNameRef.current;
-          const currentRouteName = navigationRef.current?.getCurrentRoute().name;
+          const currentRouteName = navigationRef.current?.getCurrentRoute()
+            .name;
 
           if (previousRouteName !== currentRouteName) {
             await analytics().logScreenView({
@@ -90,8 +94,7 @@ const App = () => {
             });
           }
           routeNameRef.current = currentRouteName;
-        }}
-      >
+        }}>
         <StatusBar
           barStyle="light-content"
           backgroundColor={theme.colors.primary}

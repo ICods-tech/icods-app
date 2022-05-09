@@ -7,15 +7,13 @@ import React, {
 } from 'react';
 import {TextInput, TextInputProps} from 'react-native';
 import {RFValue} from 'react-native-responsive-fontsize';
-import {Container, IconContainer, InputText} from './styles';
+import {Show, Hide} from 'react-native-iconly';
+import {ButtonEye, Container, IconContainer, InputText} from './styles';
 import {useTheme} from 'styled-components/native';
-import {User as IconProps} from 'react-native-iconly';
 import {IRouteErrors} from '../../pages/Register';
-import {SvgProps} from 'react-native-svg';
 
 interface InputTextProps extends TextInputProps {
-  iconSvg?: React.FC<SvgProps>;
-  iconly?: typeof IconProps;
+  iconly: typeof Show;
   isErrored?: boolean;
   value: string;
   isSignUpErrored?: IRouteErrors;
@@ -27,10 +25,12 @@ interface InputRef {
   focus(): void;
 }
 
-const Input: React.ForwardRefRenderFunction<InputRef, InputTextProps> = (
+const PasswordInput: React.ForwardRefRenderFunction<
+  InputRef,
+  InputTextProps
+> = (
   {
-    iconSvg: IconSvg,
-    iconly: Iconly,
+    iconly: Icon,
     isErrored = false,
     isSignUpErrored,
     setIsSignInErrored = () => {},
@@ -40,6 +40,7 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputTextProps> = (
   },
   ref,
 ) => {
+  const [toggleEye, setToggleEye] = useState(true);
   const inputRef = useRef<TextInput>(null);
   const theme = useTheme();
 
@@ -54,6 +55,9 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputTextProps> = (
   function handleInputBlur() {
     setIsFocused(false);
     setIsFilled(!!value);
+  }
+  function handleChangeEye() {
+    setToggleEye(!toggleEye);
   }
 
   useImperativeHandle(ref, () => ({
@@ -79,21 +83,12 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputTextProps> = (
   return (
     <Container isErrored={isErrored}>
       <IconContainer onPress={() => inputRef.current?.focus()}>
-        {(Iconly && (
-          <Iconly
-            width={RFValue(16)}
-            height={RFValue(16)}
-            color={iconColor}
-            set="bold"
-          />
-        )) ||
-          (IconSvg && (
-            <IconSvg
-              width={RFValue(16)}
-              height={RFValue(16)}
-              fill={iconColor}
-            />
-          ))}
+        <Icon
+          width={RFValue(16)}
+          height={RFValue(16)}
+          color={iconColor}
+          set="bold"
+        />
       </IconContainer>
 
       <InputText
@@ -101,17 +96,39 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputTextProps> = (
         placeholderTextColor={
           isErrored ? theme.colors.attention : theme.colors.subtitle
         }
+        secureTextEntry={toggleEye}
         isErrored={isErrored}
         onFocus={() => (
           handleInputFocused(),
           setIsSignInErrored!(false),
-          setIsSignUpErrored!(isSignUpErrored!)
+          setIsSignUpErrored!({
+            ...isSignUpErrored!,
+            password: false,
+          })
         )}
         onBlur={handleInputBlur}
         {...rest}
       />
+
+      <ButtonEye onPress={() => handleChangeEye()}>
+        {toggleEye ? (
+          <Hide
+            width={RFValue(16)}
+            height={RFValue(16)}
+            color={theme.colors.medium_line}
+            set="light"
+          />
+        ) : (
+          <Show
+            width={RFValue(16)}
+            height={RFValue(16)}
+            color={theme.colors.medium_line}
+            set="light"
+          />
+        )}
+      </ButtonEye>
     </Container>
   );
 };
 
-export default forwardRef(Input);
+export default forwardRef(PasswordInput);

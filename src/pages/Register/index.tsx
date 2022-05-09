@@ -1,37 +1,42 @@
-import React, { 
-  useState, 
-  useCallback, 
-  useRef, 
-  useEffect 
-} from 'react';
+import React, {useState, useCallback, useRef, useEffect} from 'react';
 import {
   Keyboard,
   TouchableWithoutFeedback,
   TextInput,
+  SafeAreaView,
 } from 'react-native';
 import {
   BackButtonContainer,
   Container,
+  Form,
   InputContainer,
-  RegisterForm,
   RegisterTitle,
-  SafeAreaView,
-  SubmitButtonContainer
+  ScrollRegister,
+  SubmitButtonContainer,
+  UseTermsButtonText,
+  UseTermsChecked,
+  UseTermsText,
+  UseTermsConfirmedButton,
+  UseTermsContainer,
+  UseTermsShowButton,
 } from './styles';
-import { useAuth } from '../../hooks/auth'
-import Toast from 'react-native-toast-message'
-import { delay } from '../../utils/delay'
-import { handleRegisterRouteErrors } from '../../utils/handleRegisterRouteErrors'
-import { handleFieldAlreadyExistsErrors } from '../../utils/handleFieldAlreadyExistsErrors'
-import { Header } from '../../components/Authentication/Header'
-import { BackButton } from '../../components/BackButton'
-import NewInput from '../../components/NewInput'
-import { SpacingLine } from '../SignIn/styles'
-import { useTheme } from 'styled-components'
-import { SubmitButton } from '../../components/Authentication/SubmitButton'
+import {useAuth} from '../../hooks/auth';
+import Toast from 'react-native-toast-message';
+import {delay} from '../../utils/delay';
+import {handleRegisterRouteErrors} from '../../utils/handleRegisterRouteErrors';
+import {handleFieldAlreadyExistsErrors} from '../../utils/handleFieldAlreadyExistsErrors';
+import {Header} from '../../components/Authentication/Header';
+import {BackButton} from '../../components/BackButton';
+import {useTheme} from 'styled-components';
+import {SubmitButton} from '../../components/Authentication/SubmitButton';
+import {LOG} from '../../config';
+import {Message, Password, User} from 'react-native-iconly';
+
 import ModalUseTerms from '../../components/ModalUseTerms';
 import analytics from '@react-native-firebase/analytics';
-import { LOG } from '../../config';
+import UserNameSvg from '../../assets/images/Icons/user_name.svg';
+import Input from '../../components/Input';
+import PasswordInput from '../../components/PasswordInput';
 const log = LOG.extend('Register');
 
 export interface IRouteErrors {
@@ -47,13 +52,13 @@ const fields = {
   email: '',
   username: '',
   password: '',
-  passwordConfirmation: ''
-}
+  passwordConfirmation: '',
+};
 
 const Register = () => {
   const theme = useTheme();
-  const { signIn, signUp } = useAuth();
-  const [name, setName] = useState('')
+  const {signIn, signUp} = useAuth();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -62,44 +67,53 @@ const Register = () => {
     email: false,
     username: false,
     password: false,
-    passwordConfirmation: false
-  })
+    passwordConfirmation: false,
+  });
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  
-  const [attention, setAttention] = useState(false);
-  const [isInputFocus, setIsInputFocus] = useState(false);
-  const [inputFocusObserver, setInputFocusObserver] = useState(false);
-  const [secure, setSecure] = useState(true);
-  const [secureConfirmation, setSecureConfirmation] = useState(true);
+
+  const [useTermsPressed, setUseTermsPressed] = useState(false);
+  const [useTerms, setUseTerms] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+
   const userNameInputRef = useRef<TextInput>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
-  const [useTerms, setUseTerms] = useState(false);
+
+  function handleResetIsErrored() {
+    setIsErrored({
+      name: false,
+      email: false,
+      username: false,
+      password: false,
+      passwordConfirmation: false,
+    });
+  }
 
   const handleSignUp = useCallback(async () => {
+    setIsLoading(true);
     const data = {
-      name, 
-      username, 
-      email, 
-      password, 
-      passwordConfirmation
-    }
-    
+      name,
+      username,
+      email,
+      password,
+      passwordConfirmation,
+    };
+
     try {
       for (let field of Object.keys(fields)) {
         setIsErrored((previousErrors) => ({
           ...previousErrors,
-          [field]: false
-        }))
+          [field]: false,
+        }));
       }
 
-      await signUp({ name, username, email, password, passwordConfirmation })
+      await signUp({name, username, email, password, passwordConfirmation});
 
       await analytics().logSignUp({
         method: 'api',
       });
-
       setUseTerms(false);
       Toast.show({
         type: 'success',
@@ -107,150 +121,214 @@ const Register = () => {
         text1: 'Conta criada com sucesso!',
         visibilityTime: 1200,
         bottomOffset: 100,
-      })
-      await delay(1250)
-      await signIn({ email, password })
-      setAttention(false);  
+      });
+      await delay(1250);
+      await signIn({email, password});
     } catch (errorResponse: any) {
       setUseTerms(false);
-      const errors = errorResponse.response.data
+      const errors = errorResponse.response.data;
       log.error(errors);
-      setAttention(true);
-      if ('message' in errors) await handleRegisterRouteErrors(errors, setIsErrored)
-      else await handleFieldAlreadyExistsErrors(errors, setIsErrored)
+      if ('message' in errors)
+        await handleRegisterRouteErrors(errors, setIsErrored);
+      else await handleFieldAlreadyExistsErrors(errors, setIsErrored);
+      setIsLoading(false);
+    }
+  }, [name, username, email, password, passwordConfirmation, useTerms]);
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
+    );
+
+    if (useTerms) {
+      setIsKeyboardVisible(false);
     }
 
-    
-  }, [name, username, email, password, passwordConfirmation, useTerms])
-  
-  useEffect(() => {
-    Keyboard.addListener('keyboardDidHide', () => {
-      setIsInputFocus(false);
-    })  
-  }, [inputFocusObserver])
+    return () => {
+      keyboardDidShowListener.remove();
+    };
+  }, [Keyboard, useTerms]);
 
+  const handleUseTerms = () => {
+    setUseTerms(!useTerms);
+  };
 
-  const handleRegister = () => {
-    setUseTerms(true);    
-  }
+  const handleKeyboardDosentVisible = () => {
+    setIsKeyboardVisible(false);
+    Keyboard.dismiss();
+  };
 
-  const handleCancel = () => {
+  const handleUseTermsPressed = () => {
+    setUseTermsPressed(!useTermsPressed);
+  };
+
+  const handleUseTermsModalConfirmed = () => {
+    setUseTerms(true);
+    setUseTermsPressed(false);
+  };
+
+  const handleUseTermsModalCancel = () => {
     setUseTerms(false);
-  }
-  
-  return (
-    <SafeAreaView>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <Header isInputFocus={isInputFocus} />
+    setUseTermsPressed(false);
+  };
 
-          <BackButtonContainer>
-            <BackButton navigationTo='SignIn' color='white' />
+  return (
+    <SafeAreaView style={{flex: 1}}>
+      <TouchableWithoutFeedback onPress={handleKeyboardDosentVisible}>
+        <Container>
+          <Header isKeyboardVisible={isKeyboardVisible} />
+
+          <BackButtonContainer isKeyboardVisible={isKeyboardVisible}>
+            <BackButton
+              navigationTo="SignIn"
+              color={isKeyboardVisible ? 'blue' : 'white'}
+            />
           </BackButtonContainer>
 
-          <RegisterForm>
-            <RegisterTitle>
-              Fazer uma conta no iCODS é simples e
-              rápido, basta preencher os campos!
-            </RegisterTitle>
-            <InputContainer 
-              isErrored={attention}>
+          <ScrollRegister keyboardShouldPersistTaps="handled">
+            <Form isKeyboardVisible={isKeyboardVisible}>
+              <RegisterTitle>
+                Fazer uma conta no iCODS é simples e rápido, basta preencher os
+                campos!
+              </RegisterTitle>
 
-                <NewInput
+              <InputContainer>
+                <Input
                   autoCorrect
                   autoCapitalize="words"
                   defaultValue={name}
-                  placeholder='Digite seu nome completo'
-                  placeholderTextColor={theme.colors.subtitle}
-                  onChangeText={(name: string) => setName(name)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
+                  iconSvg={UserNameSvg}
+                  isErrored={isErrored.name}
+                  isSignUpErrored={{
+                    ...isErrored,
+                    name: false,
+                  }}
+                  placeholder="Nome completo"
+                  onChangeText={setName}
                   onSubmitEditing={() => userNameInputRef.current?.focus()}
-                  value={name}
+                  setIsSignUpErrored={setIsErrored}
                   returnKeyType="next"
+                  value={name}
                 />
 
-                <SpacingLine isErrored={attention}/>
-
-                <NewInput
+                <Input
                   ref={userNameInputRef}
                   autoCorrect
                   autoCapitalize="none"
                   defaultValue={username}
-                  placeholder='Digite seu nome de usuário'
-                  placeholderTextColor={theme.colors.subtitle}
-                  onChangeText={(username: string) => setUsername(username)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
+                  iconly={User}
+                  isErrored={isErrored.username}
+                  isSignUpErrored={{
+                    ...isErrored,
+                    username: false,
+                  }}
+                  placeholder="Nome de usuário"
+                  onChangeText={setUsername}
                   onSubmitEditing={() => emailInputRef.current?.focus()}
+                  setIsSignUpErrored={setIsErrored}
                   value={username}
                   returnKeyType="next"
                 />
 
-                <SpacingLine isErrored={attention}/>
-
-                <NewInput
+                <Input
                   ref={emailInputRef}
                   autoCorrect={false}
                   autoCapitalize="none"
                   defaultValue={email}
-                  placeholder='Digite seu e-mail'
-                  placeholderTextColor={theme.colors.subtitle}
-                  onChangeText={(email: string) => setEmail(email)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
+                  iconly={Message}
+                  isErrored={isErrored.email}
+                  isSignUpErrored={{
+                    ...isErrored,
+                    email: false,
+                  }}
+                  placeholder="E-mail"
+                  onChangeText={setEmail}
                   onSubmitEditing={() => passwordInputRef.current?.focus()}
+                  setIsSignUpErrored={setIsErrored}
                   value={email}
                   returnKeyType="next"
                 />
 
-                <SpacingLine isErrored={attention}/>
-
-                <NewInput
+                <PasswordInput
                   ref={passwordInputRef}
-                  passwordStyleInput
-                  placeholder="Digite uma senha"
-                  placeholderTextColor={theme.colors.subtitle}
-                  secure={secure}
-                  secureTextEntry={secure}
-                  setSecure={setSecure}
+                  iconly={Password}
+                  isErrored={isErrored.password}
+                  isSignUpErrored={{
+                    ...isErrored,
+                    password: false,
+                  }}
+                  placeholder="Senha"
                   defaultValue={password}
-                  onChangeText={(password: string) => setPassword(password)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
-                  onSubmitEditing={() => passwordConfirmationInputRef.current?.focus()}
+                  onChangeText={setPassword}
+                  onSubmitEditing={() =>
+                    passwordConfirmationInputRef.current?.focus()
+                  }
+                  setIsSignUpErrored={setIsErrored}
                   value={password}
                   returnKeyType="next"
                 />
 
-                <SpacingLine isErrored={attention}/>
-
-                <NewInput
+                <PasswordInput
                   ref={passwordConfirmationInputRef}
-                  passwordStyleInput
-                  placeholder="Digite novamente a senha"
-                  placeholderTextColor={theme.colors.subtitle}
-                  secure={secureConfirmation}
-                  secureTextEntry={secureConfirmation}
-                  setSecure={setSecureConfirmation}
+                  iconly={Password}
+                  isErrored={isErrored.passwordConfirmation}
+                  isSignUpErrored={{
+                    ...isErrored,
+                    passwordConfirmation: false,
+                  }}
+                  placeholder="Confirmar senha"
                   defaultValue={passwordConfirmation}
-                  onChangeText={(passwordConfirmation: string) => setPasswordConfirmation(passwordConfirmation)}
-                  onFocus={() => {setIsInputFocus(true), setInputFocusObserver(true)}}
-                  onSubmitEditing={() => handleSignUp()}
+                  onChangeText={setPasswordConfirmation}
+                  onSubmitEditing={handleKeyboardDosentVisible}
+                  setIsSignUpErrored={setIsErrored}
                   value={passwordConfirmation}
-                  returnKeyType="send"
-                />  
-            </InputContainer>
-
-            <SubmitButtonContainer>
-              <SubmitButton
-                  onPress={() => handleRegister()}
-                  text='Cadastrar'
+                  returnKeyType="next"
                 />
-            </SubmitButtonContainer>
-          </RegisterForm>
+              </InputContainer>
+
+              <UseTermsContainer>
+                <UseTermsConfirmedButton onPress={handleUseTerms}>
+                  <UseTermsChecked useTermsPressed={useTerms} />
+                  <UseTermsText>Li e estou de acordo com os</UseTermsText>
+                </UseTermsConfirmedButton>
+
+                <UseTermsShowButton onPress={handleUseTermsPressed}>
+                  <UseTermsButtonText>Termos de Uso</UseTermsButtonText>
+                </UseTermsShowButton>
+              </UseTermsContainer>
+
+              <SubmitButtonContainer>
+                <SubmitButton
+                  enabled={
+                    !!name &&
+                    !!username &&
+                    !!email &&
+                    !!password &&
+                    !!passwordConfirmation &&
+                    useTerms &&
+                    !isLoading
+                  }
+                  loading={isLoading}
+                  onPress={() => {
+                    handleSignUp(), handleResetIsErrored();
+                  }}
+                  text="Cadastrar"
+                />
+              </SubmitButtonContainer>
+            </Form>
+          </ScrollRegister>
         </Container>
       </TouchableWithoutFeedback>
-      { useTerms && <ModalUseTerms handleSignUp={() => handleSignUp()} handleCancel={() => handleCancel()}/> }
+      <ModalUseTerms
+        handleUseTermsModalConfirmed={() => handleUseTermsModalConfirmed()}
+        handleUseTermsModalCancel={() => handleUseTermsModalCancel()}
+        visible={useTermsPressed}
+      />
     </SafeAreaView>
-
-  )
-}
+  );
+};
 
 export default Register;

@@ -39,3 +39,11 @@ export const IconContainer = styled.TouchableOpacity.attrs({
   align-items: center;
   padding: 0 ${RFValue(10)}px 0 ${RFValue(10)}px;
 `;
+
+export const ButtonEye = styled.TouchableOpacity.attrs({
+  activeOpacity: 1,
+})`
+  justify-content: center;
+  height: 100%;
+  padding: 0 ${RFValue(10)}px;
+`;

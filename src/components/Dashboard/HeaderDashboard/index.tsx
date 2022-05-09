@@ -1,21 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import profilePictureDashboard from '../../../assets/images/photo-perfil.png';
-import EllipsisDashboard from '../../../assets/images/Icons/ellipsis-dashboard.svg'
-import HeaderDashboardBackgroundImage from '../../../assets/images/background-header-dashboard.png';
+import EllipsisDashboard from '../../../assets/images/Icons/ellipsis-dashboard.svg';
 
-import { 
-  Container, 
-  Gradient, 
-  HeaderContainer, 
-  HeaderDashboardBackground,
-  HeaderDashboardImageContainer, 
+import {
+  Container,
+  Gradient,
+  HeaderContainer,
   HeaderMenuButton,
   HeaderUserInfoContainer,
   HeaderUserNameContainer,
   HeaderUserNameText,
   HeaderUserPhoto,
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 interface HeaderProps {
   avatar?: string;
@@ -24,43 +21,39 @@ interface HeaderProps {
   ellipsisPressed?: () => void;
 }
 
-const HeaderDashboard = ({ 
-  name, 
-  surname, 
-  avatar, 
-  ellipsisPressed 
+const HeaderDashboard = ({
+  name,
+  surname,
+  avatar,
+  ellipsisPressed,
 }: HeaderProps) => {
-  const [dropdownMenu, setDropdownMenu] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   return (
     <Gradient>
       <Container>
-          <HeaderContainer>
-            
-            <HeaderUserInfoContainer onPress={() => navigation.navigate('Profile')}>
-                  {
-                    <HeaderUserPhoto
-                      source={ avatar ? { uri: avatar } : profilePictureDashboard }
-                    />
-                  }
-              
-              <HeaderUserNameContainer>
-                <HeaderUserNameText>{name ? name + '  ' : ''}</HeaderUserNameText>
-                <HeaderUserNameText>{surname ? surname : ''}</HeaderUserNameText>
-              </HeaderUserNameContainer>
-            
-            </HeaderUserInfoContainer>
+        <HeaderContainer>
+          <HeaderUserInfoContainer
+            onPress={() => navigation.navigate('Profile')}>
+            {
+              <HeaderUserPhoto
+                source={avatar ? {uri: avatar} : profilePictureDashboard}
+              />
+            }
 
-            <HeaderMenuButton 
-              onPress={ellipsisPressed}>
-              <EllipsisDashboard />
-            </HeaderMenuButton>
+            <HeaderUserNameContainer>
+              <HeaderUserNameText>{name ? name + '  ' : ''}</HeaderUserNameText>
+              <HeaderUserNameText>{surname ? surname : ''}</HeaderUserNameText>
+            </HeaderUserNameContainer>
+          </HeaderUserInfoContainer>
 
-          </HeaderContainer>
+          <HeaderMenuButton onPress={ellipsisPressed}>
+            <EllipsisDashboard />
+          </HeaderMenuButton>
+        </HeaderContainer>
       </Container>
     </Gradient>
-  )
-}
+  );
+};
 
 export default HeaderDashboard;
