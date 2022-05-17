@@ -6,7 +6,7 @@ import ButtonOn from '../../assets/images/button-on.svg'
 import ButtonOff from '../../assets/images/button-off.svg'
 import DeleteAccountIcon from '../../assets/images/Icons/Profile/delete-account-icon.svg'
 import { useAuth, User } from '../../hooks/auth'
-import { ChangeInfoModal } from '../../components/ChangeInfoModal';
+import { WarningModal } from '../../components/WarningModal';
 import { useNavigation } from '@react-navigation/native';
 import theme from '../../global/styles/theme';
 import extractNameAndSurname from '../../utils/extractNameAndSurname';
@@ -66,14 +66,14 @@ const EditProfile = ({ route }: EditProfileProps) => {
         edit
         avatar={avatar}
       />
-      <ChangeInfoModal
+      <WarningModal
         title={'Você está prestes a excluir a conta'}
-        description={'Ao confirmar, seus dados serão excluidos e será necessário fazer outro cadastro'}
-        icon={<DeleteAccountIcon />}
-        iconBackgroundColor={'#ce3e36'}
+        description={'Ao confirmar, seus dados serão excluidos e será necessário \n fazer outro cadastro'}
+        icon={DeleteAccountIcon}
+        iconBackgroundColor={theme.colors.attention}
         visible={deleteAccountModalOpen}
         pressedOut={() => setDeleteAccountModalOpen(!deleteAccountModalOpen)}
-        confirmed={async () => {
+        handleSaveUpdates={async () => {
           setDeleteAccountModalOpen(false)
           await signOut()
           await deleteUser(token)

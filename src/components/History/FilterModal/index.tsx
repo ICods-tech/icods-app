@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-native-modal';
 import {
   Footer,
@@ -18,15 +18,15 @@ import {
   NoColorIcon,
   BlueIcon,
 } from './styles';
-import {SvgProps} from 'react-native-svg';
+import { SvgProps } from 'react-native-svg';
 import MonthSelectorCalendar from 'react-native-month-selector';
-import moment, {Moment} from 'moment';
-import {StyleSheet} from 'react-native';
-import {ColorsSelect} from '../../ColorsSelect';
-import {useTheme} from 'styled-components/native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import moment, { Moment } from 'moment';
+import { StyleSheet } from 'react-native';
+import { ColorsSelect } from '../../ColorsSelect';
+import { useTheme } from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import theme from '../../../global/styles/theme';
-import {ChevronLeft, ChevronRight} from 'react-native-iconly';
+import { ChevronLeft, ChevronRight } from 'react-native-iconly';
 import 'moment/locale/pt-br';
 
 interface ModalInterface {
@@ -119,7 +119,6 @@ export function FilterModal({
       isVisible={visible}
       onBackdropPress={pressedOut}
       useNativeDriver
-      // coverScreen={false
     >
       <ModalContainer>
         <ColorsContainer>

@@ -3,7 +3,7 @@ export default {
     primary: '#2B90D9',
     profilePic: '8EFFEB',
 
-    secundary: '#FF872C',
+    warning: '#F5AB0B',
 
     success: '#6DFF73',
 

@@ -1,5 +1,5 @@
-import React, {useState, useCallback, useRef, useEffect} from 'react';
-import {TouchableWithoutFeedback, Keyboard, TextInput} from 'react-native';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
 import {
   Container,
   HelpButtonContainer,
@@ -16,20 +16,20 @@ import {
   SpacingText,
 } from './styles';
 
-import {useNavigation} from '@react-navigation/native';
-import {useAuth} from '../../hooks/auth';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {useTheme} from 'styled-components';
-import {AuthFooter} from '../../components/Authentication/AuthFooter';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../hooks/auth';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components';
+import { AuthFooter } from '../../components/Authentication/AuthFooter';
 import analytics from '@react-native-firebase/analytics';
-import {Header} from '../../components/Authentication/Header';
-import {SubmitButton} from '../../components/Authentication/SubmitButton';
-import {LoginSocialButton} from '../../components/Authentication/LoginSocialButton';
+import { Header } from '../../components/Authentication/Header';
+import { SubmitButton } from '../../components/Authentication/SubmitButton';
+import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
 
 import GoogleIcon from '../../assets/images/Icons/google_icon.svg';
 import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
-import {LOG} from '../../config';
-import {Password, User} from 'react-native-iconly';
+import { LOG } from '../../config';
+import { Password, User } from 'react-native-iconly';
 
 import Toast from 'react-native-toast-message';
 import PasswordInput from '../../components/PasswordInput';
@@ -39,7 +39,7 @@ const log = LOG.extend('Signin');
 
 const SignIn = () => {
   const theme = useTheme();
-  const {signIn, user} = useAuth();
+  const { signIn, user } = useAuth();
   const navigation = useNavigation<any>();
   const [email, setEmail] = useState<string>(''); //jorgeoreidafloresta@gmail.com'
   const [password, setPassword] = useState<string>(''); // 'jorgeorei'
@@ -52,9 +52,9 @@ const SignIn = () => {
   const handleLogin = useCallback(async () => {
     setIsLoading(true);
     try {
-      await signIn({email, password});
+      await signIn({ email, password });
       navigation.navigate('Dashboard');
-      await analytics().logLogin({method: 'api'});
+      await analytics().logLogin({ method: 'api' });
       setErrored(false);
     } catch (error: any) {
       setErrored(true);
@@ -110,7 +110,7 @@ const SignIn = () => {
                 keyboardType="email-address"
                 onChangeText={setEmail}
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
-                placeholder="E-mail"
+                placeholder="E-mail/Usuário"
                 returnKeyType="next"
                 setIsSignInErrored={setErrored}
                 value={email}
@@ -154,9 +154,9 @@ const SignIn = () => {
                 text="Entrar"
               />
               <SpacingContainer>
-                <SpacingLine style={{width: '40%'}}></SpacingLine>
+                <SpacingLine style={{ width: '40%' }}></SpacingLine>
                 <SpacingText>Ou</SpacingText>
-                <SpacingLine style={{width: '40%'}}></SpacingLine>
+                <SpacingLine style={{ width: '40%' }}></SpacingLine>
               </SpacingContainer>
 
               {/* <LoginButtonContainer>
@@ -175,7 +175,7 @@ const SignIn = () => {
               </LoginButtonContainer> */}
 
               <HelpContainer>
-                <HelpContainerTexts style={{marginRight: RFValue(2)}}>
+                <HelpContainerTexts style={{ marginRight: RFValue(2) }}>
                   Algum problema no login?
                 </HelpContainerTexts>
 
