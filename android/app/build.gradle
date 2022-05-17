@@ -160,7 +160,7 @@ android {
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
-        } 
+        }
         release {
             if(project.hasProperty('MYAPP_RELEASE_STORE_FILE')) {
                 storeFile file(MYAPP_RELEASE_STORE_FILE)
@@ -198,8 +198,8 @@ android {
         }
     }
 
-    lintOptions { 
-        checkReleaseBuilds false 
+    lintOptions {
+        checkReleaseBuilds false
     }
 }
 
@@ -207,7 +207,11 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation ("androidx.appcompat:appcompat:1.4.0") {
+        version {
+            strictly '1.4.0'
+        }
+    }
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.android.support:multidex:1.0.3'  // ADD THIS LINE
@@ -239,7 +243,7 @@ dependencies {
 // Run this once to be able to run the application with BUCK
 // puts all compile dependencies into folder libs for BUCK to use
 task copyDownloadableDepsToLibs(type: Copy) {
-    from configurations.compile
+    from configurations.implementation
     into 'libs'
 }
 

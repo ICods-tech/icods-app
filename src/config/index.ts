@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/react-native';
 import { consoleTransport, logger, sentryTransport } from 'react-native-logs';
 
 Sentry.init({
-  dsn: `${process.env.SENTRY_KEY}`,
+	dsn: `${process.env.SENTRY_KEY}`,
   tracesSampleRate: 1.0,
 });
 
