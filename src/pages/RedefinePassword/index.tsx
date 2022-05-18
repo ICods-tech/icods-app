@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Keyboard, TextInput, TouchableWithoutFeedback } from "react-native";
 import { Header } from "../../components/Authentication/Header";
 import { BackButton } from "../../components/BackButton";
@@ -17,90 +17,81 @@ import {
   RedefinePasswordFormSendButtonContainer,
   RedefinePasswordFormSendButtonLabel,
 } from "./styles";
-import KeyIcon from "../../assets/images/Icons/signIn-password.svg";
 import theme from "../../global/styles/theme";
 import Toast from "react-native-toast-message";
 import { checkConnection } from "../../utils/checkConnection";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import api from "../../services/api";
 import { LOG } from "../../config";
+import PasswordInput from "../../components/PasswordInput";
 const log = LOG.extend("RedefinePassword");
+import { Message, Password } from 'react-native-iconly'
 
-const RedefinePassword = () => {
-  const navigation = useNavigation();
+const RedefinePassword = ({ route, _ }: any) => {
+  const navigation = useNavigation<any>();
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
   const [password, setpassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [secure, setSecure] = useState(true);
-  const [secureConfirmation, setSecureConfirmation] = useState(true);
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [inputFocusObserver, setInputFocusObserver] = useState(false);
   const [isErrored, setIsErrored] = useState(false);
 
-  const handleForgotPassword = async () => {
-    if (password == "" || passwordConfirmation == "") {
-      Toast.show({
-        type: "error",
-        position: "bottom",
-        text1: "Para prosseguir, complete os campos de senha",
-        text2: "",
-        visibilityTime: 1000,
-        bottomOffset: 100,
-      });
+  const { email, pass } = route.params;
 
-      setIsErrored(true);
+  const displayToast = ({ text1, type }: { text1: string, type: string }) => {
+    return Toast.show({
+      type,
+      position: "bottom",
+      text1,
+      text2: "",
+      visibilityTime: 1000,
+      bottomOffset: 100,
+    });
+  }
 
-      return;
-    }
 
-    if (password !== passwordConfirmation) {
-      Toast.show({
-        type: "error",
-        position: "bottom",
-        text1: "As senhas não conferem",
-        text2: "",
-        visibilityTime: 1000,
-        bottomOffset: 100,
-      });
 
-      setIsErrored(true);
-
-      return;
-    }
-
-    const connection = await checkConnection();
-    if (!connection) {
-      navigation.navigate("ConnectionProblems" as any);
-      return;
-    }
-
+  const handleRedefinePassword = useCallback(async () => {
     try {
-      await api.patch("resetPasswordTempPass", {
-        emaiil: "",
-        tempPassword: "",
-        newPassword: password,
-      });
 
-      Toast.show({
-        type: "success",
-        position: "bottom",
-        text1: "Sua senha foi alterada com sucesso",
-        visibilityTime: 1200,
-        bottomOffset: 100,
-      });
+      if (!password.length || !passwordConfirmation.length) {
+        displayToast({ text1: "Para prosseguir, complete os campos de senha", type: "error" });
+        setIsErrored(true);
+        return;
+      }
+
+      if (password !== passwordConfirmation) {
+        displayToast({ text1: "As senhas não conferem", type: "error" });
+        setIsErrored(true);
+        return;
+      }
+
+      const connection = await checkConnection();
+      if (!connection) {
+        navigation.navigate("ConnectionProblems" as any);
+        return;
+      }
+      await api.patch('resetPasswordTempPass', {
+        email,
+        tempPassword: pass,
+        newPassword: password,
+        passwordConfirmation
+      })
+
+      displayToast({ text1: "Sua senha foi alterada com sucesso", type: "success" });
+      navigation.navigate('SignIn')
     } catch (error: any) {
-      log.error(error.message);
-      Toast.show({
+      displayToast({
+        text1: error?.message,
         type: "error",
-        position: "bottom",
-        text1: error.message,
-        text2: "",
-        visibilityTime: 1000,
-        bottomOffset: 100,
-      });
+      })
+      log.error(error)
+      setIsErrored(true)
     }
-  };
+
+  }, [email, pass, password, passwordConfirmation])
+
 
   return (
     <SafeAreaView>
@@ -117,7 +108,7 @@ const RedefinePassword = () => {
             </RedefinePasswordFormLabel>
 
             <NicknameContainer>
-              <NicknameText>Raphael</NicknameText>
+              <NicknameText>{pass}</NicknameText>
             </NicknameContainer>
 
             <RedefinePasswordFormLabel>
@@ -125,20 +116,18 @@ const RedefinePassword = () => {
             </RedefinePasswordFormLabel>
 
             <InputContainer isErrored={isErrored}>
-              <NewInput
+              <PasswordInput
                 ref={passwordInputRef}
-                icon={KeyIcon}
+                iconly={Password}
                 placeholder="Nova senha"
                 placeholderTextColor={theme.colors.subtitle}
-                secure={secure}
-                secureTextEntry={secure}
-                setSecure={setSecure}
                 defaultValue={password}
                 onChangeText={(password: string) => setpassword(password)}
                 onSubmitEditing={() =>
                   passwordConfirmationInputRef.current?.focus()
                 }
                 returnKeyType="next"
+                value={password}
                 onFocus={() => {
                   setIsInputFocus(true), setInputFocusObserver(true);
                 }}
@@ -146,20 +135,17 @@ const RedefinePassword = () => {
 
               <SpacingLine isErrored={isErrored} />
 
-              <NewInput
+              <PasswordInput
                 ref={passwordConfirmationInputRef}
-                passwordStyleInput
-                icon={KeyIcon}
+                iconly={Password}
                 placeholder="Nova senha"
                 placeholderTextColor={theme.colors.subtitle}
-                secure={secureConfirmation}
-                secureTextEntry={secureConfirmation}
-                setSecure={setSecureConfirmation}
                 defaultValue={passwordConfirmation}
+                value={passwordConfirmation}
                 onChangeText={(passwordConfirmation: string) =>
                   setPasswordConfirmation(passwordConfirmation)
                 }
-                onSubmitEditing={handleForgotPassword}
+                onSubmitEditing={handleRedefinePassword}
                 returnKeyType="send"
                 onFocus={() => {
                   setIsInputFocus(true), setInputFocusObserver(true);
@@ -167,7 +153,7 @@ const RedefinePassword = () => {
               />
             </InputContainer>
 
-            <RedefinePasswordFormSendButton>
+            <RedefinePasswordFormSendButton onPress={handleRedefinePassword}>
               <RedefinePasswordFormSendButtonContainer>
                 <RedefinePasswordFormSendButtonLabel>
                   Alterar senha

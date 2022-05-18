@@ -13,7 +13,7 @@ import { IconRectButton } from '../../components/IconRectButton';
 import Pulse from '../../assets/images/Icons/editor/pulse.svg';
 import CloudSyncIcon from '../../assets/images/Icons/cloud_sync_icon_lg.svg';
 import theme from '../../global/styles/theme';
-import {LOG} from '../../config';
+import { LOG } from '../../config';
 
 const log = LOG.extend('Deeplink');
 
@@ -25,17 +25,18 @@ interface PopUp {
 }
 
 interface DeeplinkQrCodeProps {
-  title: string; 
-  description: string; 
+  title: string;
+  description: string;
   icon: any;
-  iconBackgroundColor: 'BLUE' | 'RED'; 
+  iconBackgroundColor: 'BLUE' | 'RED';
   button?: any;
   backString?: any;
 }
 
-type IDeeplinkStatus = 'IsEditable'|'ContainsGift'|'DoesNotBelongToIcods'|'AlreadyAssociated'|'NotLogged'|'NotProcessed'|'Verifying'
+type IDeeplinkStatus = 'IsEditable' | 'ContainsGift' | 'DoesNotBelongToIcods' | 'AlreadyAssociated' | 'NotLogged' | 'NotProcessed' | 'Verifying'
 
 const DeepLink = ({ route, _ }: any) => {
+
   const url = route.params;
   const qrCodeIdFromDeeplink = url ? url : '';
   const navigation = useNavigation();
@@ -46,12 +47,12 @@ const DeepLink = ({ route, _ }: any) => {
   const [deeplinkStatus, setDeeplinkStatus] = useState<IDeeplinkStatus>('Verifying');
   const [notProcessedTimer, setNotProcessedTimer] = useState(20);
 
-  const DeeplinkQrCode = ({title, description, icon, iconBackgroundColor, button, backString}: DeeplinkQrCodeProps) => {
+  const DeeplinkQrCode = ({ title, description, icon, iconBackgroundColor, button, backString }: DeeplinkQrCodeProps) => {
     return (
-      <Container> 
+      <Container>
         <ContentContainer>
           <IconBackground
-            style={{backgroundColor: iconBackgroundColor === 'BLUE' ? theme.colors.primary : theme.colors.attention}}
+            style={{ backgroundColor: iconBackgroundColor === 'BLUE' ? theme.colors.primary : theme.colors.attention }}
           >
             {icon}
           </IconBackground>
@@ -68,31 +69,31 @@ const DeepLink = ({ route, _ }: any) => {
     IsEditable: () => DeeplinkQrCode({
       title: 'QR Code editável',
       description: 'Esse QR Code está pronto para ser personalizado do seu jeito!',
-      icon: <Edit size={RFPercentage(6)} set="bold" primaryColor="white"/>,
+      icon: <Edit size={RFPercentage(6)} set="bold" primaryColor="white" />,
       iconBackgroundColor: 'BLUE',
       button: <IconRectButton
-                text='Editar QR Code'
-                onPress={() => {
-                  navigation.navigate('Editor' as never, { qrcode, isHistoryDetails: false } as never);
-                }}
-                icon={() => <Edit size={RFPercentage(3)} set="bold" primaryColor="white"/>}
-              />,
+        text='Editar QR Code'
+        onPress={() => {
+          navigation.navigate('Editor' as never, { qrcode, isHistoryDetails: false } as never);
+        }}
+        icon={() => <Edit size={RFPercentage(3)} set="bold" primaryColor="white" />}
+      />,
       backString: <BackStringContainer onPress={() => navigation.navigate(userConditionalPage)}>
         <BackStringText>Voltar</BackStringText>
       </BackStringContainer>
     }),
-    
+
     ContainsGift: () => DeeplinkQrCode({
       title: 'Um presente para você',
       description: 'Você acaba de receber um vídeo único e especial, visualize e aproveite!',
-      icon: <Play size={RFPercentage(18)} set="bulk" primaryColor='white' secondaryColor='#2B90D9'/>,
+      icon: <Play size={RFPercentage(18)} set="bulk" primaryColor='white' secondaryColor='#2B90D9' />,
       iconBackgroundColor: 'BLUE',
       button: <IconRectButton
-                text='Visualizar Vídeo'
-                onPress={() => {
-                  navigation.navigate('VideoPlayer' as never, { qrcode, isHistoryDetails: false } as never);
-                }}
-              />,
+        text='Visualizar Vídeo'
+        onPress={() => {
+          navigation.navigate('VideoPlayer' as never, { qrcode, isHistoryDetails: false } as never);
+        }}
+      />,
       backString: <BackStringContainer onPress={() => navigation.navigate(userConditionalPage)}>
         <BackStringText>Voltar</BackStringText>
       </BackStringContainer>
@@ -101,15 +102,15 @@ const DeepLink = ({ route, _ }: any) => {
     DoesNotBelongToIcods: () => DeeplinkQrCode({
       title: 'QR Code não pertence ao iCods',
       description: 'Esse QR Code não faz parte do iCods, adquira um QR Code nas lojas parceiras ou entre em contato conosco!',
-      icon: <CloseSquare size={RFPercentage(18)} set="bulk" primaryColor='white' secondaryColor='#DF2C2C'/>,
+      icon: <CloseSquare size={RFPercentage(18)} set="bulk" primaryColor='white' secondaryColor='#DF2C2C' />,
       iconBackgroundColor: 'RED',
       button: <IconRectButton
-                text='Voltar'
-                onPress={() => {
-                  navigation.navigate(userConditionalPage);
-                }}
-                icon={() => <Play size={RFPercentage(3)} set="light" primaryColor=""/>}
-              />,
+        text='Voltar'
+        onPress={() => {
+          navigation.navigate(userConditionalPage);
+        }}
+        icon={() => <Play size={RFPercentage(3)} set="light" primaryColor="" />}
+      />,
       backString: <BackStringContainer onPress={() => navigation.navigate((user ? 'Support' : 'SignIn') as never)}>
         <BackStringText>Entrar em contato</BackStringText>
       </BackStringContainer>
@@ -118,40 +119,40 @@ const DeepLink = ({ route, _ }: any) => {
     AlreadyAssociated: () => DeeplinkQrCode({
       title: 'QR Code já associado',
       description: 'Poxa...Esse QR Code já foi lido por outro usuário, tente escanear outro!',
-      icon: <Hide size={RFPercentage(8)} set="bold" primaryColor='white'/>,
+      icon: <Hide size={RFPercentage(8)} set="bold" primaryColor='white' />,
       iconBackgroundColor: 'RED',
       button: <IconRectButton
-                text='Voltar'
-                onPress={() => {
-                  navigation.navigate(userConditionalPage);
-                }}
-                icon={() => <Play size={RFPercentage(3)} set="light" primaryColor=""/>}
-              />
+        text='Voltar'
+        onPress={() => {
+          navigation.navigate(userConditionalPage);
+        }}
+        icon={() => <Play size={RFPercentage(3)} set="light" primaryColor="" />}
+      />
     }),
 
     NotLogged: () => DeeplinkQrCode({
       title: 'Aguarde um momento',
       description: 'Estamos processando o vídeo para que ele fique pronto para visualização',
-      icon: <Login size={RFPercentage(8)} set="bold" primaryColor='white'/>,
+      icon: <Login size={RFPercentage(8)} set="bold" primaryColor='white' />,
       iconBackgroundColor: 'BLUE',
       button: <IconRectButton
-                text='Fazer Login'
-                onPress={() => {
-                  navigation.navigate(userConditionalPage);
-                }}
-                icon={() => <Play size={RFPercentage(3)} set="light" primaryColor=""/>}
-              />,
+        text='Fazer Login'
+        onPress={() => {
+          navigation.navigate(userConditionalPage);
+        }}
+        icon={() => <Play size={RFPercentage(3)} set="light" primaryColor="" />}
+      />,
       backString: <BackStringContainer onPress={() => navigation.navigate(userConditionalPage)}>
         <BackStringText>Voltar</BackStringText>
       </BackStringContainer>
-    }),  
-    
+    }),
+
     Verifying: () => DeeplinkQrCode({
       title: 'Aguarde um momento',
       description: 'Estamos processando seu iCod e garantimos que será rapido! Assim que concluído, você ja pode presenteá-lo!',
       icon: <Pulse />,
       iconBackgroundColor: 'BLUE'
-    }), 
+    }),
 
     NotProcessed: () => DeeplinkQrCode({
       title: 'Aguarde um momento',
@@ -159,17 +160,17 @@ const DeepLink = ({ route, _ }: any) => {
       icon: <CloudSyncIcon />,
       iconBackgroundColor: 'BLUE',
       button: <IconRectButton
-                text={notProcessedTimer === 0  ? 'Tentar novamente' : `Aguarde ${notProcessedTimer} seg`}
-                color={notProcessedTimer === 0 ?  'Blue' : 'Gray'}
-                onPress={async () => {
-                  if (notProcessedTimer === 0) { 
-                    await handleQRCode({url: `=${qrCodeIdFromDeeplink.url}`})
-                  }
-                }}
-                icon={() => <Play size={RFPercentage(3)} set="light" primaryColor=""/>}
-              />,
-    }), 
-  } as {[key in IDeeplinkStatus]: () => JSX.Element}
+        text={notProcessedTimer === 0 ? 'Tentar novamente' : `Aguarde ${notProcessedTimer} seg`}
+        color={notProcessedTimer === 0 ? 'Blue' : 'Gray'}
+        onPress={async () => {
+          if (notProcessedTimer === 0) {
+            await handleQRCode({ url: `=${qrCodeIdFromDeeplink.url}` })
+          }
+        }}
+        icon={() => <Play size={RFPercentage(3)} set="light" primaryColor="" />}
+      />,
+    }),
+  } as { [key in IDeeplinkStatus]: () => JSX.Element }
 
   const qrCodeIsEditable = () => setDeeplinkStatus('IsEditable')
 
@@ -227,18 +228,18 @@ const DeepLink = ({ route, _ }: any) => {
       return;
     }
     log.info('Chamando a API', qrCodeId);
-    
+
     try {
       const response = await api.get(`qrcodes/${qrCodeId}`)
       const qrCode: QRCode = response.data;
       setQrcode(qrCode);
       await verifyQRCodeContent(qrCode);
-    } catch(error: any) {
+    } catch (error: any) {
       log.error(error.message);
       qrCodeDoesNotBelongToICods();
     }
     // setQrCodeValidate(true);
-  } 
+  }
 
   useEffect(() => {
     handleQRCode(qrCodeIdFromDeeplink)
