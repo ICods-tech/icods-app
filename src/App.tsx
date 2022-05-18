@@ -1,31 +1,28 @@
-import dynamicLinks from '@react-native-firebase/dynamic-links';
-import 'react-native-gesture-handler';
+import analytics from "@react-native-firebase/analytics";
 import {
-  NavigationContainer,
-  NavigationContainerRefContext,
-  useNavigation,
-} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {StatusBar, View} from 'react-native';
-import Toast, {BaseToast} from 'react-native-toast-message';
-import {ThemeProvider} from 'styled-components';
-import theme from './global/styles/theme';
-import AppProvider from './hooks';
-import {linking} from './Linking';
-import Routes from './routes';
-import analytics from '@react-native-firebase/analytics';
-import {Sentry, LOG} from './config';
-const log = LOG.extend('App');
+  NavigationContainer
+} from "@react-navigation/native";
+import React, { useRef } from "react";
+import { StatusBar, View } from "react-native";
+import "react-native-gesture-handler";
+import Toast, { BaseToast } from "react-native-toast-message";
+import { ThemeProvider } from "styled-components";
+import { LOG, Sentry } from "./config";
+import theme from "./global/styles/theme";
+import AppProvider from "./hooks";
+import { linking } from "./linking";
+import Routes from "./routes";
+const log = LOG.extend("App");
 
 const toastConfig = {
-  success: ({text1, text2, ...rest}: {text1: string; text2: string}) => (
+  success: ({ text1, text2, ...rest }: { text1: string; text2: string }) => (
     <BaseToast
       {...rest}
-      style={{borderLeftColor: '#2c90d9'}}
-      contentContainerStyle={{paddingHorizontal: 15}}
+      style={{ borderLeftColor: "#2c90d9" }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 12,
-        fontWeight: 'bold',
+        fontWeight: "bold",
       }}
       text1={text1}
       text2Style={{
@@ -36,14 +33,14 @@ const toastConfig = {
       text2NumberOfLines={1}
     />
   ),
-  error: ({text1, text2, ...rest}: {text1: string; text2: string}) => (
+  error: ({ text1, text2, ...rest }: { text1: string; text2: string }) => (
     <BaseToast
       {...rest}
-      style={{borderLeftColor: 'red'}}
-      contentContainerStyle={{paddingHorizontal: 15}}
+      style={{ borderLeftColor: "red" }}
+      contentContainerStyle={{ paddingHorizontal: 15 }}
       text1Style={{
         fontSize: 12,
-        fontWeight: 'bold',
+        fontWeight: "bold",
       }}
       text1={text1}
       text2Style={{
@@ -57,27 +54,13 @@ const toastConfig = {
 };
 
 const App = () => {
-  const routeNameRef = React.useRef();
-  const navigationRef = React.useRef();
-  const [deeplink, setDeeplink] = useState('');
-  const handleDynamicLink = (link: any) => {
-    log.info('the deeplink', link);
-    if (link && String(link.url).includes('https://icods.com.br')) {
-      setDeeplink(link.url);
-    }
-  };
-
-  useEffect(() => {
-    log.info('deeplink link', deeplink);
-    const unsubscribe = dynamicLinks().onLink(handleDynamicLink);
-    // When the component is unmounted, remove the listener
-    return () => unsubscribe();
-  }, [deeplink]);
+  const routeNameRef = useRef();
+  const navigationRef = useRef() as any;
 
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer
-        ref={navigationRef}
+        ref={navigationRef as any}
         linking={linking}
         onReady={() => {
           routeNameRef.current = navigationRef.current?.getCurrentRoute().name;
@@ -94,14 +77,15 @@ const App = () => {
             });
           }
           routeNameRef.current = currentRouteName;
-        }}>
+        }}
+      >
         <StatusBar
           barStyle="light-content"
           backgroundColor={theme.colors.primary}
         />
-        <View style={{flex: 1, backgroundColor: '#312e38'}}>
+        <View style={{ flex: 1, backgroundColor: "#312e38" }}>
           <AppProvider>
-            <Routes deeplink={deeplink} />
+            <Routes />
           </AppProvider>
         </View>
         <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />

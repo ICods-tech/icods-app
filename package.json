@@ -14,7 +14,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^6.2.0",
     "@react-native-firebase/analytics": "^14.2.3",
-    "@react-native-firebase/app": "^14.2.2",
+    "@react-native-firebase/app": "^14.9.3",
     "@react-native-firebase/dynamic-links": "^14.2.2",
     "@react-navigation/core": "5.2.3",
     "@react-navigation/native": "^6.0.6",

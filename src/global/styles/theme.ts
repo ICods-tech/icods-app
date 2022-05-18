@@ -12,7 +12,8 @@ export default {
 
     cancelButton: '#000',
 
-    gray: '#8f929c',
+    gray: "rgba(143, 146, 156, 0.5)",
+    gray2: "#8F828C",
 
     title: 'rgba(0, 0, 0, 0.87)',
     subtitle: 'rgba(0, 0, 0, 0.6)',
