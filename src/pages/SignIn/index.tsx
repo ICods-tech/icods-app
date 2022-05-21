@@ -140,7 +140,10 @@ const SignIn = () => {
                   </HelpButtonText>
                 </HelpButtonContainer>
 
-                <HelpButtonContainer>
+                <HelpButtonContainer  onPress={() => {
+                    setErrored(false);
+                    navigation.navigate("ForgotPassword");
+                  }}>
                   <HelpButtonText textColor={theme.colors.text}>
                     Esqueceu a senha?
                   </HelpButtonText>

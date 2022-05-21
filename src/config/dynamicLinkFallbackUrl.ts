@@ -1,0 +1,1 @@
+export const DYNAMIC_LINK_FALLBACK_URL = "https://icods.com.br";

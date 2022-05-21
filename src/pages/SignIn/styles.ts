@@ -92,7 +92,7 @@ export const HelpButtonText = styled.Text<HelpButtonTextProps>`
   color: ${({textColor}) => textColor};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 
-  border-bottom-width: 0.5px;
+  border-bottom-width: 1px;
   border-bottom-color: ${({textColor}) => textColor};
 `;
 

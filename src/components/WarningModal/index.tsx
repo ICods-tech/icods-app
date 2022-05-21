@@ -61,7 +61,7 @@ export function WarningModal({
       >
         <ModalContainer isFooterButtonsActived={isFooterButtonsActived}>
           <CloseButtonContainer>
-            <CloseButton onPress={() => { pressedOut(), console.log('teste') }}>
+            <CloseButton onPress={() => { pressedOut() }}>
               <CloseSquare color={theme.colors.title}
                 height={RFValue(24)}
                 width={RFValue(24)}
