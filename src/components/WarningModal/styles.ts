@@ -10,21 +10,22 @@ interface IModalContainter {
 }
 
 export const ModalContainer = styled.View<IModalContainter>`
-  width: ${RFValue(308)}px;
-  /* height: ${RFValue(271)}px; */
+  width: 90%;
   background-color: ${({ theme }) => theme.colors.shape};
-  ${({isFooterButtonsActived}) => isFooterButtonsActived ?
-   css`padding: ${RFValue(16)}px` :
-   css`padding: ${RFValue(16)}px ${RFValue(16)}px  ${RFValue(47)}px ${RFValue(16)}px;`}
   justify-content: center;
+  align-items: center;
   border-radius: ${RFValue(4)}px;
+
+  ${({ isFooterButtonsActived }) => isFooterButtonsActived ?
+    css`padding-bottom: ${RFValue(8)}px;` :
+    css`padding-bottom: ${RFValue(26)}px;`}
 `;
 
 
 export const CloseButtonContainer = styled(GestureHandlerRootView)`
-  width: 100%;
-  flex-direction: row;
-  justify-content: flex-end;
+  position: absolute;
+  top: ${RFValue(8)}px;
+  right: ${RFValue(8)}px;
 `;
 
 export const CloseButton = styled(BorderlessButton)`
@@ -39,7 +40,7 @@ interface IIcontainerProps {
 }
 
 export const IconContainer = styled.View<IIcontainerProps>`
-  margin-top: ${RFValue(14)}
+  margin-top: ${RFValue(50)}px;
 
   width: ${RFValue(48)}px;
   height: ${RFValue(48)}px;
@@ -49,23 +50,30 @@ export const IconContainer = styled.View<IIcontainerProps>`
   justify-content: center;
 `;
 
-export const ChangeInfoTextContainer = styled.View`
+export const InfoTextContainer = styled.View`
   margin-top: ${RFValue(23)}px;
+  width: 100%;
   align-self: center;
-  /* width: ${RFPercentage(44.0)}px; */
   align-items: center;
   justify-content: center;
 `;
 
-export const ChangeInfoTitle = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.bold};
+export const InfoTitleContainer = styled.View`
+  padding: 0 ${RFValue(20)}px;
+`;
+
+export const InfoTitle = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.extra_bold};
   font-size: ${RFValue(16)}px;
   text-align: center;
   line-height: ${RFValue(22)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
   color: ${({ theme }) => theme.colors.title};
 `
-export const ChangeInfoDescription = styled.Text`
+export const InfoDescriptionContainer = styled.View`
+  padding: 0 ${RFValue(28)}px;
+`;
+export const InfoDescription = styled.Text`
   font-family: ${({ theme }) => theme.fonts.semi_bold};
   font-size: ${RFValue(14)}px;
   line-height: ${RFValue(20)}px;
@@ -77,8 +85,7 @@ export const ChangeInfoDescription = styled.Text`
 export const Footer = styled(GestureHandlerRootView)`
   flex-direction: row;
   align-self: flex-end;
-  align-items: flex-end;
-
+  padding-right: ${RFValue(8)}px;
   margin-top: ${RFValue(36)}px;
 `;
 
@@ -87,10 +94,9 @@ export const BottomButton = styled(RectButton)`
   margin-left: ${RFValue(8)}px;
   align-items: center;
   justify-content: center;
-  padding: 0 ${RFValue(4)}px;
+  padding: 0 ${RFValue(8)}px;
 
-  background-color: ${({theme}) => theme.colors.shape};
-  border-radius: ${RFValue(32)}px;
+  border-radius: ${RFValue(4)}px;
 `;
 
 interface IFooterButtonTextProps {
@@ -99,8 +105,9 @@ interface IFooterButtonTextProps {
 
 export const FooterButtonText = styled.Text<IFooterButtonTextProps>`
   text-transform: uppercase;
-  font-family: ${({theme}) => theme.fonts.medium};
+  font-family: ${({ theme }) => theme.fonts.semi_bold};
   font-size: ${RFValue(14)}px;
+  line-height: ${RFValue(24)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
-  color: ${({color, theme}) => color === 'save' ? theme.colors.primary : theme.colors.cancelButton};
+  color: ${({ color, theme }) => color === 'save' ? theme.colors.primary : theme.colors.cancelTextButton};
 `;

@@ -89,7 +89,7 @@ interface InfoSendEmailTextProps {
 
 export const InfoSendEmailText = styled.Text<InfoSendEmailTextProps>`
   color: ${({ isBlue, theme }) =>
-    isBlue ? theme.colors.primary : theme.colors.gray2};
+    isBlue ? theme.colors.primary : theme.colors.text};
   text-align: center;
   font-size: ${RFValue(10)}px;
   font-family: ${({ theme }) => theme.fonts.regular};

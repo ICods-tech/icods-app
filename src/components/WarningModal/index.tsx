@@ -1,17 +1,19 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 import {
-  Container,
   Footer,
-  ModalContainer,
+  Container,
+  InfoTitle,
+  CloseButton,
   BottomButton,
   IconContainer,
-  ChangeInfoTitle,
-  ChangeInfoDescription,
-  ChangeInfoTextContainer,
-  CloseButton,
+  ModalContainer,
+  InfoDescription,
   FooterButtonText,
+  InfoTextContainer,
   CloseButtonContainer,
+  InfoTitleContainer,
+  InfoDescriptionContainer,
 } from './styles';
 import { CloseSquare } from 'react-native-iconly';
 import { useTheme } from 'styled-components/native';
@@ -23,7 +25,7 @@ interface ModalInterface {
   confirmText?: string,
   handleCancelled?: () => void,
   handleConfirmed?: () => void,
-  handleSaveUpdates?: () => Promise<void>,
+  handleAsyncConfirmed?: () => Promise<void>,
   description: string,
   iconly?: typeof IconProps,
   icon?: React.FC<SvgProps>,
@@ -36,18 +38,18 @@ interface ModalInterface {
 }
 
 export function WarningModal({
+  title,
+  visible,
+  icon: Icon,
+  pressedOut,
   confirmText,
   description,
   iconly: Iconly,
-  icon: Icon,
-  iconBackgroundColor,
-  isFooterButtonsActived = false,
   handleCancelled,
   handleConfirmed,
-  handleSaveUpdates,
-  pressedOut,
-  title,
-  visible,
+  handleAsyncConfirmed,
+  iconBackgroundColor,
+  isFooterButtonsActived = false,
 }: ModalInterface) {
   const theme = useTheme();
   return (
@@ -58,16 +60,24 @@ export function WarningModal({
         isVisible={visible}
         onBackdropPress={pressedOut}
         useNativeDriver
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
       >
         <ModalContainer isFooterButtonsActived={isFooterButtonsActived}>
-          <CloseButtonContainer>
-            <CloseButton onPress={() => { pressedOut() }}>
-              <CloseSquare color={theme.colors.title}
-                height={RFValue(24)}
-                width={RFValue(24)}
-              />
-            </CloseButton>
-          </CloseButtonContainer>
+
+          {
+            !isFooterButtonsActived && (
+              <CloseButtonContainer>
+                <CloseButton onPress={pressedOut}>
+                  <CloseSquare color={theme.colors.title}
+                    height={RFValue(24)}
+                    width={RFValue(24)}
+                  />
+                </CloseButton>
+              </CloseButtonContainer>)
+          }
 
           <IconContainer
             backgroundColor={iconBackgroundColor}
@@ -85,14 +95,18 @@ export function WarningModal({
 
           </IconContainer>
 
-          <ChangeInfoTextContainer>
-            <ChangeInfoTitle>
-              {title}
-            </ChangeInfoTitle>
-            <ChangeInfoDescription>
-              {description}
-            </ChangeInfoDescription>
-          </ChangeInfoTextContainer>
+          <InfoTextContainer>
+            <InfoTitleContainer>
+              <InfoTitle>
+                {title}
+              </InfoTitle>
+            </InfoTitleContainer>
+            <InfoDescriptionContainer>
+              <InfoDescription>
+                {description}
+              </InfoDescription>
+            </InfoDescriptionContainer>
+          </InfoTextContainer>
 
           {isFooterButtonsActived && (
             <Footer>
@@ -104,7 +118,7 @@ export function WarningModal({
 
               <BottomButton
                 onPress={handleConfirmed ? handleConfirmed :
-                  (() => { handleSaveUpdates!() })}>
+                  (() => { handleAsyncConfirmed!() })}>
                 <FooterButtonText color="save">{confirmText ? confirmText : 'confirmar'}</FooterButtonText>
               </BottomButton>
             </Footer>

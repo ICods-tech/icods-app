@@ -65,6 +65,15 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const [lastSavedColor, setLastSavedColor] = useState<Colors>(initialColorState)
 
   const [saveChangesModalOpen, setSaveChangesModalOpen] = useState(false)
+
+  function handleCloseModal() {
+    setSaveChangesModalOpen(false)
+  }
+
+  function handleOpenModal() {
+    setSaveChangesModalOpen(true)
+  }
+
   const theme = useTheme();
 
   const handleFavoriteQRCode = useCallback(async (id: string) => {
@@ -102,7 +111,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
           const favoriteIsDifferent = updatedFavorite !== lastSavedFavorite
 
           if (colorIsDifferent || favoriteIsDifferent) {
-            setSaveChangesModalOpen(true)
+            handleOpenModal()
           } else {
             onGoBack(changesWereMade)
             navigation.goBack()
@@ -119,11 +128,11 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         isFooterButtonsActived
         visible={saveChangesModalOpen}
         confirmText='Salvar'
-        pressedOut={() => setSaveChangesModalOpen(!saveChangesModalOpen)}
-        handleSaveUpdates={async () => {
+        pressedOut={handleCloseModal}
+        handleAsyncConfirmed={async () => {
           updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)
           updatedFavorite !== lastSavedFavorite && await handleFavoriteQRCode(id)
-          setSaveChangesModalOpen(false)
+          handleCloseModal()
           onGoBack(true)
           navigation.goBack()
         }}
