@@ -1,73 +1,108 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import {
-  Container,
   Footer,
-  ModalContainer,
+  Container,
+  InfoTitle,
+  CloseButton,
   BottomButton,
   IconContainer,
-  ChangeInfoTitle,
-  ChangeInfoDescription,
-  ChangeInfoTextContainer,
-  CloseButton,
+  ModalContainer,
+  InfoDescription,
   FooterButtonText,
+  InfoTextContainer,
   CloseButtonContainer,
+  InfoTitleContainer,
+  InfoDescriptionContainer,
 } from './styles';
 import { CloseSquare } from 'react-native-iconly';
 import { useTheme } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { User as IconProps } from 'react-native-iconly';
 import { SvgProps } from 'react-native-svg';
+import { delay } from '../../utils/delay';
 
 interface ModalInterface {
   confirmText?: string,
   handleCancelled?: () => void,
   handleConfirmed?: () => void,
-  handleSaveUpdates?: () => Promise<void>,
+  handleAsyncConfirmed?: () => Promise<void>,
   description: string,
   iconly?: typeof IconProps,
   icon?: React.FC<SvgProps>,
   iconBackgroundColor: string,
   initialDateValue?: undefined
   isFooterButtonsActived?: boolean,
-  pressedOut: () => void,
+  isTimout?: boolean,
+  onCloseModal: () => void,
+  setIsVisible?: (value: boolean) => void,
   title: string,
   visible: boolean,
 }
 
 export function WarningModal({
-  confirmText,
-  description,
-  iconly: Iconly,
-  icon: Icon,
-  iconBackgroundColor,
-  isFooterButtonsActived = false,
-  handleCancelled,
-  handleConfirmed,
-  handleSaveUpdates,
-  pressedOut,
   title,
   visible,
+  isTimout = false,
+  icon: Icon,
+  onCloseModal,
+  confirmText,
+  setIsVisible,
+  description,
+  iconly: Iconly,
+  handleCancelled,
+  handleConfirmed,
+  handleAsyncConfirmed,
+  iconBackgroundColor,
+  isFooterButtonsActived = false,
 }: ModalInterface) {
   const theme = useTheme();
+
+  const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout>();
+
+  function cleanTimoutAndCloseModal() {
+    if (myTimeout) {
+      clearTimeout(myTimeout as NodeJS.Timeout);
+    }
+    setIsVisible!(false)
+    onCloseModal()
+  }
+
+  useEffect(() => {
+    if (isTimout) {
+      delay(3500).then(() => {
+        setIsVisible!(false)
+        onCloseModal()
+      })
+    }
+  }, [visible]);
+
   return (
     <Container>
       <Modal
         animationIn={"fadeIn"}
         animationOut={"fadeOut"}
         isVisible={visible}
-        onBackdropPress={pressedOut}
+        onBackdropPress={isTimout ? cleanTimoutAndCloseModal : onCloseModal}
         useNativeDriver
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
       >
         <ModalContainer isFooterButtonsActived={isFooterButtonsActived}>
-          <CloseButtonContainer>
-            <CloseButton onPress={() => { pressedOut() }}>
-              <CloseSquare color={theme.colors.title}
-                height={RFValue(24)}
-                width={RFValue(24)}
-              />
-            </CloseButton>
-          </CloseButtonContainer>
+
+          {
+            !isFooterButtonsActived && (
+              <CloseButtonContainer>
+                <CloseButton onPress={isTimout ? cleanTimoutAndCloseModal : onCloseModal}>
+                  <CloseSquare color={theme.colors.title}
+                    height={RFValue(24)}
+                    width={RFValue(24)}
+                  />
+                </CloseButton>
+              </CloseButtonContainer>)
+          }
 
           <IconContainer
             backgroundColor={iconBackgroundColor}
@@ -85,26 +120,30 @@ export function WarningModal({
 
           </IconContainer>
 
-          <ChangeInfoTextContainer>
-            <ChangeInfoTitle>
-              {title}
-            </ChangeInfoTitle>
-            <ChangeInfoDescription>
-              {description}
-            </ChangeInfoDescription>
-          </ChangeInfoTextContainer>
+          <InfoTextContainer>
+            <InfoTitleContainer>
+              <InfoTitle>
+                {title}
+              </InfoTitle>
+            </InfoTitleContainer>
+            <InfoDescriptionContainer>
+              <InfoDescription>
+                {description}
+              </InfoDescription>
+            </InfoDescriptionContainer>
+          </InfoTextContainer>
 
           {isFooterButtonsActived && (
             <Footer>
               <BottomButton
                 onPress={handleCancelled ? handleCancelled :
-                  (() => { pressedOut() })}>
+                  (() => { onCloseModal() })}>
                 <FooterButtonText color="cancel">cancelar</FooterButtonText>
               </BottomButton>
 
               <BottomButton
                 onPress={handleConfirmed ? handleConfirmed :
-                  (() => { handleSaveUpdates!() })}>
+                  (() => { handleAsyncConfirmed!() })}>
                 <FooterButtonText color="save">{confirmText ? confirmText : 'confirmar'}</FooterButtonText>
               </BottomButton>
             </Footer>

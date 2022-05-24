@@ -32,7 +32,7 @@ import { Play, Unlock } from 'react-native-iconly'
 import { ShareButton } from '../../components/ShareButton';
 import { WarningModal } from '../../components/WarningModal';
 import Toast from 'react-native-toast-message';
-import { Danger } from 'react-native-iconly';
+import ConfirmUpdate from "../../assets/images/Icons/saved_icon.svg"
 import { BackHandler } from 'react-native';
 
 export interface QRCodeHistoryDetailsProps {
@@ -65,6 +65,16 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const [lastSavedColor, setLastSavedColor] = useState<Colors>(initialColorState)
 
   const [saveChangesModalOpen, setSaveChangesModalOpen] = useState(false)
+
+  function handleCloseModal() {
+    setSaveChangesModalOpen(false)
+    navigation.goBack();
+  }
+
+  function handleOpenModal() {
+    setSaveChangesModalOpen(true)
+  }
+
   const theme = useTheme();
 
   const handleFavoriteQRCode = useCallback(async (id: string) => {
@@ -102,7 +112,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
           const favoriteIsDifferent = updatedFavorite !== lastSavedFavorite
 
           if (colorIsDifferent || favoriteIsDifferent) {
-            setSaveChangesModalOpen(true)
+            handleOpenModal()
           } else {
             onGoBack(changesWereMade)
             navigation.goBack()
@@ -114,18 +124,17 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
       <WarningModal
         title={'Você precisa salvar as alterações'}
         description={'Você realizou alterações no QR Code e está saindo sem salva-las'}
-        iconly={Danger}
-        iconBackgroundColor={theme.colors.warning}
+        icon={ConfirmUpdate}
+        iconBackgroundColor={theme.colors.primary}
         isFooterButtonsActived
         visible={saveChangesModalOpen}
         confirmText='Salvar'
-        pressedOut={() => setSaveChangesModalOpen(!saveChangesModalOpen)}
-        handleSaveUpdates={async () => {
+        onCloseModal={handleCloseModal}
+        handleAsyncConfirmed={async () => {
           updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)
           updatedFavorite !== lastSavedFavorite && await handleFavoriteQRCode(id)
-          setSaveChangesModalOpen(false)
+          handleCloseModal()
           onGoBack(true)
-          navigation.goBack()
         }}
       />
       <Content>
@@ -178,7 +187,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
                       updatedFavorite,
                       setUpdatedFavorite,
                     },
-                    isHistoryDetails: true
+                    isHistoryDetails: true,
                   })
                 }
               }}

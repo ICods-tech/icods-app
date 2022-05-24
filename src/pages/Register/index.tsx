@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useRef, useEffect} from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   Keyboard,
   TouchableWithoutFeedback,
@@ -20,17 +20,17 @@ import {
   UseTermsContainer,
   UseTermsShowButton,
 } from './styles';
-import {useAuth} from '../../hooks/auth';
+import { useAuth } from '../../hooks/auth';
 import Toast from 'react-native-toast-message';
-import {delay} from '../../utils/delay';
-import {handleRegisterRouteErrors} from '../../utils/handleRegisterRouteErrors';
-import {handleFieldAlreadyExistsErrors} from '../../utils/handleFieldAlreadyExistsErrors';
-import {Header} from '../../components/Authentication/Header';
-import {BackButton} from '../../components/BackButton';
-import {useTheme} from 'styled-components';
-import {SubmitButton} from '../../components/Authentication/SubmitButton';
-import {LOG} from '../../config';
-import {Message, Password, User} from 'react-native-iconly';
+import { delay } from '../../utils/delay';
+import { handleRegisterRouteErrors } from '../../utils/handleRegisterRouteErrors';
+import { handleFieldAlreadyExistsErrors } from '../../utils/handleFieldAlreadyExistsErrors';
+import { Header } from '../../components/Authentication/Header';
+import { BackButton } from '../../components/BackButton';
+import { useTheme } from 'styled-components';
+import { SubmitButton } from '../../components/Authentication/SubmitButton';
+import { LOG } from '../../config';
+import { Message, Password, User } from 'react-native-iconly';
 
 import ModalUseTerms from '../../components/ModalUseTerms';
 import analytics from '@react-native-firebase/analytics';
@@ -56,8 +56,7 @@ const fields = {
 };
 
 const Register = () => {
-  const theme = useTheme();
-  const {signIn, signUp} = useAuth();
+  const { signIn, signUp } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
@@ -109,7 +108,7 @@ const Register = () => {
         }));
       }
 
-      await signUp({name, username, email, password, passwordConfirmation});
+      await signUp({ name, username, email, password, passwordConfirmation });
 
       await analytics().logSignUp({
         method: 'api',
@@ -123,7 +122,7 @@ const Register = () => {
         bottomOffset: 100,
       });
       await delay(1250);
-      await signIn({email, password});
+      await signIn({ email, password });
     } catch (errorResponse: any) {
       setUseTerms(false);
       const errors = errorResponse.response.data;
@@ -142,13 +141,16 @@ const Register = () => {
         setIsKeyboardVisible(true);
       },
     );
-
-    if (useTerms) {
-      setIsKeyboardVisible(false);
-    }
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
+    );
 
     return () => {
       keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
     };
   }, [Keyboard, useTerms]);
 
@@ -157,8 +159,8 @@ const Register = () => {
   };
 
   const handleKeyboardDosentVisible = () => {
-    setIsKeyboardVisible(false);
     Keyboard.dismiss();
+    setIsKeyboardVisible(false);
   };
 
   const handleUseTermsPressed = () => {
@@ -176,7 +178,7 @@ const Register = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={handleKeyboardDosentVisible}>
         <Container>
           <Header isKeyboardVisible={isKeyboardVisible} />

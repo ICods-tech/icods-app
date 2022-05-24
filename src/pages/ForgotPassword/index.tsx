@@ -18,9 +18,10 @@ import {
   SafeAreaView,
 } from "./styles";
 import { LOG } from "../../config";
-import { ForgotPasswordPopUP } from "../../components/ForgotPassword/ForgotPasswordModal";
 import { checkConnection } from "../../utils/checkConnection";
 import { useNavigation } from "@react-navigation/native";
+import { WarningModal } from "../../components/WarningModal";
+import { Message } from "react-native-iconly";
 import Toast from "react-native-toast-message";
 const log = LOG.extend("ForgotPassword");
 
@@ -34,6 +35,12 @@ const ForgotPassword = () => {
   const [count, setCount] = useState(TIME_TO_SEND_EMAIL);
   const [isVisible, setIsVisible] = useState(false);
 
+  function handleOpenModal() {
+    setIsVisible(true)
+  }
+  function handleCloseModal() {
+    setIsVisible(false)
+  }
   const timerToActiveButton = () => {
     setCount(count - 1);
     if (count == 0) {
@@ -81,7 +88,7 @@ const ForgotPassword = () => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
           <Header isKeyboardVisible={false} />
-          <BackButtonContainer isKeyboardVisible={isInputFocus}>
+          <BackButtonContainer>
             <BackButton navigationTo="SignIn" color="white" />
           </BackButtonContainer>
           <ForgotPasswordForm>
@@ -117,7 +124,14 @@ const ForgotPassword = () => {
         </Container>
       </TouchableWithoutFeedback>
 
-      <ForgotPasswordPopUP isVisible={isVisible} setIsVisible={setIsVisible} />
+      <WarningModal
+        title="Enviamos um e-mail para você"
+        description="Cheque nas caixa de entrada e spam só para garantir ;)"
+        visible={isVisible}
+        iconly={Message}
+        iconBackgroundColor={theme.colors.primary}
+        onCloseModal={handleCloseModal}
+      />
 
       {!activeSendButton && (
         <InfoSendEmailContainer>

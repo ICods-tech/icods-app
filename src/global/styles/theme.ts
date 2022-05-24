@@ -5,15 +5,14 @@ export default {
 
     warning: '#F5AB0B',
 
-    success: '#6DFF73',
+    success: '#63C667',
 
     attention: '#DF2C2C',
     attention_light: '#EC8080',
 
-    cancelButton: '#000',
+    cancelTextButton: '#5F6368',
 
     gray: "rgba(143, 146, 156, 0.5)",
-    gray2: "#8F828C",
 
     title: 'rgba(0, 0, 0, 0.87)',
     subtitle: 'rgba(0, 0, 0, 0.6)',

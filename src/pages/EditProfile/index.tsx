@@ -8,7 +8,6 @@ import DeleteAccountIcon from '../../assets/images/Icons/Profile/delete-account-
 import { useAuth, User } from '../../hooks/auth'
 import { WarningModal } from '../../components/WarningModal';
 import { useNavigation } from '@react-navigation/native';
-import theme from '../../global/styles/theme';
 import extractNameAndSurname from '../../utils/extractNameAndSurname';
 import { useTheme } from 'styled-components';
 
@@ -28,10 +27,11 @@ const EditProfile = ({ route }: EditProfileProps) => {
   const navigation = useNavigation();
   const theme = useTheme();
   const { user, token, alterProfileVisibility, signOut, deleteUser } = useAuth()
-  const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false)
   const { following, follower } = route.params;
   const { name, lastname } = user ? extractNameAndSurname(user.name) : { name: '', lastname: '' }
   const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
+  const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false)
+
 
   const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
   const handleUserObject = (field: UserFields, user: User | undefined) => {
@@ -44,6 +44,7 @@ const EditProfile = ({ route }: EditProfileProps) => {
       : user[field]
   }
 
+
   const handleProfileVisibility = useCallback(async () => {
     try {
       await alterProfileVisibility(user.id, token)
@@ -51,6 +52,14 @@ const EditProfile = ({ route }: EditProfileProps) => {
       console.error(err.message)
     }
   }, [user, token, alterProfileVisibility])
+
+
+  function handleOpenDeleteAccountModal() {
+    setDeleteAccountModalOpen(true)
+  }
+  function handleCloseDeleteAccountModal() {
+    setDeleteAccountModalOpen(false)
+  }
 
   return (
     <Container>
@@ -68,13 +77,14 @@ const EditProfile = ({ route }: EditProfileProps) => {
       />
       <WarningModal
         title={'Você está prestes a excluir a conta'}
-        description={'Ao confirmar, seus dados serão excluidos e será necessário \n fazer outro cadastro'}
+        description={'Ao confirmar, seus dados serão excluidos e será necessário fazer outro cadastro'}
+        visible={deleteAccountModalOpen}
         icon={DeleteAccountIcon}
         iconBackgroundColor={theme.colors.attention}
-        visible={deleteAccountModalOpen}
-        pressedOut={() => setDeleteAccountModalOpen(!deleteAccountModalOpen)}
-        handleSaveUpdates={async () => {
-          setDeleteAccountModalOpen(false)
+        isFooterButtonsActived
+        onCloseModal={handleCloseDeleteAccountModal}
+        handleAsyncConfirmed={async () => {
+          handleCloseDeleteAccountModal()
           await signOut()
           await deleteUser(token)
         }}
@@ -104,7 +114,7 @@ const EditProfile = ({ route }: EditProfileProps) => {
           <UserInformationText>Alterar senha</UserInformationText>
         </UserLabelAndInfoContainer>
         <UserLabelAndInfoContainer>
-          <TouchableOpacity onPress={() => setDeleteAccountModalOpen(true)}>
+          <TouchableOpacity onPress={handleOpenDeleteAccountModal}>
             <ExcludeAccountText>Excluir conta</ExcludeAccountText>
           </TouchableOpacity>
         </UserLabelAndInfoContainer>

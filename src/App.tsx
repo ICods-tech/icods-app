@@ -13,6 +13,11 @@ import AppProvider from "./hooks";
 import { linking } from "./linking";
 import Routes from "./routes";
 const log = LOG.extend("App");
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([
+  "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
+]);
 
 const toastConfig = {
   success: ({ text1, text2, ...rest }: { text1: string; text2: string }) => (
