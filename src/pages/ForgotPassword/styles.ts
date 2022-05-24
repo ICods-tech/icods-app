@@ -16,10 +16,9 @@ export const Container = styled.View`
   flex-direction: column;
 `;
 
-export const BackButtonContainer = styled.View<BackButtonProps>`
+export const BackButtonContainer = styled.View`
   position: absolute;
-  top: ${({ isKeyboardVisible }) =>
-    isKeyboardVisible ? RFValue(34) : RFValue(21) + getStatusBarHeight()}px;
+  top:${RFValue(21) + getStatusBarHeight()}px;
   left: ${RFValue(16)}px;
 `;
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-native-modal';
 import {
   Footer,
@@ -20,6 +20,7 @@ import { useTheme } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { User as IconProps } from 'react-native-iconly';
 import { SvgProps } from 'react-native-svg';
+import { delay } from '../../utils/delay';
 
 interface ModalInterface {
   confirmText?: string,
@@ -32,7 +33,9 @@ interface ModalInterface {
   iconBackgroundColor: string,
   initialDateValue?: undefined
   isFooterButtonsActived?: boolean,
-  pressedOut: () => void,
+  isTimout?: boolean,
+  onCloseModal: () => void,
+  setIsVisible?: (value: boolean) => void,
   title: string,
   visible: boolean,
 }
@@ -40,9 +43,11 @@ interface ModalInterface {
 export function WarningModal({
   title,
   visible,
+  isTimout = false,
   icon: Icon,
-  pressedOut,
+  onCloseModal,
   confirmText,
+  setIsVisible,
   description,
   iconly: Iconly,
   handleCancelled,
@@ -52,13 +57,33 @@ export function WarningModal({
   isFooterButtonsActived = false,
 }: ModalInterface) {
   const theme = useTheme();
+
+  const [myTimeout, setMyTimeout] = useState<NodeJS.Timeout>();
+
+  function cleanTimoutAndCloseModal() {
+    if (myTimeout) {
+      clearTimeout(myTimeout as NodeJS.Timeout);
+    }
+    setIsVisible!(false)
+    onCloseModal()
+  }
+
+  useEffect(() => {
+    if (isTimout) {
+      delay(4000).then(() => {
+        setIsVisible!(false)
+        onCloseModal()
+      })
+    }
+  }, [visible]);
+
   return (
     <Container>
       <Modal
         animationIn={"fadeIn"}
         animationOut={"fadeOut"}
         isVisible={visible}
-        onBackdropPress={pressedOut}
+        onBackdropPress={isTimout ? cleanTimoutAndCloseModal : onCloseModal}
         useNativeDriver
         style={{
           justifyContent: 'center',
@@ -70,7 +95,7 @@ export function WarningModal({
           {
             !isFooterButtonsActived && (
               <CloseButtonContainer>
-                <CloseButton onPress={pressedOut}>
+                <CloseButton onPress={isTimout ? cleanTimoutAndCloseModal : onCloseModal}>
                   <CloseSquare color={theme.colors.title}
                     height={RFValue(24)}
                     width={RFValue(24)}
@@ -112,7 +137,7 @@ export function WarningModal({
             <Footer>
               <BottomButton
                 onPress={handleCancelled ? handleCancelled :
-                  (() => { pressedOut() })}>
+                  (() => { onCloseModal() })}>
                 <FooterButtonText color="cancel">cancelar</FooterButtonText>
               </BottomButton>
 

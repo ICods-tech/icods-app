@@ -82,7 +82,7 @@ const EditProfile = ({ route }: EditProfileProps) => {
         icon={DeleteAccountIcon}
         iconBackgroundColor={theme.colors.attention}
         isFooterButtonsActived
-        pressedOut={handleCloseDeleteAccountModal}
+        onCloseModal={handleCloseDeleteAccountModal}
         handleAsyncConfirmed={async () => {
           handleCloseDeleteAccountModal()
           await signOut()

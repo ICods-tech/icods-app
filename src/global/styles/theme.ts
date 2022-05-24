@@ -5,7 +5,7 @@ export default {
 
     warning: '#F5AB0B',
 
-    success: '#6DFF73',
+    success: '#63C667',
 
     attention: '#DF2C2C',
     attention_light: '#EC8080',

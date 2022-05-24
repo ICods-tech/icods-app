@@ -18,7 +18,7 @@ export const ModalContainer = styled.View<IModalContainter>`
 
   ${({ isFooterButtonsActived }) => isFooterButtonsActived ?
     css`padding-bottom: ${RFValue(8)}px;` :
-    css`padding-bottom: ${RFValue(26)}px;`}
+    css`padding-bottom: ${RFValue(47)}px;`}
 `;
 
 

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   Container,
   Header,
@@ -7,20 +7,20 @@ import {
   SearchContainer,
   Title,
 } from './styles';
-import {BackButton} from '../../BackButton';
-import {SearchInput} from '../../SearchInput';
-import {useTheme} from 'styled-components';
-import {FavoriteButton} from '../../FavoriteButton';
-import {FilterButton} from '../../FilterButton';
-import {Keyboard, TouchableWithoutFeedback} from 'react-native';
-import {FilterModal} from '../FilterModal';
-import {Moment} from 'moment';
+import { BackButton } from '../../BackButton';
+import { SearchInput } from '../../SearchInput';
+import { useTheme } from 'styled-components';
+import { FavoriteButton } from '../../FavoriteButton';
+import { FilterButton } from '../../FilterButton';
+import { Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { FilterModal } from '../FilterModal';
+import { Moment } from 'moment';
 
 interface HeaderHistoryProps {
   favorite: boolean;
   qrCodeDetails?: boolean;
   setFavorite: () => void;
-  setColorAndDate: ({date, color}: ColorAndDateProps) => void;
+  setColorAndDate: ({ date, color }: ColorAndDateProps) => void;
   setSelectedColor?: (color: Colors) => void;
   selectedColor?: Colors;
   backButtonPressed?: () => void;
@@ -90,9 +90,9 @@ export function HeaderHistory({
                 pressedOut={() => setModalVisible(!modalVisible)}
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate!}
-                confirmedFilter={async ({date, color}) => {
+                confirmedFilter={async ({ date, color }) => {
                   setModalVisible(false);
-                  setColorAndDate({date, color});
+                  setColorAndDate({ date, color });
                 }}
               />
             </OptionalButtonsContainer>

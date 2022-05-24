@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import
-{
+import {
   SafeAreaView,
   Text,
   TouchableWithoutFeedback,
@@ -16,101 +15,91 @@ import { VESDK, Configuration } from 'react-native-videoeditorsdk';
 import { useNavigation } from '@react-navigation/native';
 import DangerIcon from '../../assets/images/Icons/danger_icon.svg';
 import { LOG } from '../../config';
+import { WarningModal } from '../../components/WarningModal';
+import { useTheme } from 'styled-components/native';
+import ConfirmationIcon from '../../assets/images/Icons/confirmation_edit_icon.svg';
 const log = LOG.extend('Editor');
 
-const Editor = ( { route, _ }: any ) =>
-{
-  const navigation = useNavigation();
-  const [ modalVisible, setModalVisible ] = useState( false );
+const Editor = ({ route, _ }: any) => {
+  const navigation = useNavigation<any>();
+  const theme = useTheme();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const { qrcode } = route.params;
 
-  const [ camera, setCamera ] = useState<RNCamera>();
-  const [ type, setType ] = useState( false );
-  const [ flash, setFlash ] = useState( false );
-  const [ focus, setFocus ] = useState( RNCamera.Constants.AutoFocus.on );
-  const [ cameraZoom, setCameraZoom ] = useState( 0.0 );
-  const [ isRecording, setIsRecording ] = useState( false );
-  const [ video, setVideo ] = useState( "" );
+  const [camera, setCamera] = useState<RNCamera>();
+  const [type, setType] = useState(false);
+  const [flash, setFlash] = useState(false);
+  const [focus, setFocus] = useState(RNCamera.Constants.AutoFocus.on);
+  const [cameraZoom, setCameraZoom] = useState(0.0);
+  const [isRecording, setIsRecording] = useState(false);
+  const [video, setVideo] = useState("");
 
-  const [ recordedData, setRecordedData ] = useState( '' );
+  const [recordedData, setRecordedData] = useState('');
 
-  const handleCancel = () =>
-  {
-    setModalVisible( false );
+  const handleCancel = () => {
+    setModalVisible(false);
     openEditor();
   }
 
-  const handleConfirm = () =>
-  {
-    if ( video === '' )
+  const handleConfirm = () => {
+    if (video === '')
       return;
 
-    setModalVisible( false );
-    navigation.navigate( 'Processing', { qrcode, video } );
+    setModalVisible(false);
+    navigation.navigate('Processing', { qrcode, video });
   }
 
-  const handleFlipCamera = () =>
-  {
-    setType( !type );
+  const handleFlipCamera = () => {
+    setType(!type);
   };
 
-  const handleFlashCamera = () =>
-  {
-    setFlash( !flash );
+  const handleFlashCamera = () => {
+    setFlash(!flash);
   };
 
-  const takePicture = async () =>
-  {
-    if ( camera )
-    {
-      try
-      {
-        log.info( 'Iniciando a gravação' );
-        setIsRecording( true );
-        const data = await camera.recordAsync( {
-          quality: RNCamera.Constants.VideoQuality[ '1080p' ],
+  const takePicture = async () => {
+    if (camera) {
+      try {
+        log.info('Iniciando a gravação');
+        setIsRecording(true);
+        const data = await camera.recordAsync({
+          quality: RNCamera.Constants.VideoQuality['1080p'],
           videoBitrate: 1000 * 1000 * 5, // 5 Mbps
           orientation: 'portrait',
           maxDuration: 30,
           maxFileSize: 100 * 1024 * 1024,
           // path: `${RNFS.TemporaryDirectoryPath}/${ Date.now() }.mkv`
-        } );
+        });
 
         log.debug(data);
 
-        setRecordedData( data.uri );
-      } catch ( err )
-      {
-        log.error( err );
+        setRecordedData(data.uri);
+      } catch (err) {
+        log.error(err);
       }
     }
   };
 
-  const onRecordEnd = () =>
-  {
-    setIsRecording( false );
-    log.info( 'Parando a gravação' );
+  const onRecordEnd = () => {
+    setIsRecording(false);
+    log.info('Parando a gravação');
   };
 
-  const stopVideo = () =>
-  {
-    if ( camera )
-    {
+  const stopVideo = () => {
+    if (camera) {
       camera.stopRecording();
-      setIsRecording( false );
-      log.info( 'Parando a gravação' );
+      setIsRecording(false);
+      log.info('Parando a gravação');
     }
   };
 
-  const openEditor = () =>
-  {
-    if ( recordedData != null )
-    {
+  const openEditor = () => {
+    if (recordedData != null) {
       const video = recordedData;
 
       const configuration: Configuration = {
-        
+
         // Configure sticker tool
         sticker: {
           // Enable personal stickers
@@ -134,109 +123,89 @@ const Editor = ( { route, _ }: any ) =>
         },
       };
 
-      VESDK.unlockWithLicense(require ('./vesdk_license.json'))
+      VESDK.unlockWithLicense(require('./vesdk_license.json'))
 
-      VESDK.openEditor( video, configuration ).then(
-        async ( result ) =>
-        {
-          log.debug( result );
+      VESDK.openEditor(video, configuration).then(
+        async (result) => {
+          log.debug(result);
           const { video } = result;
-          setModalVisible( true );
+          setModalVisible(true);
 
-          setVideo( video );
+          setVideo(video);
         },
-        ( error ) =>
-        {
-          log.error( error );
+        (error) => {
+          log.error(error);
         },
       );
     }
   };
 
   return (
-    <SafeAreaView style={ styles.container }>
+    <SafeAreaView style={styles.container}>
       <RNCamera
-        style={ { flex: 1 } }
-        ref={ ( camera: RNCamera ) =>
-        {
-          setCamera( camera );
-        } }
+        style={{ flex: 1 }}
+        ref={(camera: RNCamera) => {
+          setCamera(camera);
+        }}
         type={
           type ? RNCamera.Constants.Type.front : RNCamera.Constants.Type.back
         }
-        autoFocus={ focus }
+        autoFocus={focus}
         flashMode={
           flash
             ? RNCamera.Constants.FlashMode.torch
             : RNCamera.Constants.FlashMode.off
         }
-        zoom={ cameraZoom }
-        onRecordingEnd={ onRecordEnd }
-        faceDetectionMode={ RNCamera.Constants.FaceDetection.Mode.accurate }
-        captureAudio={ true }
-        androidCameraPermissionOptions={ {
+        zoom={cameraZoom}
+        onRecordingEnd={onRecordEnd}
+        faceDetectionMode={RNCamera.Constants.FaceDetection.Mode.accurate}
+        captureAudio={true}
+        androidCameraPermissionOptions={{
           title: 'Permission to use camera',
           message: 'We need your permission to use your camera',
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
-        } }
-        androidRecordAudioPermissionOptions={ {
+        }}
+        androidRecordAudioPermissionOptions={{
           title: 'Permission to use audio recording',
           message: 'We need your permission to use your audio',
           buttonPositive: 'Ok',
           buttonNegative: 'Cancel',
-        } }>
-        { !isRecording && (
+        }}>
+        {!isRecording && (
           <>
             <Header page="" navigate="Dashboard" color="#FFFFFF" />
 
-            { recordedData !== "" && (
-              <TouchableWithoutFeedback onPress={ openEditor }>
-                <View style={ styles.buttonNext }>
-                  <Text style={ { color: '#fff' } }>Próximo</Text>
+            {recordedData !== "" && (
+              <TouchableWithoutFeedback onPress={openEditor}>
+                <View style={styles.buttonNext}>
+                  <Text style={{ color: '#fff' }}>Próximo</Text>
                 </View>
               </TouchableWithoutFeedback>
-            ) }
+            )}
 
           </>
-        ) }
+        )}
         <Menu
-          handleFlipCamera={ handleFlipCamera }
-          handleTakePicture={ takePicture }
-          handleFlashCamera={ handleFlashCamera }
-          handleStopVideo={ stopVideo }
-          isRecording={ isRecording }
+          handleFlipCamera={handleFlipCamera}
+          handleTakePicture={takePicture}
+          handleFlashCamera={handleFlashCamera}
+          handleStopVideo={stopVideo}
+          isRecording={isRecording}
         />
       </RNCamera>
+      <WarningModal
+        title='Confirma a edição do iCod?'
+        description='Caso confirme, não será mais
+        permitido a edição desse iCod'
+        visible={modalVisible}
+        onCloseModal={handleCancel}
+        iconBackgroundColor={theme.colors.primary}
+        icon={ConfirmationIcon}
+        isFooterButtonsActived
+        handleConfirmed={handleConfirm}
+      />
 
-      <Modal
-        animationType='slide'
-        transparent={ true }
-        visible={ modalVisible }
-        onRequestClose={ () =>
-        {
-          Alert.alert( "Modal has been closed." );
-          setModalVisible( !modalVisible );
-        } }
-      >
-        <View style={ styles.modal }>
-          <View style={ styles.modalContainer }>
-            <View style={ styles.modalIcon }>
-              <DangerIcon />
-            </View>
-            <Text style={ styles.modalTitle }>Você confirma a edição do iCod?</Text>
-            <Text style={ styles.modalText }>Caso confirme, não será mais permitido a edição desse iCod</Text>
-            <View style={ styles.modalButtonsContainer }>
-              <PopUpButton onPress={ handleCancel }>
-                <ModalCancelButtonText>CANCELAR</ModalCancelButtonText>
-              </PopUpButton>
-              <PopUpButton onPress={ handleConfirm }>
-                <ModalConfirmButtonText>CONFIRMAR</ModalConfirmButtonText>
-              </PopUpButton>
-            </View>
-          </View>
-        </View>
-      </Modal>
     </SafeAreaView>
   );
 };
