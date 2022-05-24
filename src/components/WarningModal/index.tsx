@@ -70,7 +70,7 @@ export function WarningModal({
 
   useEffect(() => {
     if (isTimout) {
-      delay(4000).then(() => {
+      delay(3500).then(() => {
         setIsVisible!(false)
         onCloseModal()
       })
