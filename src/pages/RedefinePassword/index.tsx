@@ -92,6 +92,10 @@ const RedefinePassword = ({ route, _ }: any) => {
 
   }, [email, pass, password, passwordConfirmation])
 
+  const navigation = useNavigation();
+  const handleBackButton = () => {
+    navigation.navigate('SignIn');
+  }
 
   return (
     <SafeAreaView>
@@ -99,7 +103,11 @@ const RedefinePassword = ({ route, _ }: any) => {
         <Container>
           <Header isKeyboardVisible={isInputFocus} />
           <BackButtonContainer>
-            <BackButton navigationTo="SignIn" color="white" />
+            <BackButton
+             navigationTo="WAIT"
+             customFunction={handleBackButton}
+             color="white"
+            />
           </BackButtonContainer>
 
           <RedefinePasswordForm>

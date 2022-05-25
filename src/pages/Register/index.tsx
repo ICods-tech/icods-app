@@ -31,6 +31,7 @@ import { useTheme } from 'styled-components';
 import { SubmitButton } from '../../components/Authentication/SubmitButton';
 import { LOG } from '../../config';
 import { Message, Password, User } from 'react-native-iconly';
+import {useNavigation} from '@react-navigation/native';
 
 import ModalUseTerms from '../../components/ModalUseTerms';
 import analytics from '@react-native-firebase/analytics';
@@ -79,6 +80,8 @@ const Register = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
+
+  
 
   function handleResetIsErrored() {
     setIsErrored({
@@ -134,6 +137,11 @@ const Register = () => {
     }
   }, [name, username, email, password, passwordConfirmation, useTerms]);
 
+  const navigation = useNavigation();
+  const handleBackButton = () => {
+    navigation.navigate('SignIn');
+  }
+
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
@@ -185,7 +193,8 @@ const Register = () => {
 
           <BackButtonContainer isKeyboardVisible={isKeyboardVisible}>
             <BackButton
-              navigationTo="SignIn"
+              navigationTo="WAIT"
+              customFunction={handleBackButton}
               color={isKeyboardVisible ? 'blue' : 'white'}
             />
           </BackButtonContainer>
