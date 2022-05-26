@@ -23,6 +23,7 @@ import { useNavigation } from "@react-navigation/native";
 import { WarningModal } from "../../components/WarningModal";
 import { Message } from "react-native-iconly";
 import Toast from "react-native-toast-message";
+import {useNavigation} from '@react-navigation/native';
 const log = LOG.extend("ForgotPassword");
 
 const ForgotPassword = () => {
@@ -83,13 +84,22 @@ const ForgotPassword = () => {
     setCount(TIME_TO_SEND_EMAIL);
   };
 
+  const navigation = useNavigation();
+  const handleBackButton = () => {
+    navigation.navigate('SignIn');
+  }
+
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
           <Header isKeyboardVisible={false} />
           <BackButtonContainer>
-            <BackButton navigationTo="SignIn" color="white" />
+            <BackButton
+              navigationTo="WAIT"
+              customFunction={handleBackButton}
+              color="white" 
+            />
           </BackButtonContainer>
           <ForgotPasswordForm>
             <ForgotPasswordFormLabel>

@@ -58,8 +58,7 @@ export function HeaderHistory({
       <Container>
         <Header>
           <BackButton
-            customFunction={backButtonPressed}
-            navigationTo={backButtonPressed ? 'WAIT' : ''}
+            navigationTo={'/'}
           />
           <Title>Histórico</Title>
         </Header>
