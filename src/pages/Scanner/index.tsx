@@ -77,7 +77,8 @@ const Scanner = (props: ScannerProps) => {
     });
   }
 
-  const qrCodeContainsGift = async (id: string) => {
+  //TODO: Associar usuário ao qrCode - Conversar com o time das galaxias
+  const qrCodeContainsGift = async (id: string | null) => {
     setPopUp({
       title: 'Você tem um presente iCods',
       description: 'Agora é a vez de você visualiza-lo',
@@ -85,8 +86,7 @@ const Scanner = (props: ScannerProps) => {
       press: 'VideoPlayer',
       backgroundColor: theme.colors.primary,
     });
-
-    if (user) {
+    if (user && id) {
       await api.post(`/received_qrcode/${id}`, {});
     }
   }
@@ -151,12 +151,13 @@ const Scanner = (props: ScannerProps) => {
 
     if (qrCode.status === 'ACTIVE') {
       const { id } = qrCode;
-      if (qrCode.receivedUser === null || qrCode.receivedUser.id === user?.id) {
-        qrCodeContainsGift(id);
-      }
-      else {
-        qrCodeIsAssociated();
-      }
+      // if (qrCode.receivedUser.id === user?.id) {
+      const qrCodeId = qrCode.receivedUser === null ? id : null;
+      qrCodeContainsGift(qrCodeId);
+      // }
+      // else {
+      //   qrCodeIsAssociated();
+      // }
 
       return;
     } else {
@@ -169,31 +170,48 @@ const Scanner = (props: ScannerProps) => {
   };
 
   const handleQRCode = async (data: string) => {
-
-    try {
-      let splittedData = data.split('=');
-      splittedData = splittedData[2].split('&');
-      let qrCodeId = splittedData[0];
-      if (qrCodeValidate) return;
-
-      const connection = await checkConnection();
-      if (!connection) {
-        navigation.navigate('ConnectionProblems');
-        return;
-      }
-      const response = await api.get(`qrcodes/${qrCodeId}`)
-      const qrCode: QRCode = response.data;
-      setQrcode(qrCode);
-      verifyQRCodeContent(qrCode);
-
-    } catch (error: any) {
-      log.error(error.message);
+    let splittedData = data.split('=');
+    if (splittedData === undefined || splittedData.length < 2) {
       qrCodeisNotBelongsIcods();
       handleOpenModal();
-    };
+      return;
+    }
+
+    splittedData = splittedData[2].split('&');
+
+    if (splittedData === undefined) {
+      qrCodeisNotBelongsIcods();
+      handleOpenModal();
+      return;
+    }
+
+    let qrCodeId = splittedData[0];
+
+    if (qrCodeValidate) return;
+
+    const connection = await checkConnection();
+    if (!connection) {
+      navigation.navigate('ConnectionProblems');
+      return;
+    }
+
+    await api
+      .get(`qrcodes/${qrCodeId}`)
+      .then((response: any) => {
+        const qrCode: QRCode = response.data;
+        setQrcode(qrCode);
+        log.info(qrCode);
+        verifyQRCodeContent(qrCode);
+        log.info(response.config)
+        handleOpenModal();
+      })
+      .catch((error: any) => {
+        log.error(error.message);
+        qrCodeisNotBelongsIcods();
+        handleOpenModal();
+      });
 
     setQrCodeValidate(true);
-    handleOpenModal();
   }
 
   useEffect(() => {
