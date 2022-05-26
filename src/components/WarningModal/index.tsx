@@ -33,7 +33,7 @@ interface ModalInterface {
   iconBackgroundColor: string,
   initialDateValue?: undefined
   isFooterButtonsActived?: boolean,
-  isTimout?: boolean,
+  isTimeout?: boolean,
   onCloseModal: () => void,
   setIsVisible?: (value: boolean) => void,
   title: string,
@@ -43,7 +43,7 @@ interface ModalInterface {
 export function WarningModal({
   title,
   visible,
-  isTimout = false,
+  isTimeout = false,
   icon: Icon,
   onCloseModal,
   confirmText,
@@ -68,14 +68,16 @@ export function WarningModal({
     onCloseModal()
   }
 
-  useEffect(() => {
-    if (isTimout) {
+  function initializeModal() {
+    if (isTimeout) {
       delay(3500).then(() => {
         setIsVisible!(false)
         onCloseModal()
       })
     }
-  }, [visible]);
+  }
+
+
 
   return (
     <Container>
@@ -83,7 +85,8 @@ export function WarningModal({
         animationIn={"fadeIn"}
         animationOut={"fadeOut"}
         isVisible={visible}
-        onBackdropPress={isTimout ? cleanTimoutAndCloseModal : onCloseModal}
+        onModalShow={initializeModal}
+        onBackdropPress={isTimeout ? cleanTimoutAndCloseModal : onCloseModal}
         useNativeDriver
         style={{
           justifyContent: 'center',
@@ -95,7 +98,7 @@ export function WarningModal({
           {
             !isFooterButtonsActived && (
               <CloseButtonContainer>
-                <CloseButton onPress={isTimout ? cleanTimoutAndCloseModal : onCloseModal}>
+                <CloseButton onPress={isTimeout ? cleanTimoutAndCloseModal : onCloseModal}>
                   <CloseSquare color={theme.colors.title}
                     height={RFValue(24)}
                     width={RFValue(24)}

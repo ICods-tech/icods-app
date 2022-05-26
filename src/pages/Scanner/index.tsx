@@ -243,14 +243,12 @@ const Scanner = (props: ScannerProps) => {
           description={popUp.description}
           visible={isVisible}
           icon={popUp.icon}
-          isTimout
-          onCloseModal={handleCloseButton}
+          isTimeout
+          onCloseModal={() => handleCloseButton()}
           setIsVisible={setIsVisible}
           iconBackgroundColor={popUp.backgroundColor}
 
         />
-        {/* </>
-        )} */}
 
         {user &&
           <LoggedFooter

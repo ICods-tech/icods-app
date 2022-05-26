@@ -1,31 +1,23 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useCallback, useRef, useState } from "react";
 import { Keyboard, TextInput, TouchableWithoutFeedback } from "react-native";
+import { Password } from 'react-native-iconly';
+import Toast from "react-native-toast-message";
 import { Header } from "../../components/Authentication/Header";
 import { BackButton } from "../../components/BackButton";
-import NewInput from "../../components/PasswordInput";
-import {
-  Container,
-  SafeAreaView,
-  BackButtonContainer,
-  RedefinePasswordForm,
-  RedefinePasswordFormLabel,
-  NicknameContainer,
-  NicknameText,
-  InputContainer,
-  SpacingLine,
-  RedefinePasswordFormSendButton,
-  RedefinePasswordFormSendButtonContainer,
-  RedefinePasswordFormSendButtonLabel,
-} from "./styles";
-import theme from "../../global/styles/theme";
-import Toast from "react-native-toast-message";
-import { checkConnection } from "../../utils/checkConnection";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import api from "../../services/api";
-import { LOG } from "../../config";
 import PasswordInput from "../../components/PasswordInput";
+import { LOG } from "../../config";
+import theme from "../../global/styles/theme";
+import api from "../../services/api";
+import { checkConnection } from "../../utils/checkConnection";
+import {
+  BackButtonContainer, Container, InputContainer, NicknameContainer,
+  NicknameText, RedefinePasswordForm,
+  RedefinePasswordFormLabel, RedefinePasswordFormSendButton,
+  RedefinePasswordFormSendButtonContainer,
+  RedefinePasswordFormSendButtonLabel, SafeAreaView, SpacingLine
+} from "./styles";
 const log = LOG.extend("RedefinePassword");
-import { Message, Password } from 'react-native-iconly'
 
 const RedefinePassword = ({ route, _ }: any) => {
   const navigation = useNavigation<any>();
@@ -92,7 +84,6 @@ const RedefinePassword = ({ route, _ }: any) => {
 
   }, [email, pass, password, passwordConfirmation])
 
-  const navigation = useNavigation();
   const handleBackButton = () => {
     navigation.navigate('SignIn');
   }
@@ -104,9 +95,9 @@ const RedefinePassword = ({ route, _ }: any) => {
           <Header isKeyboardVisible={isInputFocus} />
           <BackButtonContainer>
             <BackButton
-             navigationTo="WAIT"
-             customFunction={handleBackButton}
-             color="white"
+              navigationTo="WAIT"
+              customFunction={handleBackButton}
+              color="white"
             />
           </BackButtonContainer>
 

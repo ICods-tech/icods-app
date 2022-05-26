@@ -1,9 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from "react";
 import { Keyboard, TextInput, TouchableWithoutFeedback } from "react-native";
+import { Message } from "react-native-iconly";
+import Toast from "react-native-toast-message";
 import { Header } from "../../components/Authentication/Header";
 import { BackButton } from "../../components/BackButton";
+import { WarningModal } from "../../components/WarningModal";
+import { LOG } from "../../config";
 import theme from "../../global/styles/theme";
 import api from "../../services/api";
+import { checkConnection } from "../../utils/checkConnection";
 import {
   BackButtonContainer,
   Container,
@@ -15,20 +21,13 @@ import {
   ForgotPasswordFormTextInput,
   InfoSendEmailContainer,
   InfoSendEmailText,
-  SafeAreaView,
+  SafeAreaView
 } from "./styles";
-import { LOG } from "../../config";
-import { checkConnection } from "../../utils/checkConnection";
-import { useNavigation } from "@react-navigation/native";
-import { WarningModal } from "../../components/WarningModal";
-import { Message } from "react-native-iconly";
-import Toast from "react-native-toast-message";
-import {useNavigation} from '@react-navigation/native';
 const log = LOG.extend("ForgotPassword");
 
 const ForgotPassword = () => {
   const TIME_TO_SEND_EMAIL = 60;
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [email, setEmail] = useState("");
   const emailInputRef = useRef<TextInput>(null);
@@ -71,7 +70,7 @@ const ForgotPassword = () => {
 
     const connection = await checkConnection();
     if (!connection) {
-      navigation.navigate("ConnectionProblems" as any);
+      navigation.navigate("ConnectionProblems");
       return;
     }
 
@@ -84,7 +83,6 @@ const ForgotPassword = () => {
     setCount(TIME_TO_SEND_EMAIL);
   };
 
-  const navigation = useNavigation();
   const handleBackButton = () => {
     navigation.navigate('SignIn');
   }
@@ -98,7 +96,7 @@ const ForgotPassword = () => {
             <BackButton
               navigationTo="WAIT"
               customFunction={handleBackButton}
-              color="white" 
+              color="white"
             />
           </BackButtonContainer>
           <ForgotPasswordForm>

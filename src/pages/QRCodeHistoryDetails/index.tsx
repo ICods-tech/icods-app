@@ -97,8 +97,29 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
 
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => true);
-  }, []);
+    console.log("======== CALLBACK ===========");
+
+    const onBackPress = () => {
+      if (saveChangesModalOpen) {
+        console.log("======== volta pro histórico carai ===========")
+        navigation.navigate('History');
+        return true;
+
+      } else {
+        handleOpenModal();
+        return false;
+      }
+    };
+
+    BackHandler.addEventListener(
+      'hardwareBackPress', onBackPress
+    );
+
+    return () =>
+      BackHandler.removeEventListener(
+        'hardwareBackPress', onBackPress
+      );
+  }, [saveChangesModalOpen])
   // useEffect(() => { 
   //   handleFavoriteQRCode(id);
   // }, [updatedFavorite]);
