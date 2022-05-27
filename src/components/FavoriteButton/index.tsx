@@ -1,8 +1,8 @@
 import React from 'react';
-import {BorderlessButtonProps} from 'react-native-gesture-handler';
-import {Heart2} from 'react-native-iconly';
-import {useTheme} from 'styled-components/native';
-import {Button, FavoriteItemContainer} from './styles';
+import { BorderlessButtonProps } from 'react-native-gesture-handler';
+import { Heart2 } from 'react-native-iconly';
+import { useTheme } from 'styled-components/native';
+import { Button, FavoriteItemContainer } from './styles';
 
 interface FavoriteButtonProps extends BorderlessButtonProps {
   favorite: boolean;

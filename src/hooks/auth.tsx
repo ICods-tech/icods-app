@@ -9,7 +9,7 @@ import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
 import Toast from 'react-native-toast-message';
 import analytics from '@react-native-firebase/analytics';
-import {LOG} from '../config';
+import { LOG } from '../config';
 const log = LOG.extend('Auth');
 
 export interface User {
@@ -52,7 +52,7 @@ interface AuthContextData {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-const AuthProvider: React.FC = ({children}) => {
+const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -63,7 +63,9 @@ const AuthProvider: React.FC = ({children}) => {
         '@ICods:user',
       ]);
       if (token[1] && user[1]) {
-        setData({token: JSON.parse(token[1]), user: JSON.parse(user[1])});
+        log.warn('token carregado:' + token[1] + user[1]);
+        api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
+        setData({ token: token[1], user: JSON.parse(user[1]) });
       }
     }
 
@@ -76,16 +78,16 @@ const AuthProvider: React.FC = ({children}) => {
 
   const signIn = useCallback(async (credentials: SignInCredentials) => {
     try {
-      const {email, password} = credentials;
+      const { email, password } = credentials;
 
       const res = await api.post('signin', {
         email,
         password,
       });
-      const {token, user} = res.data;
+      const { token, user } = res.data;
 
       await AsyncStorage.multiSet([
-        ['@ICods:token', JSON.stringify(token)],
+        ['@ICods:token', token],
         ['@ICods:user', JSON.stringify(user)],
       ]);
 
@@ -93,14 +95,14 @@ const AuthProvider: React.FC = ({children}) => {
 
       await analytics().setUserId(user.id);
 
-      setData({token, user});
+      setData({ token, user });
     } catch (error: any) {
       throw new Error(error.response.data);
     }
   }, []);
 
   const signUp = useCallback(async (credentials: SignUpCredentials) => {
-    const {name, username, email, password, passwordConfirmation} = credentials;
+    const { name, username, email, password, passwordConfirmation } = credentials;
 
     await api.post('signup', {
       name,
@@ -188,4 +190,4 @@ const useAuth = () => {
   return context;
 };
 
-export {AuthContext, AuthProvider, useAuth};
+export { AuthContext, AuthProvider, useAuth };

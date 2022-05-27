@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { CloseSquare, User as IconProps } from 'react-native-iconly';
 import Modal from 'react-native-modal';
-import {
-  Footer,
-  Container,
-  InfoTitle,
-  CloseButton,
-  BottomButton,
-  IconContainer,
-  ModalContainer,
-  InfoDescription,
-  FooterButtonText,
-  InfoTextContainer,
-  CloseButtonContainer,
-  InfoTitleContainer,
-  InfoDescriptionContainer,
-} from './styles';
-import { CloseSquare } from 'react-native-iconly';
-import { useTheme } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { User as IconProps } from 'react-native-iconly';
 import { SvgProps } from 'react-native-svg';
+import { useTheme } from 'styled-components/native';
 import { delay } from '../../utils/delay';
+import {
+  BottomButton,
+  CloseButton,
+  CloseButtonContainer,
+  Container, Footer,
+  FooterButtonText,
+  IconContainer,
+  InfoDescription,
+  InfoDescriptionContainer,
+  InfoTextContainer,
+  InfoTitle,
+  InfoTitleContainer,
+  ModalContainer
+} from './styles';
 
 interface ModalInterface {
   confirmText?: string,
@@ -33,7 +31,7 @@ interface ModalInterface {
   iconBackgroundColor: string,
   initialDateValue?: undefined
   isFooterButtonsActived?: boolean,
-  isTimout?: boolean,
+  isTimeout?: boolean,
   onCloseModal: () => void,
   setIsVisible?: (value: boolean) => void,
   title: string,
@@ -43,7 +41,7 @@ interface ModalInterface {
 export function WarningModal({
   title,
   visible,
-  isTimout = false,
+  isTimeout = false,
   icon: Icon,
   onCloseModal,
   confirmText,
@@ -68,14 +66,16 @@ export function WarningModal({
     onCloseModal()
   }
 
-  useEffect(() => {
-    if (isTimout) {
+  function initializeModal() {
+    if (isTimeout) {
       delay(3500).then(() => {
         setIsVisible!(false)
         onCloseModal()
       })
     }
-  }, [visible]);
+  }
+
+
 
   return (
     <Container>
@@ -83,7 +83,8 @@ export function WarningModal({
         animationIn={"fadeIn"}
         animationOut={"fadeOut"}
         isVisible={visible}
-        onBackdropPress={isTimout ? cleanTimoutAndCloseModal : onCloseModal}
+        onModalShow={initializeModal}
+        onBackdropPress={isTimeout ? cleanTimoutAndCloseModal : onCloseModal}
         useNativeDriver
         style={{
           justifyContent: 'center',
@@ -95,7 +96,7 @@ export function WarningModal({
           {
             !isFooterButtonsActived && (
               <CloseButtonContainer>
-                <CloseButton onPress={isTimout ? cleanTimoutAndCloseModal : onCloseModal}>
+                <CloseButton onPress={isTimeout ? cleanTimoutAndCloseModal : onCloseModal}>
                   <CloseSquare color={theme.colors.title}
                     height={RFValue(24)}
                     width={RFValue(24)}

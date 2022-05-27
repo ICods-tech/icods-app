@@ -26,6 +26,11 @@ const Support = () => {
       bottomOffset: 100,
     })
   }, [supportMessage])
+
+  const navigation = useNavigation();
+  const handleBackButton = () => {
+    navigation.navigate('Dashboard');
+  }
   
   return (
     <SafeAreaView>
@@ -35,7 +40,10 @@ const Support = () => {
       />
       <View style={styles.container}>
         <Header>
-          <BackButton navigationTo='Dashboard'/>
+          <BackButton
+            navigationTo="WAIT"
+            customFunction={handleBackButton}
+          />
           <Title>Suporte</Title>          
         </Header>
         <View style={styles.helpTextContainer}>
