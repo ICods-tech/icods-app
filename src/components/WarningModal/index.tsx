@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { CloseSquare, User as IconProps } from 'react-native-iconly';
 import Modal from 'react-native-modal';
-import {
-  Footer,
-  Container,
-  InfoTitle,
-  CloseButton,
-  BottomButton,
-  IconContainer,
-  ModalContainer,
-  InfoDescription,
-  FooterButtonText,
-  InfoTextContainer,
-  CloseButtonContainer,
-  InfoTitleContainer,
-  InfoDescriptionContainer,
-} from './styles';
-import { CloseSquare } from 'react-native-iconly';
-import { useTheme } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { User as IconProps } from 'react-native-iconly';
 import { SvgProps } from 'react-native-svg';
+import { useTheme } from 'styled-components/native';
 import { delay } from '../../utils/delay';
+import {
+  BottomButton,
+  CloseButton,
+  CloseButtonContainer,
+  Container, Footer,
+  FooterButtonText,
+  IconContainer,
+  InfoDescription,
+  InfoDescriptionContainer,
+  InfoTextContainer,
+  InfoTitle,
+  InfoTitleContainer,
+  ModalContainer
+} from './styles';
 
 interface ModalInterface {
   confirmText?: string,

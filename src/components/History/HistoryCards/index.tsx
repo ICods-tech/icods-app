@@ -2,9 +2,9 @@
 import React from 'react';
 import QrCodeImg from '../../../assets/images/qr_code.svg';
 
-import {useNavigation} from '@react-navigation/native';
-import {RectButtonProps} from 'react-native-gesture-handler';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { useNavigation } from '@react-navigation/native';
+import { RectButtonProps } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import {
   BlackMarker,

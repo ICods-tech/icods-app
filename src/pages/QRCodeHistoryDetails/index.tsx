@@ -1,39 +1,28 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Colors } from '../../interfaces/colors';
-import {
-  Container,
-  Content,
-  Separator,
-  TitleQRCode,
-  IconsContainer,
-  QRCodeContainer,
-  QRCodeImgContainer,
-  QRCodeTemplateImg,
-  ColorSelectContainer,
-  QRCodeInfoTopContainer,
-  TitleColorSelect,
-  OptionsButtonsQRContainer,
-  QRCodeInfoContainer,
-  SaveChangesContainer,
-} from './styles';
-import { colorsIconsList } from '../../components/History/FilterModal'
+import { Play, Unlock } from 'react-native-iconly';
+import { RFValue } from 'react-native-responsive-fontsize';
+import Toast from 'react-native-toast-message';
+import { useTheme } from 'styled-components/native';
+import SaveIcon from '../../assets/images/Icons/save-icon.svg';
+import ConfirmUpdate from "../../assets/images/Icons/saved_icon.svg";
 import { ColorsSelect } from '../../components/ColorsSelect';
+import { FavoriteButton } from '../../components/FavoriteButton';
+import { colorsIconsList } from '../../components/History/FilterModal';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
 import { IconRectButton } from '../../components/IconRectButton';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { useTheme } from 'styled-components/native';
-import api from '../../services/api';
-import { FavoriteButton } from '../../components/FavoriteButton';
 import HistoryFooter from '../../components/LoggedFooter';
-import SaveIcon from '../../assets/images/Icons/save-icon.svg';
-import SaveIconModal from '../../assets/images/Icons/save-changes-icon.svg';
-import { Play, Unlock } from 'react-native-iconly'
 import { ShareButton } from '../../components/ShareButton';
 import { WarningModal } from '../../components/WarningModal';
-import Toast from 'react-native-toast-message';
-import ConfirmUpdate from "../../assets/images/Icons/saved_icon.svg"
-import { BackHandler } from 'react-native';
+import { Colors } from '../../interfaces/colors';
+import api from '../../services/api';
+import {
+  ColorSelectContainer, Container,
+  Content, IconsContainer, OptionsButtonsQRContainer, QRCodeContainer,
+  QRCodeImgContainer, QRCodeInfoContainer, QRCodeInfoTopContainer, QRCodeTemplateImg, SaveChangesContainer, Separator, TitleColorSelect, TitleQRCode
+} from './styles';
+
+import { useBackHandler } from '../../utils/useBackHandler';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -94,35 +83,31 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const PlayIcon = () => <Play set={'bulk'} style={{ borderColor: theme.colors.primary, borderWidth: RFValue(2), borderRadius: RFValue(16) }} filled={false} primaryColor={theme.colors.primary} secondaryColor={'white'} />
   const UnlockIcon = () => <Unlock set={'bold'} color={theme.colors.primary} />
 
+  function isQRCodeChangesWithoutSave() {
+    const colorIsDifferent = updatedColor !== lastSavedColor
+    const favoriteIsDifferent = updatedFavorite !== lastSavedFavorite
 
+    if (colorIsDifferent || favoriteIsDifferent) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
-  useEffect(() => {
-    console.log("======== CALLBACK ===========");
-
-    const onBackPress = () => {
+  useBackHandler(() => {
+    if (isQRCodeChangesWithoutSave()) {
       if (saveChangesModalOpen) {
-        console.log("======== volta pro histórico carai ===========")
-        navigation.navigate('History');
-        return true;
-
+        handleCloseModal()
       } else {
-        handleOpenModal();
-        return false;
+        handleOpenModal()
       }
-    };
 
-    BackHandler.addEventListener(
-      'hardwareBackPress', onBackPress
-    );
+      return true;
+    }
+    return false;
+  })
 
-    return () =>
-      BackHandler.removeEventListener(
-        'hardwareBackPress', onBackPress
-      );
-  }, [saveChangesModalOpen])
-  // useEffect(() => { 
-  //   handleFavoriteQRCode(id);
-  // }, [updatedFavorite]);
+
   return (
     <Container>
       <HeaderHistory

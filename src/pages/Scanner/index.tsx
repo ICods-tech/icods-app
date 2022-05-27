@@ -23,6 +23,7 @@ import GiftIcon from '../../assets/images/Icons/scanner/gift_icon.svg';
 import EdicionIcon from '../../assets/images/Icons/scanner/login_icon.svg';
 import EyeCloseIcon from '../../assets/images/Icons/scanner/eye_close_icon.svg';
 import theme from '../../global/styles/theme';
+import { useBackHandler } from '../../utils/useBackHandler';
 
 const log = LOG.extend('Scanner');
 
@@ -213,6 +214,13 @@ const Scanner = (props: ScannerProps) => {
 
     setQrCodeValidate(true);
   }
+
+  useBackHandler(() => {
+    navigation.navigate(page);
+    return true;
+  })
+
+
 
   useEffect(() => {
     qrCodeIdFromDeeplink.length && handleQRCode(qrCodeIdFromDeeplink);
