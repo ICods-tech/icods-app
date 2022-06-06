@@ -98,6 +98,7 @@ const PasswordInput: React.ForwardRefRenderFunction<
         }
         secureTextEntry={toggleEye}
         isErrored={isErrored}
+        autoCapitalize="none"
         onFocus={() => (
           handleInputFocused(),
           setIsSignInErrored!(false),
