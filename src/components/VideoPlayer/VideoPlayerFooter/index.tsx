@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, Share } from 'react-native';
-import styles from './styles';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Share, TouchableOpacity, View } from 'react-native';
 import RNFS from 'react-native-fs';
-import IconDownload from '../../../assets/images/icon_download.svg';
 import HeartVideoIcon from '../../../assets/images/heartvideoicon.svg';
 import HeartVideoIconFilled from '../../../assets/images/heartvideoiconfilled.svg';
+import IconDownload from '../../../assets/images/icon_download.svg';
 import IconShare from '../../../assets/images/icon_share.svg';
 import { useAuth } from '../../../hooks/auth';
-import { useNavigation } from '@react-navigation/native';
+import styles from './styles';
 
 interface VideoPlayerFooterProps
 {
@@ -19,7 +19,7 @@ interface VideoPlayerFooterProps
 const VideoPlayerFooter = ( { url, updatedFavorite, setUpdatedFavorite }: VideoPlayerFooterProps ) =>
 {
   const { user } = useAuth();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const path = `${ RNFS.PicturesDirectoryPath }/${ Date.now() }.mp4`;
   const [favoriteButton, setFavoritedButton] = useState<boolean>(updatedFavorite);
   

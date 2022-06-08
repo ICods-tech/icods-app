@@ -1,11 +1,11 @@
-import styles, { Header, Title } from './styles'
-import email from 'react-native-email'
 import { useNavigation } from '@react-navigation/native'
-import React, { useState,  useCallback } from 'react'
-import { View, Text, StatusBar, SafeAreaView, TouchableWithoutFeedback, TouchableOpacity, TextInput, NativeSyntheticEvent, TextInputChangeEventData, Platform } from 'react-native'
-import { SubmitButton } from '../../components/Authentication/SubmitButton'
+import React, { useCallback, useState } from 'react'
+import { NativeSyntheticEvent, Platform, SafeAreaView, StatusBar, Text, TextInput, TextInputChangeEventData, View } from 'react-native'
+import email from 'react-native-email'
 import Toast from 'react-native-toast-message'
+import { SubmitButton } from '../../components/Authentication/SubmitButton'
 import { BackButton } from '../../components/BackButton'
+import styles, { Header, Title } from './styles'
 
 const Support = () => {
   const [supportMessage, setSupportMessage] = useState<string>('')

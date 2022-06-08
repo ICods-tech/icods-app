@@ -1,39 +1,34 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Keyboard, TextInput, TouchableWithoutFeedback } from 'react-native';
 import {
   Container,
   HelpButtonContainer,
   HelpButtonText,
   HelpContainer,
-  HelpContainerTexts,
-  LoginButtonContainer,
-  RegisterAndPassowordForgotContainer,
+  HelpContainerTexts, RegisterAndPassowordForgotContainer,
   SafeAreaView,
   ScrollContainer,
   SignInOptions,
   SpacingContainer,
   SpacingLine,
-  SpacingText,
+  SpacingText
 } from './styles';
 
+import analytics from '@react-native-firebase/analytics';
 import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../hooks/auth';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { AuthFooter } from '../../components/Authentication/AuthFooter';
-import analytics from '@react-native-firebase/analytics';
 import { Header } from '../../components/Authentication/Header';
 import { SubmitButton } from '../../components/Authentication/SubmitButton';
-import { LoginSocialButton } from '../../components/Authentication/LoginSocialButton';
+import { useAuth } from '../../hooks/auth';
 
-import GoogleIcon from '../../assets/images/Icons/google_icon.svg';
-import FacebookIcon from '../../assets/images/Icons/facebook_icon.svg';
-import { LOG } from '../../config';
 import { Password, User } from 'react-native-iconly';
+import { LOG } from '../../config';
 
 import Toast from 'react-native-toast-message';
-import PasswordInput from '../../components/PasswordInput';
 import Input from '../../components/Input';
+import PasswordInput from '../../components/PasswordInput';
 
 const log = LOG.extend('Signin');
 
@@ -41,8 +36,8 @@ const SignIn = () => {
   const theme = useTheme();
   const { signIn, user } = useAuth();
   const navigation = useNavigation<any>();
-  const [email, setEmail] = useState<string>(''); //jorgeoreidafloresta@gmail.com'
-  const [password, setPassword] = useState<string>(''); // 'jorgeorei'
+  const [email, setEmail] = useState<string>(''); 
+  const [password, setPassword] = useState<string>(''); 
   const [errored, setErrored] = useState<boolean>(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
