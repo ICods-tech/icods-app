@@ -10,6 +10,7 @@ import { LOG } from "../../config";
 import theme from "../../global/styles/theme";
 import api from "../../services/api";
 import { checkConnection } from "../../utils/checkConnection";
+import { delay } from '../../utils/delay';
 import {
   BackButtonContainer,
   Container,
@@ -38,8 +39,12 @@ const ForgotPassword = () => {
   function handleOpenModal() {
     setIsVisible(true)
   }
-  function handleCloseModal() {
+  async function handleCloseModal() {
+    await delay(80000) // 8 segundos para fechar
     setIsVisible(false)
+    navigation.navigate('RedefinePassword',{
+      email: email
+    });
   }
   const timerToActiveButton = () => {
     setCount(count - 1);
@@ -80,7 +85,9 @@ const ForgotPassword = () => {
 
     setActiveSendButton(false);
     setIsVisible(true);
+    handleCloseModal();
     setCount(TIME_TO_SEND_EMAIL);
+    
   };
 
   const handleBackButton = () => {

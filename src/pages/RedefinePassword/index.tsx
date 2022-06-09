@@ -1,97 +1,180 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useCallback, useRef, useState } from "react";
-import { Keyboard, TextInput, TouchableWithoutFeedback } from "react-native";
-import { Password } from 'react-native-iconly';
-import Toast from "react-native-toast-message";
-import { Header } from "../../components/Authentication/Header";
-import { BackButton } from "../../components/BackButton";
-import PasswordInput from "../../components/PasswordInput";
-import { LOG } from "../../config";
-import theme from "../../global/styles/theme";
-import api from "../../services/api";
-import { checkConnection } from "../../utils/checkConnection";
+import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Keyboard, TextInput, TouchableWithoutFeedback } from 'react-native';
 import {
-  BackButtonContainer, Container, InputContainer, NicknameContainer,
-  NicknameText, RedefinePasswordForm,
-  RedefinePasswordFormLabel, RedefinePasswordFormSendButton,
+  CodeField,
+  Cursor,
+  useBlurOnFulfill,
+  useClearByFocusCell
+} from 'react-native-confirmation-code-field';
+import { Password } from 'react-native-iconly';
+import Toast from 'react-native-toast-message';
+import { Header } from '../../components/Authentication/Header';
+import { BackButton } from '../../components/BackButton';
+import PasswordInput from '../../components/PasswordInput';
+import { LOG } from '../../config';
+import theme from '../../global/styles/theme';
+import api from '../../services/api';
+import { checkConnection } from '../../utils/checkConnection';
+import { encryptEmail } from '../../utils/encryptEmail';
+import {
+  BackButtonContainer,
+  Cell,
+  Container,
+  EmailText,
+  FieldsRow,
+  InputContainer, RedefinePasswordForm,
+  RedefinePasswordFormLabel,
+  RedefinePasswordFormSendButton,
   RedefinePasswordFormSendButtonContainer,
-  RedefinePasswordFormSendButtonLabel, SafeAreaView, SpacingLine
-} from "./styles";
-const log = LOG.extend("RedefinePassword");
+  RedefinePasswordFormSendButtonLabel,
+  SafeAreaView,
+  SpacingLine
+} from './styles';
+const log = LOG.extend('RedefinePassword');
 
-const RedefinePassword = ({ route, _ }: any) => {
+const RedefinePassword = ({route, _}: any) => {
+  const CELL_COUNT = 6;
   const navigation = useNavigation<any>();
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
-  const [password, setpassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [password, setpassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [inputFocusObserver, setInputFocusObserver] = useState(false);
-  const [isErrored, setIsErrored] = useState(false);
+  const [isPasswordErrored, setIsPasswordErrored] = useState(false);
+  const [confirmationCodeError, setConfirmationCodeError] = useState(false);
+  const [value, setValue] = useState('');
+  const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  const [success, setSuccess] = useState(false);
+  const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+    value,
+    setValue,
+  });
 
-  const { email, pass } = route.params;
+  const {email, pass} = route.params;
 
-  const displayToast = ({ text1, type }: { text1: string, type: string }) => {
+  useEffect(() => {
+    console.log('SENHA DP N CARREGOU',pass);
+    if (pass) {
+      console.log('pass', pass);
+      setValue(pass);
+    }
+  }, []);
+
+  const displayToast = ({text1, type}: {text1: string; type: string}) => {
     return Toast.show({
       type,
-      position: "bottom",
+      position: 'bottom',
       text1,
-      text2: "",
+      text2: '',
       visibilityTime: 1000,
       bottomOffset: 100,
     });
+  };
+
+  interface IRenderCell {
+    index: number;
+    symbol: string;
+    isFocused: boolean;
   }
 
+  const renderCell = ({index, symbol, isFocused}: IRenderCell) => {
+    let textChild = null;
 
+    if (symbol) {
+      textChild = symbol;
+    } else if (isFocused) {
+      textChild = <Cursor />;
+    }
+
+    return (
+      <Cell
+        key={index}
+        focused={isFocused}
+        isCorrect={success}
+        errored={confirmationCodeError}
+        onLayout={getCellOnLayoutHandler(index)}>
+        {textChild}
+      </Cell>
+    );
+  };
+
+  const checkPasswordErrored = (error: any) => {
+    if ('errors' in error?.response.data) {
+      const passwordsMustBeEqualError = error.response.data.errors.some(({ msg }: {msg: string}) => { 
+        return msg === "Senhas devem ser iguais";
+      });
+
+      if (passwordsMustBeEqualError) setIsPasswordErrored(true);
+      else setIsPasswordErrored(false);
+    } 
+    else setIsPasswordErrored(false);
+  }
+
+  const checkVerificationCodeError = (error: any) => {
+    const errorData = error?.response.data;
+    if (typeof errorData === 'string' && errorData.includes('Senha temporária ou email inválido!')) { 
+      setConfirmationCodeError(true);
+    } else { 
+      setConfirmationCodeError(false);
+    }
+  }
 
   const handleRedefinePassword = useCallback(async () => {
     try {
-
       if (!password.length || !passwordConfirmation.length) {
-        displayToast({ text1: "Para prosseguir, complete os campos de senha", type: "error" });
-        setIsErrored(true);
-        return;
-      }
-
-      if (password !== passwordConfirmation) {
-        displayToast({ text1: "As senhas não conferem", type: "error" });
-        setIsErrored(true);
+        displayToast({
+          text1: 'Para prosseguir, complete os campos',
+          type: 'error',
+        });
+        setIsPasswordErrored(true);
         return;
       }
 
       const connection = await checkConnection();
       if (!connection) {
-        navigation.navigate("ConnectionProblems" as any);
+        navigation.navigate('ConnectionProblems' as any);
         return;
       }
       await api.patch('resetPasswordTempPass', {
         email,
-        tempPassword: pass,
+        tempPassword: pass || value,
         newPassword: password,
-        passwordConfirmation
-      })
+        passwordConfirmation,
+      });
 
-      displayToast({ text1: "Sua senha foi alterada com sucesso", type: "success" });
-      navigation.navigate('SignIn')
-    } catch (error: any) {
       displayToast({
-        text1: error?.message,
-        type: "error",
-      })
-      log.error(error)
-      setIsErrored(true)
+        text1: 'Sua senha foi alterada com sucesso',
+        type: 'success',
+      });
+      navigation.navigate('SignIn');
+    } catch (error: any) {
+      const errorData = error?.response.data;
+      console.log('erro do catch', errorData);
+      checkVerificationCodeError(error);
+      typeof errorData !== 'string' && checkPasswordErrored(error)
+      displayToast({
+        text1: typeof errorData === 'string' ? errorData : errorData.errors[0].msg,
+        type: 'error',
+      });
+      log.error(error);
     }
+  }, [email, pass, value, password, passwordConfirmation]);
 
-  }, [email, pass, password, passwordConfirmation])
+  
+
 
   const handleBackButton = () => {
     navigation.navigate('SignIn');
-  }
+  };
+
 
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
+         
           <Header isKeyboardVisible={isInputFocus} />
           <BackButtonContainer>
             <BackButton
@@ -103,18 +186,28 @@ const RedefinePassword = ({ route, _ }: any) => {
 
           <RedefinePasswordForm>
             <RedefinePasswordFormLabel>
-              Copie e cole aqui a senha temporária que enviamos para seu email:
+              Copie e cole aqui a senha temporária que enviamos para <EmailText>{encryptEmail(email)}</EmailText>.
             </RedefinePasswordFormLabel>
-
-            <NicknameContainer>
-              <NicknameText>{pass}</NicknameText>
-            </NicknameContainer>
+                <FieldsRow>
+                  <CodeField
+                    ref={ref}
+                    {...props}
+                    value={value}
+                    onChangeText={(text: string) => {
+                      setValue(text);
+                      success === true && setSuccess(false);
+                    }}
+                    cellCount={CELL_COUNT}
+                    textContentType="oneTimeCode"
+                    renderCell={renderCell}
+                  />
+               </FieldsRow>
 
             <RedefinePasswordFormLabel>
-              Agora é só completar o dados a seguir:
+              Agora é só completar os dados a seguir:
             </RedefinePasswordFormLabel>
 
-            <InputContainer isErrored={isErrored}>
+            <InputContainer isErrored={isPasswordErrored}>
               <PasswordInput
                 ref={passwordInputRef}
                 iconly={Password}
@@ -132,12 +225,12 @@ const RedefinePassword = ({ route, _ }: any) => {
                 }}
               />
 
-              <SpacingLine isErrored={isErrored} />
+              <SpacingLine isErrored={isPasswordErrored} />
 
               <PasswordInput
                 ref={passwordConfirmationInputRef}
                 iconly={Password}
-                placeholder="Nova senha"
+                placeholder="Confirmar nova senha"
                 placeholderTextColor={theme.colors.subtitle}
                 defaultValue={passwordConfirmation}
                 value={passwordConfirmation}
