@@ -2,9 +2,10 @@ import React from 'react';
 import Modal from 'react-native-modal';
 import ReportProblemIcon from '../../../assets/images/Icons/report_problem_icon.svg';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { User, Logout, Paper } from 'react-native-iconly';
+import { User, Logout, Paper, Send } from 'react-native-iconly';
 import { ButtonsContainer, Container, NavigationButton, NavigationButtonText } from './styles';
 import { useTheme } from 'styled-components/native';
+import { Share } from 'react-native';
 
 interface ModalInterface {
   aboutPage: () => void;
@@ -24,6 +25,14 @@ export function ModalMoreDashboard({
   signOut,
 }: ModalInterface) {
   const theme = useTheme();
+   
+  const onSharePress = async () =>
+  {
+    const appUrl = "https://icodsmobile.page.link/indicacao";
+    await Share.share( {
+      message: `O que acha de criar vídeos via QR Code? Com este aplicativo você consegue de forma simples e gratuita!\n\n ${ appUrl } `
+    } );
+  };
   return (
     <Modal
       animationIn={'fadeIn'}
@@ -59,6 +68,15 @@ export function ModalMoreDashboard({
               height={RFValue(16)}
             />
             <NavigationButtonText>Sobre</NavigationButtonText>
+          </NavigationButton>
+
+          <NavigationButton onPress={onSharePress}>
+            <Send
+              color={theme.colors.dark}
+              width={RFValue(16)}
+              height={RFValue(16)}
+            />
+            <NavigationButtonText>Compartilhar</NavigationButtonText>
           </NavigationButton>
 
           <NavigationButton onPress={signOut}>

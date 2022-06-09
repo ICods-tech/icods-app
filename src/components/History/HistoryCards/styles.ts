@@ -5,6 +5,8 @@ import BlueMarkerIcon from '../../../assets/images/Icons/cardMarker/Blue.svg'
 import CyanMarkerIcon from '../../../assets/images/Icons/cardMarker/Cyan.svg'
 import GreenMarkerIcon from '../../../assets/images/Icons/cardMarker/Green.svg'
 import HeartIcon from '../../../assets/images/Icons/heart_icon.svg';
+import UnFavorite from '../../../assets/images/Icons/unFavorite.svg';
+
 import PinkMarkerIcon from '../../../assets/images/Icons/cardMarker/Pink.svg'
 import RedMarkerIcon from '../../../assets/images/Icons/cardMarker/Red.svg'
 import YellowMarkerIcon from '../../../assets/images/Icons/cardMarker/Yellow.svg'
@@ -13,7 +15,7 @@ import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions } from 'react-native';
 
-interface ContentProps{
+interface ContentProps {
     color: Colors;
 }
 
@@ -30,9 +32,9 @@ export const Container = styled.View<ContentProps>`
    
     width: 100%;
    
-    padding-left: ${({color}) => 
-    (color !== 'noColor' && color !== 'noFilter') 
-    ? 0 : RFValue(10)}px;
+    padding-left: ${({ color }) =>
+        (color !== 'noColor' && color !== 'noFilter')
+            ? 0 : RFValue(10)}px;
 
     align-items: center;
     /* background-color: green; */
@@ -44,7 +46,7 @@ export const Content = styled.View`
     align-items: center;
     margin-left: ${RFValue(11)}px;
     /* background-color: red; */
-`; 
+`;
 
 export const MainContainer = styled.View`
     flex: 1;
@@ -60,9 +62,9 @@ export const QRCodeInfo = styled.View`
 
 export const QRCodeInfoText = styled.Text`
     font-size: ${RFValue(12)}px;
-    font-family: ${({theme}) => theme.fonts.bold};
+    font-family: ${({ theme }) => theme.fonts.bold};
     color: ${({ theme }) => theme.colors.title};
-    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 
 export const QRCodeInfoPrivacy = styled.View`
@@ -71,15 +73,24 @@ export const QRCodeInfoPrivacy = styled.View`
 
 export const QRCodePrivacyText = styled.Text`
     font-size: ${RFValue(12)}px;
-    font-family: ${({theme}) => theme.fonts.bold};
+    font-family: ${({ theme }) => theme.fonts.bold};
     color: ${({ theme }) => theme.colors.primary};
-    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 
 export const QRCodeCardOptions = styled.View`
 `;
 
 export const Favorited = styled(HeartIcon).attrs({
+    width: RFValue(16),
+    height: RFValue(16),
+})`
+    position: absolute;
+    top: ${RFValue(6)}px;
+    right:${RFValue(22)}px;
+`;
+
+export const UnFavorited = styled(UnFavorite).attrs({
     width: RFValue(16),
     height: RFValue(16),
 })`

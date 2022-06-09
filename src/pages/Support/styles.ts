@@ -57,17 +57,21 @@ const styles = StyleSheet.create({
     color: '#282C37',
   },
   helpInput: {
-    marginLeft: 24,
-    marginRight: 24,
-    width: '85%',
+    paddingLeft: 24,
+    height: 232,
+    width: '95%',
     lineHeight: 20,
+    textAlign: 'justify',
+    textAlignVertical: 'top',
+
   },
   inputContainer: {
     width: '90%',
     height: 232,
     backgroundColor: '#F2F2F2',
     marginLeft: 16,
-    borderRadius: 4
+    borderRadius: 4,
+
   },
   buttonContainer: {
     alignSelf: 'center',

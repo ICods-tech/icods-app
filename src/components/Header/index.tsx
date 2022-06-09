@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, TouchableOpacity, Text, ColorValue} from 'react-native';
+import { View, TouchableOpacity, Text, ColorValue } from 'react-native';
 import styles from './styles';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import BackButton from '../../assets/images/back.svg';
 import BackButtonWhite from '../../assets/images/back-button-white.svg';
 
@@ -12,8 +12,8 @@ interface HeaderProps {
   isVideoPlayer?: boolean;
 }
 
-const Header = ({page, navigate, color, isVideoPlayer}: HeaderProps): JSX.Element => {
-  const navigation = useNavigation();
+const Header = ({ page, navigate, color, isVideoPlayer }: HeaderProps): JSX.Element => {
+  const navigation = useNavigation<any>();
 
   return (
     <View style={[styles.container]}>
@@ -25,7 +25,7 @@ const Header = ({page, navigate, color, isVideoPlayer}: HeaderProps): JSX.Elemen
             navigation.navigate(`${navigate}`);
           }
         }}>
-        {isVideoPlayer ? <BackButtonWhite/> : <BackButton /> }
+        {isVideoPlayer ? <BackButtonWhite /> : <BackButton />}
       </TouchableOpacity>
       <Text
         style={[

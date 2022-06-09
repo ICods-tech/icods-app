@@ -1,15 +1,17 @@
-import React, { useCallback, useState } from 'react';
-import { StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Container, ExcludeAccountText, PrivateProfileContainer, UserInformationContainer, UserInformationLabel, UserInformationText, UserLabelAndInfoContainer } from './styles';
-import HeaderProfile from '../../components/HeaderProfile'
-import ButtonOn from '../../assets/images/button-on.svg'
-import ButtonOff from '../../assets/images/button-off.svg'
-import DeleteAccountIcon from '../../assets/images/Icons/Profile/delete-account-icon.svg'
-import { useAuth, User } from '../../hooks/auth'
-import { WarningModal } from '../../components/WarningModal';
 import { useNavigation } from '@react-navigation/native';
-import extractNameAndSurname from '../../utils/extractNameAndSurname';
+import React, { useCallback, useState } from 'react';
+import { SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
 import { useTheme } from 'styled-components';
+import ButtonOff from '../../assets/images/button-off.svg';
+import ButtonOn from '../../assets/images/button-on.svg';
+import DeleteAccountIcon from '../../assets/images/Icons/Profile/delete-account-icon.svg';
+import ChangePasswordIcon from '../../assets/images/Icons/password-icon.svg';
+import { ChangePasswordModal } from '../../components/ChangePasswordModal';
+import HeaderProfile from '../../components/HeaderProfile';
+import { WarningModal } from '../../components/WarningModal';
+import { useAuth, User } from '../../hooks/auth';
+import extractNameAndSurname from '../../utils/extractNameAndSurname';
+import { Container, ExcludeAccountText, PrivateProfileContainer, UserInformationContainer, UserInformationLabel, UserInformationText, UserLabelAndInfoContainer } from './styles';
 
 
 interface EditProfileProps {
@@ -31,6 +33,7 @@ const EditProfile = ({ route }: EditProfileProps) => {
   const { name, lastname } = user ? extractNameAndSurname(user.name) : { name: '', lastname: '' }
   const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
   const [deleteAccountModalOpen, setDeleteAccountModalOpen] = useState(false)
+  const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false)
 
 
   const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
@@ -56,6 +59,12 @@ const EditProfile = ({ route }: EditProfileProps) => {
 
   function handleOpenDeleteAccountModal() {
     setDeleteAccountModalOpen(true)
+  }
+  function handleOpenChangePasswordModal() {
+    setChangePasswordModalOpen(true)
+  }
+  function handleCloseChangePasswordModal() {
+    setChangePasswordModalOpen(false)
   }
   function handleCloseDeleteAccountModal() {
     setDeleteAccountModalOpen(false)
@@ -89,6 +98,15 @@ const EditProfile = ({ route }: EditProfileProps) => {
           await deleteUser(token)
         }}
       />
+      <ChangePasswordModal
+        title={'Para trocar a senha, complete os dados a seguir:'}
+        visible={changePasswordModalOpen}
+        icon={ChangePasswordIcon}
+        confirmText={'Alterar senha'}
+        iconBackgroundColor={theme.colors.primary}
+        isFooterButtonsActived
+        onCloseModal={handleCloseChangePasswordModal}
+      />
       <UserInformationContainer>
         <UserLabelAndInfoContainer>
           <UserInformationLabel>Username</UserInformationLabel>
@@ -111,7 +129,9 @@ const EditProfile = ({ route }: EditProfileProps) => {
           }
         </PrivateProfileContainer>
         <UserLabelAndInfoContainer>
-          <UserInformationText>Alterar senha</UserInformationText>
+          <TouchableOpacity onPress={handleOpenChangePasswordModal}>
+            <UserInformationText>Alterar senha</UserInformationText>
+          </TouchableOpacity>
         </UserLabelAndInfoContainer>
         <UserLabelAndInfoContainer>
           <TouchableOpacity onPress={handleOpenDeleteAccountModal}>

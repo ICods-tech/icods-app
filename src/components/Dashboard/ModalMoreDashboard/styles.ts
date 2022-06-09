@@ -8,7 +8,7 @@ export const Container = styled.View`
   top: 0;
   right: -4px;
   width: ${RFValue(132)}px;
-  height: ${RFValue(160)}px;
+  height: ${RFValue(180)}px;
   z-index: 2;
   background-color: ${({theme}) => theme.colors.shape};
   border-radius: ${RFValue(20)}px;
