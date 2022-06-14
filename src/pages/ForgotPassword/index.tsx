@@ -10,6 +10,7 @@ import { LOG } from "../../config";
 import theme from "../../global/styles/theme";
 import api from "../../services/api";
 import { checkConnection } from "../../utils/checkConnection";
+import { delay } from '../../utils/delay';
 import {
   BackButtonContainer,
   Container,
@@ -35,11 +36,18 @@ const ForgotPassword = () => {
   const [count, setCount] = useState(TIME_TO_SEND_EMAIL);
   const [isVisible, setIsVisible] = useState(false);
 
-  function handleOpenModal() {
-    setIsVisible(true)
-  }
-  function handleCloseModal() {
+  async function handleCloseModal() {
     setIsVisible(false)
+    navigation.navigate('RedefinePassword',{
+      email: email
+    });
+  }
+  async function timeoutCloseModal() {
+    await delay(4000)
+    setIsVisible(false)
+    navigation.navigate('RedefinePassword',{
+      email: email
+    });
   }
   const timerToActiveButton = () => {
     setCount(count - 1);
@@ -80,7 +88,9 @@ const ForgotPassword = () => {
 
     setActiveSendButton(false);
     setIsVisible(true);
+    timeoutCloseModal();
     setCount(TIME_TO_SEND_EMAIL);
+    
   };
 
   const handleBackButton = () => {
