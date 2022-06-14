@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { Keyboard, TextInput, TouchableWithoutFeedback } from 'react-native';
 import {
   CodeField,
@@ -34,6 +34,8 @@ import {
 const log = LOG.extend('RedefinePassword');
 
 const RedefinePassword = ({route, _}: any) => {
+  const {email, pass} = route.params;
+
   const CELL_COUNT = 6;
   const navigation = useNavigation<any>();
   const passwordInputRef = useRef<TextInput>(null);
@@ -44,23 +46,13 @@ const RedefinePassword = ({route, _}: any) => {
   const [inputFocusObserver, setInputFocusObserver] = useState(false);
   const [isPasswordErrored, setIsPasswordErrored] = useState(false);
   const [confirmationCodeError, setConfirmationCodeError] = useState(false);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(pass);
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [success, setSuccess] = useState(false);
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
-
-  const {email, pass} = route.params;
-
-  useEffect(() => {
-    console.log('SENHA DP N CARREGOU',pass);
-    if (pass) {
-      console.log('pass', pass);
-      setValue(pass);
-    }
-  }, []);
 
   const displayToast = ({text1, type}: {text1: string; type: string}) => {
     return Toast.show({
@@ -94,6 +86,7 @@ const RedefinePassword = ({route, _}: any) => {
         focused={isFocused}
         isCorrect={success}
         errored={confirmationCodeError}
+        editable={pass ? false : true}
         onLayout={getCellOnLayoutHandler(index)}>
         {textChild}
       </Cell>
@@ -192,7 +185,8 @@ const RedefinePassword = ({route, _}: any) => {
                   <CodeField
                     ref={ref}
                     {...props}
-                    value={value}
+                    value={pass ? pass : value}
+                    editable={pass ? false : true}
                     onChangeText={(text: string) => {
                       setValue(text);
                       success === true && setSuccess(false);

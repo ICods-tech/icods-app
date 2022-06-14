@@ -40,7 +40,7 @@ const ForgotPassword = () => {
     setIsVisible(true)
   }
   async function handleCloseModal() {
-    await delay(80000) // 8 segundos para fechar
+    await delay(4000)
     setIsVisible(false)
     navigation.navigate('RedefinePassword',{
       email: email

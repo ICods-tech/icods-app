@@ -96,6 +96,7 @@ interface ICellProps {
   focused: boolean;
   isCorrect: boolean;
   errored: boolean;
+  editable: boolean;
 }
 
 export const Cell = styled.Text<ICellProps>`
@@ -106,7 +107,7 @@ export const Cell = styled.Text<ICellProps>`
   color: ${({theme}) => theme.colors.primary};
   text-align: center;
   margin-left: 8px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({theme, editable}) => editable ? theme.colors.shape : theme.colors.light_line};
   border-width: 1px;
   border-color: ${({ theme, focused, errored }) =>  
     focused ? 
