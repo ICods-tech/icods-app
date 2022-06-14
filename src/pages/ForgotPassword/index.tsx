@@ -36,10 +36,13 @@ const ForgotPassword = () => {
   const [count, setCount] = useState(TIME_TO_SEND_EMAIL);
   const [isVisible, setIsVisible] = useState(false);
 
-  function handleOpenModal() {
-    setIsVisible(true)
-  }
   async function handleCloseModal() {
+    setIsVisible(false)
+    navigation.navigate('RedefinePassword',{
+      email: email
+    });
+  }
+  async function timeoutCloseModal() {
     await delay(4000)
     setIsVisible(false)
     navigation.navigate('RedefinePassword',{
@@ -85,7 +88,7 @@ const ForgotPassword = () => {
 
     setActiveSendButton(false);
     setIsVisible(true);
-    handleCloseModal();
+    timeoutCloseModal();
     setCount(TIME_TO_SEND_EMAIL);
     
   };

@@ -25,8 +25,9 @@ export const RedefinePasswordForm = styled.View`
 `;
 
 export const RedefinePasswordFormLabel = styled.Text`
-  text-align: center;
+  text-align: justify;
   font-size: ${RFValue(16)}px;
+  padding: 0 ${RFValue(12)}px;
   font-family: ${({theme}) => theme.fonts.regular};
   margin: ${RFValue(32)}px ${RFValue(0)}px ${RFValue(28)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;

@@ -1,19 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { BarCodeReadEvent } from 'react-native-camera';
-import * as Progress from 'react-native-progress';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { CloseSquare, Edit, Hide, Login, Play } from 'react-native-iconly';
+import { RFPercentage } from 'react-native-responsive-fontsize';
+import CloudSyncIcon from '../../assets/images/Icons/cloud_sync_icon_lg.svg';
+import Pulse from '../../assets/images/Icons/editor/pulse.svg';
+import { IconRectButton } from '../../components/IconRectButton';
+import { LOG } from '../../config';
+import theme from '../../global/styles/theme';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import { QRCode } from '../../types/QRCode';
 import { checkConnection } from '../../utils/checkConnection';
 import { BackStringContainer, BackStringText, Container, ContentContainer, DescriptionText, IconBackground, TitleText } from './styles';
-import { Edit, Play, CloseSquare, Hide, Login } from 'react-native-iconly'
-import { IconRectButton } from '../../components/IconRectButton';
-import Pulse from '../../assets/images/Icons/editor/pulse.svg';
-import CloudSyncIcon from '../../assets/images/Icons/cloud_sync_icon_lg.svg';
-import theme from '../../global/styles/theme';
-import { LOG } from '../../config';
 
 const log = LOG.extend('Deeplink');
 
