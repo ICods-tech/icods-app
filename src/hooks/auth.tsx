@@ -1,15 +1,12 @@
+import AsyncStorage from '@react-native-community/async-storage';
+import analytics from '@react-native-firebase/analytics';
 import React, {
   createContext,
-  useCallback,
-  useState,
-  useContext,
-  useEffect,
+  useCallback, useContext,
+  useEffect, useState
 } from 'react';
-import api from '../services/api';
-import AsyncStorage from '@react-native-community/async-storage';
-import Toast from 'react-native-toast-message';
-import analytics from '@react-native-firebase/analytics';
 import { LOG } from '../config';
+import api from '../services/api';
 const log = LOG.extend('Auth');
 
 export interface User {

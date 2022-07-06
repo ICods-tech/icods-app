@@ -1,6 +1,6 @@
-import { RouteProp, useNavigation } from "@react-navigation/native";
+import { RouteProp } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTheme } from "styled-components/native";
 import { useAuth } from "../hooks/auth";
 import About from "../pages/About";
@@ -21,11 +21,14 @@ import Register from "../pages/Register";
 import Scanner from "../pages/Scanner";
 import SignIn from "../pages/SignIn";
 import Splash from "../pages/Splash";
+// import Splash from "../pages/Splash";
+import dynamicLinks from "@react-native-firebase/dynamic-links";
 import Support from "../pages/Support";
 import Version from "../pages/Version";
 import VideoPlayer from "../pages/VideoPlayer";
 import Working from "../pages/Working";
-
+import { handleDynamicLinkUrl } from "../utils/handleDynamicLinkUrl";
+import { APPLICATION_PREFIX } from "../config/applicationPrefix";
 const App = createStackNavigator();
 
 interface StyleInterpolatorProps {
@@ -79,10 +82,29 @@ const noAnimation = {
   },
 };
 
-const Routes = () => {
-  const navigation = useNavigation<any>();
+interface IRoutes {
+  linking: any;
+}
+
+const Routes = ({ linking }: IRoutes) => {
+
   const { user, token, isLoading } = useAuth();
+  const [initialLink, setInitialLink] = useState(APPLICATION_PREFIX);
+
   const theme = useTheme();
+
+  const handleInitialLink = useCallback(async() => {
+    const dynamicLinkUrl = await dynamicLinks().getInitialLink();
+    if (dynamicLinkUrl) {
+      const preffixedLink = handleDynamicLinkUrl(dynamicLinkUrl);
+      setInitialLink(preffixedLink);
+    }
+  }, [dynamicLinks, setInitialLink]);
+
+  useEffect(() => {
+    handleInitialLink()
+  }, [handleInitialLink])
+
   return (
     <App.Navigator
       mode="card"
@@ -91,13 +113,7 @@ const Routes = () => {
         cardStyle: { backgroundColor: theme.colors.shape },
       }}
     >
-      {isLoading ? (
-        <App.Screen
-          name="Splash"
-          component={Splash}
-          options={horizontalAnimation}
-        />
-      ) : user ? (
+      {user ? (
         <>
           <App.Screen
             name="Dashboard"
