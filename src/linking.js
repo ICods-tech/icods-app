@@ -1,8 +1,8 @@
-import { APPLICATION_PREFIX } from "./config/applicationPrefix";
 import dynamicLinks from "@react-native-firebase/dynamic-links";
-import { handleDynamicLinkUrl } from "./utils/handleDynamicLinkUrl";
-import { initialUrlPageName } from "./config/initialUrlPageName";
 import { Linking } from "react-native";
+import { APPLICATION_PREFIX } from "./config/applicationPrefix";
+import { initialUrlPageName } from "./config/initialUrlPageName";
+import { handleDynamicLinkUrl } from "./utils/handleDynamicLinkUrl";
 
 const config = {
   screens: {
