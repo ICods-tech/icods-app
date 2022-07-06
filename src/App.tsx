@@ -90,7 +90,7 @@ const App = () => {
         />
         <View style={{ flex: 1, backgroundColor: "#312e38" }}>
           <AppProvider>
-            <Routes />
+            <Routes linking={linking}/>
           </AppProvider>
         </View>
         <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />

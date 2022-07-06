@@ -116,7 +116,7 @@ const ForgotPassword = () => {
 
             <ForgotPasswordFormTextInput
               autoCorrect
-              autoCapitalize="words"
+              autoCapitalize="none"
               defaultValue={email}
               placeholder="E-mail"
               placeholderTextColor={theme.colors.subtitle}
