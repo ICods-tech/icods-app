@@ -38,13 +38,12 @@ const DeepLink = ({ route, _ }: any) => {
   const url = route.params;
   const qrCodeIdFromDeeplink = url ? url : '';
   const navigation = useNavigation();
-  const { user } = useAuth();
+  const { user, easyFunc } = useAuth();
   const userConditionalPage = (user ? 'Dashboard' : 'SignIn') as never;
   const [qrCodeValidate, setQrCodeValidate] = useState(false);
   const [qrcode, setQrcode] = useState<QRCode>();
   const [deeplinkStatus, setDeeplinkStatus] = useState<IDeeplinkStatus>('Verifying');
   const [notProcessedTimer, setNotProcessedTimer] = useState(20);
-
   const DeeplinkQrCode = ({ title, description, icon, iconBackgroundColor, button, backString }: DeeplinkQrCodeProps) => {
     return (
       <Container>
@@ -129,8 +128,8 @@ const DeepLink = ({ route, _ }: any) => {
     }),
 
     NotLogged: () => DeeplinkQrCode({
-      title: 'Aguarde um momento',
-      description: 'Estamos processando o vídeo para que ele fique pronto para visualização',
+      title: 'Necessidade de Login',
+      description: 'É necessário entrar na sua conta, para prosseguir na edição do vídeo.',
       icon: <Login size={RFPercentage(8)} set="bold" primaryColor='white' />,
       iconBackgroundColor: 'BLUE',
       button: <IconRectButton
@@ -147,7 +146,7 @@ const DeepLink = ({ route, _ }: any) => {
 
     Verifying: () => DeeplinkQrCode({
       title: 'Aguarde um momento',
-      description: 'Estamos processando seu iCod e garantimos que será rapido! Assim que concluído, você ja pode presenteá-lo!',
+      description: 'Estamos processando seu iCod e garantimos que será rapido!',
       icon: <Pulse />,
       iconBackgroundColor: 'BLUE'
     }),
@@ -189,7 +188,13 @@ const DeepLink = ({ route, _ }: any) => {
   const qrCodeContainsGiftButIsNotProcessed = () => setDeeplinkStatus('NotProcessed')
 
   const verifyQRCodeContent = async (qrCode: QRCode) => {
-    if (qrCode.status === 'INACTIVE' && !user) {
+    console.log('verifyQRCodeContent', qrCode);
+    const userQueFunciona = await easyFunc()
+
+    console.log('USER QUE FUNCIONA OU NÃO',((userQueFunciona as any)?.id ));
+    
+    if (qrCode.status === 'INACTIVE' && !userQueFunciona) {
+      console.log('GARANTIDO');
       qrCodeIsNotActiveBecauseUserIsNotLogged();
       return;
     }
@@ -202,7 +207,7 @@ const DeepLink = ({ route, _ }: any) => {
 
     if (qrCode.status === 'ACTIVE') {
       const { id } = qrCode;
-      if (qrCode.receivedUser === null || qrCode.receivedUser.id === user?.id) {
+      if (qrCode.receivedUser === null || qrCode.receivedUser.id === ((userQueFunciona as any)?.id )) {
         await qrCodeContainsGift(id, !!qrCode.receivedUser);
       }
       else {
@@ -239,20 +244,24 @@ const DeepLink = ({ route, _ }: any) => {
     // setQrCodeValidate(true);
   }
 
+  console.log('USEFECTANDO');
   useEffect(() => {
+    console.log('USEFECTANDO  -> 1');
+    
     handleQRCode(qrCodeIdFromDeeplink)
   }, [])
-
+  
   useEffect(() => {
+    console.log('USEFECTANDO  -> 2');
     if (notProcessedTimer !== 0) {
       const timer = setTimeout(() => {
         setNotProcessedTimer(notProcessedTimer - 1);
       }, 1000);
-
+      
       return () => clearTimeout(timer);
     }
   }, [qrCodeIdFromDeeplink, deeplinkStatus, notProcessedTimer])
-
+  
   return possibleQrCodeStatus[deeplinkStatus]()
 };
 

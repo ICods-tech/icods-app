@@ -45,6 +45,7 @@ interface AuthContextData {
   updateUser(user: User): void;
   deleteUser: (token: string) => Promise<void>;
   alterProfileVisibility: (id: string, token: string) => Promise<void>;
+  easyFunc: () => Promise<string>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -53,24 +54,36 @@ const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    async function loadStoredData(): Promise<void> {
-      const [token, user] = await AsyncStorage.multiGet([
-        '@ICods:token',
-        '@ICods:user',
-      ]);
-      if (token[1] && user[1]) {
-        log.warn('token carregado:' + token[1] + user[1]);
-        api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
-        setData({ token: token[1], user: JSON.parse(user[1]) });
-      }
-    }
-
-    loadStoredData();
-
-    setTimeout(() => {
+  const loadStorageData = async () => {
+    const [token, user] = await AsyncStorage.multiGet([
+      '@ICods:token',
+      '@ICods:user',
+    ]);
+    
+    if (token[1] && user[1]) {
+      log.warn('token carregado:' + token[1] + user[1]);
+      api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
+      const userId = JSON.parse(user[1])
+      setData({ token: token[1], user: userId });
       setIsLoading(false);
-    }, 3000);
+    } 
+  }
+  
+  const easyFunc =async () => {
+    const [token, user] = await AsyncStorage.multiGet([
+      '@ICods:token',
+      '@ICods:user',
+    ]);
+    
+    if (token[1] && user[1]) {
+      const userId = JSON.parse(user[1])
+      return userId
+    } 
+  }
+
+  useEffect(() => {
+    loadStorageData();
+
   }, []);
 
   const signIn = useCallback(async (credentials: SignInCredentials) => {
@@ -171,6 +184,7 @@ const AuthProvider: React.FC = ({ children }) => {
         updateUser,
         deleteUser,
         alterProfileVisibility,
+        easyFunc,
       }}>
       {children}
     </AuthContext.Provider>

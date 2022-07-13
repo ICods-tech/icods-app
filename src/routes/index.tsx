@@ -102,9 +102,10 @@ const Routes = ({ linking }: IRoutes) => {
   }, [dynamicLinks, setInitialLink]);
 
   useEffect(() => {
+    console.log("useEffect ROUTES");
     handleInitialLink()
   }, [handleInitialLink])
-
+  
   return (
     <App.Navigator
       mode="card"
@@ -280,6 +281,7 @@ const Routes = ({ linking }: IRoutes) => {
           />
         </>
       )}
+
     </App.Navigator>
   );
 };
