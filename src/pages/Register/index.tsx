@@ -137,7 +137,7 @@ const Register = () => {
     }
   }, [name, username, email, password, passwordConfirmation, useTerms]);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const handleBackButton = () => {
     navigation.navigate('SignIn');
   }

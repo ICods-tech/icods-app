@@ -2,8 +2,9 @@ import analytics from "@react-native-firebase/analytics";
 import {
   NavigationContainer
 } from "@react-navigation/native";
+
 import React, { useRef } from "react";
-import { StatusBar, View } from "react-native";
+import { LogBox, StatusBar, View } from "react-native";
 import "react-native-gesture-handler";
 import Toast, { BaseToast } from "react-native-toast-message";
 import { ThemeProvider } from "styled-components";
@@ -11,9 +12,8 @@ import { LOG, Sentry } from "./config";
 import theme from "./global/styles/theme";
 import AppProvider from "./hooks";
 import { linking } from "./linking";
-import Routes from "./routes";
+import { AuthRoutes } from "./routes/auth.routes";
 const log = LOG.extend("App");
-import { LogBox } from 'react-native';
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
@@ -90,7 +90,8 @@ const App = () => {
         />
         <View style={{ flex: 1, backgroundColor: "#312e38" }}>
           <AppProvider>
-            <Routes linking={linking}/>
+            {/* <Routes linking={linking}/> */}
+              <AuthRoutes />
           </AppProvider>
         </View>
         <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />

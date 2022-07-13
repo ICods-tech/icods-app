@@ -9,6 +9,7 @@ export const SafeAreaView = styled.SafeAreaView`
 export const Container = styled.View`
   flex: 1;
   flex-direction: column;
+  background: ${({theme}) => theme.colors.shape};
 `;
 
 export const BackButtonContainer = styled.View`
@@ -25,7 +26,7 @@ export const RedefinePasswordForm = styled.View`
 `;
 
 export const RedefinePasswordFormLabel = styled.Text`
-  text-align: justify;
+  text-align: center;
   font-size: ${RFValue(16)}px;
   padding: 0 ${RFValue(12)}px;
   font-family: ${({theme}) => theme.fonts.regular};

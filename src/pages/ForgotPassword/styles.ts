@@ -14,6 +14,7 @@ export const SafeAreaView = styled.SafeAreaView`
 export const Container = styled.View`
   flex: 1;
   flex-direction: column;
+  background: ${({ theme }) => theme.colors.shape};
 `;
 
 export const BackButtonContainer = styled.View`

@@ -18,6 +18,7 @@ export const ScrollRegister = styled.ScrollView.attrs({
 
 export const Container = styled.View`
   flex: 1;
+  background-color: ${({theme}) => theme.colors.shape};
 `;
 export const BackButtonContainer = styled.View<Props>`
   position: absolute;

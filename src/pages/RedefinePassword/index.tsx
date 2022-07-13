@@ -179,7 +179,7 @@ const RedefinePassword = ({route, _}: any) => {
 
           <RedefinePasswordForm>
             <RedefinePasswordFormLabel>
-              Copie e cole aqui a senha temporária que enviamos para <EmailText>{encryptEmail(email)}</EmailText>.
+              Copie e cole aqui a senha temporária que enviamos para {'\n'}<EmailText>{encryptEmail(email)}</EmailText>.
             </RedefinePasswordFormLabel>
                 <FieldsRow>
                   <CodeField
