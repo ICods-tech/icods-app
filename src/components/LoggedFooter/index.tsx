@@ -11,10 +11,10 @@ import ActivatedNotificationsIcon from '../../assets/images/Icons/footer/activat
 import ActivatedSocialIcon from '../../assets/images/Icons/footer/activated-social.svg';
 import ScannerImg from '../../assets/images/ícone-qr-code.svg';
 
-import { 
+import {
   BorderTop,
-  Container, 
-  FooterButton, 
+  Container,
+  FooterButton,
   FooterButtonTitle,
   // ScannerButton, 
 } from './styles';
@@ -30,8 +30,8 @@ interface LoggedFooterProps {
 
 
 export default function LoggedFooter({
-  isDashboard, 
-  isHistory, 
+  isDashboard,
+  isHistory,
   isScanner,
   isNotification,
   isSocial
@@ -39,92 +39,91 @@ export default function LoggedFooter({
   const navigation = useNavigation()
   return (
     <Container>
-        <FooterButton
-          onPress={() => navigation.navigate({name: 'Dashboard', key: 'DASHBOARD_FROM_FOOTER'})}
-          >
+      <FooterButton
+        onPress={() => navigation.navigate({ name: 'Dashboard', key: 'DASHBOARD_FROM_FOOTER' })}
+      >
 
-          <BorderTop
-            selected={isDashboard!}
-          />
-          
-          {isDashboard ?
-            <ActivatedHomeIcon 
-              width={RFValue(24)}
-              height={RFValue(24)}
-            /> :
-            <DeactivatedHomeIcon 
-              width={RFValue(24)}
-              height={RFValue(24)}
-            />
-          }
-          <FooterButtonTitle selected={isDashboard!}>Início</FooterButtonTitle>
-        </FooterButton>
+        <BorderTop
+          selected={isDashboard!}
+        />
 
-        <FooterButton
-          onPress={() => navigation.navigate({name: 'History', key: 'HISTORY_FROM_FOOTER'})}
-        >
-          <BorderTop
-            selected={isHistory!}
-          />
-          {isHistory ?
-          <ActivatedHistoryIcon 
+        {isDashboard ?
+          <ActivatedHomeIcon
             width={RFValue(24)}
             height={RFValue(24)}
-          /> : 
-          <DeactivatedHistoryIcon 
+          /> :
+          <DeactivatedHomeIcon
+            width={RFValue(24)}
+            height={RFValue(24)}
+          />
+        }
+        <FooterButtonTitle selected={isDashboard!}>Início</FooterButtonTitle>
+      </FooterButton>
+
+      <FooterButton
+        onPress={() => navigation.navigate({ name: 'History', key: 'HISTORY_FROM_FOOTER' })}
+      >
+        <BorderTop
+          selected={isHistory!}
+        />
+        {isHistory ?
+          <ActivatedHistoryIcon
+            width={RFValue(24)}
+            height={RFValue(24)}
+          /> :
+          <DeactivatedHistoryIcon
             width={RFValue(24)}
             height={RFValue(24)}
           />}
-          
-          <FooterButtonTitle selected={isHistory!}>Histórico</FooterButtonTitle>
-        </FooterButton>
 
-        <ScannerButton 
-          onPress={() => navigation.navigate({name: 'Scanner', key: 'SCANNER_FROM_FOOTER'})} 
-          selected={isScanner}
-        />
-        
-        <FooterButton
+        <FooterButtonTitle selected={isHistory!}>Histórico</FooterButtonTitle>
+      </FooterButton>
+
+
+      <FooterButton
         onPress={() => navigation.navigate({
           name: 'Working', key: 'WORKING_FROM_FOOTER', params: {
             type: 'Notification'
-          }})}
-        >
-          <BorderTop
-            selected={isNotification!}
-          />
-        {isNotification! ? 
-          (<ActivatedNotificationsIcon 
+          }
+        })}
+      >
+        <BorderTop
+          selected={isNotification!}
+        />
+        {isNotification! ?
+          (<ActivatedNotificationsIcon
             width={RFValue(24)}
             height={RFValue(24)}
           />)
-          : (<DeactivatedNotificationsIcon 
+          : (<DeactivatedNotificationsIcon
             width={RFValue(24)}
             height={RFValue(24)}
           />)}
-          <FooterButtonTitle selected={isNotification!}>Notificação</FooterButtonTitle>
-        </FooterButton>
-        
-        <FooterButton
-          onPress={ () => navigation.navigate({name: 'Working', key: 'WORKING_FROM_FOOTER', params: {
+        <FooterButtonTitle selected={isNotification!}>Notificação</FooterButtonTitle>
+      </FooterButton>
+
+      <FooterButton
+        onPress={() => navigation.navigate({
+          name: 'Working', key: 'WORKING_FROM_FOOTER', params: {
             type: 'Social'
-          }})}
-        >
-          <BorderTop
-            selected={isSocial!}
-          />
+          }
+        })}
+      >
+        <BorderTop
+          selected={isSocial!}
+        />
         {isSocial! ?
-          (<ActivatedSocialIcon 
+          (<ActivatedSocialIcon
             width={RFValue(24)}
             height={RFValue(24)}
           />)
-          : (<DeactivatedSocialIcon 
-              width={RFValue(24)}
-              height={RFValue(24)}
+          : (<DeactivatedSocialIcon
+            width={RFValue(24)}
+            height={RFValue(24)}
           />)}
-          <FooterButtonTitle selected={isSocial!}>Social</FooterButtonTitle>
-        </FooterButton>
-        
+        <FooterButtonTitle selected={isSocial!}>Social</FooterButtonTitle>
+      </FooterButton>
+
     </Container>
   )
 }

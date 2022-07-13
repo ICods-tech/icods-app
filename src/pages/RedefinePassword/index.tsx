@@ -167,7 +167,6 @@ const RedefinePassword = ({route, _}: any) => {
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-         
           <Header isKeyboardVisible={isInputFocus} />
           <BackButtonContainer>
             <BackButton

@@ -17,20 +17,6 @@ interface StyleInterpolatorProps {
 
 export const AuthRoutes = () => {
 
-  const cardStyleReturn = (current: any, layouts: any, isInverted: boolean) => ({
-    cardStyle: {
-      transform: [
-        {
-          translateX: current.progress.interpolate({
-            inputRange: [0, 1],
-            outputRange: isInverted
-              ? [-layouts.screen.width, 0]
-              : [layouts.screen.width, 0],
-          }),
-        },
-      ],
-    },
-  });
 
   const cardStyleNoAnimationReturn = (current: any, layouts: any) => ({
     cardStyle: {
@@ -51,7 +37,6 @@ export const AuthRoutes = () => {
       return cardStyleNoAnimationReturn(current, layouts);
     },
   };
-
 
   const theme = useTheme();
 

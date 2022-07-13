@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    display: flex;
+    flex: 1;
     align-items: center;
+    background: ${({ theme }) => theme.colors.shape};
 `;
 
 export const Title = styled.Text`

@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import api from '../../services/api';
-import {SafeAreaView, LogBox} from 'react-native';
+import { SafeAreaView, LogBox } from 'react-native';
 import {
   CloudContainer,
   CloudLeftLarge,
@@ -16,16 +16,16 @@ import {
   QRCodeTitleContainer,
   QRCodeTitleDate,
 } from './styles';
-import {filteredQRCodesByDatePlaceholder} from '../../utils/filteredQRCodesByDatePlaceholder';
-import {HistoryCards} from '../../components/History/HistoryCards';
-import {HeaderHistory} from '../../components/History/HeaderHistory';
+import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
+import { HistoryCards } from '../../components/History/HistoryCards';
+import { HeaderHistory } from '../../components/History/HeaderHistory';
 import LoggedFooter from '../../components/LoggedFooter';
 import formattedDate from '../../utils/formatDates';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Moment} from 'moment';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Moment } from 'moment';
 import * as Progress from 'react-native-progress';
-import {useNavigation} from '@react-navigation/native';
-import {useAuth} from '../../hooks/auth';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../hooks/auth';
 
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
@@ -46,7 +46,7 @@ export interface FilteredQRCodesByDate {
 }
 
 const History = () => {
-  const {token} = useAuth();
+  const { token } = useAuth();
   const navigation = useNavigation<any>();
   const [reloadState, setReloadState] = useState(false);
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(
@@ -92,7 +92,7 @@ const History = () => {
   }, [reloadState]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Container>
         <HeaderHistory
           selectedColor={color}
@@ -116,7 +116,7 @@ const History = () => {
               const [date] = Object.keys(item);
               return date;
             }}
-            renderItem={({item}) => {
+            renderItem={({ item }) => {
               const [date] = Object.keys(item);
               if (date !== '0' && date !== null && date !== undefined) {
                 return (
@@ -132,7 +132,7 @@ const History = () => {
                     <QRCodeList
                       data={item[date]}
                       keyExtractor={(item) => item.id}
-                      renderItem={({item}) => {
+                      renderItem={({ item }) => {
                         const {
                           id,
                           color,
@@ -200,7 +200,7 @@ const History = () => {
             }}
           />
         </Content>
-        <LoggedFooter isHistory={true} />
+        {/* <LoggedFooter isHistory={true} /> */}
       </Container>
     </SafeAreaView>
   );

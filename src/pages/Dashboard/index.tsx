@@ -159,7 +159,7 @@ const Dashboard = () => {
         </FeedSubTitleContainer>
       </FeedContainer>
 
-      <LoggedFooter isDashboard={true} />
+      {/* <LoggedFooter isDashboard={true} /> */}
     </Container>
   );
 };

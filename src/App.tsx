@@ -12,6 +12,7 @@ import { LOG, Sentry } from "./config";
 import theme from "./global/styles/theme";
 import AppProvider from "./hooks";
 import { linking } from "./linking";
+import { AppRoutes } from "./routes/app.routes";
 import { AuthRoutes } from "./routes/auth.routes";
 const log = LOG.extend("App");
 
@@ -91,7 +92,10 @@ const App = () => {
         <View style={{ flex: 1, backgroundColor: "#312e38" }}>
           <AppProvider>
             {/* <Routes linking={linking}/> */}
-              <AuthRoutes />
+            {/* <View style={{ flex: 1, backgroundColor: "#fff"}}> */}
+              {/* <AuthRoutes /> */}
+              <AppRoutes />
+            {/* </View> */}
           </AppProvider>
         </View>
         <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
