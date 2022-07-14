@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 
 export const Button = styled(BorderlessButton)`
     height: 100%; 
-    margin-bottom: ${RFValue(24)}px;
+    margin-top: -${RFValue(12)}px;
     align-items: center;
     justify-content: center;
 `;

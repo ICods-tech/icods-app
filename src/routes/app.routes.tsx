@@ -3,8 +3,6 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
-import Dashboard from '../pages/Dashboard';
-import History from '../pages/History';
 import Scanner from '../pages/Scanner';
 import Working from '../pages/Working';
 
@@ -19,6 +17,7 @@ import SocialDeactivatedIcon from '../assets/images/Icons/footer/socialDark.svg'
 import BorderMenu from '../components/BorderMenu';
 import { ScannerButton } from '../components/ScannerButton';
 import { DashboardRoutes } from './dashboard.routes';
+import { HistoryRoutes } from './history.routes';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -79,7 +78,7 @@ export const AppRoutes = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          height: RFValue(47),
+          height: RFValue(56),
           backgroundColor: theme.colors.cloudly,
           // paddingTop: RFValue(12),
           paddingBottom: RFValue(5),
@@ -100,7 +99,7 @@ export const AppRoutes = () => {
       />
       <Screen
         name="Histórico"
-        component={History}
+        component={HistoryRoutes}
         options={{
           tabBarIcon: ({ focused }) => {
             return (

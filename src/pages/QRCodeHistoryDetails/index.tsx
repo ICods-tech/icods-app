@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Play, Unlock } from 'react-native-iconly';
 import { RFValue } from 'react-native-responsive-fontsize';
 import Toast from 'react-native-toast-message';
@@ -11,7 +11,6 @@ import { FavoriteButton } from '../../components/FavoriteButton';
 import { colorsIconsList } from '../../components/History/FilterModal';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
 import { IconRectButton } from '../../components/IconRectButton';
-import HistoryFooter from '../../components/LoggedFooter';
 import { ShareButton } from '../../components/ShareButton';
 import { WarningModal } from '../../components/WarningModal';
 import { Colors } from '../../interfaces/colors';
@@ -203,8 +202,6 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
             />
           </OptionsButtonsQRContainer>
         </QRCodeInfoContainer>
-      </Content>
-      <SaveChangesContainer>
         <IconRectButton
           onPress={() => {
             const colorsAreDifferent = updatedColor !== lastSavedColor
@@ -228,10 +225,8 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
           text="Salvar alterações"
           icon={SaveIcon}
         />
-      </SaveChangesContainer>
-      <HistoryFooter
-        isHistory
-      />
+      </Content>
+
     </Container >
   )
 }

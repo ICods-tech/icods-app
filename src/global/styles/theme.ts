@@ -3,6 +3,8 @@ export default {
     primary: '#2B90D9',
     profilePic: '8EFFEB',
 
+    gray_600: '#282C37',
+
     warning: '#F5AB0B',
 
     success: '#63C667',
@@ -10,11 +12,12 @@ export default {
     attention: '#DF2C2C',
     attention_light: '#EC8080',
 
-    cancelTextButton: '#5F6368',
+    gray_200: '#5F6368',
 
     gray: "rgba(143, 146, 156, 0.5)",
 
     title: 'rgba(0, 0, 0, 0.87)',
+
     subtitle: 'rgba(0, 0, 0, 0.6)',
     text: 'rgba(0, 0, 0, 0.4)',
 

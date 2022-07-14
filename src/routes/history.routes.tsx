@@ -6,16 +6,24 @@ import VideoPlayer from '../pages/VideoPlayer';
 
 const { Navigator, Screen } = createStackNavigator();
 
-export const DashboardRoutes = () => {
+export const HistoryRoutes = () => {
   return (
-    <>
+    <Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Screen name="History" component={History} />
+
       <Screen name="QRCodeHistoryDetails" component={QRCodeHistoryDetails} />
+      {/* Hidden tab button */}
       <Screen
         name="VideoPlayer"
         component={VideoPlayer}
-      // options={horizontalAnimation}
+        options={{
+
+        }}
       />
-    </>
+    </Navigator>
   )
 }

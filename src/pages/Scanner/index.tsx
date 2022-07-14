@@ -3,7 +3,6 @@ import Header from '../../components/Header';
 import Mask from '../../components/Scanner/Mask';
 import styles from './styles';
 import api from '../../services/api';
-import LoggedFooter from '../../components/LoggedFooter';
 
 import { View, Text, SafeAreaView } from 'react-native';
 import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
@@ -257,12 +256,6 @@ const Scanner = (props: ScannerProps) => {
           iconBackgroundColor={popUp.backgroundColor}
 
         />
-
-        {user &&
-          <LoggedFooter
-            isScanner={true}
-          />
-        }
       </RNCamera>
     </SafeAreaView>
   );

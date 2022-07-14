@@ -1,26 +1,16 @@
-import {StyleSheet, Dimensions, Platform} from 'react-native';
-const {width, height} = Dimensions.get('window');
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: Platform.OS === 'ios' ? 2 : 5,
-    flexDirection: 'row',
-    width: width,
-    height: height * 0.1,
-  },
-  title: {
-    // color: '#282C37',
+export const Container = styled.View`
+  width: 100%;
+  align-items: center;
+  flex-direction: row;
+  margin-top: ${RFValue(20)}px;
+`;
 
-    // fontFamily: 'Manrope',
-    fontSize: 25.89,
-    fontStyle: 'normal',
-    fontWeight: '700',
-    lineHeight: 35,
-    letterSpacing: width * 0.002,
-
-    marginTop: 6,
-    marginLeft: -4,
-  },
-});
-
-export default styles;
+export const Title = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.semi_bold};
+  font-size: ${RFValue(24)};
+  color: ${({ theme }) => theme.colors.title};
+  margin-left: ${RFValue(16)};
+`;

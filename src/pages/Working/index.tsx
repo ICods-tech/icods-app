@@ -1,19 +1,20 @@
 import React from "react";
+import WorkingImage from '../../assets/images/Icons/working.svg';
 import Header from "../../components/Header";
-import { Container, Message, Title } from './styes';
-import WorkingImage from '../../assets/images/Icons/working.svg'
-import LoggedFooter from "../../components/LoggedFooter";
+import { Container, ContainerMessage, ContainerTitle, Message, Title } from './styes';
 
 const Working = () => {
     return (
-        <>
-            <Container>
-                <Header page="Manutenção" navigate="back" />
-                <Title>Ops! Ainda estamos trabalhando</Title>
-                <WorkingImage />
+        <Container>
+            <Header title="Manutenção" navigate="back" />
+            <ContainerTitle>
+                <Title>Ops! Ainda{`\n`}estamos{`\n`}trabalhando</Title>
+            </ContainerTitle>
+            <WorkingImage />
+            <ContainerMessage>
                 <Message>Parece que você nos pegou desavisados... Mas espera que logo em breve estaremos terminando essa sessão!</Message>
-            </Container>
-        </>
+            </ContainerMessage>
+        </Container>
     );
 };
 

@@ -29,6 +29,7 @@ import { LOG } from '../../config';
 import Toast from 'react-native-toast-message';
 import Input from '../../components/Input';
 import PasswordInput from '../../components/PasswordInput';
+import handleLinkNavigation from '../../utils/handleLinkNavigation';
 
 const log = LOG.extend('Signin');
 
@@ -36,8 +37,8 @@ const SignIn = () => {
   const theme = useTheme();
   const { signIn, user } = useAuth();
   const navigation = useNavigation<any>();
-  const [email, setEmail] = useState<string>(''); 
-  const [password, setPassword] = useState<string>(''); 
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [errored, setErrored] = useState<boolean>(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +49,6 @@ const SignIn = () => {
     setIsLoading(true);
     try {
       await signIn({ email, password });
-      navigation.navigate('Dashboard');
       await analytics().logLogin({ method: 'api' });
       setErrored(false);
     } catch (error: any) {
@@ -135,10 +135,10 @@ const SignIn = () => {
                   </HelpButtonText>
                 </HelpButtonContainer>
 
-                <HelpButtonContainer  onPress={() => {
-                    setErrored(false);
-                    navigation.navigate("ForgotPassword");
-                  }}>
+                <HelpButtonContainer onPress={() => {
+                  setErrored(false);
+                  navigation.navigate("ForgotPassword");
+                }}>
                   <HelpButtonText textColor={theme.colors.text}>
                     Esqueceu a senha?
                   </HelpButtonText>
@@ -177,13 +177,16 @@ const SignIn = () => {
                   Algum problema no login?
                 </HelpContainerTexts>
 
-                <HelpButtonContainer>
+                <HelpButtonContainer onPress={() => handleLinkNavigation("https://icods.com.br")}>
                   <HelpButtonText textColor={theme.colors.primary}>
                     Contate-nos
                   </HelpButtonText>
                 </HelpButtonContainer>
               </HelpContainer>
             </SignInOptions>
+
+
+
             <AuthFooter />
           </ScrollContainer>
         </Container>

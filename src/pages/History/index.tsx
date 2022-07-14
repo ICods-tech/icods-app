@@ -1,6 +1,15 @@
+import { useNavigation } from '@react-navigation/native';
+import { Moment } from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
+import { LogBox, SafeAreaView } from 'react-native';
+import * as Progress from 'react-native-progress';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { HeaderHistory } from '../../components/History/HeaderHistory';
+import { HistoryCards } from '../../components/History/HistoryCards';
+import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
-import { SafeAreaView, LogBox } from 'react-native';
+import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
+import formattedDate from '../../utils/formatDates';
 import {
   CloudContainer,
   CloudLeftLarge,
@@ -14,18 +23,8 @@ import {
   QRCodeDateList,
   QRCodeList,
   QRCodeTitleContainer,
-  QRCodeTitleDate,
+  QRCodeTitleDate
 } from './styles';
-import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
-import { HistoryCards } from '../../components/History/HistoryCards';
-import { HeaderHistory } from '../../components/History/HeaderHistory';
-import LoggedFooter from '../../components/LoggedFooter';
-import formattedDate from '../../utils/formatDates';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { Moment } from 'moment';
-import * as Progress from 'react-native-progress';
-import { useNavigation } from '@react-navigation/native';
-import { useAuth } from '../../hooks/auth';
 
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
 
@@ -200,7 +199,6 @@ const History = () => {
             }}
           />
         </Content>
-        {/* <LoggedFooter isHistory={true} /> */}
       </Container>
     </SafeAreaView>
   );

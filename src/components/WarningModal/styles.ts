@@ -109,5 +109,5 @@ export const FooterButtonText = styled.Text<IFooterButtonTextProps>`
   font-size: ${RFValue(14)}px;
   line-height: ${RFValue(24)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
-  color: ${({ color, theme }) => color === 'save' ? theme.colors.primary : theme.colors.cancelTextButton};
+  color: ${({ color, theme }) => color === 'save' ? theme.colors.primary : theme.colors.gray_200};
 `;

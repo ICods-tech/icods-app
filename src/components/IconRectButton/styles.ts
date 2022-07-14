@@ -10,15 +10,15 @@ interface ButtonProps {
 }
 
 const backgroundColor = {
-  White: '#FFF',
-  Blue: theme.colors.primary,
-  Gray: theme.colors.gray
+    White: '#FFF',
+    Blue: theme.colors.primary,
+    Gray: theme.colors.gray
 }
 
 const textColor = {
-  White: theme.colors.primary,
-  Blue: '#FFF',
-  Gray: '#FFF'
+    White: theme.colors.primary,
+    Blue: '#FFF',
+    Gray: '#FFF'
 }
 
 export const Container = styled.View<ButtonProps>`
@@ -30,7 +30,7 @@ export const Container = styled.View<ButtonProps>`
     elevation: 2;
 `;
 
-export const Button = styled(RectButton)<ButtonProps>`
+export const Button = styled(RectButton) <ButtonProps>`
     flex-direction: row;
     width: ${RFValue(266)}px;
     height: ${RFValue(36)}px;

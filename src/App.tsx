@@ -1,9 +1,5 @@
-import analytics from "@react-native-firebase/analytics";
-import {
-  NavigationContainer
-} from "@react-navigation/native";
 
-import React, { useRef } from "react";
+import React from "react";
 import { LogBox, StatusBar, View } from "react-native";
 import "react-native-gesture-handler";
 import Toast, { BaseToast } from "react-native-toast-message";
@@ -11,9 +7,7 @@ import { ThemeProvider } from "styled-components";
 import { LOG, Sentry } from "./config";
 import theme from "./global/styles/theme";
 import AppProvider from "./hooks";
-import { linking } from "./linking";
-import { AppRoutes } from "./routes/app.routes";
-import { AuthRoutes } from "./routes/auth.routes";
+import { Routes } from "./routes";
 const log = LOG.extend("App");
 
 LogBox.ignoreLogs([
@@ -60,46 +54,19 @@ const toastConfig = {
 };
 
 const App = () => {
-  const routeNameRef = useRef();
-  const navigationRef = useRef() as any;
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer
-        ref={navigationRef as any}
-        linking={linking}
-        onReady={() => {
-          routeNameRef.current = navigationRef.current?.getCurrentRoute().name;
-        }}
-        onStateChange={async () => {
-          const previousRouteName = routeNameRef.current;
-          const currentRouteName = navigationRef.current?.getCurrentRoute()
-            .name;
-
-          if (previousRouteName !== currentRouteName) {
-            await analytics().logScreenView({
-              screen_name: currentRouteName,
-              screen_class: currentRouteName,
-            });
-          }
-          routeNameRef.current = currentRouteName;
-        }}
-      >
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={theme.colors.primary}
-        />
-        <View style={{ flex: 1, backgroundColor: "#312e38" }}>
-          <AppProvider>
-            {/* <Routes linking={linking}/> */}
-            {/* <View style={{ flex: 1, backgroundColor: "#fff"}}> */}
-              {/* <AuthRoutes /> */}
-              <AppRoutes />
-            {/* </View> */}
-          </AppProvider>
-        </View>
-        <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
-      </NavigationContainer>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={theme.colors.primary}
+      />
+      <View style={{ flex: 1, backgroundColor: "#312e38" }}>
+        <AppProvider>
+          <Routes />
+        </AppProvider>
+      </View>
+      <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
     </ThemeProvider>
   );
 };
