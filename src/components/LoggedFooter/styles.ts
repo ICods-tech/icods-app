@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View`
     flex-direction: row;
-    background-color: ${({theme}) => theme.colors.cloudly};
+    background-color: ${({ theme }) => theme.colors.cloudly};
     
     height: ${RFValue(56)}px;
     width: 100%;
@@ -24,26 +24,28 @@ export const FooterButton = styled(RectButton)`
 `;
 
 interface ButtonSelectedProps {
-    selected?: boolean;
+    selected: boolean;
 }
 
 export const BorderTop = styled.View<ButtonSelectedProps>`
+    position: absolute;
+    top: 0;
     height: ${RFValue(2)}px;
     width: ${RFValue(24)}px;
-    background-color: ${({theme, selected}) => selected ? theme.colors.primary : theme.colors.background};    
+    background-color: ${({ theme, selected }) => selected ? theme.colors.primary : theme.colors.background};    
 `;
 
 export const FooterButtonTitle = styled.Text<ButtonSelectedProps>`
     font-size: ${RFValue(9)}px;
-    color: ${({theme}) => theme.colors.title};
+    color: ${({ theme }) => theme.colors.title};
     font-family: 'Manrope-Light';
     /* background-color: cyan; */
     
-    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.002}px;
     
-    ${({selected}) => selected && 
-    css`
-        color: ${({theme}) => theme.colors.primary} 
+    ${({ selected }) => selected &&
+        css`
+        color: ${({ theme }) => theme.colors.primary} 
         font-family: 'Manrope-Bold';
     `};
     margin-bottom: 6px;

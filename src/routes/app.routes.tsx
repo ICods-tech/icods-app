@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
@@ -8,15 +8,17 @@ import History from '../pages/History';
 import Scanner from '../pages/Scanner';
 import Working from '../pages/Working';
 
-import SocialActivatedIcon from '../assets/images/Icons/footer/activated-social.svg';
-import SocialDeactivatedIcon from '../assets/images/Icons/footer/socialDark.svg';
-import NotificationsDeactivatedIcon from '../assets/images/Icons/footer/deactivated-bell.svg';
 import NotificationsActivatedIcon from '../assets/images/Icons/footer/activated-bell.svg';
 import ActivatedHistoryIcon from '../assets/images/Icons/footer/activated-history.svg';
-import DeactivatedHistoryIcon from '../assets/images/Icons/footer/deactivated-history.svg';
 import ActivatedHomeIcon from '../assets/images/Icons/footer/activated-home.svg';
+import SocialActivatedIcon from '../assets/images/Icons/footer/activated-social.svg';
+import NotificationsDeactivatedIcon from '../assets/images/Icons/footer/deactivated-bell.svg';
+import DeactivatedHistoryIcon from '../assets/images/Icons/footer/deactivated-history.svg';
 import DeactivatedHomeIcon from '../assets/images/Icons/footer/deactivated-home.svg';
+import SocialDeactivatedIcon from '../assets/images/Icons/footer/socialDark.svg';
+import BorderMenu from '../components/BorderMenu';
 import { ScannerButton } from '../components/ScannerButton';
+import { DashboardRoutes } from './dashboard.routes';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -85,71 +87,66 @@ export const AppRoutes = () => {
       }}>
       <Screen
         name="Início"
-        component={Dashboard}
+        component={DashboardRoutes}
         options={{
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <ActivatedHomeIcon width={RFValue(24)} height={RFValue(24)} />
-            ) : (
-              <DeactivatedHomeIcon width={RFValue(24)} height={RFValue(24)} />
-            ),
+          tabBarIcon: ({ focused }) => (
+            <BorderMenu
+              selected={focused}
+              activatedIcon={ActivatedHomeIcon}
+              deactivatedIcon={DeactivatedHomeIcon}
+            />
+          ),
         }}
       />
       <Screen
         name="Histórico"
         component={History}
         options={{
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <ActivatedHistoryIcon width={RFValue(24)} height={RFValue(24)} />
-            ) : (
-              <DeactivatedHistoryIcon
-                width={RFValue(24)}
-                height={RFValue(24)}
+          tabBarIcon: ({ focused }) => {
+            return (
+              <BorderMenu
+                selected={focused}
+                activatedIcon={ActivatedHistoryIcon}
+                deactivatedIcon={DeactivatedHistoryIcon}
               />
-            ),
+            );
+          },
         }}
       />
       <Screen
         name="Escanear"
         component={Scanner}
         options={{
-          tabBarIcon: () => (
-            <ScannerButton />)
+          tabBarIcon: () => <ScannerButton />,
         }}
       />
-
 
       <Screen
         name="Notificação"
         component={Working}
         options={{
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <NotificationsActivatedIcon
-                width={RFValue(24)}
-                height={RFValue(24)}
-              />
-            ) : (
-              <NotificationsDeactivatedIcon
-                width={RFValue(24)}
-                height={RFValue(24)}
-              />
-            ),
+          tabBarIcon: ({ focused }) => (
+            <BorderMenu
+              selected={focused}
+              activatedIcon={NotificationsActivatedIcon}
+              deactivatedIcon={NotificationsDeactivatedIcon}
+            />
+          ),
         }}
       />
       <Screen
         name="Social"
         component={Working}
         options={{
-          tabBarIcon: ({ focused }) =>
-            focused ? (
-              <SocialActivatedIcon width={RFValue(24)} height={RFValue(24)} />
-            ) : (
-              <SocialDeactivatedIcon width={RFValue(24)} height={RFValue(24)} />
-            ),
+          tabBarIcon: ({ focused }) => (
+            <BorderMenu
+              selected={focused}
+              activatedIcon={SocialActivatedIcon}
+              deactivatedIcon={SocialDeactivatedIcon}
+            />
+          ),
         }}
       />
-    </Navigator> //
+    </Navigator>
   );
 };

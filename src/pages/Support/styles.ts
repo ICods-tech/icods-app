@@ -13,10 +13,10 @@ export const Header = styled.View`
 export const Title = styled.Text`
     font-size: ${RFValue(26)}px;
 
-    font-family: ${({theme}) => theme.fonts.extra_bold};
-    color: ${({theme}) => theme.colors.title};
+    font-family: ${({ theme }) => theme.fonts.extra_bold};
+    color: ${({ theme }) => theme.colors.title};
     
-    letter-spacing: ${Dimensions.get('window').width*0.001}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.001}px;
     
     margin-left: ${RFValue(17)}px;
     margin-bottom: 4px;
@@ -25,6 +25,8 @@ export const Title = styled.Text`
 const styles = StyleSheet.create({
   container: {
     marginTop: Platform.OS === 'ios' ? 2 : 2,
+    height: "100%",
+    backgroundColor: '#FFF'
   },
   header: {
     display: 'flex',

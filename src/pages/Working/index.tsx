@@ -4,16 +4,7 @@ import { Container, Message, Title } from './styes';
 import WorkingImage from '../../assets/images/Icons/working.svg'
 import LoggedFooter from "../../components/LoggedFooter";
 
-interface IWorkingProps {
-    route: {
-        params: {
-            type?: 'Notification' | 'Social'
-        }
-    }
-}
-
-const Working = ({ route }: IWorkingProps) => {
-    const type = route.params === undefined ? null : route.params.type;
+const Working = () => {
     return (
         <>
             <Container>

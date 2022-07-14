@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
 import {
   CloudLargeContainer,
   CloudSmallContainer,
@@ -18,23 +18,22 @@ import {
   HightLightListContainer,
   WelcomeContainer,
   WelcomeTitle,
-  WelcomeTitleContainer,
+  WelcomeTitleContainer
 } from './styles';
 
-import {useAuth} from '../../hooks/auth';
-import {useTheme} from 'styled-components';
-import {HighlightButton} from '../../components/Dashboard/HighlightButton';
-import {ModalMoreDashboard} from '../../components/Dashboard/ModalMoreDashboard';
+import { useTheme } from 'styled-components';
+import { HighlightButton } from '../../components/Dashboard/HighlightButton';
+import { ModalMoreDashboard } from '../../components/Dashboard/ModalMoreDashboard';
+import { useAuth } from '../../hooks/auth';
 
-import HeaderDashboard from '../../components/Dashboard/HeaderDashboard';
-import extractNameAndSurname from '../../utils/extractNameAndSurname';
-import LoggedFooter from '../../components/LoggedFooter';
-import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
+import analytics from '@react-native-firebase/analytics';
 import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
-import SocialIcon from '../../assets/images/Icons/social.svg';
+import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
 import HistoryIcon from '../../assets/images/Icons/history.svg';
 import ScanIcon from '../../assets/images/Icons/qrcode_scan.svg';
-import analytics from '@react-native-firebase/analytics';
+import SocialIcon from '../../assets/images/Icons/social.svg';
+import HeaderDashboard from '../../components/Dashboard/HeaderDashboard';
+import extractNameAndSurname from '../../utils/extractNameAndSurname';
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -43,10 +42,10 @@ const Dashboard = () => {
     'all' | 'mine'
   >('all');
   const [modalVisible, setModalVisible] = useState(false);
-  const {user, signOut} = useAuth();
-  const {name, lastname} = user
+  const { user, signOut } = useAuth();
+  const { name, lastname } = user
     ? extractNameAndSurname(user.username)
-    : {name: '', lastname: ''};
+    : { name: '', lastname: '' };
   const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
   const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
 
@@ -98,9 +97,9 @@ const Dashboard = () => {
           <WelcomeTitle>Bem vindo{'\n'}ao iCODS!</WelcomeTitle>
 
           <CloudLargeContainer>
-            <CloudLeftLarge style={{position: 'absolute', left: 15, top: 0}} />
+            <CloudLeftLarge style={{ position: 'absolute', left: 15, top: 0 }} />
             <CloudRightSmall
-              style={{position: 'absolute', right: 15, bottom: 0}}
+              style={{ position: 'absolute', right: 15, bottom: 0 }}
             />
           </CloudLargeContainer>
         </WelcomeTitleContainer>
@@ -114,19 +113,19 @@ const Dashboard = () => {
           <HighlightButton
             text="Escanear"
             icon={ScanIcon}
-            onPress={() => navigation.navigate('Scanner')}
+            onPress={() => navigation.navigate('Escanear')}
           />
 
           <HighlightButton
             text="Histórico"
             icon={HistoryIcon}
-            onPress={() => navigation.navigate('History')}
+            onPress={() => navigation.navigate('Histórico')}
           />
 
           <HighlightButton
             text="Social"
             icon={SocialIcon}
-            onPress={() => navigation.navigate('Working', {type: 'Social'})}
+            onPress={() => navigation.navigate('Social')}
           />
         </HighlightButtonList>
       </HightLightListContainer>
