@@ -8,9 +8,13 @@ export const Container = styled.View`
   margin-top: ${RFValue(20)}px;
 `;
 
-export const Title = styled.Text`
+interface ITitleProps {
+  whiteMode: boolean;
+}
+
+export const Title = styled.Text<ITitleProps>`
   font-family: ${({ theme }) => theme.fonts.semi_bold};
   font-size: ${RFValue(24)};
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ whiteMode, theme }) => whiteMode ? theme.colors.shape : theme.colors.title};
   margin-left: ${RFValue(16)};
 `;

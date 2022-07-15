@@ -187,7 +187,6 @@ export function FilterModal({
 
 const calendarStyles = StyleSheet.create({
   calendarContainer: {
-    display: 'flex',
     width: RFValue(250),
     alignSelf: 'center',
     alignItems: 'center',

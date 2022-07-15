@@ -1,9 +1,8 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Platform } from 'react-native';
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     backgroundColor: '#F2F2F2',
     position: 'absolute',
     height: 56,

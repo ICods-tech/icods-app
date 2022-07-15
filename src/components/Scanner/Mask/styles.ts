@@ -1,6 +1,6 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
   },
 
   square: {
-    display: 'flex',
     flexDirection: 'row',
     height: width * 0.7,
   },
@@ -35,14 +34,12 @@ const styles = StyleSheet.create({
   },
 
   squareBordersTop: {
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: width * 0.7 * 0.5,
   },
 
   squareBordersBottom: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'space-between',

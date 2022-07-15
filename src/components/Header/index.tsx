@@ -8,10 +8,10 @@ import { Container, Title } from './styles';
 interface HeaderProps {
   title: string;
   navigate: string;
-  isVideoPlayer?: boolean;
+  whiteMode?: boolean;
 }
 
-const Header = ({ title, navigate, isVideoPlayer }: HeaderProps): JSX.Element => {
+const Header = ({ title, navigate, whiteMode = false }: HeaderProps): JSX.Element => {
   const navigation = useNavigation<any>();
 
   return (
@@ -24,9 +24,9 @@ const Header = ({ title, navigate, isVideoPlayer }: HeaderProps): JSX.Element =>
             navigation.navigate(`${navigate}`);
           }
         }}>
-        {isVideoPlayer ? <BackButtonWhite /> : <BackButton />}
+        {whiteMode ? <BackButtonWhite /> : <BackButton />}
       </TouchableOpacity>
-      <Title>
+      <Title whiteMode={whiteMode}>
         {title}
       </Title>
     </Container>

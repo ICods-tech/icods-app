@@ -3,7 +3,6 @@ import { Dimensions, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   blockStyle: {
-    display: 'flex',
     flexDirection: 'column',
     width: 128,
     height: 128,

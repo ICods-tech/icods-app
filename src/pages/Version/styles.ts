@@ -36,7 +36,7 @@ export const HeaderText = styled.Text`
   font-size: ${RFValue(24)}px;
   line-height: ${RFValue(22)}px;
   align-self: center;
-  letter-spacing: ${Dimensions.get('window').width*0.002}px;
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   color: #FFF;
   align-self: center;
   justify-content: center;
@@ -50,6 +50,6 @@ export const FooterText = styled.Text`
   font-size: ${RFValue(16)}px;
   line-height: ${RFValue(22)}px;
   text-align: center;
-  letter-spacing: ${Dimensions.get('window').width*0.002}px;
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   color: #FFF;
 `

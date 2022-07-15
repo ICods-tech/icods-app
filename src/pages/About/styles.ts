@@ -15,10 +15,7 @@ export const Container = styled.View`
   padding: 0 ${RFValue(15)}px;
 `
 
-export const CategoriesOuterContainer = styled.View``
-
 export const CategoriesInnerContainer = styled.View`
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
@@ -31,8 +28,7 @@ export const AboutButtonContainer = styled.View`
 
 
 export const CategoriesHeader = styled.View`
-  display: flex;
-  margin-top: ${RFValue(20)}px;
+  margin-top: ${RFValue(56)}px;
   margin-bottom: ${RFValue(56)}px;
 `
 

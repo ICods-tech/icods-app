@@ -40,19 +40,21 @@ export const BodyMessage = styled.Text`
   letter-spacing: ${Dimensions.get('window').width * 0.0005}px;
 `;
 
-export const InputContainer = styled.View`
+export const InputContainer = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+})`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.cloudly};
   margin-top: ${RFValue(36)}px;
   margin-bottom: ${RFValue(36)}px;
   height: ${RFValue(232)}px;
-
   padding: 0 ${RFValue(23)}px;
+
 `;
 
 export const ContainerButton = styled.View`
   width: 80%;
-  margin-top: ${RFValue(38)}px;
+  margin-top: ${RFValue(16)}px;
   margin-bottom: ${RFValue(36)}px;
   height: ${RFValue(38)}px;
   align-items: center;
