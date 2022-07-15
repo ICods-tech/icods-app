@@ -42,14 +42,21 @@ export const BodyMessage = styled.Text`
 
 export const InputContainer = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    height: RFValue(232),
+  }
 })`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.cloudly};
   margin-top: ${RFValue(36)}px;
   margin-bottom: ${RFValue(36)}px;
-  height: ${RFValue(232)}px;
-  padding: 0 ${RFValue(23)}px;
+  padding: ${RFValue(18)}px;
+`;
 
+export const Input = styled.TextInput`
+  height: 100%;
+  width: 100%;
+  text-align: justify;
 `;
 
 export const ContainerButton = styled.View`

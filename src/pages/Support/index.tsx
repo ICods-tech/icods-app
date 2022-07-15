@@ -17,8 +17,11 @@ import {
   CloudRightSmall,
   Container,
   ContainerBodyMessage,
-  ContainerButton, InputContainer
+  ContainerButton,
+  InputContainer,
+  Input
 } from './styles';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const Support = () => {
   const theme = useTheme();
@@ -26,6 +29,7 @@ const Support = () => {
   const [supportMessage, setSupportMessage] = useState<string>('');
 
   const handleEmail = useCallback(() => {
+    // TODO: Ajeitar o envio do email
     if (Platform.OS !== 'ios') {
       const emailTo = 'contato@icods.com.br';
       email(emailTo, {
@@ -42,8 +46,6 @@ const Support = () => {
     });
   }, [supportMessage]);
 
-  const navigation = useNavigation<any>();
-
   return (
     <Container>
       <Header title={'Suporte'} navigate="back" />
@@ -56,7 +58,8 @@ const Support = () => {
         </BodyMessage>
       </ContainerBodyMessage>
       <InputContainer>
-        <TextInput
+        <Input
+          style={{ textAlignVertical: 'top' }}
           placeholder="Mensagem"
           multiline
           value={supportMessage}

@@ -42,7 +42,6 @@ export const CategoriesText = styled.Text`
 `
 
 export const CategoryContainer = styled.TouchableOpacity`
-  display: flex;
   flex-direction: row;
   height: ${RFValue(42)}px;
   align-items: center;

@@ -10,7 +10,6 @@ export const Container = styled.SafeAreaView`
 `;
 
 export const HeaderContainer = styled.View`
-  display: flex;
   flex-direction: row;
   align-self: flex-start;
   align-items: center;
@@ -20,7 +19,6 @@ export const HeaderContainer = styled.View`
 `
 
 export const FooterContainer = styled.View`
-  display: flex;
   flex-direction: column;
   align-self: center;
   align-items: center;

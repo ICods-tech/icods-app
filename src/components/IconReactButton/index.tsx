@@ -14,7 +14,7 @@ interface IconRectButtonProps extends RectButtonProps {
 }
 
 
-export function IconRectButton({ text, noIcon, icon: Icon, color, ...rest }: IconRectButtonProps) {
+export function IconReactButton({ text, noIcon, icon: Icon, color, ...rest }: IconRectButtonProps) {
     const content = (
         <Button color={color!} {...rest}>
             {noIcon ? <IconContainer>

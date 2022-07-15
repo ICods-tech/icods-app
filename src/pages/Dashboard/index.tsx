@@ -94,7 +94,7 @@ const Dashboard = () => {
 
       <WelcomeContainer>
         <WelcomeTitleContainer>
-          <WelcomeTitle>Bem vindo{'\n'}ao iCODS!</WelcomeTitle>
+          <WelcomeTitle>Bem vindo{'\n'}ao iCods!</WelcomeTitle>
 
           <CloudLargeContainer>
             <CloudLeftLarge style={{ position: 'absolute', left: 15, top: 0 }} />

@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import Mask from '../../components/Scanner/Mask';
-import styles from './styles';
 import api from '../../services/api';
+import styles from './styles';
 
-import { View, Text, SafeAreaView } from 'react-native';
-import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
-import { QRCode } from '../../types/QRCode';
-import { useAuth } from '../../hooks/auth';
 import { useNavigation } from '@react-navigation/native';
-import { checkConnection } from '../../utils/checkConnection';
-import { LOG } from '../../config';
+import { SafeAreaView, Text, View } from 'react-native';
+import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
+import { SvgProps } from 'react-native-svg';
 import { useTheme } from 'styled-components/native';
 import { WarningModal } from '../../components/WarningModal';
-import { SvgProps } from 'react-native-svg';
+import { LOG } from '../../config';
+import { useAuth } from '../../hooks/auth';
+import { QRCode } from '../../types/QRCode';
+import { checkConnection } from '../../utils/checkConnection';
 
 import CancelIcon from '../../assets/images/Icons/scanner/cancel_icon.svg';
 import CheckIcon from '../../assets/images/Icons/scanner/check_icon.svg';
 import CloudSyncIcon from '../../assets/images/Icons/scanner/cloud_sync_icon.svg';
+import EyeCloseIcon from '../../assets/images/Icons/scanner/eye_close_icon.svg';
 import GiftIcon from '../../assets/images/Icons/scanner/gift_icon.svg';
 import EdicionIcon from '../../assets/images/Icons/scanner/login_icon.svg';
-import EyeCloseIcon from '../../assets/images/Icons/scanner/eye_close_icon.svg';
 import theme from '../../global/styles/theme';
 import { useBackHandler } from '../../utils/useBackHandler';
 
@@ -237,7 +237,7 @@ const Scanner = (props: ScannerProps) => {
         <Mask read={qrCodeValidate} />
 
         <View style={styles.textContainer}>
-          <Header page="Escanear" navigate={page} color={theme.colors.shape} />
+          <Header title="Escanear" navigate={page} whiteMode={true} />
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Text style={styles.textParagraph}>
               Aponte o QR CODE para região abaixo
@@ -258,6 +258,7 @@ const Scanner = (props: ScannerProps) => {
         />
       </RNCamera>
     </SafeAreaView>
+
   );
 };
 

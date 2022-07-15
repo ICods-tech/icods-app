@@ -31,7 +31,7 @@ import { useTheme } from 'styled-components';
 import { SubmitButton } from '../../components/Authentication/SubmitButton';
 import { LOG } from '../../config';
 import { Message, Password, User } from 'react-native-iconly';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import ModalUseTerms from '../../components/ModalUseTerms';
 import analytics from '@react-native-firebase/analytics';
@@ -81,7 +81,7 @@ const Register = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
 
-  
+
 
   function handleResetIsErrored() {
     setIsErrored({
@@ -202,7 +202,7 @@ const Register = () => {
           <ScrollRegister keyboardShouldPersistTaps="handled">
             <Form isKeyboardVisible={isKeyboardVisible}>
               <RegisterTitle>
-                Fazer uma conta no iCODS é simples e rápido, basta preencher os
+                Fazer uma conta no iCods é simples e rápido, basta preencher os
                 campos!
               </RegisterTitle>
 

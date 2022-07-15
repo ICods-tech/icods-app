@@ -8,17 +8,14 @@ import { Dimensions } from 'react-native';
 import { Edit } from 'react-native-iconly';
 
 export const Container = styled.View`
-  display: flex;
   flex-direction: row;
 `
 
 export const BackButtonContainer = styled.View`
-  display: flex;
   flex-direction: row;
 `
 
 export const ProfileContainer = styled.View`
-  display: flex;
   flexDirection: row;
   marginTop: ${RFValue(-30)}px;
   alignItems: center;
@@ -26,7 +23,6 @@ export const ProfileContainer = styled.View`
 `
 
 export const MiddleProfileContainer = styled.View`
-  display: flex;
   flexDirection: column;
   alignItems: center;
   justifyContent: center;
@@ -44,7 +40,7 @@ export const WhiteText = styled.Text`
   font-style: normal;
   font-weight: 700;
   font-size: ${RFValue(16)}px;
-  letter-spacing: ${Dimensions.get('window').width*0.002}px;
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `
 
 export const WhiteTextName = styled.Text`
@@ -61,13 +57,12 @@ export const WhiteTextNumbers = styled.Text`
   font-style: normal;
   font-weight: 700;
   font-size: ${RFValue(16)}px;
-  letter-spacing: ${Dimensions.get('window').width*0.002}px;
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   margin-top: ${RFValue(12)}px;
   margin-bottom: ${RFValue(-60)}px;
 `
 
 export const FollowingFollowersContainers = styled.View`
-  display: flex;
   flexDirection: row;
   justifyContent: space-around;
   marginTop: ${RFValue(18)}px;
@@ -79,7 +74,6 @@ export const Connections = styled.View`
 `
 
 export const LeftCloudsContainer = styled.View`
-  display: flex;
   flexDirection: column;
   justifyContent: flex-end;
   width: ${RFValue(100)}px;
@@ -87,16 +81,13 @@ export const LeftCloudsContainer = styled.View`
 `
 
 export const ProfilePictureContainer = styled.View`
-  display: flex;
 `
 
 export const HeaderInformation = styled.View`
-  display: flex;
   flex-direction: column;
 `
 
 export const RightCloudsContainer = styled.View`
-  display: flex;
   flex-direction: column;
   align-items: center;
   width: ${RFValue(100)}px;
@@ -133,7 +124,6 @@ export const HeaderContainerBackground = styled(Header)`
 `
 
 export const CloudLeftContainer = styled(CloudLeft)`
-  display: flex;
   margin-left: ${RFValue(18)}px;
 `
 

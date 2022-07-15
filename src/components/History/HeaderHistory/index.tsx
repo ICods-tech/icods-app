@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   Container,
-  Header,
   OptionalButtonsContainer,
   SearchContainer,
   Title,
@@ -15,6 +14,7 @@ import { FilterButton } from '../../FilterButton';
 import { Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { FilterModal } from '../FilterModal';
 import { Moment } from 'moment';
+import Header from '../../Header';
 
 interface HeaderHistoryProps {
   favorite: boolean;
@@ -44,7 +44,6 @@ export function HeaderHistory({
   setSelectedDate,
   selectedDate,
 }: HeaderHistoryProps) {
-  const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const theme = useTheme();
   const [searchEntry, setSearchEntry] = useState('');
@@ -56,13 +55,7 @@ export function HeaderHistory({
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
-        <Header>
-          <BackButton
-            customFunction={backButtonPressed}
-            navigationTo={backButtonPressed ? 'WAIT' : ''}
-          />
-          <Title>Histórico</Title>
-        </Header>
+        <Header title='Histórico' navigate='back' customBackBehavior={backButtonPressed} />
         {!qrCodeDetails && (
           <SearchContainer>
             <SearchInput

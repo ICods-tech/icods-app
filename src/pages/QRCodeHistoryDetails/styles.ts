@@ -11,15 +11,16 @@ export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const Content = styled.View`
-  flex: 1;
-  margin-top: ${RFValue(18)}px;
-  align-items: center;
-  flex-direction: column;
+export const Content = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    alignItems: 'center',
+  },
+})`
+  margin-top: ${RFValue(38)}px;
 `;
 
 export const SaveChangesContainer = styled.View`
-  display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: ${RFValue(20)}px;
@@ -35,14 +36,12 @@ export const QRCodeContainer = styled.View`
 `;
 
 export const QRCodeInfoTopContainer = styled.View`
-  display: flex;
   width: ${RFValue(320)}px;
   flex-direction: row;
   justify-content: flex-end;
 `;
 
 export const IconsContainer = styled.View`
-  display: flex;
   margin-top: ${RFPercentage(2.5)}px;
   flex-direction: column;
   margin-right: ${RFPercentage(3.8)}px;
@@ -151,3 +150,7 @@ export const OptionsButtonsQRContainer = styled.View`
   justify-content: space-between;
   align-items: center;
 `;
+
+export const ContainerButton = styled.View`
+  margin-bottom: ${RFValue(100)}px;
+`

@@ -8,7 +8,6 @@ export const Button = styled(BorderlessButton)`
 `;
 
 export const ShareItemContainer = styled.View`
-    display: flex; 
     align-items: center;
     justify-content: center;
     width: ${RFValue(32)}px;

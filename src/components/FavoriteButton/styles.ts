@@ -1,8 +1,8 @@
 import styled from 'styled-components/native';
 import NotFavorited from '../../assets/images/Icons/favorite_search.svg';
 import Favorited from '../../assets/images/Icons/favorited_search.svg';
-import {BorderlessButton} from 'react-native-gesture-handler';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface FavoriteItemContainerProps {
   background: 'WHITE' | 'BLUE';
@@ -19,18 +19,17 @@ export const NotFavoriteIcon = styled(NotFavorited).attrs({
 })``;
 
 export const FavoriteItemContainer = styled.View<FavoriteItemContainerProps>`
-  display: flex;
   align-items: center;
   justify-content: center;
   width: ${RFValue(32)}px;
   height: ${RFValue(32)}px;
   border-radius: ${RFValue(16)}px;
-  background: ${({background, theme}) =>
+  background: ${({ background, theme }) =>
     background === 'WHITE' ? theme.colors.shape : theme.colors.primary};
   shadow-color: black;
   shadow-opacity: 1;
   shadow-radius: 32px;
-  elevation: ${({background}) => (background === 'WHITE' ? 6 : 0)};
+  elevation: ${({ background }) => (background === 'WHITE' ? 6 : 0)};
 `;
 
 export const FavoritedIcon = styled(Favorited).attrs({

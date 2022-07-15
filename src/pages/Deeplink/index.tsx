@@ -4,7 +4,7 @@ import { CloseSquare, Edit, Hide, Login, Play } from 'react-native-iconly';
 import { RFPercentage } from 'react-native-responsive-fontsize';
 import CloudSyncIcon from '../../assets/images/Icons/cloud_sync_icon_lg.svg';
 import Pulse from '../../assets/images/Icons/editor/pulse.svg';
-import { IconRectButton } from '../../components/IconRectButton';
+import { IconReactButton } from '../../components/IconReactButton';
 import { LOG } from '../../config';
 import theme from '../../global/styles/theme';
 import { useAuth } from '../../hooks/auth';
@@ -68,7 +68,7 @@ const DeepLink = ({ route, _ }: any) => {
       description: 'Esse QR Code está pronto para ser personalizado do seu jeito!',
       icon: <Edit size={RFPercentage(6)} set="bold" primaryColor="white" />,
       iconBackgroundColor: 'BLUE',
-      button: <IconRectButton
+      button: <IconReactButton
         text='Editar QR Code'
         onPress={() => {
           navigation.navigate('Editor' as never, { qrcode, isHistoryDetails: false } as never);
@@ -85,7 +85,7 @@ const DeepLink = ({ route, _ }: any) => {
       description: 'Você acaba de receber um vídeo único e especial, visualize e aproveite!',
       icon: <Play size={RFPercentage(18)} set="bulk" primaryColor='white' secondaryColor='#2B90D9' />,
       iconBackgroundColor: 'BLUE',
-      button: <IconRectButton
+      button: <IconReactButton
         text='Visualizar Vídeo'
         onPress={() => {
           navigation.navigate('VideoPlayer' as never, { qrcode, isHistoryDetails: false } as never);
@@ -101,7 +101,7 @@ const DeepLink = ({ route, _ }: any) => {
       description: 'Esse QR Code não faz parte do iCods, adquira um QR Code nas lojas parceiras ou entre em contato conosco!',
       icon: <CloseSquare size={RFPercentage(18)} set="bulk" primaryColor='white' secondaryColor='#DF2C2C' />,
       iconBackgroundColor: 'RED',
-      button: <IconRectButton
+      button: <IconReactButton
         text='Voltar'
         onPress={() => {
           navigation.navigate(userConditionalPage);
@@ -118,7 +118,7 @@ const DeepLink = ({ route, _ }: any) => {
       description: 'Poxa...Esse QR Code já foi lido por outro usuário, tente escanear outro!',
       icon: <Hide size={RFPercentage(8)} set="bold" primaryColor='white' />,
       iconBackgroundColor: 'RED',
-      button: <IconRectButton
+      button: <IconReactButton
         text='Voltar'
         onPress={() => {
           navigation.navigate(userConditionalPage);
@@ -132,7 +132,7 @@ const DeepLink = ({ route, _ }: any) => {
       description: 'É necessário entrar na sua conta, para prosseguir na edição do vídeo.',
       icon: <Login size={RFPercentage(8)} set="bold" primaryColor='white' />,
       iconBackgroundColor: 'BLUE',
-      button: <IconRectButton
+      button: <IconReactButton
         text='Fazer Login'
         onPress={() => {
           navigation.navigate(userConditionalPage);
@@ -156,7 +156,7 @@ const DeepLink = ({ route, _ }: any) => {
       description: 'Estamos processando seu iCod e garantimos que será rapido! Assim que concluído, você ja pode presenteá-lo!',
       icon: <CloudSyncIcon />,
       iconBackgroundColor: 'BLUE',
-      button: <IconRectButton
+      button: <IconReactButton
         text={notProcessedTimer === 0 ? 'Tentar novamente' : `Aguarde ${notProcessedTimer} seg`}
         color={notProcessedTimer === 0 ? 'Blue' : 'Gray'}
         onPress={async () => {
@@ -191,8 +191,8 @@ const DeepLink = ({ route, _ }: any) => {
     console.log('verifyQRCodeContent', qrCode);
     const userQueFunciona = await easyFunc()
 
-    console.log('USER QUE FUNCIONA OU NÃO',((userQueFunciona as any)?.id ));
-    
+    console.log('USER QUE FUNCIONA OU NÃO', ((userQueFunciona as any)?.id));
+
     if (qrCode.status === 'INACTIVE' && !userQueFunciona) {
       console.log('GARANTIDO');
       qrCodeIsNotActiveBecauseUserIsNotLogged();
@@ -207,7 +207,7 @@ const DeepLink = ({ route, _ }: any) => {
 
     if (qrCode.status === 'ACTIVE') {
       const { id } = qrCode;
-      if (qrCode.receivedUser === null || qrCode.receivedUser.id === ((userQueFunciona as any)?.id )) {
+      if (qrCode.receivedUser === null || qrCode.receivedUser.id === ((userQueFunciona as any)?.id)) {
         await qrCodeContainsGift(id, !!qrCode.receivedUser);
       }
       else {
@@ -247,21 +247,21 @@ const DeepLink = ({ route, _ }: any) => {
   console.log('USEFECTANDO');
   useEffect(() => {
     console.log('USEFECTANDO  -> 1');
-    
+
     handleQRCode(qrCodeIdFromDeeplink)
   }, [])
-  
+
   useEffect(() => {
     console.log('USEFECTANDO  -> 2');
     if (notProcessedTimer !== 0) {
       const timer = setTimeout(() => {
         setNotProcessedTimer(notProcessedTimer - 1);
       }, 1000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [qrCodeIdFromDeeplink, deeplinkStatus, notProcessedTimer])
-  
+
   return possibleQrCodeStatus[deeplinkStatus]()
 };
 

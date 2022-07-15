@@ -10,15 +10,16 @@ import { ColorsSelect } from '../../components/ColorsSelect';
 import { FavoriteButton } from '../../components/FavoriteButton';
 import { colorsIconsList } from '../../components/History/FilterModal';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
-import { IconRectButton } from '../../components/IconRectButton';
+import { IconReactButton } from '../../components/IconReactButton';
 import { ShareButton } from '../../components/ShareButton';
 import { WarningModal } from '../../components/WarningModal';
 import { Colors } from '../../interfaces/colors';
 import api from '../../services/api';
 import {
   ColorSelectContainer, Container,
+  ContainerButton,
   Content, IconsContainer, OptionsButtonsQRContainer, QRCodeContainer,
-  QRCodeImgContainer, QRCodeInfoContainer, QRCodeInfoTopContainer, QRCodeTemplateImg, SaveChangesContainer, Separator, TitleColorSelect, TitleQRCode
+  QRCodeImgContainer, QRCodeInfoContainer, QRCodeInfoTopContainer, QRCodeTemplateImg, Separator, TitleColorSelect, TitleQRCode
 } from './styles';
 
 import { useBackHandler } from '../../utils/useBackHandler';
@@ -113,10 +114,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         favorite={false}
         qrCodeDetails={true}
         backButtonPressed={() => {
-          const colorIsDifferent = updatedColor !== lastSavedColor
-          const favoriteIsDifferent = updatedFavorite !== lastSavedFavorite
-
-          if (colorIsDifferent || favoriteIsDifferent) {
+          if (isQRCodeChangesWithoutSave()) {
             handleOpenModal()
           } else {
             onGoBack(changesWereMade)
@@ -174,7 +172,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
             />
           </ColorSelectContainer>
           <OptionsButtonsQRContainer>
-            <IconRectButton
+            <IconReactButton
               color={'White'}
               onPress={() => { }}
               style={{ width: RFValue(212) }}
@@ -182,7 +180,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
               icon={UnlockIcon}
             />
             <Separator />
-            <IconRectButton
+            <IconReactButton
               color={'White'}
               onPress={() => {
                 if (link) {
@@ -202,29 +200,31 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
             />
           </OptionsButtonsQRContainer>
         </QRCodeInfoContainer>
-        <IconRectButton
-          onPress={() => {
-            const colorsAreDifferent = updatedColor !== lastSavedColor
-            const favoritesAreDifferent = updatedFavorite !== lastSavedFavorite
+        <ContainerButton>
+          <IconReactButton
+            onPress={() => {
+              const colorsAreDifferent = updatedColor !== lastSavedColor
+              const favoritesAreDifferent = updatedFavorite !== lastSavedFavorite
 
-            if (colorsAreDifferent || favoritesAreDifferent) {
-              colorsAreDifferent && handleChangeQRCodeColor(updatedColor)
-              favoritesAreDifferent && handleFavoriteQRCode(id)
-              Toast.show({
-                type: 'success',
-                position: 'bottom',
-                text1: 'As alterações foram salvas com sucesso',
-                visibilityTime: 1200,
-                bottomOffset: 100,
-              })
+              if (colorsAreDifferent || favoritesAreDifferent) {
+                colorsAreDifferent && handleChangeQRCodeColor(updatedColor)
+                favoritesAreDifferent && handleFavoriteQRCode(id)
+                Toast.show({
+                  type: 'success',
+                  position: 'bottom',
+                  text1: 'As alterações foram salvas com sucesso',
+                  visibilityTime: 1200,
+                  bottomOffset: 100,
+                })
 
-              setChangesWereMade(true)
-            }
-          }}
-          style={{ width: RFValue(212) }}
-          text="Salvar alterações"
-          icon={SaveIcon}
-        />
+                setChangesWereMade(true)
+              }
+            }}
+            style={{ width: RFValue(212) }}
+            text="Salvar alterações"
+            icon={SaveIcon}
+          />
+        </ContainerButton>
       </Content>
 
     </Container >

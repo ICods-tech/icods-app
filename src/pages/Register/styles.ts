@@ -1,8 +1,8 @@
-import styled, {css} from 'styled-components/native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Dimensions} from 'react-native';
-import {getStatusBarHeight} from 'react-native-iphone-x-helper';
-import {RectButton} from 'react-native-gesture-handler';
+import styled, { css } from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { RectButton } from 'react-native-gesture-handler';
 
 interface Props {
   isKeyboardVisible: boolean;
@@ -18,11 +18,11 @@ export const ScrollRegister = styled.ScrollView.attrs({
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.shape};
 `;
 export const BackButtonContainer = styled.View<Props>`
   position: absolute;
-  top: ${({isKeyboardVisible}) =>
+  top: ${({ isKeyboardVisible }) =>
     isKeyboardVisible ? RFValue(34) : RFValue(21) + getStatusBarHeight()}px;
   left: ${RFValue(16)}px;
 `;
@@ -36,10 +36,10 @@ export const Form = styled.View<Props>`
 export const RegisterTitle = styled.Text`
   text-align: center;
   font-size: ${RFValue(16)}px;
-  font-family: ${({theme}) => theme.fonts.regular};
+  font-family: ${({ theme }) => theme.fonts.regular};
   margin-bottom: ${RFValue(17)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  color: ${({theme}) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.title};
 `;
 
 export const InputContainer = styled.View``;
@@ -49,7 +49,6 @@ export const SubmitButtonContainer = styled.View`
 `;
 
 export const UseTermsContainer = styled.View`
-  display: flex;
   flex-direction: row;
 
   align-items: center;
@@ -59,10 +58,9 @@ export const UseTermsContainer = styled.View`
 `;
 
 export const UseTermsConfirmedButton = styled(RectButton)`
-  display: flex;
   flex-direction: row;
   padding: ${RFValue(2)}px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.shape};
   border-radius: ${RFValue(16)}px;
 `;
 
@@ -74,21 +72,21 @@ export const UseTermsChecked = styled.View<UseTermsProps>`
   width: ${RFValue(12)}px;
   height: ${RFValue(12)}px;
   border-radius: ${RFValue(2)}px;
-  background-color: ${({theme}) => theme.colors.shape};
-  ${({useTermsPressed, theme}) =>
+  background-color: ${({ theme }) => theme.colors.shape};
+  ${({ useTermsPressed, theme }) =>
     useTermsPressed &&
     css`
       background-color: ${theme.colors.primary};
     `}
 
   border-width: 1px;
-  border-color: ${({theme}) => theme.colors.gray};
+  border-color: ${({ theme }) => theme.colors.gray};
 `;
 
 export const UseTermsText = styled.Text`
   font-size: ${RFValue(9.89)}px;
-  font-family: ${({theme}) => theme.fonts.regular};
-  color: ${({theme}) => theme.colors.gray};
+  font-family: ${({ theme }) => theme.fonts.regular};
+  color: ${({ theme }) => theme.colors.gray};
 
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
   line-height: ${RFValue(13.51)}px;
@@ -98,14 +96,14 @@ export const UseTermsText = styled.Text`
 
 export const UseTermsShowButton = styled(RectButton)`
   padding: ${RFValue(2)}px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.shape};
   border-radius: ${RFValue(16)}px;
 `;
 
 export const UseTermsButtonText = styled.Text`
   font-size: ${RFValue(9.89)}px;
-  font-family: ${({theme}) => theme.fonts.bold};
-  color: ${({theme}) => theme.colors.primary};
+  font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme }) => theme.colors.primary};
   text-decoration: underline;
   line-height: ${RFValue(13.51)}px;
 
