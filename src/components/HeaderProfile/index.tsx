@@ -69,8 +69,8 @@ const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPr
                     </EditIconContainer>
                   )}
                   <ProfilePicture
-                      source={ avatar ? { uri: avatar } : profilePictureDashboard }
-                    />
+                    source={avatar ? { uri: avatar } : profilePictureDashboard}
+                  />
                 </ProfilePictureContainer>
                 {
                   edit ?

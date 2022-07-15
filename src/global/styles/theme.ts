@@ -3,7 +3,6 @@ export default {
     primary: '#2B90D9',
     profilePic: '8EFFEB',
 
-    gray_600: '#282C37',
 
     warning: '#F5AB0B',
 
@@ -12,7 +11,6 @@ export default {
     attention: '#DF2C2C',
     attention_light: '#EC8080',
 
-    gray_200: '#5F6368',
 
     gray: "rgba(143, 146, 156, 0.5)",
 
@@ -31,6 +29,10 @@ export default {
     shape: '#FFFFFF',
     dark: '#000000',
     transparent: 'rgba(0, 0, 0, 0.0)',
+    // TODO: Atenção aos próximos nomes definidos padroes globais
+    gray_200: '#5F6368',
+    gray_400: '#797b82',
+    gray_600: '#282C37',
   },
 
   fonts: {

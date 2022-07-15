@@ -1,20 +1,19 @@
 import styled from 'styled-components/native';
-import CloudRightSmallIcon from '../../assets/images/cloud-right-stripe-sm.svg';
 import CloudLeftLargeIcon from '../../assets/images/cloud-left-stripe-lg.svg';
-import LargeSearch from '../../assets/images/Icons/large-search.svg'
-import FavoriteCardButton from '../../assets/images/Icons/favorite_qrcode_card.svg'
-import NotFavoritedCardButton from '../../assets/images/Icons/notFavorited_qrcode_card.svg'
-import Delete from '../../assets/images/Icons/trash_qrcode_card.svg'
+import CloudRightSmallIcon from '../../assets/images/cloud-right-stripe-sm.svg';
+import FavoriteCardButton from '../../assets/images/Icons/favorite_qrcode_card.svg';
+import LargeSearch from '../../assets/images/Icons/large-search.svg';
+import NotFavoritedCardButton from '../../assets/images/Icons/notFavorited_qrcode_card.svg';
+import Delete from '../../assets/images/Icons/trash_qrcode_card.svg';
 
-import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions, FlatList } from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
+import { RFValue } from 'react-native-responsive-fontsize';
 import { FilteredQRCodes, FilteredQRCodesByDate } from '.';
-import { BorderlessButton } from 'react-native-gesture-handler';
 
 export const Container = styled.View`
     flex: 1;
-    background-color: ${({theme}) => theme.colors.shape};
+    background-color: ${({ theme }) => theme.colors.shape};
 `;
 
 export const Content = styled.View`
@@ -31,12 +30,12 @@ export const QRCodeTitleContainer = styled.View`
 `;
 
 export const QRCodeTitleDate = styled.Text`
-    font-family: ${({theme}) => theme.fonts.extra_bold};
+    font-family: ${({ theme }) => theme.fonts.extra_bold};
     font-size: ${RFValue(16)}px;
     
-    color: ${({theme}) => theme.colors.title};
+    color: ${({ theme }) => theme.colors.title};
     
-    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 
 
@@ -98,7 +97,7 @@ export const DeleteButtonIcon = styled(Delete).attrs({
 
 export const QRCodeDateList = styled(
     FlatList as new () => FlatList<FilteredQRCodesByDate>
-    ).attrs({
+).attrs({
     showsVerticalScrollIndicator: false,
     contentContainerStyle: {
         paddingBottom: getBottomSpace() + RFValue(83),
@@ -107,7 +106,7 @@ export const QRCodeDateList = styled(
 
 export const QRCodeList = styled(
     FlatList as new () => FlatList<FilteredQRCodes>
-    ).attrs({
+).attrs({
     showsVerticalScrollIndicator: false,
 })``;
 
@@ -124,16 +123,16 @@ export const LargeSearchIcon = styled(LargeSearch).attrs({
 
 export const NoResultsFoundText = styled.Text`
     font-size: ${RFValue(24)}px;
-    font-family: ${({theme}) => theme.fonts.bold};
-    color: ${({theme}) => theme.colors.title};
+    font-family: ${({ theme }) => theme.fonts.bold};
+    color: ${({ theme }) => theme.colors.title};
     text-align: center;
     letter-spacing: ${RFValue(0.18)}px;
 `;
 
 export const NoResultsFoundDescriptionText = styled.Text`
     font-size: ${RFValue(16)}px;
-    font-family: ${({theme}) => theme.fonts.semi_bold};
-    color: ${({theme}) => theme.colors.text};
+    font-family: ${({ theme }) => theme.fonts.semi_bold};
+    color: ${({ theme }) => theme.colors.text};
     text-align: center;
     letter-spacing: ${RFValue(0.5)}px;
 `;
