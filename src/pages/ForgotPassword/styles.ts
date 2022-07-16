@@ -17,6 +17,7 @@ export const Container = styled.View`
   background: ${({ theme }) => theme.colors.shape};
 `;
 
+
 export const BackButtonContainer = styled.View`
   position: absolute;
   top:${RFValue(21) + getStatusBarHeight()}px;
@@ -74,6 +75,14 @@ export const ForgotPasswordFormSendButtonLabel = styled.Text`
   letter-spacing: ${Dimensions.get("window").width * 0.001}px;
   color: ${({ theme }) => theme.colors.shape};
 `;
+
+export const ContainerButton = styled.View`
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+`;
+
 
 export const InfoSendEmailContainer = styled.View`
   width: 100%;

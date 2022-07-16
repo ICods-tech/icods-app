@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useRef, useState } from 'react';
-import { Keyboard, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -12,6 +12,7 @@ import Toast from 'react-native-toast-message';
 import { Header } from '../../components/Authentication/Header';
 import { BackButton } from '../../components/BackButton';
 import PasswordInput from '../../components/PasswordInput';
+import { SubmitButton } from '../../components/SubmitButton';
 import { LOG } from '../../config';
 import theme from '../../global/styles/theme';
 import api from '../../services/api';
@@ -21,9 +22,11 @@ import {
   BackButtonContainer,
   Cell,
   Container,
+  ContainerButton,
   EmailText,
   FieldsRow,
-  InputContainer, RedefinePasswordForm,
+  InputContainer,
+  RedefinePasswordForm,
   RedefinePasswordFormLabel,
   RedefinePasswordFormSendButton,
   RedefinePasswordFormSendButtonContainer,
@@ -33,8 +36,8 @@ import {
 } from './styles';
 const log = LOG.extend('RedefinePassword');
 
-const RedefinePassword = ({route, _}: any) => {
-  const {email, pass} = route.params;
+const RedefinePassword = ({ route, _ }: any) => {
+  const { email, pass } = route.params;
 
   const CELL_COUNT = 6;
   const navigation = useNavigation<any>();
@@ -47,14 +50,14 @@ const RedefinePassword = ({route, _}: any) => {
   const [isPasswordErrored, setIsPasswordErrored] = useState(false);
   const [confirmationCodeError, setConfirmationCodeError] = useState(false);
   const [value, setValue] = useState(pass);
-  const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [success, setSuccess] = useState(false);
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
 
-  const displayToast = ({text1, type}: {text1: string; type: string}) => {
+  const displayToast = ({ text1, type }: { text1: string; type: string }) => {
     return Toast.show({
       type,
       position: 'bottom',
@@ -71,12 +74,13 @@ const RedefinePassword = ({route, _}: any) => {
     isFocused: boolean;
   }
 
-  const renderCell = ({index, symbol, isFocused}: IRenderCell) => {
+  const renderCell = ({ index, symbol, isFocused }: IRenderCell) => {
     let textChild = null;
 
     if (symbol) {
       textChild = symbol;
     } else if (isFocused) {
+      setConfirmationCodeError(false);
       textChild = <Cursor />;
     }
 
@@ -95,30 +99,51 @@ const RedefinePassword = ({route, _}: any) => {
 
   const checkPasswordErrored = (error: any) => {
     if ('errors' in error?.response.data) {
-      const passwordsMustBeEqualError = error.response.data.errors.some(({ msg }: {msg: string}) => { 
-        return msg === "Senhas devem ser iguais";
-      });
+      const passwordsMustBeEqualError = error.response.data.errors.some(
+        ({ msg }: { msg: string }) => {
+          return msg === 'Senhas devem ser iguais';
+        },
+      );
 
       if (passwordsMustBeEqualError) setIsPasswordErrored(true);
       else setIsPasswordErrored(false);
-    } 
-    else setIsPasswordErrored(false);
-  }
+    } else setIsPasswordErrored(false);
+  };
 
   const checkVerificationCodeError = (error: any) => {
     const errorData = error?.response.data;
-    if (typeof errorData === 'string' && errorData.includes('Senha temporária ou email inválido!')) { 
+    if (
+      typeof errorData === 'string' &&
+      errorData.includes('Senha temporária ou email inválido!')
+    ) {
       setConfirmationCodeError(true);
-    } else { 
+    } else {
       setConfirmationCodeError(false);
     }
-  }
+  };
 
   const handleRedefinePassword = useCallback(async () => {
     try {
+      const tempPassword = pass || value
+      if (!tempPassword || tempPassword.length < 6) {
+        displayToast({
+          text1: 'Código inválido',
+          type: 'error',
+        });
+        setConfirmationCodeError(true);
+        return;
+      }
       if (!password.length || !passwordConfirmation.length) {
         displayToast({
           text1: 'Para prosseguir, complete os campos',
+          type: 'error',
+        });
+        setIsPasswordErrored(true);
+        return;
+      }
+      if (password !== passwordConfirmation) {
+        displayToast({
+          text1: 'Senhas devem ser iguais',
           type: 'error',
         });
         setIsPasswordErrored(true);
@@ -132,7 +157,7 @@ const RedefinePassword = ({route, _}: any) => {
       }
       await api.patch('resetPasswordTempPass', {
         email,
-        tempPassword: pass || value,
+        tempPassword,
         newPassword: password,
         passwordConfirmation,
       });
@@ -146,17 +171,19 @@ const RedefinePassword = ({route, _}: any) => {
       const errorData = error?.response.data;
       console.log('erro do catch', errorData);
       checkVerificationCodeError(error);
-      typeof errorData !== 'string' && checkPasswordErrored(error)
+      typeof errorData !== 'string' && checkPasswordErrored(error);
       displayToast({
-        text1: typeof errorData === 'string' ? errorData : errorData.errors[0].msg,
+        text1:
+          typeof errorData === 'string' ? errorData : errorData.errors[0].msg,
         type: 'error',
       });
       log.error(error);
     }
   }, [email, pass, value, password, passwordConfirmation]);
 
-  
-
+  const filledInput = () => {
+    return password.length > 0 || passwordConfirmation.length > 0
+  }
 
   const handleBackButton = () => {
     navigation.navigate('SignIn');
@@ -178,23 +205,25 @@ const RedefinePassword = ({route, _}: any) => {
 
           <RedefinePasswordForm>
             <RedefinePasswordFormLabel>
-              Copie e cole aqui a senha temporária que enviamos para {'\n'}<EmailText>{encryptEmail(email)}</EmailText>.
+              Copie e cole aqui a senha temporária que enviamos para {'\n'}
+              <EmailText>{encryptEmail(email)}</EmailText>.
+
             </RedefinePasswordFormLabel>
-                <FieldsRow>
-                  <CodeField
-                    ref={ref}
-                    {...props}
-                    value={pass ? pass : value}
-                    editable={pass ? false : true}
-                    onChangeText={(text: string) => {
-                      setValue(text);
-                      success === true && setSuccess(false);
-                    }}
-                    cellCount={CELL_COUNT}
-                    textContentType="oneTimeCode"
-                    renderCell={renderCell}
-                  />
-               </FieldsRow>
+            <FieldsRow>
+              <CodeField
+                ref={ref}
+                {...props}
+                value={pass ? pass : value}
+                editable={pass ? false : true}
+                onChangeText={(text: string) => {
+                  setValue(text);
+                  success === true && setSuccess(false);
+                }}
+                cellCount={CELL_COUNT}
+                textContentType="oneTimeCode"
+                renderCell={renderCell}
+              />
+            </FieldsRow>
 
             <RedefinePasswordFormLabel>
               Agora é só completar os dados a seguir:
@@ -213,9 +242,8 @@ const RedefinePassword = ({route, _}: any) => {
                 }
                 returnKeyType="next"
                 value={password}
-                onFocus={() => {
-                  setIsInputFocus(true), setInputFocusObserver(true);
-                }}
+                isErrored={isPasswordErrored}
+                setIsSignInErrored={setIsPasswordErrored}
               />
 
               <SpacingLine isErrored={isPasswordErrored} />
@@ -232,19 +260,17 @@ const RedefinePassword = ({route, _}: any) => {
                 }
                 onSubmitEditing={handleRedefinePassword}
                 returnKeyType="send"
-                onFocus={() => {
-                  setIsInputFocus(true), setInputFocusObserver(true);
-                }}
+                isErrored={isPasswordErrored}
+                setIsSignInErrored={setIsPasswordErrored}
               />
             </InputContainer>
-
-            <RedefinePasswordFormSendButton onPress={handleRedefinePassword}>
-              <RedefinePasswordFormSendButtonContainer>
-                <RedefinePasswordFormSendButtonLabel>
-                  Alterar senha
-                </RedefinePasswordFormSendButtonLabel>
-              </RedefinePasswordFormSendButtonContainer>
-            </RedefinePasswordFormSendButton>
+            <ContainerButton>
+              <SubmitButton
+                enabled={filledInput()}
+                onPress={handleRedefinePassword}
+                text={'Alterar senha'}
+              />
+            </ContainerButton>
           </RedefinePasswordForm>
         </Container>
       </TouchableWithoutFeedback>

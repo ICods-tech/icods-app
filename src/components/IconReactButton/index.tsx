@@ -6,7 +6,7 @@ import {
     Button, Container, IconContainer, Title
 } from './styles';
 
-interface IconRectButtonProps extends RectButtonProps {
+interface IconReactButtonProps extends RectButtonProps {
     text: string;
     noIcon?: boolean;
     icon?: any;
@@ -14,7 +14,7 @@ interface IconRectButtonProps extends RectButtonProps {
 }
 
 
-export function IconReactButton({ text, noIcon, icon: Icon, color, ...rest }: IconRectButtonProps) {
+export function IconReactButton({ text, noIcon, icon: Icon, color, ...rest }: IconReactButtonProps) {
     const content = (
         <Button color={color!} {...rest}>
             {noIcon ? <IconContainer>

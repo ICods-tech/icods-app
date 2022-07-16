@@ -20,7 +20,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components';
 import { AuthFooter } from '../../components/Authentication/AuthFooter';
 import { Header } from '../../components/Authentication/Header';
-import { SubmitButton } from '../../components/Authentication/SubmitButton';
+import { SubmitButton } from '../../components/SubmitButton';
 import { useAuth } from '../../hooks/auth';
 
 import { Password, User } from 'react-native-iconly';

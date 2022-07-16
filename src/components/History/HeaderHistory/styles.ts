@@ -18,7 +18,6 @@ export const Title = styled.Text`
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   line-height: ${RFValue(33)}px;
   margin-left: ${RFValue(17)}px;
-  /* margin-bottom: 4px; */
 `;
 
 export const SearchContainer = styled.View`

@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from "react";
 import { Keyboard, TextInput, TouchableWithoutFeedback } from "react-native";
 import { Message } from "react-native-iconly";
-import Toast from "react-native-toast-message";
+import * as Yup from 'yup';
 import { Header } from "../../components/Authentication/Header";
 import { BackButton } from "../../components/BackButton";
 import { WarningModal } from "../../components/WarningModal";
@@ -11,20 +11,26 @@ import theme from "../../global/styles/theme";
 import api from "../../services/api";
 import { checkConnection } from "../../utils/checkConnection";
 import { delay } from '../../utils/delay';
+import { displayToast } from '../../utils/Toast';
+
+import { SubmitButton } from '../../components/SubmitButton';
 import {
   BackButtonContainer,
   Container,
+  ContainerButton,
   ForgotPasswordForm,
-  ForgotPasswordFormLabel,
-  ForgotPasswordFormSendButton,
-  ForgotPasswordFormSendButtonContainer,
-  ForgotPasswordFormSendButtonLabel,
-  ForgotPasswordFormTextInput,
+  ForgotPasswordFormLabel, ForgotPasswordFormTextInput,
   InfoSendEmailContainer,
   InfoSendEmailText,
   SafeAreaView
 } from "./styles";
 const log = LOG.extend("ForgotPassword");
+
+const emailSchema = Yup.object().shape({
+  email: Yup.string().required().email(
+    "Email inválido",
+  ),
+});
 
 const ForgotPassword = () => {
   const TIME_TO_SEND_EMAIL = 60;
@@ -38,14 +44,14 @@ const ForgotPassword = () => {
 
   async function handleCloseModal() {
     setIsVisible(false)
-    navigation.navigate('RedefinePassword',{
+    navigation.navigate('RedefinePassword', {
       email: email
     });
   }
   async function timeoutCloseModal() {
     await delay(4000)
     setIsVisible(false)
-    navigation.navigate('RedefinePassword',{
+    navigation.navigate('RedefinePassword', {
       email: email
     });
   }
@@ -64,33 +70,32 @@ const ForgotPassword = () => {
   }, [activeSendButton, count]);
 
   const handleSend = async () => {
-    if (email === "") {
-      Toast.show({
-        type: "error",
-        position: "bottom",
-        text1: "Para prosseguir, complete o campo e-mail",
-        text2: "",
-        visibilityTime: 1000,
-        bottomOffset: 100,
-      });
-      return;
-    }
+    emailSchema.validate({ email }).then(async () => {
+      try {
+        const connection = await checkConnection();
+        if (!connection) {
+          navigation.navigate("ConnectionProblems");
+          return;
+        }
+        await api.patch("resetPasswordWithoutPass", {
+          email,
+        });
+      } catch (error) {
+        console.error(error)
+      }
+      setActiveSendButton(false);
+      setIsVisible(true);
+      timeoutCloseModal();
+      setCount(TIME_TO_SEND_EMAIL);
+    })
+      .catch((err) => {
+        return displayToast({
+          text1: err.errors,
+          type: "error",
+        });
+      })
 
-    const connection = await checkConnection();
-    if (!connection) {
-      navigation.navigate("ConnectionProblems");
-      return;
-    }
 
-    const response = await api.patch("resetPasswordWithoutPass", {
-      email,
-    });
-
-    setActiveSendButton(false);
-    setIsVisible(true);
-    timeoutCloseModal();
-    setCount(TIME_TO_SEND_EMAIL);
-    
   };
 
   const handleBackButton = () => {
@@ -126,18 +131,15 @@ const ForgotPassword = () => {
               value={email}
               returnKeyType="send"
               editable={activeSendButton}
+              keyboardType="email-address"
             />
-
-            <ForgotPasswordFormSendButton
-              onPress={handleSend}
-              disabled={!activeSendButton}
-            >
-              <ForgotPasswordFormSendButtonContainer active={activeSendButton}>
-                <ForgotPasswordFormSendButtonLabel>
-                  Receber e-mail de confirmação
-                </ForgotPasswordFormSendButtonLabel>
-              </ForgotPasswordFormSendButtonContainer>
-            </ForgotPasswordFormSendButton>
+            <ContainerButton>
+              <SubmitButton
+                onPress={handleSend}
+                enabled={!!email}
+                text="Receber e-mail de confirmação"
+              />
+            </ContainerButton>
           </ForgotPasswordForm>
         </Container>
       </TouchableWithoutFeedback>
@@ -151,16 +153,18 @@ const ForgotPassword = () => {
         onCloseModal={handleCloseModal}
       />
 
-      {!activeSendButton && (
-        <InfoSendEmailContainer>
-          <InfoSendEmailText isBlue={false}>
-            Não recebeu o e-mail?{" "}
-            <InfoSendEmailText isBlue>Aguarde {count}s </InfoSendEmailText>
-            para receber novamente
-          </InfoSendEmailText>
-        </InfoSendEmailContainer>
-      )}
-    </SafeAreaView>
+      {
+        !activeSendButton && (
+          <InfoSendEmailContainer>
+            <InfoSendEmailText isBlue={false}>
+              Não recebeu o e-mail?{" "}
+              <InfoSendEmailText isBlue>Aguarde {count}s </InfoSendEmailText>
+              para receber novamente
+            </InfoSendEmailText>
+          </InfoSendEmailContainer>
+        )
+      }
+    </SafeAreaView >
   );
 };
 

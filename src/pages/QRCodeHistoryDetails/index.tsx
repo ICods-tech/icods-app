@@ -83,30 +83,25 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
   const PlayIcon = () => <Play set={'bulk'} style={{ borderColor: theme.colors.primary, borderWidth: RFValue(2), borderRadius: RFValue(16) }} filled={false} primaryColor={theme.colors.primary} secondaryColor={'white'} />
   const UnlockIcon = () => <Unlock set={'bold'} color={theme.colors.primary} />
 
-  function isQRCodeChangesWithoutSave() {
-    const colorIsDifferent = updatedColor !== lastSavedColor
-    const favoriteIsDifferent = updatedFavorite !== lastSavedFavorite
+  function isColorDifferent() {
+    return updatedColor !== lastSavedColor
+  }
 
-    if (colorIsDifferent || favoriteIsDifferent) {
-      return true;
-    } else {
-      return false;
-    }
+  function isFavoriteDifferent() {
+    return updatedFavorite !== lastSavedFavorite
+  }
+
+  function qrCodeChangedWithoutSave() {
+    return isColorDifferent() || isFavoriteDifferent()
   }
 
   useBackHandler(() => {
-    if (isQRCodeChangesWithoutSave()) {
-      if (saveChangesModalOpen) {
-        handleCloseModal()
-      } else {
-        handleOpenModal()
-      }
-
+    if (qrCodeChangedWithoutSave()) {
+      saveChangesModalOpen ? handleCloseModal() : handleOpenModal()
       return true;
     }
     return false;
   })
-
 
   return (
     <Container>
@@ -114,7 +109,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         favorite={false}
         qrCodeDetails={true}
         backButtonPressed={() => {
-          if (isQRCodeChangesWithoutSave()) {
+          if (qrCodeChangedWithoutSave()) {
             handleOpenModal()
           } else {
             onGoBack(changesWereMade)
@@ -134,8 +129,8 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         confirmText='Salvar'
         onCloseModal={handleCloseModal}
         handleAsyncConfirmed={async () => {
-          updatedColor !== lastSavedColor && await handleChangeQRCodeColor(updatedColor)
-          updatedFavorite !== lastSavedFavorite && await handleFavoriteQRCode(id)
+          isColorDifferent() && await handleChangeQRCodeColor(updatedColor)
+          isFavoriteDifferent() && await handleFavoriteQRCode(id)
           handleCloseModal()
           onGoBack(true)
         }}
@@ -144,7 +139,7 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         <QRCodeInfoContainer>
           <QRCodeInfoTopContainer>
             <QRCodeContainer>
-              <TitleQRCode>iCOD {id.substr(id.length - 8)}</TitleQRCode>
+              <TitleQRCode>iCOD {id.substring(id.length - 8)}</TitleQRCode>
               <QRCodeImgContainer updatedColor={updatedColor}>
                 <QRCodeTemplateImg />
               </QRCodeImgContainer>
@@ -203,12 +198,10 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
         <ContainerButton>
           <IconReactButton
             onPress={() => {
-              const colorsAreDifferent = updatedColor !== lastSavedColor
-              const favoritesAreDifferent = updatedFavorite !== lastSavedFavorite
+              if (qrCodeChangedWithoutSave()) {
+                isColorDifferent() && handleChangeQRCodeColor(updatedColor)
+                isFavoriteDifferent() && handleFavoriteQRCode(id)
 
-              if (colorsAreDifferent || favoritesAreDifferent) {
-                colorsAreDifferent && handleChangeQRCodeColor(updatedColor)
-                favoritesAreDifferent && handleFavoriteQRCode(id)
                 Toast.show({
                   type: 'success',
                   position: 'bottom',

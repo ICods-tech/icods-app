@@ -28,7 +28,7 @@ import { handleFieldAlreadyExistsErrors } from '../../utils/handleFieldAlreadyEx
 import { Header } from '../../components/Authentication/Header';
 import { BackButton } from '../../components/BackButton';
 import { useTheme } from 'styled-components';
-import { SubmitButton } from '../../components/Authentication/SubmitButton';
+import { SubmitButton } from '../../components/SubmitButton';
 import { LOG } from '../../config';
 import { Message, Password, User } from 'react-native-iconly';
 import { useNavigation } from '@react-navigation/native';

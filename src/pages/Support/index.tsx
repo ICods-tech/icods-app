@@ -1,15 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import {
   NativeSyntheticEvent,
-  Platform, TextInput,
-  TextInputChangeEventData
+  Platform, TextInputChangeEventData
 } from 'react-native';
 import { useTheme } from 'styled-components/native';
 
 import email from 'react-native-email';
 import Toast from 'react-native-toast-message';
-import { SubmitButton } from '../../components/Authentication/SubmitButton';
+import { SubmitButton } from '../../components/SubmitButton';
 import Header from '../../components/Header';
 import {
   BodyMessage,
@@ -17,11 +15,8 @@ import {
   CloudRightSmall,
   Container,
   ContainerBodyMessage,
-  ContainerButton,
-  InputContainer,
-  Input
+  ContainerButton, Input, InputContainer
 } from './styles';
-import { RFValue } from 'react-native-responsive-fontsize';
 
 const Support = () => {
   const theme = useTheme();
