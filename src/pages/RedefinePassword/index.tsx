@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useRef, useState } from 'react';
-import { Keyboard, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Keyboard, TextInput, TouchableWithoutFeedback } from 'react-native';
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
-  useClearByFocusCell
+  useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import { Password } from 'react-native-iconly';
 import Toast from 'react-native-toast-message';
@@ -28,11 +28,8 @@ import {
   InputContainer,
   RedefinePasswordForm,
   RedefinePasswordFormLabel,
-  RedefinePasswordFormSendButton,
-  RedefinePasswordFormSendButtonContainer,
-  RedefinePasswordFormSendButtonLabel,
   SafeAreaView,
-  SpacingLine
+  SpacingLine,
 } from './styles';
 const log = LOG.extend('RedefinePassword');
 
@@ -48,6 +45,7 @@ const RedefinePassword = ({ route, _ }: any) => {
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [inputFocusObserver, setInputFocusObserver] = useState(false);
   const [isPasswordErrored, setIsPasswordErrored] = useState(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [confirmationCodeError, setConfirmationCodeError] = useState(false);
   const [value, setValue] = useState(pass);
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
@@ -124,7 +122,7 @@ const RedefinePassword = ({ route, _ }: any) => {
 
   const handleRedefinePassword = useCallback(async () => {
     try {
-      const tempPassword = pass || value
+      const tempPassword = pass || value;
       if (!tempPassword || tempPassword.length < 6) {
         displayToast({
           text1: 'Código inválido',
@@ -182,32 +180,49 @@ const RedefinePassword = ({ route, _ }: any) => {
   }, [email, pass, value, password, passwordConfirmation]);
 
   const filledInput = () => {
-    return password.length > 0 || passwordConfirmation.length > 0
-  }
+    return password.length > 0 || passwordConfirmation.length > 0;
+  };
 
   const handleBackButton = () => {
     navigation.navigate('SignIn');
   };
 
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, [Keyboard]);
 
   return (
     <SafeAreaView>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
-          <Header isKeyboardVisible={isInputFocus} />
-          <BackButtonContainer>
+          <Header isKeyboardVisible={isKeyboardVisible} />
+          <BackButtonContainer isKeyboardVisible={isKeyboardVisible}>
             <BackButton
               navigationTo="WAIT"
               customFunction={handleBackButton}
-              color="white"
+              color={isKeyboardVisible ? 'blue' : 'white'}
             />
           </BackButtonContainer>
-
-          <RedefinePasswordForm>
+          <RedefinePasswordForm isKeyboardVisible={isKeyboardVisible}>
             <RedefinePasswordFormLabel>
               Copie e cole aqui a senha temporária que enviamos para {'\n'}
               <EmailText>{encryptEmail(email)}</EmailText>.
-
             </RedefinePasswordFormLabel>
             <FieldsRow>
               <CodeField

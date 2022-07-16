@@ -27,7 +27,7 @@ export const BackButtonContainer = styled.View<Props>`
   left: ${RFValue(16)}px;
 `;
 
-export const Form = styled.View<Props>`
+export const Form = styled.View`
   width: 100%;
   padding: 0 ${RFValue(55)}px;
   margin-top: ${RFValue(24)}px;

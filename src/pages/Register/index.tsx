@@ -200,7 +200,7 @@ const Register = () => {
           </BackButtonContainer>
 
           <ScrollRegister keyboardShouldPersistTaps="handled">
-            <Form isKeyboardVisible={isKeyboardVisible}>
+            <Form>
               <RegisterTitle>
                 Fazer uma conta no iCods é simples e rápido, basta preencher os
                 campos!

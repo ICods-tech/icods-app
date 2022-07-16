@@ -1,6 +1,12 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions } from 'react-native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+
+
+interface Props {
+  isKeyboardVisible: boolean;
+}
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -12,16 +18,18 @@ export const Container = styled.View`
   background: ${({ theme }) => theme.colors.shape};
 `;
 
-export const BackButtonContainer = styled.View`
+export const BackButtonContainer = styled.View<Props>`
   position: absolute;
-  top: ${RFValue(21)}px;
+  top: ${({ isKeyboardVisible }) =>
+    isKeyboardVisible ? RFValue(26) : RFValue(21) + getStatusBarHeight()}px;
   left: ${RFValue(16)}px;
 `;
 
-export const RedefinePasswordForm = styled.View`
+export const RedefinePasswordForm = styled.ScrollView<Props>`
   width: 100%;
   padding: 0 ${RFValue(8)}px;
   align-itens: center;
+  ${({ isKeyboardVisible }) => isKeyboardVisible && css`margin-top: ${RFValue(48)}px`}
 `;
 
 export const RedefinePasswordFormLabel = styled.Text`
@@ -134,4 +142,5 @@ export const ContainerButton = styled.View`
   align-items: center;
   justify-content: center;
   align-self: center;
+  margin-bottom: ${RFValue(16)}px;
 `;
