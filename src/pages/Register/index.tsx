@@ -1,10 +1,17 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  Keyboard,
-  TouchableWithoutFeedback,
-  TextInput,
-  SafeAreaView,
+  Keyboard, SafeAreaView, TextInput, TouchableWithoutFeedback
 } from 'react-native';
+import { Message, Password, User } from 'react-native-iconly';
+import { Header } from '../../components/Authentication/Header';
+import { BackButton } from '../../components/BackButton';
+import { SubmitButton } from '../../components/SubmitButton';
+import { LOG } from '../../config';
+import { useAuth } from '../../hooks/auth';
+import { delay } from '../../utils/delay';
+import { handleFieldAlreadyExistsErrors } from '../../utils/handleFieldAlreadyExistsErrors';
+import { handleRegisterRouteErrors } from '../../utils/handleRegisterRouteErrors';
 import {
   BackButtonContainer,
   Container,
@@ -14,30 +21,17 @@ import {
   ScrollRegister,
   SubmitButtonContainer,
   UseTermsButtonText,
-  UseTermsChecked,
-  UseTermsText,
-  UseTermsConfirmedButton,
+  UseTermsChecked, UseTermsConfirmedButton,
   UseTermsContainer,
-  UseTermsShowButton,
+  UseTermsShowButton, UseTermsText
 } from './styles';
-import { useAuth } from '../../hooks/auth';
-import Toast from 'react-native-toast-message';
-import { delay } from '../../utils/delay';
-import { handleRegisterRouteErrors } from '../../utils/handleRegisterRouteErrors';
-import { handleFieldAlreadyExistsErrors } from '../../utils/handleFieldAlreadyExistsErrors';
-import { Header } from '../../components/Authentication/Header';
-import { BackButton } from '../../components/BackButton';
-import { useTheme } from 'styled-components';
-import { SubmitButton } from '../../components/SubmitButton';
-import { LOG } from '../../config';
-import { Message, Password, User } from 'react-native-iconly';
-import { useNavigation } from '@react-navigation/native';
 
-import ModalUseTerms from '../../components/ModalUseTerms';
 import analytics from '@react-native-firebase/analytics';
 import UserNameSvg from '../../assets/images/Icons/user_name.svg';
 import Input from '../../components/Input';
+import ModalUseTerms from '../../components/ModalUseTerms';
 import PasswordInput from '../../components/PasswordInput';
+import { displayToast } from '../../utils/Toast';
 const log = LOG.extend('Register');
 
 export interface IRouteErrors {
@@ -117,13 +111,11 @@ const Register = () => {
         method: 'api',
       });
       setUseTerms(false);
-      Toast.show({
+      displayToast({
+        message1: 'Conta criada com sucesso!',
         type: 'success',
-        position: 'bottom',
-        text1: 'Conta criada com sucesso!',
-        visibilityTime: 1200,
-        bottomOffset: 100,
-      });
+        duration: 1200
+      })
       await delay(1250);
       await signIn({ email, password });
     } catch (errorResponse: any) {

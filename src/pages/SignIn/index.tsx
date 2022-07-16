@@ -26,10 +26,10 @@ import { useAuth } from '../../hooks/auth';
 import { Password, User } from 'react-native-iconly';
 import { LOG } from '../../config';
 
-import Toast from 'react-native-toast-message';
 import Input from '../../components/Input';
 import PasswordInput from '../../components/PasswordInput';
 import handleLinkNavigation from '../../utils/handleLinkNavigation';
+import { displayToast } from '../../utils/Toast';
 
 const log = LOG.extend('Signin');
 
@@ -54,14 +54,11 @@ const SignIn = () => {
     } catch (error: any) {
       setErrored(true);
 
-      Toast.show({
+      displayToast({
+        message1: 'Email/Password ou senha incorretos',
         type: 'error',
-        position: 'bottom',
-        text1: 'Email/Password ou senha incorretos',
-        text2: '',
-        visibilityTime: 1000,
-        bottomOffset: 100,
-      });
+        duration: 1000,
+      })
       setIsLoading(false);
       log.error(error.message);
     }

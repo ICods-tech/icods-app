@@ -2,7 +2,6 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { Play, Unlock } from 'react-native-iconly';
 import { RFValue } from 'react-native-responsive-fontsize';
-import Toast from 'react-native-toast-message';
 import { useTheme } from 'styled-components/native';
 import SaveIcon from '../../assets/images/Icons/save-icon.svg';
 import ConfirmUpdate from "../../assets/images/Icons/saved_icon.svg";
@@ -22,6 +21,7 @@ import {
   QRCodeImgContainer, QRCodeInfoContainer, QRCodeInfoTopContainer, QRCodeTemplateImg, Separator, TitleColorSelect, TitleQRCode
 } from './styles';
 
+import { displayToast } from '../../utils/Toast';
 import { useBackHandler } from '../../utils/useBackHandler';
 
 export interface QRCodeHistoryDetailsProps {
@@ -201,15 +201,11 @@ const QRCodeHistoryDetails = ({ route }: RouteParams) => {
               if (qrCodeChangedWithoutSave()) {
                 isColorDifferent() && handleChangeQRCodeColor(updatedColor)
                 isFavoriteDifferent() && handleFavoriteQRCode(id)
-
-                Toast.show({
+                displayToast({
                   type: 'success',
-                  position: 'bottom',
-                  text1: 'As alterações foram salvas com sucesso',
-                  visibilityTime: 1200,
-                  bottomOffset: 100,
+                  message1: 'As alterações foram salvas com sucesso',
+                  duration: 1200
                 })
-
                 setChangesWereMade(true)
               }
             }}

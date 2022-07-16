@@ -8,7 +8,6 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 import { Password } from 'react-native-iconly';
-import Toast from 'react-native-toast-message';
 import { Header } from '../../components/Authentication/Header';
 import { BackButton } from '../../components/BackButton';
 import PasswordInput from '../../components/PasswordInput';
@@ -18,6 +17,7 @@ import theme from '../../global/styles/theme';
 import api from '../../services/api';
 import { checkConnection } from '../../utils/checkConnection';
 import { encryptEmail } from '../../utils/encryptEmail';
+import { displayToast } from '../../utils/Toast';
 import {
   BackButtonContainer,
   Cell,
@@ -54,17 +54,6 @@ const RedefinePassword = ({ route, _ }: any) => {
     value,
     setValue,
   });
-
-  const displayToast = ({ text1, type }: { text1: string; type: string }) => {
-    return Toast.show({
-      type,
-      position: 'bottom',
-      text1,
-      text2: '',
-      visibilityTime: 1000,
-      bottomOffset: 100,
-    });
-  };
 
   interface IRenderCell {
     index: number;
@@ -125,24 +114,27 @@ const RedefinePassword = ({ route, _ }: any) => {
       const tempPassword = pass || value;
       if (!tempPassword || tempPassword.length < 6) {
         displayToast({
-          text1: 'Código inválido',
+          message1: 'Código inválido',
           type: 'error',
+          duration: 1000,
         });
         setConfirmationCodeError(true);
         return;
       }
       if (!password.length || !passwordConfirmation.length) {
         displayToast({
-          text1: 'Para prosseguir, complete os campos',
+          message1: 'Para prosseguir, complete os campos',
           type: 'error',
+          duration: 1000,
         });
         setIsPasswordErrored(true);
         return;
       }
       if (password !== passwordConfirmation) {
         displayToast({
-          text1: 'Senhas devem ser iguais',
+          message1: 'Senhas devem ser iguais',
           type: 'error',
+          duration: 1000,
         });
         setIsPasswordErrored(true);
         return;
@@ -161,8 +153,9 @@ const RedefinePassword = ({ route, _ }: any) => {
       });
 
       displayToast({
-        text1: 'Sua senha foi alterada com sucesso',
+        message1: 'Sua senha foi alterada com sucesso',
         type: 'success',
+        duration: 1000,
       });
       navigation.navigate('SignIn');
     } catch (error: any) {
@@ -171,9 +164,10 @@ const RedefinePassword = ({ route, _ }: any) => {
       checkVerificationCodeError(error);
       typeof errorData !== 'string' && checkPasswordErrored(error);
       displayToast({
-        text1:
+        message1:
           typeof errorData === 'string' ? errorData : errorData.errors[0].msg,
         type: 'error',
+        duration: 1000,
       });
       log.error(error);
     }

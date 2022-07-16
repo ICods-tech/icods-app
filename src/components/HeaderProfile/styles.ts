@@ -8,7 +8,7 @@ import { Dimensions } from 'react-native';
 import { Edit } from 'react-native-iconly';
 
 export const Container = styled.View`
-  flex-direction: row;
+  flex: 1;
 `
 
 export const BackButtonContainer = styled.View`

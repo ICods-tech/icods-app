@@ -37,83 +37,81 @@ interface ProfileProps {
   ellipsisPressed?: () => void;
 }
 
-const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPressed }: ProfileProps) => {
-  const navigation = useNavigation()
+export function HeaderProfile({ fullName, avatar, following, follower, edit, ellipsisPressed }: ProfileProps) {
+  const navigation = useNavigation<any>()
   return (
-    <>
-      <Container>
-        <HeaderContainerBackground />
-        <HeaderInformation>
-          <BackButtonContainer>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-              <BackButtonWhite />
-            </TouchableOpacity>
-            {edit ?
-              <AccountText>
-                Editar
-              </AccountText>
-              : <AccountText>
-                Conta
-              </AccountText>}
-          </BackButtonContainer>
-          <View>
-            <ProfileContainer>
-              <LeftCloudsContainer>
-                <CloudLeftContainer />
-              </LeftCloudsContainer>
-              <MiddleProfileContainer>
-                <ProfilePictureContainer>
-                  {!edit && (
-                    <EditIconContainer onPress={() => navigation.navigate('EditProfile', { following, follower })}>
-                      <EditIcon />
-                    </EditIconContainer>
-                  )}
-                  <ProfilePicture
-                    source={avatar ? { uri: avatar } : profilePictureDashboard}
-                  />
-                </ProfilePictureContainer>
-                {
-                  edit ?
-                    <ButtonProfilePicture
-                      text={'Trocar sua foto de perfil'}
-                    />
-                    : (fullName
-                      ? <WhiteTextName>
-                        {fullName}
-                      </WhiteTextName>
-                      : <WhiteTextName>
-                        Mucas Loreira
-                      </WhiteTextName>)
-                }
-              </MiddleProfileContainer>
-              <RightCloudsContainer>
-                <RightCloudsTop />
-                <RightCloudsBottom />
-              </RightCloudsContainer>
-            </ProfileContainer>
-          </View>
-          <FollowingFollowersContainers>
-            <Connections>
-              <WhiteText>Seguidores</WhiteText>
-              {
-                follower
-                  ? <WhiteText>{follower}</WhiteText>
-                  : <WhiteText>0</WhiteText>
-              }
-            </Connections>
-            <Connections>
-              <WhiteText>Seguindo</WhiteText>
-              {
-                following
-                  ? <WhiteText>{following}</WhiteText>
-                  : <WhiteText>0</WhiteText>
-              }
-            </Connections>
-          </FollowingFollowersContainers>
-        </HeaderInformation>
-      </Container>
-    </>
+    <Container>
+
+    </Container>
   )
 }
 
-export default HeaderProfile;
+// <HeaderContainerBackground />
+//         <HeaderInformation>
+//           <BackButtonContainer>
+//             <TouchableOpacity onPress={() => navigation.goBack()}>
+//               <BackButtonWhite />
+//             </TouchableOpacity>
+//             {edit ?
+//               <AccountText>
+//                 Editar
+//               </AccountText>
+//               : <AccountText>
+//                 Conta
+//               </AccountText>}
+//           </BackButtonContainer>
+//           <View>
+//             <ProfileContainer>
+//               <LeftCloudsContainer>
+//                 <CloudLeftContainer />
+//               </LeftCloudsContainer>
+//               <MiddleProfileContainer>
+//                 <ProfilePictureContainer>
+//                   {!edit && (
+//                     <EditIconContainer onPress={() => navigation.navigate('EditProfile', { following, follower })}>
+//                       <EditIcon />
+//                     </EditIconContainer>
+//                   )}
+//                   <ProfilePicture
+//                     source={avatar ? { uri: avatar } : profilePictureDashboard}
+//                   />
+//                 </ProfilePictureContainer>
+//                 {
+//                   edit ?
+//                     <ButtonProfilePicture
+//                       text={'Trocar sua foto de perfil'}
+//                     />
+//                     : (fullName
+//                       ? <WhiteTextName>
+//                         {fullName}
+//                       </WhiteTextName>
+//                       : <WhiteTextName>
+//                         Mucas Loreira
+//                       </WhiteTextName>)
+//                 }
+//               </MiddleProfileContainer>
+//               <RightCloudsContainer>
+//                 <RightCloudsTop />
+//                 <RightCloudsBottom />
+//               </RightCloudsContainer>
+//             </ProfileContainer>
+//           </View>
+//           <FollowingFollowersContainers>
+//             <Connections>
+//               <WhiteText>Seguidores</WhiteText>
+//               {
+//                 follower
+//                   ? <WhiteText>{follower}</WhiteText>
+//                   : <WhiteText>0</WhiteText>
+//               }
+//             </Connections>
+//             <Connections>
+//               <WhiteText>Seguindo</WhiteText>
+//               {
+//                 following
+//                   ? <WhiteText>{following}</WhiteText>
+//                   : <WhiteText>0</WhiteText>
+//               }
+//             </Connections>
+//           </FollowingFollowersContainers>
+//         </HeaderInformation>

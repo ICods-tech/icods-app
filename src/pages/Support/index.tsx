@@ -6,9 +6,9 @@ import {
 import { useTheme } from 'styled-components/native';
 
 import email from 'react-native-email';
-import Toast from 'react-native-toast-message';
-import { SubmitButton } from '../../components/SubmitButton';
 import Header from '../../components/Header';
+import { SubmitButton } from '../../components/SubmitButton';
+import { displayToast } from '../../utils/Toast';
 import {
   BodyMessage,
   CloudContainer,
@@ -32,13 +32,11 @@ const Support = () => {
         body: supportMessage,
       }).catch(console.error);
     }
-    Toast.show({
+    displayToast({
+      message1: 'Mensagem enviada com sucesso!',
       type: 'success',
-      position: 'bottom',
-      text1: 'Mensagem enviada com sucesso',
-      visibilityTime: 1200,
-      bottomOffset: 100,
-    });
+      duration: 1200,
+    })
   }, [supportMessage]);
 
   return (

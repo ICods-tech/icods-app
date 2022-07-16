@@ -21,8 +21,8 @@ import {
 } from './styles';
 
 import { LOG } from '../../config';
-import Toast from 'react-native-toast-message';
 import api from '../../services/api';
+import { displayToast } from '../../utils/Toast';
 const log = LOG.extend('ChangePasswordModal');
 
 
@@ -69,7 +69,7 @@ export function ChangePasswordModal({
     newPassword: false,
     passwordNewConfirmation: false,
   });
-  
+
   const clearInputs = useCallback(() => {
     setCurrentPassword('');
     setNewPassword('');
@@ -78,8 +78,8 @@ export function ChangePasswordModal({
       currentPassword: false,
       newPassword: false,
       passwordNewConfirmation: false,
-    })    
-  },[]);
+    })
+  }, []);
 
 
   function cleanTimoutAndCloseModal() {
@@ -131,25 +131,23 @@ export function ChangePasswordModal({
         password_confirmation: confirmNewPassword
       })
       onCloseModal();
-      Toast.show({
+      displayToast({
         type: 'success',
-        position: 'bottom',
-        text1: 'Sua senha foi alterada com sucesso!',
-        visibilityTime: 1000,
-        bottomOffset: 100,
-      });
+        message1: 'Sua senha foi alterada com sucesso!',
+        duration: 1000,
+      })
       clearInputs()
     } catch (error: any) {
       // Melhorar tratamento de erros
       const erro = error.response.data;
-      if(erro === 'Password confirmation must match new password'){
+      if (erro === 'Password confirmation must match new password') {
         setIsErrored({
           ...isErrored,
           newPassword: true,
           passwordNewConfirmation: true,
         })
       }
-      if(erro === 'Old Password does not match'){
+      if (erro === 'Old Password does not match') {
         setIsErrored({
           ...isErrored,
           currentPassword: true,
@@ -213,35 +211,35 @@ export function ChangePasswordModal({
             </InfoTitleContainer>
             <PasswordsContainer>
               <PasswordInput
-                  ref={passwordInputRef}
-                  iconly={Password}
-                  defaultValue={currentPassword}
-                  placeholder="Senha atual"
-                  onChangeText={setCurrentPassword}
-                  returnKeyType="send"
-                  isErrored={isErrored.currentPassword}
-                  value={currentPassword}
-                />
+                ref={passwordInputRef}
+                iconly={Password}
+                defaultValue={currentPassword}
+                placeholder="Senha atual"
+                onChangeText={setCurrentPassword}
+                returnKeyType="send"
+                isErrored={isErrored.currentPassword}
+                value={currentPassword}
+              />
               <PasswordInput
-                  ref={passwordInputRef}
-                  iconly={Password}
-                  defaultValue={newPassword}
-                  placeholder="Nova senha"
-                  onChangeText={setNewPassword}
-                  isErrored={isErrored.newPassword}
-                  returnKeyType="send"
-                  value={newPassword}
-                />
+                ref={passwordInputRef}
+                iconly={Password}
+                defaultValue={newPassword}
+                placeholder="Nova senha"
+                onChangeText={setNewPassword}
+                isErrored={isErrored.newPassword}
+                returnKeyType="send"
+                value={newPassword}
+              />
               <PasswordInput
-                  ref={passwordInputRef}
-                  iconly={Password}
-                  defaultValue={confirmNewPassword}
-                  placeholder="Confirmar nova senha"
-                  onChangeText={setConfirmNewPassword}
-                  isErrored={isErrored.passwordNewConfirmation}
-                  returnKeyType="send"
-                  value={confirmNewPassword}
-                />
+                ref={passwordInputRef}
+                iconly={Password}
+                defaultValue={confirmNewPassword}
+                placeholder="Confirmar nova senha"
+                onChangeText={setConfirmNewPassword}
+                isErrored={isErrored.passwordNewConfirmation}
+                returnKeyType="send"
+                value={confirmNewPassword}
+              />
             </PasswordsContainer>
           </InfoTextContainer>
 

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar, SafeAreaView } from 'react-native';
 import { useTheme } from 'styled-components';
-import HeaderProfile from '../../components/HeaderProfile'
+// import HeaderProfile from '../../components/HeaderProfile';
+import { SubmitButton } from '../../components/SubmitButton';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import extractNameAndSurname from '../../utils/extractNameAndSurname';
-import { 
-  ActivitiesContainer, 
-  ActivitiesText, 
-  Container
+import {
+  ActivitiesContainer,
+  ActivitiesText,
+  Container,
+  Gradient
 } from './styles';
 
 interface IFollowUsers {
@@ -66,18 +67,22 @@ const Profile = () => {
 
   return (
     <Container>
-      <SafeAreaView style={{ backgroundColor: '#2b90d9' }} />
-      <StatusBar
-        backgroundColor="#3097db"
-        barStyle="light-content"
-      />
+      {/* <SafeAreaView style={{ backgroundColor: '#2b90d9' }} /> */}
+      <Gradient>
+        <SubmitButton
+          text='Editar conta'
+
+        />
+      </Gradient>
+      {/* 
       <HeaderProfile
         fullName={user.name}
         following={following.followingCount}
         follower={followers.followersCount}
         edit={false}
         avatar={avatar}
-      />
+      /> */}
+
       <ActivitiesContainer>
         <ActivitiesText>Atividades</ActivitiesText>
       </ActivitiesContainer>
