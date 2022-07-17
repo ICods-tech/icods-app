@@ -32,6 +32,6 @@ export const Text = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
 
-  color: ${({ theme }) => theme.colors.shape};
+  color: ${({ theme }) => theme.colors.white};
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
 `;

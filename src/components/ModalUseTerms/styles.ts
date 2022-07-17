@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Dimensions} from 'react-native';
-import {GestureHandlerRootView, RectButton} from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
+import { GestureHandlerRootView, RectButton } from 'react-native-gesture-handler';
 
 export const ModalContainer = styled.Modal`
   flex: 1;
@@ -28,7 +28,7 @@ export const SubContainer = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-family: ${({theme}) => theme.fonts.bold};
+  font-family: ${({ theme }) => theme.fonts.bold};
   font-size: ${RFValue(14)}px;
   font-size: ${RFValue(14)}px;
   lineheight: 22px;
@@ -42,7 +42,7 @@ export const TextContainer = styled.ScrollView`
 `;
 
 export const TextContainerTitle = styled.Text`
-  font-family: ${({theme}) => theme.fonts.semi_bold};
+  font-family: ${({ theme }) => theme.fonts.semi_bold};
   font-size: ${RFValue(14)}px;
   lineheight: 19px;
   margintop: 8px;
@@ -51,7 +51,7 @@ export const TextContainerTitle = styled.Text`
 
 export const TextContainerText = styled.Text`
   width: 95%;
-  font-family: ${({theme}) => theme.fonts.regular};
+  font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(12)}px;
   line-height: 19px;
   color: rgba(0, 0, 0, 0.87);
@@ -74,25 +74,25 @@ export const BottomButton = styled(RectButton)`
 
   padding: 0 ${RFValue(4)}px;
 
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: ${RFValue(32)}px;
 `;
 
 export const ButtonLabelConfirm = styled.Text`
   text-transform: uppercase;
-  font-family: ${({theme}) => theme.fonts.medium};
+  font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(14)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
 
-  color: ${({theme}) => theme.colors.primary};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const ButtonLabelCancel = styled.Text`
   text-transform: uppercase;
-  font-family: ${({theme}) => theme.fonts.medium};
+  font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(14)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
 
-  color: ${({theme}) => theme.colors.cancelButton};
+  color: ${({ theme }) => theme.colors.cancelButton};
   opacity: 0.4;
 `;

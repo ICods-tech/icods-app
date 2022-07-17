@@ -1,8 +1,6 @@
 export default {
   colors: {
-    primary: '#2B90D9',
     profilePic: '8EFFEB',
-
 
     warning: '#F5AB0B',
 
@@ -11,10 +9,7 @@ export default {
     attention: '#DF2C2C',
     attention_light: '#EC8080',
 
-
     gray: "rgba(143, 146, 156, 0.5)",
-
-    title: 'rgba(0, 0, 0, 0.87)',
 
     subtitle: 'rgba(0, 0, 0, 0.6)',
     text: 'rgba(0, 0, 0, 0.4)',
@@ -22,17 +17,24 @@ export default {
     light_line: 'rgba(0, 0, 0, 0.12)',
     medium_line: 'rgba(0, 0, 0, 0.3)',
 
-    background: '#F0F2F5',
-    cloudly: '#F2F2F2',
-    cloudly_strong: '#E2E2E2',
-
-    shape: '#FFFFFF',
-    dark: '#000000',
     transparent: 'rgba(0, 0, 0, 0.0)',
     // TODO: Atenção aos próximos nomes definidos padroes globais
+
+    primary: '#2B90D9',
+
+    white: '#FFFFFF',
+
+    light_500: '#F2F2F2',
+
+
     gray_200: '#5F6368',
     gray_400: '#797b82',
     gray_600: '#282C37',
+
+
+    dark_800: '#1f1f1f',
+
+    black: '#000000',
   },
 
   fonts: {

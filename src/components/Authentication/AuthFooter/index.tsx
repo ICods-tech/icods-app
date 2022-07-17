@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ButtonTitle, Container } from './styles';
-import { ScannerButton } from '../../ScannerButton';
+import { ScannerButton } from '../../atoms/ScannerButton';
 
 export function AuthFooter() {
   const navigation = useNavigation<any>();

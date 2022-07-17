@@ -13,7 +13,7 @@ import { FilteredQRCodes, FilteredQRCodesByDate } from '.';
 
 export const Container = styled.View`
     flex: 1;
-    background-color: ${({ theme }) => theme.colors.shape};
+    background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const Content = styled.View`
@@ -33,7 +33,7 @@ export const QRCodeTitleDate = styled.Text`
     font-family: ${({ theme }) => theme.fonts.extra_bold};
     font-size: ${RFValue(16)}px;
     
-    color: ${({ theme }) => theme.colors.title};
+    color: ${({ theme }) => theme.colors.dark_800};
     
     letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
@@ -124,7 +124,7 @@ export const LargeSearchIcon = styled(LargeSearch).attrs({
 export const NoResultsFoundText = styled.Text`
     font-size: ${RFValue(24)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
-    color: ${({ theme }) => theme.colors.title};
+    color: ${({ theme }) => theme.colors.dark_800};
     text-align: center;
     letter-spacing: ${RFValue(0.18)}px;
 `;

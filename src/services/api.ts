@@ -1,8 +1,8 @@
 import axios from 'axios';
-const {API_URL} = process.env;
+const { API_URL } = process.env;
 
 const api = axios.create({
-  baseURL: `http://10.0.2.2:3333`
+  baseURL: `https://icods-api.com.br`
 });
 
 export default api;

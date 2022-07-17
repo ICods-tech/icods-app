@@ -9,14 +9,14 @@ interface ContainerProps {
     isKeyboardVisible: boolean;
 }
 
-export const Gradient = styled(LinearGradient).attrs({ 
-      start:{ x: 0, y: 0 },
-      end:{ x: 0, y: 1 },
-      colors:['#2B90D9', '#53C4E8'],
-      style:{ flex: 1 }
-})<ContainerProps>`
-    display: ${({isKeyboardVisible}) => isKeyboardVisible ? 'none' : 'flex'};
-    height: ${Dimensions.get('window').height*0.3 + getStatusBarHeight()}px;
+export const Gradient = styled(LinearGradient).attrs({
+    start: { x: 0, y: 0 },
+    end: { x: 0, y: 1 },
+    colors: ['#2B90D9', '#53C4E8'],
+    style: { flex: 1 }
+}) <ContainerProps>`
+    display: ${({ isKeyboardVisible }) => isKeyboardVisible ? 'none' : 'flex'};
+    height: ${Dimensions.get('window').height * 0.3 + getStatusBarHeight()}px;
 `;
 export const Container = styled.View`
     height: 100%;
@@ -33,11 +33,11 @@ export const IcodsLogo = styled(Logo).attrs({
 
 export const Title = styled.Text`
    font-size: ${RFValue(16)}px;
-   font-family: ${({theme}) => theme.fonts.medium};
+   font-family: ${({ theme }) => theme.fonts.medium};
 
    text-align: center;
    margin-top: ${RFValue(6)}px;
 
-   color: ${({theme}) => theme.colors.shape};
-   letter-spacing: ${Dimensions.get('window').width*0.002}px;
+   color: ${({ theme }) => theme.colors.white};
+   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;

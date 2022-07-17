@@ -93,7 +93,7 @@ const Routes = ({ linking }: IRoutes) => {
 
   const theme = useTheme();
 
-  const handleInitialLink = useCallback(async() => {
+  const handleInitialLink = useCallback(async () => {
     const dynamicLinkUrl = await dynamicLinks().getInitialLink();
     if (dynamicLinkUrl) {
       const preffixedLink = handleDynamicLinkUrl(dynamicLinkUrl);
@@ -105,13 +105,13 @@ const Routes = ({ linking }: IRoutes) => {
     console.log("useEffect ROUTES");
     handleInitialLink()
   }, [handleInitialLink])
-  
+
   return (
     <App.Navigator
       mode="card"
       screenOptions={{
         headerShown: false,
-        cardStyle: { backgroundColor: theme.colors.shape },
+        cardStyle: { backgroundColor: theme.colors.white },
       }}
     >
       {user ? (

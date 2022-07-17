@@ -1,13 +1,13 @@
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Dimensions} from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
 
 export const Gradient = styled(LinearGradient).attrs({
-  start: {x: 0, y: 0},
-  end: {x: 0, y: 1},
+  start: { x: 0, y: 0 },
+  end: { x: 0, y: 1 },
   colors: ['#2B90D9', '#53C4E8'],
-  style: {flex: 1},
+  style: { flex: 1 },
 })`
   height: ${RFValue(72)}px;
 `;
@@ -46,9 +46,9 @@ export const HeaderUserNameContainer = styled.View``;
 
 export const HeaderUserNameText = styled.Text`
   font-size: ${RFValue(18)}px;
-  font-family: ${({theme}) => theme.fonts.semi_bold};
+  font-family: ${({ theme }) => theme.fonts.semi_bold};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  color: ${({theme}) => theme.colors.shape};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 export const HeaderMenuButton = styled.TouchableOpacity.attrs({

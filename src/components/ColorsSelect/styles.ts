@@ -1,7 +1,7 @@
-import styled, {css} from 'styled-components/native';
-import {FlatList} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {colorsIconsProps} from '../History/FilterModal';
+import styled, { css } from 'styled-components/native';
+import { FlatList } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { colorsIconsProps } from '../History/FilterModal';
 
 export const Container = styled.View`
   height: ${RFValue(50)}px;
@@ -31,14 +31,14 @@ export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
   height: ${RFValue(32)}px;
   align-items: center;
   justify-content: center;
-  ${({selectedColor, color}) =>
+  ${({ selectedColor, color }) =>
     selectedColor === color &&
     css`
       width: ${RFValue(36)}px;
       height: ${RFValue(36)}px;
       border-width: ${RFValue(2)}px;
       border-radius: ${RFValue(4)}px;
-      border-color: ${({theme}) => theme.colors.title};
+      border-color: ${({ theme }) => theme.colors.dark_800};
     `};
 `;
 

@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View`
     flex: 1;
-    background-color: ${({ theme }) => theme.colors.shape};
+    background-color: ${({ theme }) => theme.colors.white};
     align-items: center;
     justify-content: center;  
 `;
@@ -16,7 +16,7 @@ export const PercentageText = styled.Text`
   font-weight: bold;
   font-size: ${RFValue(12)}px;
   text-align: center;
-  letter-spacing: ${Dimensions.get('window').width*0.002}px;
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   color: #2B90D9;
 `;
 
@@ -28,16 +28,16 @@ export const WaitText = styled.Text`
   font-weight: bold;
   line-height: 38px;
   text-align: center;
-  letter-spacing: ${Dimensions.get('window').width*0.002}px;
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 
 export const ProcessingText = styled.Text`
   font-weight: 600;
   width: 350px;
   margin-top: ${RFValue(12)}px;
-  color: ${({theme}) => theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   text-align: center;
-  letter-spacing: ${Dimensions.get('window').width*0.002}px;
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;

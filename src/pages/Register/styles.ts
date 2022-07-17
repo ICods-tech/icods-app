@@ -18,7 +18,7 @@ export const ScrollRegister = styled.ScrollView.attrs({
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 export const BackButtonContainer = styled.View<Props>`
   position: absolute;
@@ -39,7 +39,7 @@ export const RegisterTitle = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   margin-bottom: ${RFValue(17)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
 `;
 
 export const InputContainer = styled.View``;
@@ -60,7 +60,7 @@ export const UseTermsContainer = styled.View`
 export const UseTermsConfirmedButton = styled(RectButton)`
   flex-direction: row;
   padding: ${RFValue(2)}px;
-  background-color: ${({ theme }) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: ${RFValue(16)}px;
 `;
 
@@ -72,7 +72,7 @@ export const UseTermsChecked = styled.View<UseTermsProps>`
   width: ${RFValue(12)}px;
   height: ${RFValue(12)}px;
   border-radius: ${RFValue(2)}px;
-  background-color: ${({ theme }) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
   ${({ useTermsPressed, theme }) =>
     useTermsPressed &&
     css`
@@ -96,7 +96,7 @@ export const UseTermsText = styled.Text`
 
 export const UseTermsShowButton = styled(RectButton)`
   padding: ${RFValue(2)}px;
-  background-color: ${({ theme }) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: ${RFValue(16)}px;
 `;
 

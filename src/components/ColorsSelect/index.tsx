@@ -1,8 +1,8 @@
 import React from 'react';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {colorsIconsProps} from '../History/FilterModal';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { colorsIconsProps } from '../History/FilterModal';
 
-import {ColorButton, ColorsButtonList, Container, Separator} from './styles';
+import { ColorButton, ColorsButtonList, Container, Separator } from './styles';
 
 interface ColorsSelectProps {
   data: colorsIconsProps[];
@@ -19,8 +19,8 @@ export function ColorsSelect({
       <ColorsButtonList
         data={data}
         keyExtractor={(item) => item.key}
-        renderItem={({item}) => {
-          const {icon: Icon, key} = item;
+        renderItem={({ item }) => {
+          const { icon: Icon, key } = item;
           return (
             <ColorButton
               onPress={() => setSelectedColor(key as Colors)}

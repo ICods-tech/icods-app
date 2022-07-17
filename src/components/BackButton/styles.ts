@@ -1,4 +1,4 @@
-import {RFValue} from 'react-native-responsive-fontsize';
+import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import Back from '../../assets/images/new-back-button-white.svg';
 import BackBlue from '../../assets/images/back-button-blue.svg';

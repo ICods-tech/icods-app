@@ -25,7 +25,7 @@ export const FavoriteItemContainer = styled.View<FavoriteItemContainerProps>`
   height: ${RFValue(32)}px;
   border-radius: ${RFValue(16)}px;
   background: ${({ background, theme }) =>
-    background === 'WHITE' ? theme.colors.shape : theme.colors.primary};
+    background === 'WHITE' ? theme.colors.white : theme.colors.primary};
   shadow-color: black;
   shadow-opacity: 1;
   shadow-radius: 32px;

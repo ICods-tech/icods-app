@@ -1,17 +1,16 @@
+import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import styled, { css } from 'styled-components/native';
 
 
 export const Container = styled.View`
-  background-color: ${({ theme }) => theme.colors.cloudly};
+  height: 100%;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-end;
 `;
 
-
-
 export const BorderTop = styled.View`
-    margin-bottom: 5px;    
+    position: absolute;
+    top: 0;
     height: ${RFValue(2)}px;
     width: ${RFValue(24)}px;
     background-color: ${({ theme }) => theme.colors.primary};    

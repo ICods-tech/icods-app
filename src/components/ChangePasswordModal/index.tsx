@@ -179,7 +179,7 @@ export function ChangePasswordModal({
             !isFooterButtonsActived && (
               <CloseButtonContainer>
                 <CloseButton onPress={isTimeout ? cleanTimoutAndCloseModal : onCloseModal}>
-                  <CloseSquare color={theme.colors.title}
+                  <CloseSquare color={theme.colors.dark_800}
                     height={RFValue(24)}
                     width={RFValue(24)}
                   />
@@ -193,7 +193,7 @@ export function ChangePasswordModal({
             {
               (Iconly && (<Iconly
                 set='bold'
-                color={theme.colors.shape}
+                color={theme.colors.white}
                 width={RFValue(24)}
                 height={RFValue(24)}
               />)) ||

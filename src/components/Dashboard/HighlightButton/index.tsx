@@ -1,9 +1,9 @@
 import React from 'react';
-import {RectButtonProps} from 'react-native-gesture-handler';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {SvgProps} from 'react-native-svg';
+import { RectButtonProps } from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { SvgProps } from 'react-native-svg';
 
-import {Button, Gradient, Title} from './styles';
+import { Button, Gradient, Title } from './styles';
 
 interface HighlightButtonProps extends RectButtonProps {
   text: string;

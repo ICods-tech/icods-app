@@ -15,7 +15,7 @@ export const SafeAreaView = styled.SafeAreaView`
 export const Container = styled.View`
   flex: 1;
   flex-direction: column;
-  background: ${({ theme }) => theme.colors.shape};
+  background: ${({ theme }) => theme.colors.white};
 `;
 
 export const BackButtonContainer = styled.View<Props>`
@@ -25,11 +25,14 @@ export const BackButtonContainer = styled.View<Props>`
   left: ${RFValue(16)}px;
 `;
 
-export const RedefinePasswordForm = styled.ScrollView<Props>`
+export const RedefinePasswordForm = styled.ScrollView.attrs({
+  contentContainerStyle: {
+    alignItems: 'center',
+  }
+}) <Props>`
   width: 100%;
   padding: 0 ${RFValue(8)}px;
-  align-itens: center;
-  ${({ isKeyboardVisible }) => isKeyboardVisible && css`margin-top: ${RFValue(48)}px`}
+  margin-top: ${({ isKeyboardVisible }) => isKeyboardVisible ? RFValue(48) : 0};
 `;
 
 export const RedefinePasswordFormLabel = styled.Text`
@@ -39,16 +42,16 @@ export const RedefinePasswordFormLabel = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   margin: ${RFValue(32)}px ${RFValue(0)}px ${RFValue(28)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
 `;
 
 export const NicknameContainer = styled.View`
-  background: ${({ theme }) => theme.colors.shape};
+  background: ${({ theme }) => theme.colors.white};
   margin: ${RFValue(0)}px ${RFValue(28)}px;
   height: ${RFValue(48)}px;
   border-radius: ${RFValue(8)}px;
   border: ${RFValue(1)}px solid #2b90d9;
-  align-itens: center;
+  align-items: center;
   justify-content: center;
   flex-direction: row;
 `;
@@ -88,7 +91,7 @@ export const RedefinePasswordFormSendButtonContainer = styled.View`
   width: 80%;
   height: 40px;
   margin: 0 auto;
-  align-itens: center;
+  align-items: center;
   justify-content: center;
   border-radius: ${RFValue(116)}px;
 `;
@@ -98,34 +101,9 @@ export const RedefinePasswordFormSendButtonLabel = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  color: ${({ theme }) => theme.colors.shape};
+  color: ${({ theme }) => theme.colors.white};
 `;
 
-interface ICellProps {
-  focused: boolean;
-  isCorrect: boolean;
-  errored: boolean;
-  editable: boolean;
-}
-
-export const Cell = styled.Text<ICellProps>`
-  width: 38px;
-  height: 38px;
-  font-size: ${RFValue(22)}px;
-  font-family: ${({ theme }) => theme.fonts.light};
-  color: ${({ theme }) => theme.colors.primary};
-  text-align: center;
-  margin-left: 8px;
-  background-color: ${({ theme, editable }) => editable ? theme.colors.shape : theme.colors.light_line};
-  border-width: 1px;
-  border-color: ${({ theme, focused, errored }) =>
-    focused ?
-      theme.colors.primary
-      : errored ?
-        theme.colors.attention
-        : theme.colors.gray};
-  justify-content: flex-start;
-`;
 
 export const FieldsRow = styled.View`
   flex-direction: row;

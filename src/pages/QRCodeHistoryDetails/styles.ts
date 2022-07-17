@@ -8,7 +8,7 @@ import QRCodeTemplate from '../../assets/images/qrCodeLargeTemplate.svg';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const Content = styled.ScrollView.attrs({
@@ -66,7 +66,7 @@ export const QRCodeInfoContainer = styled.View`
 export const TitleQRCode = styled.Text`
   font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.extra_bold};
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 
@@ -80,7 +80,7 @@ export const QRCodeImgContainer = styled.View<QRCodeImgContainerProps>`
   border-color: ${({ theme, updatedColor }) =>
     updatedColor !== 'noColor' && updatedColor !== 'noFilter'
       ? CardColors[updatedColor]
-      : theme.colors.shape};
+      : theme.colors.white};
   margin-top: ${RFValue(12)}px;
 `;
 
@@ -98,7 +98,7 @@ export const ColorSelectContainer = styled.View`
 export const TitleColorSelect = styled.Text`
   font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 
   margin-bottom: ${RFValue(8)}px;
@@ -136,7 +136,7 @@ export const ColorButton = styled.TouchableOpacity<ColorButtonProps>`
       padding: ${RFValue(10)}px ${RFValue(10)}px;
       border-width: ${RFValue(2)}px;
       border-radius: ${RFValue(4)}px;
-      border-color: ${({ theme }) => theme.colors.title};
+      border-color: ${({ theme }) => theme.colors.dark_800};
     `};
 `;
 

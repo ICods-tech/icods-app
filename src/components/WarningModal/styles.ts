@@ -11,7 +11,7 @@ interface IModalContainter {
 
 export const ModalContainer = styled.View<IModalContainter>`
   width: 90%;
-  background-color: ${({ theme }) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
   justify-content: center;
   align-items: center;
   border-radius: ${RFValue(4)}px;
@@ -68,7 +68,7 @@ export const InfoTitle = styled.Text`
   text-align: center;
   line-height: ${RFValue(22)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
 `
 export const InfoDescriptionContainer = styled.View`
   padding: 0 ${RFValue(28)}px;

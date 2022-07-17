@@ -5,7 +5,7 @@ import { Dimensions } from 'react-native';
 export const Container = styled.View`
   flex: 1;
   align-items: center;
-  background: ${({ theme }) => theme.colors.shape};
+  background: ${({ theme }) => theme.colors.white};
   padding: 0 ${RFValue(16)}px;
 `;
 

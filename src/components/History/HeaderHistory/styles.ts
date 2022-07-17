@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   padding: 0px ${RFValue(15)}px;
-  background-color: ${({ theme }) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 
@@ -13,7 +13,7 @@ export const Title = styled.Text`
   font-size: ${RFValue(24)}px;
 
   font-family: ${({ theme }) => theme.fonts.semi_bold};
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
 
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   line-height: ${RFValue(33)}px;

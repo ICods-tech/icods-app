@@ -22,7 +22,7 @@ interface ContentProps {
 export const Button = styled(RectButton)`
     height: ${RFValue(128)}px;
     width: 100%;
-    /* background-color: ${({ theme }) => theme.colors.shape}; */
+    /* background-color: ${({ theme }) => theme.colors.white}; */
     justify-content: center;
     /* background-color: gray; */
 `;
@@ -63,7 +63,7 @@ export const QRCodeInfo = styled.View`
 export const QRCodeInfoText = styled.Text`
     font-size: ${RFValue(12)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
-    color: ${({ theme }) => theme.colors.title};
+    color: ${({ theme }) => theme.colors.dark_800};
     letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 

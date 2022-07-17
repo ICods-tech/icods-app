@@ -7,7 +7,7 @@ export const Title = styled.Text`
   font-size: ${RFValue(26)}px;
 
   font-family: ${({ theme }) => theme.fonts.extra_bold};
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
 
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
 
@@ -17,7 +17,7 @@ export const Title = styled.Text`
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
   padding: 0 ${RFValue(15)}px;
 `;
 
@@ -33,7 +33,7 @@ export const ContainerBodyMessage = styled.View`
 `;
 
 export const BodyMessage = styled.Text`
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
   font-family: ${({ theme }) => theme.fonts.semi_bold};
   font-size: ${RFValue(16)}px;
   opacity: 0.87;
@@ -47,7 +47,7 @@ export const InputContainer = styled.ScrollView.attrs({
   }
 })`
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.cloudly};
+  background-color: ${({ theme }) => theme.colors.light_500};
   margin-top: ${RFValue(36)}px;
   margin-bottom: ${RFValue(36)}px;
   padding: ${RFValue(18)}px;

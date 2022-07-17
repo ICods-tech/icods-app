@@ -4,20 +4,19 @@ import { SvgProps } from "react-native-svg";
 
 import { BorderTop, Container } from "./styles";
 
-interface BorderMenuProps {
+interface RouteButtonProps {
   selected: boolean;
   activatedIcon: React.FC<SvgProps>;
   deactivatedIcon: React.FC<SvgProps>;
 }
 
 
-export default function BorderMenu({ selected, activatedIcon: ActivatedIcon, deactivatedIcon: DeactivatedIcon }: BorderMenuProps) {
+export function RouteButton({ selected, activatedIcon: ActivatedIcon, deactivatedIcon: DeactivatedIcon }: RouteButtonProps) {
 
   return (
     <Container>
       {selected && <BorderTop />}
       {selected ? <ActivatedIcon width={RFValue(24)} height={RFValue(24)} /> : <DeactivatedIcon width={RFValue(24)} height={RFValue(24)} />}
-
     </Container>
   );
 }

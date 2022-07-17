@@ -25,13 +25,12 @@ export function ModalMoreDashboard({
   signOut,
 }: ModalInterface) {
   const theme = useTheme();
-   
-  const onSharePress = async () =>
-  {
+
+  const onSharePress = async () => {
     const appUrl = "https://icodsmobile.page.link/indicacao";
-    await Share.share( {
-      message: `O que acha de criar vídeos via QR Code? Com este aplicativo você consegue de forma simples e gratuita!\n\n ${ appUrl } `
-    } );
+    await Share.share({
+      message: `O que acha de criar vídeos via QR Code? Com este aplicativo você consegue de forma simples e gratuita!\n\n ${appUrl} `
+    });
   };
   return (
     <Modal
@@ -45,7 +44,7 @@ export function ModalMoreDashboard({
         <ButtonsContainer>
           <NavigationButton onPress={profilePage}>
             <User
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />
@@ -54,7 +53,7 @@ export function ModalMoreDashboard({
 
           <NavigationButton onPress={supportPage}>
             <ReportProblemIcon
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />
@@ -63,7 +62,7 @@ export function ModalMoreDashboard({
 
           <NavigationButton onPress={aboutPage}>
             <Paper
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />
@@ -72,7 +71,7 @@ export function ModalMoreDashboard({
 
           <NavigationButton onPress={onSharePress}>
             <Send
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />
@@ -81,7 +80,7 @@ export function ModalMoreDashboard({
 
           <NavigationButton onPress={signOut}>
             <Logout
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />

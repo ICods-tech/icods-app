@@ -15,6 +15,6 @@ interface ITitleProps {
 export const Title = styled.Text<ITitleProps>`
   font-family: ${({ theme }) => theme.fonts.semi_bold};
   font-size: ${RFValue(24)};
-  color: ${({ whiteMode, theme }) => whiteMode ? theme.colors.shape : theme.colors.title};
+  color: ${({ whiteMode, theme }) => whiteMode ? theme.colors.white : theme.colors.dark_800};
   margin-left: ${RFValue(16)};
 `;

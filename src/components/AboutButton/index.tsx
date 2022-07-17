@@ -22,7 +22,7 @@ export function AboutButton({ icon: Icon, title, ...rest }: AboutButtonProps) {
       <Button {...rest}>
         <Main>
           <IconContainer>
-            <Icon color={theme.colors.title} />
+            <Icon color={theme.colors.dark_800} />
           </IconContainer>
           <CategoriesText>{title}</CategoriesText>
         </Main>

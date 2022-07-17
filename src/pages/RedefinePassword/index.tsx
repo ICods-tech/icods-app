@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Keyboard, TextInput, TouchableWithoutFeedback } from 'react-native';
 import {
   CodeField,
-  Cursor,
+  RenderCellOptions,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
@@ -18,9 +18,9 @@ import api from '../../services/api';
 import { checkConnection } from '../../utils/checkConnection';
 import { encryptEmail } from '../../utils/encryptEmail';
 import { displayToast } from '../../utils/Toast';
+import { errorsBoilerplate, handleError } from './utils/handleInputErrors'
 import {
   BackButtonContainer,
-  Cell,
   Container,
   ContainerButton,
   EmailText,
@@ -31,9 +31,11 @@ import {
   SafeAreaView,
   SpacingLine,
 } from './styles';
+import { handleApiError } from './utils/handleApiErrors';
+import { VerificationCodeInput } from '../../components/molecules/VerificationCodeInput';
 const log = LOG.extend('RedefinePassword');
 
-const RedefinePassword = ({ route, _ }: any) => {
+const RedefinePassword = ({ route }: any) => {
   const { email, pass } = route.params;
 
   const CELL_COUNT = 6;
@@ -42,8 +44,6 @@ const RedefinePassword = ({ route, _ }: any) => {
   const passwordConfirmationInputRef = useRef<TextInput>(null);
   const [password, setpassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
-  const [isInputFocus, setIsInputFocus] = useState(false);
-  const [inputFocusObserver, setInputFocusObserver] = useState(false);
   const [isPasswordErrored, setIsPasswordErrored] = useState(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [confirmationCodeError, setConfirmationCodeError] = useState(false);
@@ -55,96 +55,34 @@ const RedefinePassword = ({ route, _ }: any) => {
     setValue,
   });
 
-  interface IRenderCell {
-    index: number;
-    symbol: string;
-    isFocused: boolean;
-  }
-
-  const renderCell = ({ index, symbol, isFocused }: IRenderCell) => {
-    let textChild = null;
-
-    if (symbol) {
-      textChild = symbol;
-    } else if (isFocused) {
-      setConfirmationCodeError(false);
-      textChild = <Cursor />;
-    }
-
-    return (
-      <Cell
-        key={index}
-        focused={isFocused}
-        isCorrect={success}
-        errored={confirmationCodeError}
-        editable={pass ? false : true}
-        onLayout={getCellOnLayoutHandler(index)}>
-        {textChild}
-      </Cell>
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow', () => { setIsKeyboardVisible(true); },
     );
-  };
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide', () => { setIsKeyboardVisible(false); },
+    );
 
-  const checkPasswordErrored = (error: any) => {
-    if ('errors' in error?.response.data) {
-      const passwordsMustBeEqualError = error.response.data.errors.some(
-        ({ msg }: { msg: string }) => {
-          return msg === 'Senhas devem ser iguais';
-        },
-      );
-
-      if (passwordsMustBeEqualError) setIsPasswordErrored(true);
-      else setIsPasswordErrored(false);
-    } else setIsPasswordErrored(false);
-  };
-
-  const checkVerificationCodeError = (error: any) => {
-    const errorData = error?.response.data;
-    if (
-      typeof errorData === 'string' &&
-      errorData.includes('Senha temporária ou email inválido!')
-    ) {
-      setConfirmationCodeError(true);
-    } else {
-      setConfirmationCodeError(false);
-    }
-  };
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, [Keyboard]);
 
   const handleRedefinePassword = useCallback(async () => {
     try {
-      const tempPassword = pass || value;
-      if (!tempPassword || tempPassword.length < 6) {
-        displayToast({
-          message1: 'Código inválido',
-          type: 'error',
-          duration: 1000,
-        });
-        setConfirmationCodeError(true);
-        return;
-      }
-      if (!password.length || !passwordConfirmation.length) {
-        displayToast({
-          message1: 'Para prosseguir, complete os campos',
-          type: 'error',
-          duration: 1000,
-        });
-        setIsPasswordErrored(true);
-        return;
-      }
-      if (password !== passwordConfirmation) {
-        displayToast({
-          message1: 'Senhas devem ser iguais',
-          type: 'error',
-          duration: 1000,
-        });
-        setIsPasswordErrored(true);
-        return;
-      }
+      const tempPassword = pass || value
+
+      const { hasErrors, possibleErrors, possibleErrorMessages } = errorsBoilerplate({ tempPassword, password, passwordConfirmation })
+
+      if (hasErrors) return handleError({ possibleErrors, possibleErrorMessages, setIsPasswordErrored, setConfirmationCodeError })
 
       const connection = await checkConnection();
       if (!connection) {
         navigation.navigate('ConnectionProblems' as any);
         return;
       }
+
       await api.patch('resetPasswordTempPass', {
         email,
         tempPassword,
@@ -152,23 +90,10 @@ const RedefinePassword = ({ route, _ }: any) => {
         passwordConfirmation,
       });
 
-      displayToast({
-        message1: 'Sua senha foi alterada com sucesso',
-        type: 'success',
-        duration: 1000,
-      });
+      displayToast({ message1: 'Sua senha foi alterada com sucesso', type: 'success', duration: 1000 });
       navigation.navigate('SignIn');
     } catch (error: any) {
-      const errorData = error?.response.data;
-      console.log('erro do catch', errorData);
-      checkVerificationCodeError(error);
-      typeof errorData !== 'string' && checkPasswordErrored(error);
-      displayToast({
-        message1:
-          typeof errorData === 'string' ? errorData : errorData.errors[0].msg,
-        type: 'error',
-        duration: 1000,
-      });
+      handleApiError({ error, setConfirmationCodeError, setIsPasswordErrored });
       log.error(error);
     }
   }, [email, pass, value, password, passwordConfirmation]);
@@ -181,25 +106,6 @@ const RedefinePassword = ({ route, _ }: any) => {
     navigation.navigate('SignIn');
   };
 
-  useEffect(() => {
-    const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow',
-      () => {
-        setIsKeyboardVisible(true);
-      },
-    );
-    const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide',
-      () => {
-        setIsKeyboardVisible(false);
-      },
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
-    };
-  }, [Keyboard]);
 
   return (
     <SafeAreaView>
@@ -230,14 +136,24 @@ const RedefinePassword = ({ route, _ }: any) => {
                 }}
                 cellCount={CELL_COUNT}
                 textContentType="oneTimeCode"
-                renderCell={renderCell}
+                renderCell={({ symbol, index, isFocused }: RenderCellOptions) =>
+                  <VerificationCodeInput
+                    key={index}
+                    confirmationCodeError={confirmationCodeError}
+                    isFocused={isFocused}
+                    symbol={symbol}
+                    index={index}
+                    getCellOnLayoutHandler={getCellOnLayoutHandler}
+                    pass={pass}
+                    setConfirmationCodeError={setConfirmationCodeError}
+                    success={success}
+                  />
+                }
               />
             </FieldsRow>
-
             <RedefinePasswordFormLabel>
               Agora é só completar os dados a seguir:
             </RedefinePasswordFormLabel>
-
             <InputContainer isErrored={isPasswordErrored}>
               <PasswordInput
                 ref={passwordInputRef}
@@ -245,7 +161,7 @@ const RedefinePassword = ({ route, _ }: any) => {
                 placeholder="Nova senha"
                 placeholderTextColor={theme.colors.subtitle}
                 defaultValue={password}
-                onChangeText={(password: string) => setpassword(password)}
+                onChangeText={(passwordChange: string) => setpassword(passwordChange)}
                 onSubmitEditing={() =>
                   passwordConfirmationInputRef.current?.focus()
                 }
@@ -254,9 +170,7 @@ const RedefinePassword = ({ route, _ }: any) => {
                 isErrored={isPasswordErrored}
                 setIsSignInErrored={setIsPasswordErrored}
               />
-
               <SpacingLine isErrored={isPasswordErrored} />
-
               <PasswordInput
                 ref={passwordConfirmationInputRef}
                 iconly={Password}
@@ -264,8 +178,8 @@ const RedefinePassword = ({ route, _ }: any) => {
                 placeholderTextColor={theme.colors.subtitle}
                 defaultValue={passwordConfirmation}
                 value={passwordConfirmation}
-                onChangeText={(passwordConfirmation: string) =>
-                  setPasswordConfirmation(passwordConfirmation)
+                onChangeText={(passwordConfirmationChange: string) =>
+                  setPasswordConfirmation(passwordConfirmationChange)
                 }
                 onSubmitEditing={handleRedefinePassword}
                 returnKeyType="send"

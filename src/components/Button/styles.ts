@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   buttonShadows: {
-    shadowOffset: { width: 1, height: 3},
+    shadowOffset: { width: 1, height: 3 },
     shadowColor: 'black',
     shadowOpacity: 0.1
   },
