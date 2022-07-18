@@ -12,6 +12,8 @@ const log = LOG.extend("App");
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
+  "new NativeEventEmitter",
+  "exported from 'deprecated-react-native-prop-types'."
 ]);
 
 const toastConfig = {

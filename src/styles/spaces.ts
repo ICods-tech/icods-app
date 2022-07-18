@@ -1,5 +1,5 @@
 import { Dimensions } from "react-native";
 
-export function letterSpacing(spacing: number = 0.0002) {
+export function setLetterSpacing(spacing: number = 0) {
   return Dimensions.get('window').width * spacing;
 }

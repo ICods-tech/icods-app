@@ -1,8 +1,8 @@
 import { Dimensions, StyleSheet } from 'react-native';
 
-const { width, height } = Dimensions.get( 'window' );
+const { width, height } = Dimensions.get('window');
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   container: {
     width: width,
     height: height,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create( {
     fontSize: 28,
     lineHeight: 38,
     textAlign: 'center',
-    letterSpacing: 0.02,
+    setLetterSpacing: 0.02,
     marginBottom: 14,
   },
   text: {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create( {
     fontSize: 16,
     lineHeight: 22,
     textAlign: 'center',
-    letterSpacing: 0.02,
+    setLetterSpacing: 0.02,
   },
   errorButton: {
     width: width * 0.8,
@@ -48,6 +48,6 @@ const styles = StyleSheet.create( {
   errorButtonText: {
     color: '#FFF',
   },
-} );
+});
 
 export default styles;

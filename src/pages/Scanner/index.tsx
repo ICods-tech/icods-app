@@ -54,7 +54,7 @@ const Scanner = (props: ScannerProps) => {
   const navigation = useNavigation<any>();
 
   const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
-  const page = user ? 'Dashboard' : 'SignIn';
+  const page = user ? 'Início' : 'SignIn';
 
   const [camera, setCamera] = useState<RNCamera>();
   const [qrCodeValidate, setQrCodeValidate] = useState(false);

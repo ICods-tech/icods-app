@@ -1,8 +1,8 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const { height, width } = Dimensions.get( 'window' );
+const { height, width } = Dimensions.get('window');
 
-const styles = StyleSheet.create( {
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
@@ -31,7 +31,7 @@ const styles = StyleSheet.create( {
     fontWeight: '600',
     fontSize: 16,
     textAlign: 'center',
-    letterSpacing: 0.02,
+    setLetterSpacing: 0.02,
 
     color: 'rgba(40, 44, 55, 0.4)',
     marginBottom: 17,
@@ -48,6 +48,6 @@ const styles = StyleSheet.create( {
     shadowColor: 'black',
     shadowOpacity: 0.1
   },
-} );
+});
 
 export default styles;

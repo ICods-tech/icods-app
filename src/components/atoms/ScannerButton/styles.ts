@@ -5,7 +5,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export const Button = styled(BorderlessButton)`
     height: 100%; 
-    margin-top: -${RFValue(12)}px;
+    margin-bottom: ${RFValue(23.5)}px;
     align-items: center;
     justify-content: center;
 `;

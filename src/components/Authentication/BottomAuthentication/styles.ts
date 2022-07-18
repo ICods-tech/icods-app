@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === 'ios' ? 16 : 0,
     fontSize: 10,
     lineHeight: 12,
-    letterSpacing: 0.02,
+    setLetterSpacing: 0.02,
     color: '#282C37'
   }
 })

@@ -1,22 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
-import { SvgProps } from "react-native-svg";
+import { RouteTitle } from "../RouteTitle";
 
 import { BorderTop, Container } from "./styles";
+import { ISwitchRouteIconReturn, switchRouteIcon } from "./utils/switchRouteIcon";
 
 interface RouteButtonProps {
-  selected: boolean;
-  activatedIcon: React.FC<SvgProps>;
-  deactivatedIcon: React.FC<SvgProps>;
+  title: string;
+  isActivated: boolean;
 }
 
 
-export function RouteButton({ selected, activatedIcon: ActivatedIcon, deactivatedIcon: DeactivatedIcon }: RouteButtonProps) {
+export function RouteButton({
+  title,
+  isActivated,
+}: RouteButtonProps) {
+
+  const [icon] = useState<ISwitchRouteIconReturn>(switchRouteIcon(title));
+  const { activatedIcon: ActivatedIcon, deactivatedIcon: DeactivatedIcon } = icon;
 
   return (
     <Container>
-      {selected && <BorderTop />}
-      {selected ? <ActivatedIcon width={RFValue(24)} height={RFValue(24)} /> : <DeactivatedIcon width={RFValue(24)} height={RFValue(24)} />}
+      {isActivated && <BorderTop />}
+
+      {isActivated ?
+        <ActivatedIcon width={RFValue(24)} height={RFValue(24)} />
+        :
+        <DeactivatedIcon width={RFValue(24)} height={RFValue(24)} />
+      }
+
+      <RouteTitle title={title} isActivated={isActivated} />
     </Container>
   );
 }

@@ -37,7 +37,7 @@ import extractNameAndSurname from '../../utils/extractNameAndSurname';
 
 const Dashboard = () => {
   const theme = useTheme();
-  const navigation = useNavigation<any>();
+  const { navigate } = useNavigation();
   const [choosenActivityScope, setChoosenActivityScope] = useState<
     'all' | 'mine'
   >('all');
@@ -57,15 +57,15 @@ const Dashboard = () => {
   }
   function handleOpenSupportPage() {
     setModalVisible(false);
-    navigation.navigate('Support');
+    navigate('Support');
   }
   function handleOpenProfilePage() {
     setModalVisible(false);
-    navigation.navigate('Profile');
+    navigate('Profile');
   }
   function handleOpenAboutPage() {
     setModalVisible(false);
-    navigation.navigate('About');
+    navigate('About');
   }
   async function handleSignOut() {
     setModalVisible(false);
@@ -113,19 +113,19 @@ const Dashboard = () => {
           <HighlightButton
             text="Escanear"
             icon={ScanIcon}
-            onPress={() => navigation.navigate('Escanear')}
+            onPress={() => navigate('Escanear')}
           />
 
           <HighlightButton
             text="Histórico"
             icon={HistoryIcon}
-            onPress={() => navigation.navigate('Histórico')}
+            onPress={() => navigate('Histórico')}
           />
 
           <HighlightButton
             text="Social"
             icon={SocialIcon}
-            onPress={() => navigation.navigate('Social')}
+            onPress={() => navigate('Social')}
           />
         </HighlightButtonList>
       </HightLightListContainer>

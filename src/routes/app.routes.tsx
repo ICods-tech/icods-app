@@ -1,160 +1,34 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useTheme } from 'styled-components/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import NotificationsActivatedIcon from '../assets/images/Icons/footer/activated-bell.svg';
-import ActivatedHistoryIcon from '../assets/images/Icons/footer/activated-history.svg';
-import ActivatedHomeIcon from '../assets/images/Icons/footer/activated-home.svg';
-import SocialActivatedIcon from '../assets/images/Icons/footer/activated-social.svg';
-import NotificationsDeactivatedIcon from '../assets/images/Icons/footer/deactivated-bell.svg';
-import DeactivatedHistoryIcon from '../assets/images/Icons/footer/deactivated-history.svg';
-import DeactivatedHomeIcon from '../assets/images/Icons/footer/deactivated-home.svg';
-import SocialDeactivatedIcon from '../assets/images/Icons/footer/socialDark.svg';
+import { BottomTabRoutes } from './bottomTab.routes';
+import VideoPlayer from '../pages/VideoPlayer';
 
-import { RouteTitle } from '../components/atoms/RouteTitle';
-import { RouteButton } from '../components/atoms/RouteButton';
+const { Navigator, Screen } = createStackNavigator();
+
+import About from '../pages/About';
+import Dashboard from '../pages/Dashboard';
+import EditProfile from '../pages/EditProfile';
+import Profile from '../pages/Profile';
+import Support from '../pages/Support';
+import Version from '../pages/Version';
 
 
-import { DashboardRoutes } from './dashboard.routes';
-import { HistoryRoutes } from './history.routes';
-import Scanner from '../pages/Scanner';
-import Working from '../pages/Working';
-import { ScannerButton } from '../components/atoms/ScannerButton';
-
-
-const { Navigator, Screen } = createBottomTabNavigator();
-
-// interface StyleInterpolatorProps {
-//   current: any;
-//   layouts: any;
-// }
-
-export const AppRoutes = () => {
-  const theme = useTheme();
-  // const navigation = useNavigation<any>();
-  // const cardStyleNoAnimationReturn = (current: any, layouts: any) => ({
-  //   cardStyle: {
-  //     transform: [
-  //       {
-  //         translateX: current.progress.interpolate({
-  //           inputRange: [0, 0],
-  //           outputRange: [-layouts.screen.width, 0],
-  //         }),
-  //       },
-  //     ],
-  //   },
-  // });
-
-  // const noAnimation = {
-  //   cardStyleInterpolator: ({ current, layouts }: StyleInterpolatorProps) => {
-  //     return cardStyleNoAnimationReturn(current, layouts);
-  //   },
-  // };
-
-  // const horizontalAnimation = {
-  //   cardStyleInterpolator: ({ current, layouts }: StyleInterpolatorProps) => {
-  //     return cardStyleReturn(current, layouts, false);
-  //   },
-  // };
-
-  // const cardStyleReturn = (
-  //   current: any,
-  //   layouts: any,
-  //   isInverted: boolean,
-  // ) => ({
-  //   cardStyle: {
-  //     transform: [
-  //       {
-  //         translateX: current.progress.interpolate({
-  //           inputRange: [0, 1],
-  //           outputRange: isInverted
-  //             ? [-layouts.screen.width, 0]
-  //             : [layouts.screen.width, 0],
-  //         }),
-  //       },
-  //     ],
-  //   },
-  // });
-
+export function AppRoutes() {
   return (
     <Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          height: RFValue(56),
-          backgroundColor: theme.colors.light_500,
-          paddingBottom: 5,
-        },
+      }}>
+      <Screen name="TabBarRoutes" component={BottomTabRoutes} />
 
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.dark_800,
-
-        tabBarLabel: ({ focused }) => <RouteTitle title={route.name} isActivated={focused} />
-      })}
-    >
-      <Screen
-        name="Início"
-        component={DashboardRoutes}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <RouteButton
-              selected={focused}
-              activatedIcon={ActivatedHomeIcon}
-              deactivatedIcon={DeactivatedHomeIcon}
-            />
-          ),
-        }}
-      />
-      <Screen
-        name="Histórico"
-        component={HistoryRoutes}
-        options={{
-          tabBarIcon: ({ focused }) => {
-            return (
-              <RouteButton
-                selected={focused}
-                activatedIcon={ActivatedHistoryIcon}
-                deactivatedIcon={DeactivatedHistoryIcon}
-              />
-            );
-          },
-        }}
-      />
-      <Screen
-        name="Escanear"
-        component={Scanner}
-        options={{
-          tabBarIcon: () => <ScannerButton />,
-        }}
-      />
-
-      <Screen
-        name="Notificação"
-        component={Working}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <RouteButton
-              selected={focused}
-              activatedIcon={NotificationsActivatedIcon}
-              deactivatedIcon={NotificationsDeactivatedIcon}
-            />
-          ),
-        }}
-      />
-      <Screen
-        name="Social"
-        component={Working}
-        options={{
-          tabBarIcon: ({ focused }) => (
-            <RouteButton
-              selected={focused}
-              activatedIcon={SocialActivatedIcon}
-              deactivatedIcon={SocialDeactivatedIcon}
-            />
-          ),
-        }}
-      />
+      <Screen name="Dashboard" component={Dashboard} />
+      <Screen name="Profile" component={Profile} />
+      <Screen name="Support" component={Support} />
+      <Screen name="About" component={About} />
+      <Screen name="EditProfile" component={EditProfile} />
+      <Screen name="Version" component={Version} />
+      <Screen name="VideoPlayer" component={VideoPlayer} />
     </Navigator >
   );
-};
+}

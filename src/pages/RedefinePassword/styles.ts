@@ -32,7 +32,7 @@ export const RedefinePasswordForm = styled.ScrollView.attrs({
 }) <Props>`
   width: 100%;
   padding: 0 ${RFValue(8)}px;
-  margin-top: ${({ isKeyboardVisible }) => isKeyboardVisible ? RFValue(48) : 0};
+  margin-top: ${({ isKeyboardVisible }) => isKeyboardVisible ? RFValue(48) : 0}px;
 `;
 
 export const RedefinePasswordFormLabel = styled.Text`
