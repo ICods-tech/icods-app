@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import { RouteTitle } from "../RouteTitle";
 
-import { BorderTop, Container } from "./styles";
+import { Container } from "./styles";
 import { ISwitchRouteIconReturn, switchRouteIcon } from "./utils/switchRouteIcon";
 
 interface RouteButtonProps {
@@ -21,8 +21,6 @@ export function RouteButton({
 
   return (
     <Container>
-      {isActivated && <BorderTop />}
-
       {isActivated ?
         <ActivatedIcon width={RFValue(24)} height={RFValue(24)} />
         :

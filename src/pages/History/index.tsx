@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { LogBox, SafeAreaView } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { Spacer } from '../../components/atoms/Spacer';
 import { HeaderHistory } from '../../components/History/HeaderHistory';
 import { HistoryCards } from '../../components/History/HistoryCards';
 import { useAuth } from '../../hooks/auth';
@@ -131,6 +132,9 @@ const History = () => {
                     <QRCodeList
                       data={item[date]}
                       keyExtractor={(item) => item.id}
+                      ItemSeparatorComponent={() => (
+                        <Spacer bottom={8} />
+                      )}
                       renderItem={({ item }) => {
                         const {
                           id,

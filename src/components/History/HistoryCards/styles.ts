@@ -16,15 +16,16 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions } from 'react-native';
 
 interface ContentProps {
-    color: Colors;
+  color: Colors;
 }
+
 
 export const Button = styled(RectButton)`
     height: ${RFValue(128)}px;
-    width: 100%;
-    /* background-color: ${({ theme }) => theme.colors.white}; */
+    width: 98%;
+    align-self: center;
     justify-content: center;
-    /* background-color: gray; */
+    border-radius: 10px;
 `;
 
 export const Container = styled.View<ContentProps>`
@@ -33,8 +34,8 @@ export const Container = styled.View<ContentProps>`
     width: 100%;
    
     padding-left: ${({ color }) =>
-        (color !== 'noColor' && color !== 'noFilter')
-            ? 0 : RFValue(10)}px;
+    (color !== 'noColor' && color !== 'noFilter')
+      ? 0 : RFValue(10)}px;
 
     align-items: center;
     /* background-color: green; */
@@ -82,8 +83,8 @@ export const QRCodeCardOptions = styled.View`
 `;
 
 export const Favorited = styled(HeartIcon).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })`
     position: absolute;
     top: ${RFValue(6)}px;
@@ -91,8 +92,8 @@ export const Favorited = styled(HeartIcon).attrs({
 `;
 
 export const UnFavorited = styled(UnFavorite).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })`
     position: absolute;
     top: ${RFValue(6)}px;
@@ -110,42 +111,42 @@ export const OptionsButton = styled(BorderlessButton)`
 `;
 
 export const OptionsButtonIcon = styled(ArrowIcon).attrs({
-    width: RFValue(16),
-    height: RFValue(16),
+  width: RFValue(16),
+  height: RFValue(16),
 })``;
 
 // Color Makers
 export const BlackMarker = styled(BlackMarkerIcon).attrs({
-    width: RFValue(10),
-    height: RFValue(114),
+  width: RFValue(10),
+  height: RFValue(114),
 })``;
 
 export const BlueMarker = styled(BlueMarkerIcon).attrs({
-    width: RFValue(10),
-    height: RFValue(114),
+  width: RFValue(10),
+  height: RFValue(114),
 })``;
 
 export const CyanMarker = styled(CyanMarkerIcon).attrs({
-    width: RFValue(10),
-    height: RFValue(114),
+  width: RFValue(10),
+  height: RFValue(114),
 })``;
 
 export const GreenMarker = styled(GreenMarkerIcon).attrs({
-    width: RFValue(10),
-    height: RFValue(114),
+  width: RFValue(10),
+  height: RFValue(114),
 })``;
 
 export const PinkMarker = styled(PinkMarkerIcon).attrs({
-    width: RFValue(10),
-    height: RFValue(114),
+  width: RFValue(10),
+  height: RFValue(114),
 })``;
 
 export const RedMarker = styled(RedMarkerIcon).attrs({
-    width: RFValue(10),
-    height: RFValue(114),
+  width: RFValue(10),
+  height: RFValue(114),
 })``;
 
 export const YellowMarker = styled(YellowMarkerIcon).attrs({
-    width: RFValue(10),
-    height: RFValue(114),
+  width: RFValue(10),
+  height: RFValue(114),
 })``;

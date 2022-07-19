@@ -1,15 +1,15 @@
-import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
 
 import { RouteButton } from '../components/atoms/RouteButton';
 import { ScannerButton } from '../components/atoms/ScannerButton';
 
-import { HistoryRoutes } from './history.routes';
+import Dashboard from '../pages/Dashboard';
 import Scanner from '../pages/Scanner';
 import Working from '../pages/Working';
-import Dashboard from '../pages/Dashboard';
+import { HistoryRoutes } from './history.routes';
 
 
 const { Navigator, Screen } = createBottomTabNavigator();

@@ -2,10 +2,10 @@
 import React from 'react';
 import QrCodeImg from '../../../assets/images/qr_code.svg';
 
-import { useNavigation } from '@react-navigation/native';
 import { RectButtonProps } from 'react-native-gesture-handler';
 import { RFValue } from 'react-native-responsive-fontsize';
 
+import { StyleSheet } from 'react-native';
 import {
   BlackMarker,
   BlueMarker,
@@ -25,7 +25,7 @@ import {
   QRCodeInfoText,
   QRCodePrivacyText,
   RedMarker,
-  YellowMarker,
+  YellowMarker
 } from './styles';
 
 interface HistoryCardsProps extends RectButtonProps {
@@ -70,15 +70,11 @@ export function HistoryCards({
   link,
   ...rest
 }: HistoryCardsProps) {
-  const navigation = useNavigation();
+  type colorType = keyof typeof CardMarker
   return (
-    <Button onPress={pressed} {...rest}>
+    <Button onPress={pressed} {...rest} style={styles.ShadowButton}>
       <Container color={color}>
-        {color in CardColors &&
-          color !== 'noFilter' &&
-          color !== 'noColor' &&
-          CardMarker[color]}
-
+        {color in CardColors && CardMarker[color as colorType]}
         <Content>
           <QrCodeImg width={RFValue(82)} height={RFValue(82)} />
           <MainContainer>
@@ -93,7 +89,6 @@ export function HistoryCards({
               <QRCodeInfoText>Feito por: {creator}</QRCodeInfoText>
               <QRCodeInfoText>Data: {date}</QRCodeInfoText>
             </QRCodeInfo>
-
             <QRCodeCardOptions>
               <OptionsButton>
                 <OptionsButtonIcon />
@@ -101,9 +96,24 @@ export function HistoryCards({
             </QRCodeCardOptions>
           </MainContainer>
         </Content>
-
         {favorite && <Favorited />}
       </Container>
     </Button>
+
   );
 }
+
+
+const styles = StyleSheet.create({
+  ShadowButton: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    backgroundColor: '#fff',
+    elevation: 3,
+  },
+});
