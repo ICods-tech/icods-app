@@ -67,7 +67,8 @@ const DeepLink = ({ route, _ }: any) => {
   }
 
   useEffect(() => {
-    if (!qrCodeIdFromDeeplink.length) {
+    if (!qrCodeIdFromDeeplink.url.length) {
+      console.log('Deeplink: ', qrCodeIdFromDeeplink);
       navigation.navigate(userConditionalPage);
     }
   }, []);

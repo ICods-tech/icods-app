@@ -17,8 +17,8 @@ export function AuthRoutes() {
         headerShown: false,
       }}
     >
-      <Screen name="Deeplink" component={Deeplink} />
       <Screen name="SignIn" component={SignIn} />
+      <Screen name="Deeplink" component={Deeplink} />
       <Screen name="Register" component={Register} />
       <Screen name="Scanner" component={Scanner} />
       <Screen name="ForgotPassword" component={ForgotPassword} />

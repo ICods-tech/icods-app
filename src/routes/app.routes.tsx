@@ -20,7 +20,6 @@ export function AppRoutes() {
       screenOptions={{
         headerShown: false,
       }}>
-      <Screen name="Deeplink" component={Deeplink} />
       <Screen name="TabBarRoutes" component={BottomTabRoutes} />
       <Screen name="Dashboard" component={Dashboard} />
       <Screen name="Profile" component={Profile} />
@@ -29,6 +28,7 @@ export function AppRoutes() {
       <Screen name="EditProfile" component={EditProfile} />
       <Screen name="Version" component={Version} />
       <Screen name="VideoPlayer" component={VideoPlayer} />
+      <Screen name="Deeplink" component={Deeplink} />
     </Navigator>
   );
 }
