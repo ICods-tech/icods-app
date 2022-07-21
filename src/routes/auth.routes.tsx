@@ -7,6 +7,7 @@ import RedefinePassword from '../pages/RedefinePassword';
 import Register from '../pages/Register';
 import Scanner from '../pages/Scanner';
 import SignIn from '../pages/SignIn';
+import Deeplink from '../pages/Deeplink';
 const { Navigator, Screen } = createStackNavigator();
 
 export function AuthRoutes() {
@@ -16,6 +17,7 @@ export function AuthRoutes() {
         headerShown: false,
       }}
     >
+      <Screen name="Deeplink" component={Deeplink} />
       <Screen name="SignIn" component={SignIn} />
       <Screen name="Register" component={Register} />
       <Screen name="Scanner" component={Scanner} />

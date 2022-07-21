@@ -31,13 +31,14 @@ import {
   SafeAreaView,
   SpacingLine,
 } from './styles';
+import { useAuth } from '../../hooks/auth';
 import { handleApiError } from './utils/handleApiErrors';
 import { VerificationCodeInput } from '../../components/molecules/VerificationCodeInput';
 const log = LOG.extend('RedefinePassword');
 
 const RedefinePassword = ({ route }: any) => {
+  const { user, signOut } = useAuth();
   const { email, pass } = route.params;
-
   const CELL_COUNT = 6;
   const navigation = useNavigation<any>();
   const passwordInputRef = useRef<TextInput>(null);
@@ -54,6 +55,15 @@ const RedefinePassword = ({ route }: any) => {
     value,
     setValue,
   });
+
+  const handleUserLogout = useCallback(async () => {
+    if (!user) await signOut();
+  }, [user, signOut]);
+
+  useEffect(() => {
+    handleUserLogout()
+  }, [handleUserLogout])
+
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(

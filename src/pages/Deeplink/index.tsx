@@ -34,12 +34,16 @@ interface DeeplinkQrCodeProps {
 type IDeeplinkStatus = 'IsEditable' | 'ContainsGift' | 'DoesNotBelongToIcods' | 'AlreadyAssociated' | 'NotLogged' | 'NotProcessed' | 'Verifying'
 
 const DeepLink = ({ route, _ }: any) => {
+  console.log("-----------------------");
+  console.log("-----------------------");
 
   const url = route.params;
   const qrCodeIdFromDeeplink = url ? url : '';
+
+
   const navigation = useNavigation();
   const { user, easyFunc } = useAuth();
-  const userConditionalPage = (user ? 'Dashboard' : 'SignIn') as never;
+  const userConditionalPage = (user ? 'TabBarRoutes' : 'SignIn') as never;
   const [qrCodeValidate, setQrCodeValidate] = useState(false);
   const [qrcode, setQrcode] = useState<QRCode>();
   const [deeplinkStatus, setDeeplinkStatus] = useState<IDeeplinkStatus>('Verifying');
@@ -61,6 +65,12 @@ const DeepLink = ({ route, _ }: any) => {
       </Container>
     )
   }
+
+  useEffect(() => {
+    if (!qrCodeIdFromDeeplink.length) {
+      navigation.navigate(userConditionalPage);
+    }
+  }, []);
 
   const possibleQrCodeStatus = {
     IsEditable: () => DeeplinkQrCode({

@@ -1,4 +1,4 @@
-import analytics from "@react-native-firebase/analytics";
+import analytics from '@react-native-firebase/analytics';
 import React, { useRef } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -7,7 +7,6 @@ import { linking } from '../linking';
 
 import { AppRoutes } from './app.routes';
 import { AuthRoutes } from './auth.routes';
-
 
 export function Routes() {
   const { user } = useAuth();
@@ -22,8 +21,7 @@ export function Routes() {
       }}
       onStateChange={async () => {
         const previousRouteName = routeNameRef.current;
-        const currentRouteName = navigationRef.current?.getCurrentRoute()
-          .name;
+        const currentRouteName = navigationRef.current?.getCurrentRoute().name;
 
         if (previousRouteName !== currentRouteName) {
           await analytics().logScreenView({
@@ -32,8 +30,7 @@ export function Routes() {
           });
         }
         routeNameRef.current = currentRouteName;
-      }}
-    >
+      }}>
       {user ? <AppRoutes /> : <AuthRoutes />}
     </NavigationContainer>
   );
