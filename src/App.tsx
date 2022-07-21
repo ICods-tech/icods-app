@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { LogBox, StatusBar, View } from "react-native";
 import "react-native-gesture-handler";
 import Toast, { BaseToast } from "react-native-toast-message";
@@ -9,6 +9,7 @@ import theme from "./global/styles/theme";
 import AppProvider from "./hooks";
 import { Routes } from "./routes";
 const log = LOG.extend("App");
+import SplashScreen from "react-native-splash-screen";
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
@@ -55,7 +56,12 @@ const toastConfig = {
   ),
 };
 
+
 const App = () => {
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
