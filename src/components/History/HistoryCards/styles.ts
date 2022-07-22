@@ -62,8 +62,8 @@ export const QRCodeInfo = styled.View`
 
 export const QRCodeInfoText = styled.Text`
   font-size: ${RFValue(12)}px;
-  font-family: ${({theme}) => theme.fonts.bold};
-  color: ${({theme}) => theme.colors.dark_800};
+  font-family: ${({theme}) => theme.fonts.medium};
+  color: ${({theme}) => theme.colors.black};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 

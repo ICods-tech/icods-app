@@ -53,7 +53,7 @@ const CardMarker = {
 export const CardColors = {
   red: '#ff6d6d',
   green: '#6dff73',
-  blue: '#2b90d9',
+  blue: '#0099FF',
   yellow: '#ffb600',
   cyan: '#68f6ff',
   pink: '#ff68c3',
