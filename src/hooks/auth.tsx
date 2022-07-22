@@ -45,7 +45,6 @@ interface AuthContextData {
   updateUser(user: User): void;
   deleteUser: (token: string) => Promise<void>;
   alterProfileVisibility: (id: string, token: string) => Promise<void>;
-  easyFunc: () => Promise<string>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -69,17 +68,6 @@ const AuthProvider: React.FC = ({ children }) => {
     }
   }
 
-  const easyFunc = async () => {
-    const [token, user] = await AsyncStorage.multiGet([
-      '@ICods:token',
-      '@ICods:user',
-    ]);
-
-    if (token[1] && user[1]) {
-      const userId = JSON.parse(user[1])
-      return userId
-    }
-  }
 
   useEffect(() => {
     loadStorageData();
@@ -188,7 +176,6 @@ const AuthProvider: React.FC = ({ children }) => {
         updateUser,
         deleteUser,
         alterProfileVisibility,
-        easyFunc,
       }}>
       {children}
     </AuthContext.Provider>

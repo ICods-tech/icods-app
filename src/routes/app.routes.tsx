@@ -1,14 +1,14 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 
 import VideoPlayer from '../pages/VideoPlayer';
-import { BottomTabRoutes } from './bottomTab.routes';
+import {BottomTabRoutes} from './bottomTab.routes';
 
-const { Navigator, Screen } = createStackNavigator();
+const {Navigator, Screen} = createStackNavigator();
 
 import About from '../pages/About';
+import ConnectionProblems from '../pages/ConnectionProblems';
 import Dashboard from '../pages/Dashboard';
-import Deeplink from '../pages/Deeplink';
 import EditProfile from '../pages/EditProfile';
 import Profile from '../pages/Profile';
 import Support from '../pages/Support';
@@ -28,7 +28,8 @@ export function AppRoutes() {
       <Screen name="EditProfile" component={EditProfile} />
       <Screen name="Version" component={Version} />
       <Screen name="VideoPlayer" component={VideoPlayer} />
-      <Screen name="Deeplink" component={Deeplink} />
+      <Screen name="ConnectionProblems" component={ConnectionProblems} />
+      {/* <Screen name="Deeplink" component={Deeplink} /> */}
     </Navigator>
   );
 }

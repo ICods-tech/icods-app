@@ -1,24 +1,24 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Keyboard, TextInput, TouchableWithoutFeedback } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Keyboard, TextInput, TouchableWithoutFeedback} from 'react-native';
 import {
   CodeField,
   RenderCellOptions,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
-import { Password } from 'react-native-iconly';
-import { Header } from '../../components/Authentication/Header';
-import { BackButton } from '../../components/BackButton';
+import {Password} from 'react-native-iconly';
+import {Header} from '../../components/Authentication/Header';
+import {BackButton} from '../../components/BackButton';
 import PasswordInput from '../../components/PasswordInput';
-import { SubmitButton } from '../../components/SubmitButton';
-import { LOG } from '../../config';
+import {SubmitButton} from '../../components/SubmitButton';
+import {LOG} from '../../config';
 import theme from '../../global/styles/theme';
 import api from '../../services/api';
-import { checkConnection } from '../../utils/checkConnection';
-import { encryptEmail } from '../../utils/encryptEmail';
-import { displayToast } from '../../utils/Toast';
-import { errorsBoilerplate, handleError } from './utils/handleInputErrors'
+import {checkConnection} from '../../utils/checkConnection';
+import {encryptEmail} from '../../utils/encryptEmail';
+import {displayToast} from '../../utils/Toast';
+import {errorsBoilerplate, handleError} from './utils/handleInputErrors';
 import {
   BackButtonContainer,
   Container,
@@ -31,14 +31,14 @@ import {
   SafeAreaView,
   SpacingLine,
 } from './styles';
-import { useAuth } from '../../hooks/auth';
-import { handleApiError } from './utils/handleApiErrors';
-import { VerificationCodeInput } from '../../components/molecules/VerificationCodeInput';
+import {useAuth} from '../../hooks/auth';
+import {handleApiError} from './utils/handleApiErrors';
+import {VerificationCodeInput} from '../../components/molecules/VerificationCodeInput';
 const log = LOG.extend('RedefinePassword');
 
-const RedefinePassword = ({ route }: any) => {
-  const { user, signOut } = useAuth();
-  const { email, pass } = route.params;
+const RedefinePassword = ({route}: any) => {
+  const {user, signOut} = useAuth();
+  const {email, pass} = route.params;
   const CELL_COUNT = 6;
   const navigation = useNavigation<any>();
   const passwordInputRef = useRef<TextInput>(null);
@@ -49,7 +49,7 @@ const RedefinePassword = ({ route }: any) => {
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [confirmationCodeError, setConfirmationCodeError] = useState(false);
   const [value, setValue] = useState(pass);
-  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+  const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [success, setSuccess] = useState(false);
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
@@ -57,35 +57,54 @@ const RedefinePassword = ({ route }: any) => {
   });
 
   const handleUserLogout = useCallback(async () => {
-    if (!user) await signOut();
+    if (!user) {
+      await signOut();
+    }
   }, [user, signOut]);
 
   useEffect(() => {
-    handleUserLogout()
-  }, [handleUserLogout])
-
+    handleUserLogout();
+  }, [handleUserLogout]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
-      'keyboardDidShow', () => { setIsKeyboardVisible(true); },
+      'keyboardDidShow',
+      () => {
+        setIsKeyboardVisible(true);
+      },
     );
     const keyboardDidHideListener = Keyboard.addListener(
-      'keyboardDidHide', () => { setIsKeyboardVisible(false); },
+      'keyboardDidHide',
+      () => {
+        setIsKeyboardVisible(false);
+      },
     );
 
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Keyboard]);
 
   const handleRedefinePassword = useCallback(async () => {
     try {
-      const tempPassword = pass || value
+      const tempPassword = pass || value;
 
-      const { hasErrors, possibleErrors, possibleErrorMessages } = errorsBoilerplate({ tempPassword, password, passwordConfirmation })
+      const {
+        hasErrors,
+        possibleErrors,
+        possibleErrorMessages,
+      } = errorsBoilerplate({tempPassword, password, passwordConfirmation});
 
-      if (hasErrors) return handleError({ possibleErrors, possibleErrorMessages, setIsPasswordErrored, setConfirmationCodeError })
+      if (hasErrors) {
+        return handleError({
+          possibleErrors,
+          possibleErrorMessages,
+          setIsPasswordErrored,
+          setConfirmationCodeError,
+        });
+      }
 
       const connection = await checkConnection();
       if (!connection) {
@@ -100,13 +119,17 @@ const RedefinePassword = ({ route }: any) => {
         passwordConfirmation,
       });
 
-      displayToast({ message1: 'Sua senha foi alterada com sucesso', type: 'success', duration: 1000 });
+      displayToast({
+        message1: 'Sua senha foi alterada com sucesso',
+        type: 'success',
+        duration: 1000,
+      });
       navigation.navigate('SignIn');
     } catch (error: any) {
-      handleApiError({ error, setConfirmationCodeError, setIsPasswordErrored });
+      handleApiError({error, setConfirmationCodeError, setIsPasswordErrored});
       log.error(error);
     }
-  }, [email, pass, value, password, passwordConfirmation]);
+  }, [pass, value, password, passwordConfirmation, email, navigation]);
 
   const filledInput = () => {
     return password.length > 0 || passwordConfirmation.length > 0;
@@ -115,7 +138,6 @@ const RedefinePassword = ({ route }: any) => {
   const handleBackButton = () => {
     navigation.navigate('SignIn');
   };
-
 
   return (
     <SafeAreaView>
@@ -146,7 +168,7 @@ const RedefinePassword = ({ route }: any) => {
                 }}
                 cellCount={CELL_COUNT}
                 textContentType="oneTimeCode"
-                renderCell={({ symbol, index, isFocused }: RenderCellOptions) =>
+                renderCell={({symbol, index, isFocused}: RenderCellOptions) => (
                   <VerificationCodeInput
                     key={index}
                     confirmationCodeError={confirmationCodeError}
@@ -158,7 +180,7 @@ const RedefinePassword = ({ route }: any) => {
                     setConfirmationCodeError={setConfirmationCodeError}
                     success={success}
                   />
-                }
+                )}
               />
             </FieldsRow>
             <RedefinePasswordFormLabel>
@@ -171,7 +193,9 @@ const RedefinePassword = ({ route }: any) => {
                 placeholder="Nova senha"
                 placeholderTextColor={theme.colors.subtitle}
                 defaultValue={password}
-                onChangeText={(passwordChange: string) => setpassword(passwordChange)}
+                onChangeText={(passwordChange: string) =>
+                  setpassword(passwordChange)
+                }
                 onSubmitEditing={() =>
                   passwordConfirmationInputRef.current?.focus()
                 }

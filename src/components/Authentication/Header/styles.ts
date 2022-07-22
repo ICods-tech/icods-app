@@ -6,14 +6,14 @@ import { Dimensions, Platform } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 interface ContainerProps {
-    isKeyboardVisible: boolean;
+  isKeyboardVisible: boolean;
 }
 
 export const Gradient = styled(LinearGradient).attrs({
-    start: { x: 0, y: 0 },
-    end: { x: 0, y: 1 },
-    colors: ['#2B90D9', '#53C4E8'],
-    style: { flex: 1 }
+  start: { x: 0, y: 0 },
+  end: { x: 0, y: 1 },
+  colors: ['#0099FF', '#0099FF'],
+  style: { flex: 1 }
 }) <ContainerProps>`
     display: ${({ isKeyboardVisible }) => isKeyboardVisible ? 'none' : 'flex'};
     height: ${Dimensions.get('window').height * 0.3 + getStatusBarHeight()}px;
@@ -26,8 +26,8 @@ export const Container = styled.View`
 `;
 
 export const IcodsLogo = styled(Logo).attrs({
-    width: RFValue(289),
-    height: RFValue(170)
+  width: RFValue(289),
+  height: RFValue(170)
 })`
 `;
 

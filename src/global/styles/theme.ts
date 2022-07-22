@@ -20,7 +20,7 @@ export default {
     transparent: 'rgba(0, 0, 0, 0.0)',
     // TODO: Atenção aos próximos nomes definidos padroes globais
 
-    primary: '#2B90D9',
+    primary: '#0099FF',
 
     white: '#FFFFFF',
 

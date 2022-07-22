@@ -1,31 +1,31 @@
-
-import React, { useEffect } from "react";
-import { LogBox, StatusBar, View } from "react-native";
-import "react-native-gesture-handler";
-import Toast, { BaseToast } from "react-native-toast-message";
-import { ThemeProvider } from "styled-components";
-import { LOG, Sentry } from "./config";
-import theme from "./global/styles/theme";
-import AppProvider from "./hooks";
-import { Routes } from "./routes";
-const log = LOG.extend("App");
-import SplashScreen from "react-native-splash-screen";
+import React, {useEffect} from 'react';
+import {LogBox, StatusBar, View} from 'react-native';
+import 'react-native-gesture-handler';
+import Toast, {BaseToast} from 'react-native-toast-message';
+import {ThemeProvider} from 'styled-components';
+import {LOG, Sentry} from './config';
+import theme from './global/styles/theme';
+import AppProvider from './hooks';
+import {Routes} from './routes';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const log = LOG.extend('App');
+import SplashScreen from 'react-native-splash-screen';
 
 LogBox.ignoreLogs([
-  "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
-  "new NativeEventEmitter",
-  "exported from 'deprecated-react-native-prop-types'."
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+  'new NativeEventEmitter',
+  "exported from 'deprecated-react-native-prop-types'.",
 ]);
 
 const toastConfig = {
-  success: ({ text1, text2, ...rest }: { text1: string; text2: string }) => (
+  success: ({text1, text2, ...rest}: {text1: string; text2: string}) => (
     <BaseToast
       {...rest}
-      style={{ borderLeftColor: "#2c90d9" }}
-      contentContainerStyle={{ paddingHorizontal: 15 }}
+      style={{borderLeftColor: '#2c90d9'}}
+      contentContainerStyle={{paddingHorizontal: 15}}
       text1Style={{
         fontSize: 12,
-        fontWeight: "bold",
+        fontWeight: 'bold',
       }}
       text1={text1}
       text2Style={{
@@ -36,14 +36,14 @@ const toastConfig = {
       text2NumberOfLines={1}
     />
   ),
-  error: ({ text1, text2, ...rest }: { text1: string; text2: string }) => (
+  error: ({text1, text2, ...rest}: {text1: string; text2: string}) => (
     <BaseToast
       {...rest}
-      style={{ borderLeftColor: "red" }}
-      contentContainerStyle={{ paddingHorizontal: 15 }}
+      style={{borderLeftColor: 'red'}}
+      contentContainerStyle={{paddingHorizontal: 15}}
       text1Style={{
         fontSize: 12,
-        fontWeight: "bold",
+        fontWeight: 'bold',
       }}
       text1={text1}
       text2Style={{
@@ -56,9 +56,7 @@ const toastConfig = {
   ),
 };
 
-
 const App = () => {
-
   useEffect(() => {
     SplashScreen.hide();
   }, []);
@@ -69,7 +67,7 @@ const App = () => {
         barStyle="light-content"
         backgroundColor={theme.colors.primary}
       />
-      <View style={{ flex: 1, backgroundColor: "#312e38" }}>
+      <View style={{flex: 1, backgroundColor: '#312e38'}}>
         <AppProvider>
           <Routes />
         </AppProvider>
