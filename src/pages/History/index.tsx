@@ -1,15 +1,16 @@
-import { useNavigation } from '@react-navigation/native';
-import { Moment } from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
-import { LogBox, SafeAreaView } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {Moment} from 'moment';
+import React, {useCallback, useEffect, useState} from 'react';
+import {LogBox, SafeAreaView} from 'react-native';
 import * as Progress from 'react-native-progress';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { Spacer } from '../../components/atoms/Spacer';
-import { HeaderHistory } from '../../components/History/HeaderHistory';
-import { HistoryCards } from '../../components/History/HistoryCards';
-import { useAuth } from '../../hooks/auth';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {Colors} from '../../@types/interfaces';
+import {Spacer} from '../../components/atoms/Spacer';
+import {HeaderHistory} from '../../components/History/HeaderHistory';
+import {HistoryCards} from '../../components/History/HistoryCards';
+import {useAuth} from '../../hooks/auth';
 import api from '../../services/api';
-import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
+import {filteredQRCodesByDatePlaceholder} from '../../utils/filteredQRCodesByDatePlaceholder';
 import formattedDate from '../../utils/formatDates';
 import {
   CloudContainer,
@@ -24,7 +25,7 @@ import {
   QRCodeDateList,
   QRCodeList,
   QRCodeTitleContainer,
-  QRCodeTitleDate
+  QRCodeTitleDate,
 } from './styles';
 
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
@@ -46,7 +47,7 @@ export interface FilteredQRCodesByDate {
 }
 
 const History = () => {
-  const { token } = useAuth();
+  const {token} = useAuth();
   const navigation = useNavigation<any>();
   const [reloadState, setReloadState] = useState(false);
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(
@@ -84,15 +85,17 @@ const History = () => {
       setLoading(false);
       setReloadState(false);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [reloadState],
   );
 
   useEffect(() => {
     loadQRCodes(color, selectedDate?.toDate(), favoriteFilter);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reloadState]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <Container>
         <HeaderHistory
           selectedColor={color}
@@ -116,7 +119,7 @@ const History = () => {
               const [date] = Object.keys(item);
               return date;
             }}
-            renderItem={({ item }) => {
+            renderItem={({item}) => {
               const [date] = Object.keys(item);
               if (date !== '0' && date !== null && date !== undefined) {
                 return (
@@ -132,14 +135,11 @@ const History = () => {
                     <QRCodeList
                       data={item[date]}
                       keyExtractor={(item) => item.id}
-                      ItemSeparatorComponent={() => (
-                        <Spacer bottom={8} />
-                      )}
-                      renderItem={({ item }) => {
+                      ItemSeparatorComponent={() => <Spacer bottom={8} />}
+                      renderItem={({item}) => {
                         const {
                           id,
                           color,
-                          content,
                           comparisonDate,
                           favorited,
                           qrCodeCreatorName,

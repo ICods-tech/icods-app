@@ -1,10 +1,10 @@
-import { Dimensions } from 'react-native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import styled, { css } from 'styled-components/native';
+import {Dimensions} from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import styled, {css} from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({ theme }) => theme.colors.white};
+  background-color: ${({theme}) => theme.colors.white};
 `;
 
 export const Header = styled.View``;
@@ -36,15 +36,15 @@ export const CloudSmallContainer = styled.View`
 
 export const WelcomeTitle = styled.Text`
   font-size: ${RFValue(28)}px;
-  font-family: ${({ theme }) => theme.fonts.extra_bold};
-  color: ${({ theme }) => theme.colors.dark_800};
+  font-family: ${({theme}) => theme.fonts.extra_bold};
+  color: ${({theme}) => theme.colors.dark_800};
   line-height: ${RFValue(38)}px;
 `;
 
 export const HighlightTitle = styled.Text`
-  color: ${({ theme }) => theme.colors.text};
+  color: ${({theme}) => theme.colors.text};
   font-size: ${RFValue(14)}px;
-  font-family: ${({ theme }) => theme.fonts.regular};
+  font-family: ${({theme}) => theme.fonts.regular};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 
@@ -77,10 +77,10 @@ export const FeedHeader = styled.View`
 
 export const FeedTitle = styled.Text`
   font-size: ${RFValue(28)}px;
-  font-family: ${({ theme }) => theme.fonts.extra_bold};
+  font-family: ${({theme}) => theme.fonts.extra_bold};
 
   line-height: ${RFValue(38)}px;
-  color: ${({ theme }) => theme.colors.dark_800};
+  color: ${({theme}) => theme.colors.dark_800};
 `;
 
 export const FeedOptionsTitleContainer = styled.View`
@@ -97,17 +97,17 @@ interface FeedOptionsTitleProps {
 
 export const FeedOptionTitleButton = styled.TouchableOpacity.attrs({
   activeOpacity: 0.6,
-}) <FeedOptionsTitleProps>`
+})<FeedOptionsTitleProps>`
   align-items: center;
   height: 100%;
   width: ${RFValue(70)}px;
   padding-bottom: ${RFValue(8)}px;
 
-  ${({ active }) =>
+  ${({active}) =>
     active
       ? css`
           border-bottom-width: ${RFValue(2)}px;
-          border-bottom-color: ${({ theme }) => theme.colors.primary};
+          border-bottom-color: ${({theme}) => theme.colors.primary};
         `
       : css`
           border-bottom-width: ${RFValue(2)}px;
@@ -117,15 +117,15 @@ export const FeedOptionTitleButton = styled.TouchableOpacity.attrs({
 
 export const FeedOptionTitle = styled.Text<FeedOptionsTitleProps>`
   font-size: ${RFValue(14)}px;
-  font-family: ${({ theme }) => theme.fonts.semi_bold};
+  font-family: ${({theme}) => theme.fonts.semi_bold};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  ${({ active }) =>
+  ${({active}) =>
     active
       ? css`
-          color: ${({ theme }) => theme.colors.primary};
+          color: ${({theme}) => theme.colors.primary};
         `
       : css`
-          color: ${({ theme }) => theme.colors.subtitle};
+          color: ${({theme}) => theme.colors.subtitle};
         `};
 `;
 
@@ -133,8 +133,8 @@ export const FeedSubTitleContainer = styled.View``;
 
 export const FeedSubTitle = styled.Text`
   font-size: ${RFValue(14)}px;
-  font-family: ${({ theme }) => theme.fonts.regular};
+  font-family: ${({theme}) => theme.fonts.regular};
 
-  color: ${({ theme }) => theme.colors.gray};
+  color: ${({theme}) => theme.colors.gray};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;

@@ -1,13 +1,18 @@
-import Toast from "react-native-toast-message";
+import Toast from 'react-native-toast-message';
 
 interface IToastProps {
   message1: string;
-  type: "success" | "error" | "warning" | "info";
+  type: 'success' | 'error' | 'warning' | 'info';
   message2?: string;
   duration?: number;
 }
 
-export const displayToast = ({ message1, type, message2, duration }: IToastProps) => {
+export const displayToast = ({
+  message1,
+  type,
+  message2,
+  duration,
+}: IToastProps) => {
   return Toast.show({
     type,
     position: 'bottom',

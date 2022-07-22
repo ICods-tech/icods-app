@@ -1,21 +1,24 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   NativeSyntheticEvent,
-  Platform, TextInputChangeEventData
+  Platform,
+  TextInputChangeEventData,
 } from 'react-native';
-import { useTheme } from 'styled-components/native';
+import {useTheme} from 'styled-components/native';
 
 import email from 'react-native-email';
 import Header from '../../components/Header';
-import { SubmitButton } from '../../components/SubmitButton';
-import { displayToast } from '../../utils/Toast';
+import {SubmitButton} from '../../components/SubmitButton';
+import {displayToast} from '../../utils/Toast';
 import {
   BodyMessage,
   CloudContainer,
   CloudRightSmall,
   Container,
   ContainerBodyMessage,
-  ContainerButton, Input, InputContainer
+  ContainerButton,
+  Input,
+  InputContainer,
 } from './styles';
 
 const Support = () => {
@@ -36,7 +39,7 @@ const Support = () => {
       message1: 'Mensagem enviada com sucesso!',
       type: 'success',
       duration: 1200,
-    })
+    });
   }, [supportMessage]);
 
   return (
@@ -52,7 +55,7 @@ const Support = () => {
       </ContainerBodyMessage>
       <InputContainer>
         <Input
-          style={{ textAlignVertical: 'top' }}
+          style={{textAlignVertical: 'top'}}
           placeholder="Mensagem"
           multiline
           value={supportMessage}
@@ -65,7 +68,9 @@ const Support = () => {
       <ContainerButton>
         <SubmitButton
           enabled={!!supportMessage}
-          onPress={() => handleEmail()} text={'Enviar'} />
+          onPress={() => handleEmail()}
+          text={'Enviar'}
+        />
       </ContainerButton>
     </Container>
   );

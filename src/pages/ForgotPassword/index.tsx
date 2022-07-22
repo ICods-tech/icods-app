@@ -1,58 +1,56 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from "react";
-import { Keyboard, TextInput, TouchableWithoutFeedback } from "react-native";
-import { Message } from "react-native-iconly";
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {Keyboard, TouchableWithoutFeedback} from 'react-native';
+import {Message} from 'react-native-iconly';
 import * as Yup from 'yup';
-import { Header } from "../../components/Authentication/Header";
-import { BackButton } from "../../components/BackButton";
-import { WarningModal } from "../../components/WarningModal";
-import { LOG } from "../../config";
-import theme from "../../global/styles/theme";
-import api from "../../services/api";
-import { checkConnection } from "../../utils/checkConnection";
-import { delay } from '../../utils/delay';
-import { displayToast } from '../../utils/Toast';
+import {Header} from '../../components/Authentication/Header';
+import {BackButton} from '../../components/BackButton';
+import {WarningModal} from '../../components/WarningModal';
+import {LOG} from '../../config';
+import theme from '../../global/styles/theme';
+import api from '../../services/api';
+import {checkConnection} from '../../utils/checkConnection';
+import {delay} from '../../utils/delay';
+import {displayToast} from '../../utils/Toast';
 
-import { SubmitButton } from '../../components/SubmitButton';
+import {SubmitButton} from '../../components/SubmitButton';
 import {
   BackButtonContainer,
   Container,
   ContainerButton,
   ForgotPasswordForm,
-  ForgotPasswordFormLabel, ForgotPasswordFormTextInput,
+  ForgotPasswordFormLabel,
+  ForgotPasswordFormTextInput,
   InfoSendEmailContainer,
   InfoSendEmailText,
-  SafeAreaView
-} from "./styles";
-const log = LOG.extend("ForgotPassword");
+  SafeAreaView,
+} from './styles';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const log = LOG.extend('ForgotPassword');
 
 const emailSchema = Yup.object().shape({
-  email: Yup.string().required().email(
-    "Email inválido",
-  ),
+  email: Yup.string().required().email('Email inválido'),
 });
 
 const ForgotPassword = () => {
   const TIME_TO_SEND_EMAIL = 60;
   const navigation = useNavigation<any>();
-  const [isInputFocus, setIsInputFocus] = useState(false);
-  const [email, setEmail] = useState("");
-  const emailInputRef = useRef<TextInput>(null);
+  const [email, setEmail] = useState('');
   const [activeSendButton, setActiveSendButton] = useState(true);
   const [count, setCount] = useState(TIME_TO_SEND_EMAIL);
   const [isVisible, setIsVisible] = useState(false);
 
   async function handleCloseModal() {
-    setIsVisible(false)
+    setIsVisible(false);
     navigation.navigate('RedefinePassword', {
-      email: email
+      email: email,
     });
   }
   async function timeoutCloseModal() {
-    await delay(4000)
-    setIsVisible(false)
+    await delay(4000);
+    setIsVisible(false);
     navigation.navigate('RedefinePassword', {
-      email: email
+      email: email,
     });
   }
   const timerToActiveButton = () => {
@@ -67,40 +65,41 @@ const ForgotPassword = () => {
       const timer = setInterval(timerToActiveButton, 1000);
       return () => clearInterval(timer);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSendButton, count]);
 
   const handleSend = async () => {
-    emailSchema.validate({ email }).then(async () => {
-      try {
-        const connection = await checkConnection();
-        if (!connection) {
-          navigation.navigate("ConnectionProblems");
-          return;
+    emailSchema
+      .validate({email})
+      .then(async () => {
+        try {
+          const connection = await checkConnection();
+          if (!connection) {
+            navigation.navigate('ConnectionProblems');
+            return;
+          }
+          await api.patch('resetPasswordWithoutPass', {
+            email,
+          });
+        } catch (error) {
+          console.error(error);
         }
-        await api.patch("resetPasswordWithoutPass", {
-          email,
-        });
-      } catch (error) {
-        console.error(error)
-      }
-      setActiveSendButton(false);
-      setIsVisible(true);
-      timeoutCloseModal();
-      setCount(TIME_TO_SEND_EMAIL);
-    })
+        setActiveSendButton(false);
+        setIsVisible(true);
+        timeoutCloseModal();
+        setCount(TIME_TO_SEND_EMAIL);
+      })
       .catch((err) => {
         return displayToast({
-          text1: err.errors,
-          type: "error",
+          message1: err.message,
+          type: 'error',
         });
-      })
-
-
+      });
   };
 
   const handleBackButton = () => {
     navigation.navigate('SignIn');
-  }
+  };
 
   return (
     <SafeAreaView>
@@ -126,7 +125,6 @@ const ForgotPassword = () => {
               placeholder="E-mail"
               placeholderTextColor={theme.colors.subtitle}
               onChangeText={(email: string) => setEmail(email)}
-              onFocus={() => setIsInputFocus(true)}
               onSubmitEditing={handleSend}
               value={email}
               returnKeyType="send"
@@ -153,19 +151,17 @@ const ForgotPassword = () => {
         onCloseModal={handleCloseModal}
       />
 
-      {
-        !activeSendButton && (
-          <InfoSendEmailContainer>
-            <InfoSendEmailText isBlue={false}>
-              Não recebeu o e-mail?{" "}
-              <InfoSendEmailText isBlue>Aguarde {count}s </InfoSendEmailText>
-              para receber novamente
-            </InfoSendEmailText>
-          </InfoSendEmailContainer>
-        )
-      }
-    </SafeAreaView >
+      {!activeSendButton && (
+        <InfoSendEmailContainer>
+          <InfoSendEmailText isBlue={false}>
+            Não recebeu o e-mail?{' '}
+            <InfoSendEmailText isBlue>Aguarde {count}s </InfoSendEmailText>
+            para receber novamente
+          </InfoSendEmailText>
+        </InfoSendEmailContainer>
+      )}
+    </SafeAreaView>
   );
 };
 
-export { ForgotPassword };
+export {ForgotPassword};

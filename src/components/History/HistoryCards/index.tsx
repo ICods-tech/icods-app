@@ -2,10 +2,10 @@
 import React from 'react';
 import QrCodeImg from '../../../assets/images/qr_code.svg';
 
-import { RectButtonProps } from 'react-native-gesture-handler';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RectButtonProps} from 'react-native-gesture-handler';
+import {RFValue} from 'react-native-responsive-fontsize';
 
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 import {
   BlackMarker,
   BlueMarker,
@@ -25,8 +25,9 @@ import {
   QRCodeInfoText,
   QRCodePrivacyText,
   RedMarker,
-  YellowMarker
+  YellowMarker,
 } from './styles';
+import {Colors} from '../../../@types/interfaces';
 
 interface HistoryCardsProps extends RectButtonProps {
   id: string;
@@ -67,10 +68,9 @@ export function HistoryCards({
   pressed,
   favorite,
   privacy,
-  link,
   ...rest
 }: HistoryCardsProps) {
-  type colorType = keyof typeof CardMarker
+  type colorType = keyof typeof CardMarker;
   return (
     <Button onPress={pressed} {...rest} style={styles.ShadowButton}>
       <Container color={color}>
@@ -99,14 +99,12 @@ export function HistoryCards({
         {favorite && <Favorited />}
       </Container>
     </Button>
-
   );
 }
 
-
 const styles = StyleSheet.create({
   ShadowButton: {
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 1,
       height: 1,

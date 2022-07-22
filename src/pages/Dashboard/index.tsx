@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
 import {
   CloudLargeContainer,
   CloudSmallContainer,
@@ -18,13 +18,13 @@ import {
   HightLightListContainer,
   WelcomeContainer,
   WelcomeTitle,
-  WelcomeTitleContainer
+  WelcomeTitleContainer,
 } from './styles';
 
-import { useTheme } from 'styled-components';
-import { HighlightButton } from '../../components/Dashboard/HighlightButton';
-import { ModalMoreDashboard } from '../../components/Dashboard/ModalMoreDashboard';
-import { useAuth } from '../../hooks/auth';
+import {useTheme} from 'styled-components';
+import {HighlightButton} from '../../components/Dashboard/HighlightButton';
+import {ModalMoreDashboard} from '../../components/Dashboard/ModalMoreDashboard';
+import {useAuth} from '../../hooks/auth';
 
 import analytics from '@react-native-firebase/analytics';
 import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
@@ -37,15 +37,15 @@ import extractNameAndSurname from '../../utils/extractNameAndSurname';
 
 const Dashboard = () => {
   const theme = useTheme();
-  const { navigate } = useNavigation();
+  const {navigate} = useNavigation();
   const [choosenActivityScope, setChoosenActivityScope] = useState<
     'all' | 'mine'
   >('all');
   const [modalVisible, setModalVisible] = useState(false);
-  const { user, signOut } = useAuth();
-  const { name, lastname } = user
+  const {user, signOut} = useAuth();
+  const {name, lastname} = user
     ? extractNameAndSurname(user.username)
-    : { name: '', lastname: '' };
+    : {name: '', lastname: ''};
   const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
   const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
 
@@ -97,14 +97,14 @@ const Dashboard = () => {
           <WelcomeTitle>Bem vindo{'\n'}ao iCods!</WelcomeTitle>
 
           <CloudLargeContainer>
-            <CloudLeftLarge style={{ position: 'absolute', left: 15, top: 0 }} />
+            <CloudLeftLarge style={{position: 'absolute', left: 15, top: 0}} />
             <CloudRightSmall
-              style={{ position: 'absolute', right: 15, bottom: 0 }}
+              style={{position: 'absolute', right: 15, bottom: 0}}
             />
           </CloudLargeContainer>
         </WelcomeTitleContainer>
 
-        <CloudSmallContainer></CloudSmallContainer>
+        <CloudSmallContainer />
         <HighlightTitle>Selecione uma das opções abaixo</HighlightTitle>
       </WelcomeContainer>
 
@@ -157,7 +157,6 @@ const Dashboard = () => {
           <FeedSubTitle>Fique por dentro de tudo que aconteceu</FeedSubTitle>
         </FeedSubTitleContainer>
       </FeedContainer>
-
     </Container>
   );
 };
