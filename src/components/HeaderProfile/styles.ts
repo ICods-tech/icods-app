@@ -8,11 +8,13 @@ import { Dimensions } from 'react-native';
 import { Edit } from 'react-native-iconly';
 
 export const Container = styled.View`
-  flex: 1;
 `
 
 export const BackButtonContainer = styled.View`
+  margin-top: ${RFValue(20)}px;
+  margin-left: ${RFValue(16)}px;
   flex-direction: row;
+  align-items: center;
 `
 
 export const ProfileContainer = styled.View`
@@ -96,10 +98,9 @@ export const RightCloudsContainer = styled.View`
 
 export const AccountText = styled.Text`
   color: #fff;
-  font-weight: 800;
-  font-size: ${RFValue(26)}px;
-  margin-top: ${RFValue(6)}px;
-  margin-left: ${RFValue(-4)}px;
+  font-family: ${({ theme }) => theme.fonts.semi_bold};
+  font-size: ${RFValue(24)}px;
+  margin-left: ${RFValue(8)}px;
 `
 
 export const RightCloudsTop = styled(CloudRightTop)`

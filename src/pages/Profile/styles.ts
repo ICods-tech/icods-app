@@ -15,7 +15,7 @@ height: ${Dimensions.get('window').height * 0.4 + getStatusBarHeight()}px;
 `;
 
 export const ActivitiesContainer = styled.View`
-  margin-top: ${RFValue(52)}px;
+  margin-top: ${RFValue(56)}px;
   align-items: center;
 `
 

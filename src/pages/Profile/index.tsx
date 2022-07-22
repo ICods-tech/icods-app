@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native';
 import { useTheme } from 'styled-components';
-// import HeaderProfile from '../../components/HeaderProfile';
+import HeaderProfile from '../../components/HeaderProfile';
 import { SubmitButton } from '../../components/SubmitButton';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
@@ -67,21 +68,13 @@ const Profile = () => {
 
   return (
     <Container>
-      {/* <SafeAreaView style={{ backgroundColor: '#2b90d9' }} /> */}
-      <Gradient>
-        <SubmitButton
-          text='Editar conta'
-
-        />
-      </Gradient>
-      {/* 
       <HeaderProfile
         fullName={user.name}
         following={following.followingCount}
         follower={followers.followersCount}
         edit={false}
         avatar={avatar}
-      /> */}
+      />
 
       <ActivitiesContainer>
         <ActivitiesText>Atividades</ActivitiesText>
