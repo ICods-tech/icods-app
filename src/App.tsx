@@ -1,33 +1,31 @@
-import analytics from "@react-native-firebase/analytics";
-import {
-  NavigationContainer
-} from "@react-navigation/native";
-import React, { useRef } from "react";
-import { StatusBar, View } from "react-native";
-import "react-native-gesture-handler";
-import Toast, { BaseToast } from "react-native-toast-message";
-import { ThemeProvider } from "styled-components";
-import { LOG, Sentry } from "./config";
-import theme from "./global/styles/theme";
-import AppProvider from "./hooks";
-import { linking } from "./linking";
-import Routes from "./routes";
-const log = LOG.extend("App");
-import { LogBox } from 'react-native';
+import React, {useEffect} from 'react';
+import {LogBox, StatusBar, View} from 'react-native';
+import 'react-native-gesture-handler';
+import Toast, {BaseToast} from 'react-native-toast-message';
+import {ThemeProvider} from 'styled-components';
+import {LOG, Sentry} from './config';
+import theme from './global/styles/theme';
+import AppProvider from './hooks';
+import {Routes} from './routes';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const log = LOG.extend('App');
+import SplashScreen from 'react-native-splash-screen';
 
 LogBox.ignoreLogs([
-  "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
+  "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+  'new NativeEventEmitter',
+  "exported from 'deprecated-react-native-prop-types'.",
 ]);
 
 const toastConfig = {
-  success: ({ text1, text2, ...rest }: { text1: string; text2: string }) => (
+  success: ({text1, text2, ...rest}: {text1: string; text2: string}) => (
     <BaseToast
       {...rest}
-      style={{ borderLeftColor: "#2c90d9" }}
-      contentContainerStyle={{ paddingHorizontal: 15 }}
+      style={{borderLeftColor: '#2c90d9'}}
+      contentContainerStyle={{paddingHorizontal: 15}}
       text1Style={{
         fontSize: 12,
-        fontWeight: "bold",
+        fontWeight: 'bold',
       }}
       text1={text1}
       text2Style={{
@@ -38,14 +36,14 @@ const toastConfig = {
       text2NumberOfLines={1}
     />
   ),
-  error: ({ text1, text2, ...rest }: { text1: string; text2: string }) => (
+  error: ({text1, text2, ...rest}: {text1: string; text2: string}) => (
     <BaseToast
       {...rest}
-      style={{ borderLeftColor: "red" }}
-      contentContainerStyle={{ paddingHorizontal: 15 }}
+      style={{borderLeftColor: 'red'}}
+      contentContainerStyle={{paddingHorizontal: 15}}
       text1Style={{
         fontSize: 12,
-        fontWeight: "bold",
+        fontWeight: 'bold',
       }}
       text1={text1}
       text2Style={{
@@ -59,42 +57,22 @@ const toastConfig = {
 };
 
 const App = () => {
-  const routeNameRef = useRef();
-  const navigationRef = useRef() as any;
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer
-        ref={navigationRef as any}
-        linking={linking}
-        onReady={() => {
-          routeNameRef.current = navigationRef.current?.getCurrentRoute().name;
-        }}
-        onStateChange={async () => {
-          const previousRouteName = routeNameRef.current;
-          const currentRouteName = navigationRef.current?.getCurrentRoute()
-            .name;
-
-          if (previousRouteName !== currentRouteName) {
-            await analytics().logScreenView({
-              screen_name: currentRouteName,
-              screen_class: currentRouteName,
-            });
-          }
-          routeNameRef.current = currentRouteName;
-        }}
-      >
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor={theme.colors.primary}
-        />
-        <View style={{ flex: 1, backgroundColor: "#312e38" }}>
-          <AppProvider>
-            <Routes linking={linking}/>
-          </AppProvider>
-        </View>
-        <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
-      </NavigationContainer>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={theme.colors.primary}
+      />
+      <View style={{flex: 1, backgroundColor: '#312e38'}}>
+        <AppProvider>
+          <Routes />
+        </AppProvider>
+      </View>
+      <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
     </ThemeProvider>
   );
 };

@@ -4,7 +4,6 @@ import EllipsisDashboard from '../../../assets/images/Icons/ellipsis-dashboard.s
 
 import {
   Container,
-  Gradient,
   HeaderContainer,
   HeaderMenuButton,
   HeaderUserInfoContainer,
@@ -12,7 +11,7 @@ import {
   HeaderUserNameText,
   HeaderUserPhoto,
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 interface HeaderProps {
   avatar?: string;
@@ -30,28 +29,25 @@ const HeaderDashboard = ({
   const navigation = useNavigation<any>();
 
   return (
-    <Gradient>
-      <Container>
-        <HeaderContainer>
-          <HeaderUserInfoContainer
-            onPress={() => navigation.navigate('Profile')}>
-            {
-              <HeaderUserPhoto
-                source={avatar ? { uri: avatar } : profilePictureDashboard}
-              />
-            }
+    <Container>
+      <HeaderUserInfoContainer onPress={() => navigation.navigate('Profile')}>
+        {
+          <HeaderUserPhoto
+            source={avatar ? {uri: avatar} : profilePictureDashboard}
+          />
+        }
+        <HeaderUserNameContainer>
+          <HeaderUserNameText>{name}</HeaderUserNameText>
+          {!!surname && <HeaderUserNameText>{surname}</HeaderUserNameText>}
+        </HeaderUserNameContainer>
+      </HeaderUserInfoContainer>
 
-            <HeaderUserNameContainer>
-              <HeaderUserNameText>{name}</HeaderUserNameText>
-              {!!surname && <HeaderUserNameText>{surname}</HeaderUserNameText>}</HeaderUserNameContainer>
-          </HeaderUserInfoContainer>
-
-          <HeaderMenuButton onPress={ellipsisPressed}>
-            <EllipsisDashboard />
-          </HeaderMenuButton>
-        </HeaderContainer>
-      </Container>
-    </Gradient>
+      <HeaderContainer>
+        <HeaderMenuButton onPress={ellipsisPressed}>
+          <EllipsisDashboard />
+        </HeaderMenuButton>
+      </HeaderContainer>
+    </Container>
   );
 };
 

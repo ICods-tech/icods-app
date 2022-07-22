@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   buttonContentContainer: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'

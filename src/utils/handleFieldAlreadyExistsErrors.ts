@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction } from 'react';
-import Toast from 'react-native-toast-message';
 import { IRouteErrors } from '../pages/Register';
 import { capitalizeWords } from './capitalizeWords';
 import { delay } from './delay';
+import { displayToast } from './Toast';
 
 interface FieldExistsErrors {
   message: string
@@ -30,15 +30,11 @@ export async function handleFieldAlreadyExistsErrors(
   }
 
   for (let { message } of errors) {
-    Toast.show({
+    displayToast({
+      message1: capitalizeWords(fieldAlreadyExistsErrors[message as fieldExistsMessages]),
+      message2: message,
       type: 'error',
-      position: 'bottom',
-      text1: capitalizeWords(fieldAlreadyExistsErrors[message as fieldExistsMessages]),
-      text2: message,
-      visibilityTime: 2500,
-      bottomOffset: 100,
     })
-
     await delay(2000)
   }
 }

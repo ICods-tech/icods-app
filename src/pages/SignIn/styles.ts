@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Dimensions} from 'react-native';
-import {RectButton} from 'react-native-gesture-handler';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
 
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -9,7 +9,7 @@ export const SafeAreaView = styled.SafeAreaView`
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const ScrollContainer = styled.ScrollView.attrs({
@@ -21,7 +21,7 @@ export const ScrollContainer = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
   margin-top: ${RFValue(25)}px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const SignInOptions = styled.View`
@@ -43,14 +43,14 @@ export const SpacingContainer = styled.View`
 
 export const SpacingLine = styled.View`
   height: ${RFValue(1)}px;
-  background-color: ${({theme}) => theme.colors.light_line};
+  background-color: ${({ theme }) => theme.colors.light_line};
 `;
 
 export const SpacingText = styled.Text`
   margin: 0 ${RFValue(15)}px 0 ${RFValue(15)}px;
-  color: ${({theme}) => theme.colors.subtitle};
+  color: ${({ theme }) => theme.colors.subtitle};
   font-size: ${RFValue(10)}px;
-  font-family: ${({theme}) => theme.fonts.medium};
+  font-family: ${({ theme }) => theme.fonts.medium};
 
   font-weight: 500;
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
@@ -77,7 +77,7 @@ export const HelpContainer = styled.View`
 
 export const HelpButtonContainer = styled(RectButton)`
   padding: ${RFValue(4)}px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({ theme }) => theme.colors.white};
   border-radius: ${RFValue(16)}px;
 `;
 
@@ -87,13 +87,13 @@ interface HelpButtonTextProps {
 
 export const HelpButtonText = styled.Text<HelpButtonTextProps>`
   font-size: ${RFValue(10)}px;
-  font-family: ${({theme}) => theme.fonts.semi_bold};
+  font-family: ${({ theme }) => theme.fonts.semi_bold};
 
-  color: ${({textColor}) => textColor};
+  color: ${({ textColor }) => textColor};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 
   border-bottom-width: 1px;
-  border-bottom-color: ${({textColor}) => textColor};
+  border-bottom-color: ${({ textColor }) => textColor};
 `;
 
 export const RegisterAndPassowordForgotContainer = styled.View`
@@ -107,6 +107,6 @@ export const RegisterAndPassowordForgotContainer = styled.View`
 
 export const HelpContainerTexts = styled.Text`
   font-size: ${RFValue(10)}px;
-  color: ${({theme}) => theme.colors.text};
-  font-family: ${({theme}) => theme.fonts.regular};
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.regular};
 `;

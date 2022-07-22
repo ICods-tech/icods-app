@@ -16,6 +16,7 @@
     "@react-native-firebase/analytics": "^14.2.3",
     "@react-native-firebase/app": "^14.9.3",
     "@react-native-firebase/dynamic-links": "^14.2.2",
+    "@react-navigation/bottom-tabs": "^6.3.2",
     "@react-navigation/core": "5.2.3",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/stack": "5.2.3",
@@ -54,6 +55,7 @@
     "react-native-screens": "^2.17.1",
     "react-native-simple-month-year-picker": "^1.2.1",
     "react-native-slider": "^0.11.0",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-svg": "^12.1.1",
     "react-native-svg-transformer": "^0.14.3",
     "react-native-svg-uri": "^1.2.3",
@@ -66,7 +68,8 @@
     "react-native-videoeditorsdk": "^2.13.1",
     "react-navigation": "^4.4.3",
     "react-navigation-stack": "^2.10.2",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
@@ -80,12 +83,15 @@
     "@types/react-native-video": "^5.0.8",
     "@types/react-native-video-player": "^0.10.2",
     "@types/styled-components-react-native": "^5.1.1",
+    "@typescript-eslint/parser": "^5.30.7",
     "babel-jest": "^25.1.0",
     "eslint": "^6.5.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
     "react-native-bundle-visualizer": "^3.1.1",
-    "react-test-renderer": "16.13.1"
+    "react-test-renderer": "16.13.1",
+    "typescript": "^4.7.4"
   },
   "jest": {
     "preset": "react-native"

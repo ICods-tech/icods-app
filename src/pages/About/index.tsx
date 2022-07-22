@@ -1,30 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar, SafeAreaView } from 'react-native';
-import Header from '../../components/Header';
-import { 
-  ActivitiesContainer, 
-  CategoriesText,
-  CategoriesHeader,
-  CategoriesOuterContainer,
-  CategoryContainer,
-  Container,
-  RightArrowIcon,
-  CategoriesInnerContainer,
-} from './styles';
-import { Lock, Paper, InfoSquare } from 'react-native-iconly'
-import { RFValue } from 'react-native-responsive-fontsize';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { SafeAreaView, StatusBar } from 'react-native';
+import { InfoSquare, Lock, Paper } from 'react-native-iconly';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { AboutButton } from '../../components/AboutButton';
+import Header from '../../components/Header';
+import handleLinkNavigation from '../../utils/handleLinkNavigation';
+import {
+  AboutButtonContainer,
+  CategoriesHeader, CategoriesInnerContainer, CategoriesText, Container
+} from './styles';
 
 const About = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const iconColor = 'rgba(0, 0, 0, 0.87)'
   const iconMargin = { marginRight: RFValue(18) }
-
-  const categoriesData = [
-    { name: 'Política de dados', icon: <Lock style={iconMargin} color={iconColor} />, page: null },
-    { name: 'Termos de uso', icon: <Paper  style={iconMargin}  color={iconColor} />, page: null },
-    { name: 'Versão do aplicativo', icon: <InfoSquare style={iconMargin}  color={iconColor} />, page: 'Version' }
-  ]
 
   return (
     <Container>
@@ -35,24 +25,37 @@ const About = () => {
       />
       <Header
         navigate='back'
-        page='Sobre'
+        title='Sobre'
       />
-      <CategoriesOuterContainer>
-        <CategoriesHeader>
-          <CategoriesText>Categorias</CategoriesText>
-        </CategoriesHeader>
-        <CategoriesInnerContainer>
-          {categoriesData.map((category, index) => (
-            <CategoryContainer onPress={() => {
-              return category.page && navigation.navigate('Version')
-            }}>
-              { category.icon }
-              <CategoriesText>{category.name}</CategoriesText>
-              <RightArrowIcon />
-            </CategoryContainer>
-          ))}
-        </CategoriesInnerContainer>
-      </CategoriesOuterContainer>
+      <CategoriesHeader>
+        <CategoriesText>Categorias</CategoriesText>
+      </CategoriesHeader>
+      <CategoriesInnerContainer>
+        <AboutButtonContainer>
+          <AboutButton
+            title="Política de privacidade"
+            icon={Lock}
+            onPress={() => handleLinkNavigation('https://www.icods.com.br/politcs')}
+          />
+        </AboutButtonContainer>
+
+        <AboutButtonContainer>
+          <AboutButton
+            title="Termos de uso"
+            icon={Paper}
+            onPress={() => handleLinkNavigation('https://www.icods.com.br/terms')}
+          />
+        </AboutButtonContainer>
+
+
+        <AboutButtonContainer>
+          <AboutButton
+            title="Versão do aplicativo"
+            icon={InfoSquare}
+            onPress={() => navigation.navigate('Version')}
+          />
+        </AboutButtonContainer>
+      </CategoriesInnerContainer>
     </Container>
   )
 }

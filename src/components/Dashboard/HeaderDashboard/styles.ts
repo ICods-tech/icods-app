@@ -1,37 +1,23 @@
 import styled from 'styled-components/native';
-import LinearGradient from 'react-native-linear-gradient';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {Dimensions} from 'react-native';
 
-export const Gradient = styled(LinearGradient).attrs({
-  start: {x: 0, y: 0},
-  end: {x: 0, y: 1},
-  colors: ['#2B90D9', '#53C4E8'],
-  style: {flex: 1},
-})`
-  height: ${RFValue(72)}px;
-`;
-
 export const Container = styled.View`
-  width: 100%;
-  height: 100%;
-  padding: 0 ${RFValue(15)}px;
-`;
-
-export const HeaderContainer = styled.View`
-  height: 100%;
-  width: 100%;
   flex-direction: row;
   justify-content: space-between;
+  width: 100%;
+  padding: ${RFValue(8)}px ${RFValue(15)}px;
+  background-color: ${({theme}) => theme.colors.primary};
   align-items: center;
 `;
+
+export const HeaderContainer = styled.View``;
 
 export const HeaderUserInfoContainer = styled.TouchableOpacity.attrs({
   activeOpacity: 0.6,
 })`
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
 `;
 
 export const HeaderUserPhoto = styled.Image.attrs({
@@ -48,7 +34,7 @@ export const HeaderUserNameText = styled.Text`
   font-size: ${RFValue(18)}px;
   font-family: ${({theme}) => theme.fonts.semi_bold};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
-  color: ${({theme}) => theme.colors.shape};
+  color: ${({theme}) => theme.colors.white};
 `;
 
 export const HeaderMenuButton = styled.TouchableOpacity.attrs({

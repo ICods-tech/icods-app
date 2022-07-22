@@ -14,7 +14,9 @@ export const SafeAreaView = styled.SafeAreaView`
 export const Container = styled.View`
   flex: 1;
   flex-direction: column;
+  background: ${({ theme }) => theme.colors.white};
 `;
+
 
 export const BackButtonContainer = styled.View`
   position: absolute;
@@ -34,7 +36,7 @@ export const ForgotPasswordFormLabel = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   margin: ${RFValue(35)}px ${RFValue(32)}px ${RFValue(18)}px;
   letter-spacing: ${Dimensions.get("window").width * 0.001}px;
-  color: ${({ theme }) => theme.colors.title};
+  color: ${({ theme }) => theme.colors.dark_800};
 `;
 
 export const ForgotPasswordFormTextInput = styled.TextInput`
@@ -46,7 +48,7 @@ export const ForgotPasswordFormTextInput = styled.TextInput`
   font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   letter-spacing: ${Dimensions.get("window").width * 0.001}px;
-  color: ${({ theme }) => theme.colors.dark};
+  color: ${({ theme }) => theme.colors.black};
 `;
 
 export const ForgotPasswordFormSendButton = styled.TouchableNativeFeedback``;
@@ -71,8 +73,16 @@ export const ForgotPasswordFormSendButtonLabel = styled.Text`
   font-size: ${RFValue(14)}px;
   font-family: ${({ theme }) => theme.fonts.bold};
   letter-spacing: ${Dimensions.get("window").width * 0.001}px;
-  color: ${({ theme }) => theme.colors.shape};
+  color: ${({ theme }) => theme.colors.white};
 `;
+
+export const ContainerButton = styled.View`
+  width: 85%;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+`;
+
 
 export const InfoSendEmailContainer = styled.View`
   width: 100%;

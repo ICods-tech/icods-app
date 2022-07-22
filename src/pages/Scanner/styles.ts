@@ -1,16 +1,16 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  
+
   textContainer: {
     position: 'absolute',
     height: height * 0.25,
-    
+    paddingHorizontal: 15,
     justifyContent: 'space-around',
   },
 
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     fontSize: 18,
     color: '#fff',
-  
+
     fontFamily: 'Manrope',
   },
 

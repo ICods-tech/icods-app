@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 export const PopUpButton = styled.TouchableOpacity`
     padding: ${RFValue(6)}px ${RFValue(8)}px;
@@ -29,7 +29,7 @@ export const ModalCancelButtonText = styled.Text`
     opacity: 0.40;
 `;
 
-const { width, height } = Dimensions.get( 'window' );
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     height: 32,
 
     backgroundColor: '#2B90D9',
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '800',
     lineHeight: 22,
-    letterSpacing: 0.02,
+    setLetterSpacing: 0.02,
     color: '#282C37',
     marginBottom: 14,
   },

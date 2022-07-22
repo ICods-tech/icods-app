@@ -1,6 +1,6 @@
-import {Dimensions, TextInput} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import styled, {css} from 'styled-components/native';
+import { Dimensions, TextInput } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import styled, { css } from 'styled-components/native';
 
 interface Props {
   isErrored: boolean;
@@ -13,21 +13,21 @@ export const Container = styled.View<Props>`
   flex-direction: row;
   align-items: center;
 
-  border: 0.8px solid ${({theme}) => theme.colors.light_line};
+  border: 0.8px solid ${({ theme }) => theme.colors.light_line};
 
-  ${({isErrored}) =>
+  ${({ isErrored }) =>
     isErrored &&
     css`
-      border: 0.8px solid ${({theme}) => theme.colors.attention_light};
+      border: 0.8px solid ${({ theme }) => theme.colors.attention_light};
     `}
 `;
 
-export const InputText = styled(TextInput)<Props>`
+export const InputText = styled(TextInput) <Props>`
   flex: 1;
   font-size: ${RFValue(14)}px;
-  font-family: ${({theme}) => theme.fonts.regular};
-  color: ${({theme, isErrored}) =>
-    isErrored ? theme.colors.attention : theme.colors.dark};
+  font-family: ${({ theme }) => theme.fonts.regular};
+  color: ${({ theme, isErrored }) =>
+    isErrored ? theme.colors.attention : theme.colors.black};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
 

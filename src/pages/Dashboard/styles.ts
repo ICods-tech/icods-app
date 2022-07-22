@@ -4,7 +4,7 @@ import styled, {css} from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({theme}) => theme.colors.white};
 `;
 
 export const Header = styled.View``;
@@ -37,7 +37,7 @@ export const CloudSmallContainer = styled.View`
 export const WelcomeTitle = styled.Text`
   font-size: ${RFValue(28)}px;
   font-family: ${({theme}) => theme.fonts.extra_bold};
-  color: ${({theme}) => theme.colors.title};
+  color: ${({theme}) => theme.colors.dark_800};
   line-height: ${RFValue(38)}px;
 `;
 
@@ -80,7 +80,7 @@ export const FeedTitle = styled.Text`
   font-family: ${({theme}) => theme.fonts.extra_bold};
 
   line-height: ${RFValue(38)}px;
-  color: ${({theme}) => theme.colors.title};
+  color: ${({theme}) => theme.colors.dark_800};
 `;
 
 export const FeedOptionsTitleContainer = styled.View`
