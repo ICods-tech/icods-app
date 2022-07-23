@@ -29,9 +29,9 @@ import {useAuth} from '../../hooks/auth';
 import analytics from '@react-native-firebase/analytics';
 import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
 import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
-import HistoryIcon from '../../assets/images/Icons/history.svg';
-import ScanIcon from '../../assets/images/Icons/qrcode_scan.svg';
-import SocialIcon from '../../assets/images/Icons/social.svg';
+import HistoryIcon from '../../assets/images/Icons/Highlight/history.svg';
+import ScanIcon from '../../assets/images/Icons/Highlight/scanner.svg';
+import SocialIcon from '../../assets/images/Icons/Highlight/social.svg';
 import HeaderDashboard from '../../components/Dashboard/HeaderDashboard';
 import extractNameAndSurname from '../../utils/extractNameAndSurname';
 
