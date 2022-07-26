@@ -1,9 +1,8 @@
 import React from 'react';
 import { Dimensions, StyleSheet, Platform } from 'react-native';
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
   container: {
-    display: 'flex',
     backgroundColor: '#F2F2F2',
     position: 'absolute',
     height: 56,
@@ -20,7 +19,7 @@ const styles = StyleSheet.create({
     marginBottom: Platform.OS === 'ios' ? 16 : 0,
     fontSize: 10,
     lineHeight: 12,
-    letterSpacing: 0.02,
+    setLetterSpacing: 0.02,
     color: '#282C37'
   }
 })

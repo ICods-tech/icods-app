@@ -9,7 +9,7 @@ export const SafeAreaView = styled.SafeAreaView`
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({theme}) => theme.colors.white};
 `;
 
 export const ScrollContainer = styled.ScrollView.attrs({
@@ -21,7 +21,7 @@ export const ScrollContainer = styled.ScrollView.attrs({
   showsVerticalScrollIndicator: false,
 })`
   margin-top: ${RFValue(25)}px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({theme}) => theme.colors.white};
 `;
 
 export const SignInOptions = styled.View`
@@ -77,7 +77,7 @@ export const HelpContainer = styled.View`
 
 export const HelpButtonContainer = styled(RectButton)`
   padding: ${RFValue(4)}px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({theme}) => theme.colors.white};
   border-radius: ${RFValue(16)}px;
 `;
 

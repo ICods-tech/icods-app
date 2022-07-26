@@ -5,13 +5,13 @@ import React, {
   useImperativeHandle,
   useEffect,
 } from 'react';
-import {TextInput, TextInputProps} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {Container, IconContainer, InputText} from './styles';
-import {useTheme} from 'styled-components/native';
-import {User as IconProps} from 'react-native-iconly';
-import {IRouteErrors} from '../../pages/Register';
-import {SvgProps} from 'react-native-svg';
+import { TextInput, TextInputProps } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Container, IconContainer, InputText } from './styles';
+import { useTheme } from 'styled-components/native';
+import { User as IconProps } from 'react-native-iconly';
+import { IRouteErrors } from '../../pages/Register';
+import { SvgProps } from 'react-native-svg';
 
 interface InputTextProps extends TextInputProps {
   iconSvg?: React.FC<SvgProps>;
@@ -33,8 +33,8 @@ const Input: React.ForwardRefRenderFunction<InputRef, InputTextProps> = (
     iconly: Iconly,
     isErrored = false,
     isSignUpErrored,
-    setIsSignInErrored = () => {},
-    setIsSignUpErrored = () => {},
+    setIsSignInErrored = () => { },
+    setIsSignUpErrored = () => { },
     value,
     ...rest
   },

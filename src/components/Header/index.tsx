@@ -1,42 +1,41 @@
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import { View, TouchableOpacity, Text, ColorValue } from 'react-native';
-import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
-import BackButton from '../../assets/images/back.svg';
+import {TouchableOpacity} from 'react-native';
+import BackButton from '../../assets/images/back-button-blue.svg';
 import BackButtonWhite from '../../assets/images/back-button-white.svg';
+import {Container, Title} from './styles';
 
 interface HeaderProps {
-  page: string;
+  title: string;
   navigate: string;
-  color?: ColorValue;
-  isVideoPlayer?: boolean;
+  whiteMode?: boolean;
+  customBackBehavior?: () => void;
 }
 
-const Header = ({ page, navigate, color, isVideoPlayer }: HeaderProps): JSX.Element => {
+const Header = ({
+  title,
+  navigate,
+  whiteMode = false,
+  customBackBehavior,
+}: HeaderProps): JSX.Element => {
   const navigation = useNavigation<any>();
-
+  const onPressBack = () => {
+    if (customBackBehavior) {
+      return customBackBehavior();
+    } else {
+      if (navigate === 'back') {
+        return navigation.goBack();
+      }
+      navigation.navigate(`${navigate}`);
+    }
+  };
   return (
-    <View style={[styles.container]}>
-      <TouchableOpacity
-        onPress={() => {
-          if (navigate === 'back') {
-            navigation.goBack();
-          } else {
-            navigation.navigate(`${navigate}`);
-          }
-        }}>
-        {isVideoPlayer ? <BackButtonWhite /> : <BackButton />}
+    <Container>
+      <TouchableOpacity onPress={onPressBack}>
+        {whiteMode ? <BackButtonWhite /> : <BackButton />}
       </TouchableOpacity>
-      <Text
-        style={[
-          styles.title,
-          {
-            color: color ? color : '#282C37',
-          },
-        ]}>
-        {page}
-      </Text>
-    </View>
+      <Title whiteMode={whiteMode}>{title}</Title>
+    </Container>
   );
 };
 

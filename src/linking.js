@@ -1,8 +1,8 @@
-import dynamicLinks from "@react-native-firebase/dynamic-links";
-import { Linking } from "react-native";
-import { APPLICATION_PREFIX } from "./config/applicationPrefix";
-import { initialUrlPageName } from "./config/initialUrlPageName";
-import { handleDynamicLinkUrl } from "./utils/handleDynamicLinkUrl";
+import dynamicLinks from '@react-native-firebase/dynamic-links';
+import {Linking} from 'react-native';
+import {APPLICATION_PREFIX} from './config/applicationPrefix';
+import {initialUrlPageName} from './config/initialUrlPageName';
+import {handleDynamicLinkUrl} from './utils/handleDynamicLinkUrl';
 
 const config = {
   screens: {
@@ -16,7 +16,7 @@ const config = {
       path: `${initialUrlPageName.redefine_password}/:email/:pass`,
       parse: {
         email: (email) => `${email}`,
-        pass: (pass) => `${pass}`
+        pass: (pass) => `${pass}`,
       },
     },
   },
@@ -40,8 +40,8 @@ export const linking = {
   },
 
   subscribe(listener) {
-    const onReceiveURL = ({ url }) => listener(url);
-    const linkingEventListener = Linking.addEventListener("url", onReceiveURL);
+    const onReceiveURL = ({url}) => listener(url);
+    const linkingEventListener = Linking.addEventListener('url', onReceiveURL);
     const handleDynamicLink = (dynamicLink) => {
       const preffixedLink = handleDynamicLinkUrl(dynamicLink);
       listener(preffixedLink);

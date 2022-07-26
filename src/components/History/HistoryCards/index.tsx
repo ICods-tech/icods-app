@@ -2,10 +2,10 @@
 import React from 'react';
 import QrCodeImg from '../../../assets/images/qr_code.svg';
 
-import { useNavigation } from '@react-navigation/native';
-import { RectButtonProps } from 'react-native-gesture-handler';
-import { RFValue } from 'react-native-responsive-fontsize';
+import {RectButtonProps} from 'react-native-gesture-handler';
+import {RFValue} from 'react-native-responsive-fontsize';
 
+import {StyleSheet} from 'react-native';
 import {
   BlackMarker,
   BlueMarker,
@@ -27,6 +27,7 @@ import {
   RedMarker,
   YellowMarker,
 } from './styles';
+import {Colors} from '../../../@types/interfaces';
 
 interface HistoryCardsProps extends RectButtonProps {
   id: string;
@@ -52,7 +53,7 @@ const CardMarker = {
 export const CardColors = {
   red: '#ff6d6d',
   green: '#6dff73',
-  blue: '#2b90d9',
+  blue: '#0099FF',
   yellow: '#ffb600',
   cyan: '#68f6ff',
   pink: '#ff68c3',
@@ -67,18 +68,13 @@ export function HistoryCards({
   pressed,
   favorite,
   privacy,
-  link,
   ...rest
 }: HistoryCardsProps) {
-  const navigation = useNavigation();
+  type colorType = keyof typeof CardMarker;
   return (
-    <Button onPress={pressed} {...rest}>
+    <Button onPress={pressed} {...rest} style={styles.ShadowButton}>
       <Container color={color}>
-        {color in CardColors &&
-          color !== 'noFilter' &&
-          color !== 'noColor' &&
-          CardMarker[color]}
-
+        {color in CardColors && CardMarker[color as colorType]}
         <Content>
           <QrCodeImg width={RFValue(82)} height={RFValue(82)} />
           <MainContainer>
@@ -93,7 +89,6 @@ export function HistoryCards({
               <QRCodeInfoText>Feito por: {creator}</QRCodeInfoText>
               <QRCodeInfoText>Data: {date}</QRCodeInfoText>
             </QRCodeInfo>
-
             <QRCodeCardOptions>
               <OptionsButton>
                 <OptionsButtonIcon />
@@ -101,9 +96,22 @@ export function HistoryCards({
             </QRCodeCardOptions>
           </MainContainer>
         </Content>
-
         {favorite && <Favorited />}
       </Container>
     </Button>
   );
 }
+
+const styles = StyleSheet.create({
+  ShadowButton: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    backgroundColor: '#fff',
+    elevation: 3,
+  },
+});

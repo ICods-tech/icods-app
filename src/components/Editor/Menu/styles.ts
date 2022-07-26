@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet} from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     backgroundColor: '#282C37B3',
 
-    display: 'flex',
     alignItems: 'center',
   },
 
@@ -30,7 +29,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
 
     borderRadius: 100,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -54,7 +52,6 @@ const styles = StyleSheet.create({
   },
 
   flipButton: {
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -72,7 +69,6 @@ const styles = StyleSheet.create({
   },
 
   infoButton: {
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
 

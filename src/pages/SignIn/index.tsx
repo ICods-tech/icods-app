@@ -1,43 +1,45 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Keyboard, TextInput, TouchableWithoutFeedback } from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Keyboard, TextInput, TouchableWithoutFeedback} from 'react-native';
 import {
   Container,
   HelpButtonContainer,
   HelpButtonText,
   HelpContainer,
-  HelpContainerTexts, RegisterAndPassowordForgotContainer,
+  HelpContainerTexts,
+  RegisterAndPassowordForgotContainer,
   SafeAreaView,
   ScrollContainer,
   SignInOptions,
   SpacingContainer,
   SpacingLine,
-  SpacingText
+  SpacingText,
 } from './styles';
 
 import analytics from '@react-native-firebase/analytics';
-import { useNavigation } from '@react-navigation/native';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { useTheme } from 'styled-components';
-import { AuthFooter } from '../../components/Authentication/AuthFooter';
-import { Header } from '../../components/Authentication/Header';
-import { SubmitButton } from '../../components/Authentication/SubmitButton';
-import { useAuth } from '../../hooks/auth';
+import {useNavigation} from '@react-navigation/native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {useTheme} from 'styled-components';
+import {AuthFooter} from '../../components/Authentication/AuthFooter';
+import {Header} from '../../components/Authentication/Header';
+import {SubmitButton} from '../../components/SubmitButton';
+import {useAuth} from '../../hooks/auth';
 
-import { Password, User } from 'react-native-iconly';
-import { LOG } from '../../config';
+import {Password, User} from 'react-native-iconly';
+import {LOG} from '../../config';
 
-import Toast from 'react-native-toast-message';
 import Input from '../../components/Input';
 import PasswordInput from '../../components/PasswordInput';
+import handleLinkNavigation from '../../utils/handleLinkNavigation';
+import {displayToast} from '../../utils/Toast';
 
 const log = LOG.extend('Signin');
 
 const SignIn = () => {
   const theme = useTheme();
-  const { signIn, user } = useAuth();
+  const {signIn} = useAuth();
   const navigation = useNavigation<any>();
-  const [email, setEmail] = useState<string>(''); 
-  const [password, setPassword] = useState<string>(''); 
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [errored, setErrored] = useState<boolean>(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,24 +49,21 @@ const SignIn = () => {
   const handleLogin = useCallback(async () => {
     setIsLoading(true);
     try {
-      await signIn({ email, password });
-      navigation.navigate('Dashboard');
-      await analytics().logLogin({ method: 'api' });
+      await signIn({email, password});
+      await analytics().logLogin({method: 'api'});
       setErrored(false);
     } catch (error: any) {
       setErrored(true);
 
-      Toast.show({
+      displayToast({
+        message1: 'Email ou senha inválidos',
         type: 'error',
-        position: 'bottom',
-        text1: 'Email/Password ou senha incorretos',
-        text2: '',
-        visibilityTime: 1000,
-        bottomOffset: 100,
+        duration: 1000,
       });
       setIsLoading(false);
       log.error(error.message);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, password]);
 
   useEffect(() => {
@@ -85,6 +84,7 @@ const SignIn = () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Keyboard]);
 
   return (
@@ -135,9 +135,10 @@ const SignIn = () => {
                   </HelpButtonText>
                 </HelpButtonContainer>
 
-                <HelpButtonContainer  onPress={() => {
+                <HelpButtonContainer
+                  onPress={() => {
                     setErrored(false);
-                    navigation.navigate("ForgotPassword");
+                    navigation.navigate('ForgotPassword');
                   }}>
                   <HelpButtonText textColor={theme.colors.text}>
                     Esqueceu a senha?
@@ -152,9 +153,9 @@ const SignIn = () => {
                 text="Entrar"
               />
               <SpacingContainer>
-                <SpacingLine style={{ width: '40%' }}></SpacingLine>
+                <SpacingLine style={{width: '40%'}} />
                 <SpacingText>Ou</SpacingText>
-                <SpacingLine style={{ width: '40%' }}></SpacingLine>
+                <SpacingLine style={{width: '40%'}} />
               </SpacingContainer>
 
               {/* <LoginButtonContainer>
@@ -173,17 +174,19 @@ const SignIn = () => {
               </LoginButtonContainer> */}
 
               <HelpContainer>
-                <HelpContainerTexts style={{ marginRight: RFValue(2) }}>
+                <HelpContainerTexts style={{marginRight: RFValue(2)}}>
                   Algum problema no login?
                 </HelpContainerTexts>
 
-                <HelpButtonContainer>
+                <HelpButtonContainer
+                  onPress={() => handleLinkNavigation('https://icods.com.br')}>
                   <HelpButtonText textColor={theme.colors.primary}>
                     Contate-nos
                   </HelpButtonText>
                 </HelpButtonContainer>
               </HelpContainer>
             </SignInOptions>
+
             <AuthFooter />
           </ScrollContainer>
         </Container>

@@ -10,9 +10,9 @@ export const Container = styled.View`
 
     height: ${RFValue(47)}px;
     /* width: ${RFValue(240)}px; */
-    width: ${Dimensions.get('window').width*0.6}px;
+    width: ${Dimensions.get('window').width * 0.6}px;
     border-radius: ${RFValue(8)}px;
-    background-color: ${({theme}) => theme.colors.cloudly};
+    background-color: ${({ theme }) => theme.colors.light_500};
 `;
 
 export const IconButton = styled(BorderlessButton)`
@@ -26,8 +26,8 @@ export const IconButton = styled(BorderlessButton)`
 export const Input = styled(TextInput)`
     flex: 1;
     font-size: ${RFValue(16)}px;
-    font-family: ${({theme}) => theme.fonts.regular};
-    letter-spacing: ${Dimensions.get('window').width*0.002}px;
+    font-family: ${({ theme }) => theme.fonts.regular};
+    letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 
     padding-right: ${RFValue(12)}px;
 `;

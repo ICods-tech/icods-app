@@ -1,19 +1,19 @@
-import { useNavigation } from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import BackButtonWhite from '../../assets/images/back-button-white.svg'
-import EditIcon from '../../assets/images/Icons/edit-icon.svg'
-import ButtonProfilePicture from '../../components/ButtonProfilePicture'
+import {TouchableOpacity, View} from 'react-native';
+import BackButtonWhite from '../../assets/images/back-button-white.svg';
 import profilePictureDashboard from '../../assets/images/photo-perfil.png';
+import {LineSeparator} from '../LineSeparator/styles';
 
+import {SubmitButton} from '../SubmitButton';
 import {
   AccountText,
   BackButtonContainer,
   CloudLeftContainer,
   Connections,
   Container,
-  EditIconContainer,
-  FollowingFollowersContainers,
+  ContainerButton,
+  ContainerText,
   HeaderContainerBackground,
   HeaderInformation,
   LeftCloudsContainer,
@@ -25,7 +25,7 @@ import {
   RightCloudsContainer,
   RightCloudsTop,
   WhiteText,
-  WhiteTextName
+  WhiteTextName,
 } from './styles';
 
 interface ProfileProps {
@@ -37,8 +37,15 @@ interface ProfileProps {
   ellipsisPressed?: () => void;
 }
 
-const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPressed }: ProfileProps) => {
-  const navigation = useNavigation()
+const HeaderProfile = ({
+  fullName,
+  avatar,
+  following,
+  follower,
+  edit,
+}: ProfileProps) => {
+  const navigation = useNavigation();
+
   return (
     <>
       <Container>
@@ -48,13 +55,11 @@ const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPr
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <BackButtonWhite />
             </TouchableOpacity>
-            {edit ?
-              <AccountText>
-                Editar
-              </AccountText>
-              : <AccountText>
-                Conta
-              </AccountText>}
+            {edit ? (
+              <AccountText>Editar</AccountText>
+            ) : (
+              <AccountText>Conta</AccountText>
+            )}
           </BackButtonContainer>
           <View>
             <ProfileContainer>
@@ -63,28 +68,15 @@ const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPr
               </LeftCloudsContainer>
               <MiddleProfileContainer>
                 <ProfilePictureContainer>
-                  {!edit && (
-                    <EditIconContainer onPress={() => navigation.navigate('EditProfile', { following, follower })}>
-                      <EditIcon />
-                    </EditIconContainer>
-                  )}
                   <ProfilePicture
-                      source={ avatar ? { uri: avatar } : profilePictureDashboard }
-                    />
+                    source={avatar ? {uri: avatar} : profilePictureDashboard}
+                  />
                 </ProfilePictureContainer>
-                {
-                  edit ?
-                    <ButtonProfilePicture
-                      text={'Trocar sua foto de perfil'}
-                    />
-                    : (fullName
-                      ? <WhiteTextName>
-                        {fullName}
-                      </WhiteTextName>
-                      : <WhiteTextName>
-                        Mucas Loreira
-                      </WhiteTextName>)
-                }
+                {fullName && (
+                  <ContainerText>
+                    <WhiteTextName>{fullName}</WhiteTextName>
+                  </ContainerText>
+                )}
               </MiddleProfileContainer>
               <RightCloudsContainer>
                 <RightCloudsTop />
@@ -92,28 +84,29 @@ const HeaderProfile = ({ fullName, avatar, following, follower, edit, ellipsisPr
               </RightCloudsContainer>
             </ProfileContainer>
           </View>
-          <FollowingFollowersContainers>
-            <Connections>
-              <WhiteText>Seguidores</WhiteText>
-              {
-                follower
-                  ? <WhiteText>{follower}</WhiteText>
-                  : <WhiteText>0</WhiteText>
-              }
-            </Connections>
-            <Connections>
-              <WhiteText>Seguindo</WhiteText>
-              {
-                following
-                  ? <WhiteText>{following}</WhiteText>
-                  : <WhiteText>0</WhiteText>
-              }
-            </Connections>
-          </FollowingFollowersContainers>
+          {/*<LineSeparator />
+          <Connections>
+            <WhiteText>Seguidores: 0</WhiteText>
+            <WhiteText>Seguindo: 0</WhiteText>
+          </Connections> */}
+          {!edit && (
+            <>
+              <LineSeparator />
+              <ContainerButton>
+                <SubmitButton
+                  text="Editar Conta"
+                  onPress={() =>
+                    navigation.navigate('EditProfile')
+                  }
+                  darkMode={true}
+                />
+              </ContainerButton>
+            </>
+          )}
         </HeaderInformation>
       </Container>
     </>
-  )
-}
+  );
+};
 
 export default HeaderProfile;

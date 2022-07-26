@@ -1,11 +1,16 @@
 import React from 'react';
 import Modal from 'react-native-modal';
 import ReportProblemIcon from '../../../assets/images/Icons/report_problem_icon.svg';
-import { RFValue } from 'react-native-responsive-fontsize';
-import { User, Logout, Paper, Send } from 'react-native-iconly';
-import { ButtonsContainer, Container, NavigationButton, NavigationButtonText } from './styles';
-import { useTheme } from 'styled-components/native';
-import { Share } from 'react-native';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {User, Logout, Paper, Send} from 'react-native-iconly';
+import {
+  ButtonsContainer,
+  Container,
+  NavigationButton,
+  NavigationButtonText,
+} from './styles';
+import {useTheme} from 'styled-components/native';
+import {Share} from 'react-native';
 
 interface ModalInterface {
   aboutPage: () => void;
@@ -25,13 +30,12 @@ export function ModalMoreDashboard({
   signOut,
 }: ModalInterface) {
   const theme = useTheme();
-   
-  const onSharePress = async () =>
-  {
-    const appUrl = "https://icodsmobile.page.link/indicacao";
-    await Share.share( {
-      message: `O que acha de criar vídeos via QR Code? Com este aplicativo você consegue de forma simples e gratuita!\n\n ${ appUrl } `
-    } );
+
+  const onSharePress = async () => {
+    const appUrl = 'https://icodsmobile.page.link/indicacao';
+    await Share.share({
+      message: `O que acha de criar vídeos via QR Code? Com este aplicativo você consegue de forma simples e gratuita!\n\n ${appUrl} `,
+    });
   };
   return (
     <Modal
@@ -39,13 +43,12 @@ export function ModalMoreDashboard({
       animationOut={'fadeOut'}
       isVisible={visible}
       onBackdropPress={pressedOut}
-      useNativeDriver
-    >
+      useNativeDriver>
       <Container>
         <ButtonsContainer>
           <NavigationButton onPress={profilePage}>
             <User
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />
@@ -54,7 +57,7 @@ export function ModalMoreDashboard({
 
           <NavigationButton onPress={supportPage}>
             <ReportProblemIcon
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />
@@ -63,7 +66,7 @@ export function ModalMoreDashboard({
 
           <NavigationButton onPress={aboutPage}>
             <Paper
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />
@@ -72,7 +75,7 @@ export function ModalMoreDashboard({
 
           <NavigationButton onPress={onSharePress}>
             <Send
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />
@@ -81,7 +84,7 @@ export function ModalMoreDashboard({
 
           <NavigationButton onPress={signOut}>
             <Logout
-              color={theme.colors.dark}
+              color={theme.colors.black}
               width={RFValue(16)}
               height={RFValue(16)}
             />

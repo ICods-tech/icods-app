@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Modal from 'react-native-modal';
 import {
   Footer,
@@ -18,15 +18,15 @@ import {
   NoColorIcon,
   BlueIcon,
 } from './styles';
-import { SvgProps } from 'react-native-svg';
+import {SvgProps} from 'react-native-svg';
 import MonthSelectorCalendar from 'react-native-month-selector';
-import moment, { Moment } from 'moment';
-import { StyleSheet } from 'react-native';
-import { ColorsSelect } from '../../ColorsSelect';
-import { useTheme } from 'styled-components/native';
-import { RFValue } from 'react-native-responsive-fontsize';
+import moment, {Moment} from 'moment';
+import {StyleSheet} from 'react-native';
+import {ColorsSelect} from '../../ColorsSelect';
+import {useTheme} from 'styled-components/native';
+import {RFValue} from 'react-native-responsive-fontsize';
 import theme from '../../../global/styles/theme';
-import { ChevronLeft, ChevronRight } from 'react-native-iconly';
+import {ChevronLeft, ChevronRight} from 'react-native-iconly';
 import 'moment/locale/pt-br';
 
 interface ModalInterface {
@@ -118,8 +118,7 @@ export function FilterModal({
       animationOut={'slideOutRight'}
       isVisible={visible}
       onBackdropPress={pressedOut}
-      useNativeDriver
-    >
+      useNativeDriver>
       <ModalContainer>
         <ColorsContainer>
           <ColorOrderContainer>
@@ -139,13 +138,13 @@ export function FilterModal({
           currentDate={undefined}
           minDate={moment(new Date(2020, 0, 1))}
           nextIcon={
-            <ChevronRight set="bold" size={32} color={theme.colors.title} />
+            <ChevronRight set="bold" size={32} color={theme.colors.dark_800} />
           }
           prevIcon={
-            <ChevronLeft set="bold" size={32} color={theme.colors.title} />
+            <ChevronLeft set="bold" size={32} color={theme.colors.dark_800} />
           }
           seperatorColor={theme.colors.primary}
-          selectedBackgroundColor={theme.colors.shape}
+          selectedBackgroundColor={theme.colors.white}
           onMonthTapped={(date: Moment) => setSelectedDate(date)}
           currentMonthTextStyle={calendarStyles.currentMonthText}
           selectedMonthTextStyle={
@@ -187,7 +186,6 @@ export function FilterModal({
 
 const calendarStyles = StyleSheet.create({
   calendarContainer: {
-    display: 'flex',
     width: RFValue(250),
     alignSelf: 'center',
     alignItems: 'center',
@@ -198,7 +196,7 @@ const calendarStyles = StyleSheet.create({
   yearText: {
     fontSize: RFValue(24),
     fontFamily: theme.fonts.extra_bold,
-    color: theme.colors.title,
+    color: theme.colors.dark_800,
   },
 
   monthText: {
@@ -227,7 +225,7 @@ const calendarStyles = StyleSheet.create({
   selectedMonth: {
     fontSize: RFValue(14),
     fontFamily: theme.fonts.bold,
-    color: theme.colors.title,
+    color: theme.colors.dark_800,
     textAlign: 'center',
     padding: RFValue(2),
     borderRadius: RFValue(16),

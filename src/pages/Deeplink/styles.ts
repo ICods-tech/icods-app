@@ -14,8 +14,8 @@ export const ContentContainer = styled.View`
 
 export const TitleText = styled.Text`
   font-size: ${RFValue(28)}px;
-  font-family: ${({theme}) => theme.fonts.bold};
-  color: ${({theme}) => theme.colors.title};
+  font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme }) => theme.colors.dark_800};
   text-align: center;
   max-width: ${RFPercentage(50)}px;
   letter-spacing: ${RFValue(0.18)}px;
@@ -24,8 +24,8 @@ export const TitleText = styled.Text`
 
 export const DescriptionText = styled.Text`
   font-size: ${RFValue(16)}px;
-  font-family: ${({theme}) => theme.fonts.medium};
-  color: ${({theme}) => theme.colors.subtitle};
+  font-family: ${({ theme }) => theme.fonts.medium};
+  color: ${({ theme }) => theme.colors.subtitle};
   text-align: center;
   max-width: ${RFPercentage(45)}px;
   letter-spacing: ${RFValue(0.18)}px;
@@ -46,8 +46,8 @@ export const BackStringContainer = styled.TouchableOpacity``
 export const BackStringText = styled.Text`
   margin-top: ${RFPercentage(2)}px;
   font-size: ${RFValue(16)}px;
-  font-family: ${({theme}) => theme.fonts.bold};
-  color: ${({theme}) => theme.colors.primary};
+  font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme }) => theme.colors.primary};
   text-align: center;
   text-decoration: underline;
   max-width: ${RFPercentage(45)}px;

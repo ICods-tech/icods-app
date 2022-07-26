@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
 import {
   CloudLargeContainer,
   CloudSmallContainer,
@@ -21,24 +21,23 @@ import {
   WelcomeTitleContainer,
 } from './styles';
 
-import {useAuth} from '../../hooks/auth';
 import {useTheme} from 'styled-components';
 import {HighlightButton} from '../../components/Dashboard/HighlightButton';
 import {ModalMoreDashboard} from '../../components/Dashboard/ModalMoreDashboard';
+import {useAuth} from '../../hooks/auth';
 
+import analytics from '@react-native-firebase/analytics';
+import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
+import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
+import HistoryIcon from '../../assets/images/Icons/Highlight/history.svg';
+import ScanIcon from '../../assets/images/Icons/Highlight/scanner.svg';
+import SocialIcon from '../../assets/images/Icons/Highlight/social.svg';
 import HeaderDashboard from '../../components/Dashboard/HeaderDashboard';
 import extractNameAndSurname from '../../utils/extractNameAndSurname';
-import LoggedFooter from '../../components/LoggedFooter';
-import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
-import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
-import SocialIcon from '../../assets/images/Icons/social.svg';
-import HistoryIcon from '../../assets/images/Icons/history.svg';
-import ScanIcon from '../../assets/images/Icons/qrcode_scan.svg';
-import analytics from '@react-native-firebase/analytics';
 
 const Dashboard = () => {
   const theme = useTheme();
-  const navigation = useNavigation<any>();
+  const {navigate} = useNavigation();
   const [choosenActivityScope, setChoosenActivityScope] = useState<
     'all' | 'mine'
   >('all');
@@ -58,15 +57,15 @@ const Dashboard = () => {
   }
   function handleOpenSupportPage() {
     setModalVisible(false);
-    navigation.navigate('Support');
+    navigate('Support');
   }
   function handleOpenProfilePage() {
     setModalVisible(false);
-    navigation.navigate('Profile');
+    navigate('EditProfile');
   }
   function handleOpenAboutPage() {
     setModalVisible(false);
-    navigation.navigate('About');
+    navigate('About');
   }
   async function handleSignOut() {
     setModalVisible(false);
@@ -95,7 +94,7 @@ const Dashboard = () => {
 
       <WelcomeContainer>
         <WelcomeTitleContainer>
-          <WelcomeTitle>Bem vindo{'\n'}ao iCODS!</WelcomeTitle>
+          <WelcomeTitle>Bem vindo{'\n'}ao iCods!</WelcomeTitle>
 
           <CloudLargeContainer>
             <CloudLeftLarge style={{position: 'absolute', left: 15, top: 0}} />
@@ -105,7 +104,7 @@ const Dashboard = () => {
           </CloudLargeContainer>
         </WelcomeTitleContainer>
 
-        <CloudSmallContainer></CloudSmallContainer>
+        <CloudSmallContainer />
         <HighlightTitle>Selecione uma das opções abaixo</HighlightTitle>
       </WelcomeContainer>
 
@@ -114,19 +113,19 @@ const Dashboard = () => {
           <HighlightButton
             text="Escanear"
             icon={ScanIcon}
-            onPress={() => navigation.navigate('Scanner')}
+            onPress={() => navigate('Escanear')}
           />
 
           <HighlightButton
             text="Histórico"
             icon={HistoryIcon}
-            onPress={() => navigation.navigate('History')}
+            onPress={() => navigate('Histórico')}
           />
 
           <HighlightButton
             text="Social"
             icon={SocialIcon}
-            onPress={() => navigation.navigate('Working', {type: 'Social'})}
+            onPress={() => navigate('Social')}
           />
         </HighlightButtonList>
       </HightLightListContainer>
@@ -158,8 +157,6 @@ const Dashboard = () => {
           <FeedSubTitle>Fique por dentro de tudo que aconteceu</FeedSubTitle>
         </FeedSubTitleContainer>
       </FeedContainer>
-
-      <LoggedFooter isDashboard={true} />
     </Container>
   );
 };

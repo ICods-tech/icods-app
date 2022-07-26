@@ -17,7 +17,7 @@ export const ModalContainer = styled.View`
   z-index: 2;
   height: ${RFValue(580)}px;
   width: ${Dimensions.get('window').width * 0.9}px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({theme}) => theme.colors.white};
 
   justify-content: center;
   border-radius: ${RFValue(5)}px;
@@ -38,7 +38,7 @@ export const ColorOrderText = styled.Text`
   font-family: ${({theme}) => theme.fonts.extra_bold};
   font-size: ${RFValue(16)}px;
 
-  color: ${({theme}) => theme.colors.title};
+  color: ${({theme}) => theme.colors.dark_800};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   line-height: ${RFValue(22)}px;
 `;
@@ -67,7 +67,7 @@ export const DataContainer = styled.View`
 export const DataText = styled.Text`
   font-size: ${RFValue(16)}px;
   font-family: ${({theme}) => theme.fonts.extra_bold};
-  color: ${({theme}) => theme.colors.title};
+  color: ${({theme}) => theme.colors.dark_800};
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   margin-bottom: ${RFValue(28)}px;
 `;
@@ -85,7 +85,7 @@ export const SubmitButton = styled.TouchableOpacity`
 export const SubmitButtonText = styled.Text`
   font-family: ${({theme}) => theme.fonts.bold};
   font-size: ${RFValue(14)}px;
-  color: ${({theme}) => theme.colors.shape};
+  color: ${({theme}) => theme.colors.white};
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
 `;
 
@@ -105,7 +105,7 @@ export const BottomButton = styled(RectButton)`
 
   align-items: center;
   justify-content: center;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({theme}) => theme.colors.white};
   border-radius: ${RFValue(32)}px;
 `;
 
@@ -123,7 +123,7 @@ export const ModalCancelButtonText = styled.Text`
   font-family: ${({theme}) => theme.fonts.medium};
   font-size: ${RFValue(14)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;
-  background-color: ${({theme}) => theme.colors.shape};
+  background-color: ${({theme}) => theme.colors.white};
   color: ${({theme}) => theme.colors.cancelButton};
   opacity: 0.4;
 `;

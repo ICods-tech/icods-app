@@ -53,24 +53,25 @@ const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  useEffect(() => {
-    async function loadStoredData(): Promise<void> {
-      const [token, user] = await AsyncStorage.multiGet([
-        '@ICods:token',
-        '@ICods:user',
-      ]);
-      if (token[1] && user[1]) {
-        log.warn('token carregado:' + token[1] + user[1]);
-        api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
-        setData({ token: token[1], user: JSON.parse(user[1]) });
-      }
-    }
+  const loadStorageData = async () => {
+    const [token, user] = await AsyncStorage.multiGet([
+      '@ICods:token',
+      '@ICods:user',
+    ]);
 
-    loadStoredData();
-
-    setTimeout(() => {
+    if (token[1] && user[1]) {
+      log.warn('token carregado:' + token[1] + user[1]);
+      api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
+      const userId = JSON.parse(user[1])
+      setData({ token: token[1], user: userId });
       setIsLoading(false);
-    }, 3000);
+    }
+  }
+
+
+  useEffect(() => {
+    loadStorageData();
+
   }, []);
 
   const signIn = useCallback(async (credentials: SignInCredentials) => {
@@ -111,9 +112,13 @@ const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   const signOut = useCallback(async () => {
-    await AsyncStorage.multiRemove(['@ICods:token', '@ICods:user']);
+    try {
+      await AsyncStorage.multiRemove(['@ICods:token', '@ICods:user']);
 
-    setData({} as AuthState);
+      setData({} as AuthState);
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }, []);
 
   const alterProfileVisibility = useCallback(

@@ -1,18 +1,14 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
+
+import {ScannerButton} from '../../atoms/ScannerButton';
 import {Container} from './styles';
-import {ScannerButton} from '../../ScannerButton';
 
 export function AuthFooter() {
-  const navigation = useNavigation<any>();
-
+  const navigation = useNavigation();
   return (
     <Container>
-      <ScannerButton
-        onPress={() =>
-          navigation.navigate({name: 'Scanner', key: 'SCANNER_FROM_FOOTER'})
-        }
-      />
+      <ScannerButton onPress={() => navigation.navigate('Scanner')} />
     </Container>
   );
 }

@@ -1,30 +1,37 @@
 import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { Dimensions } from 'react-native';
 
 export const Container = styled.View`
-    display: flex;
-    align-items: center;
+  flex: 1;
+  align-items: center;
+  background: ${({ theme }) => theme.colors.white};
+  padding: 0 ${RFValue(16)}px;
 `;
 
 export const Title = styled.Text`
-    width: 90%;
-    font-weight: 800;
-    font-size: 30px;
-    line-height: 36px;
-    margin: 3% 15px 42px 15px;
-    padding-right: 15%;
-    font-family: Manrope;
-    color: #282C37;
-    text-align: left;
+  font-size: ${RFValue(30)}px;
+  color: ${({ theme }) => theme.colors.gray_600};
+  font-family: ${({ theme }) => theme.fonts.extra_bold};
+`;
+
+export const ContainerTitle = styled.View`
+  width: 100%;
+  margin-top: ${RFValue(36)}px;
+  margin-bottom: ${RFValue(48)}px;
+`;
+
+export const ContainerMessage = styled.View`
+  width: 100%;
+  margin-top: ${RFValue(36)}px;
 `;
 
 export const Message = styled.Text`
-    width: 80%;
-    margin: 10% 15px;
-    font-weight: 600;
-    font-size: 16px;
-    font-family: Manrope;
-    line-height: 24px;
-    color: rgba(0, 0, 0, 0.4);
-    opacity: 0.57;
-    text-align: center;
+  text-align: center;
+  color: ${({ theme }) => theme.colors.gray_200};
+  font-family: ${({ theme }) => theme.fonts.regular};
+  font-size: ${RFValue(14)}px;
+  opacity: 0.57;
+  letter-spacing: ${Dimensions.get('window').width * 0.0005}px;
+
 `;
