@@ -23,21 +23,13 @@ import {
   UserLabelAndInfoContainer,
 } from './styles';
 
-interface EditProfileProps {
-  route: {
-    params: {
-      following: number;
-      follower: number;
-    };
-  };
-}
+
 
 type UserFields = 'id' | 'name' | 'email' | 'username' | 'visibility';
 
-const EditProfile = ({route}: EditProfileProps) => {
+const EditProfile = () => {
   const theme = useTheme();
   const {user, token, alterProfileVisibility, signOut, deleteUser} = useAuth();
-  const {following, follower} = route.params;
   const {name, lastname} = user
     ? extractNameAndSurname(user.name)
     : {name: '', lastname: ''};
@@ -81,8 +73,6 @@ const EditProfile = ({route}: EditProfileProps) => {
       <StatusBar backgroundColor="#3097db" barStyle="light-content" />
       <HeaderProfile
         fullName={String(handleUserObject('name', user))}
-        following={following}
-        follower={follower}
         edit
         avatar={avatar}
       />

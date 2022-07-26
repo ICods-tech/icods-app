@@ -61,7 +61,7 @@ const Dashboard = () => {
   }
   function handleOpenProfilePage() {
     setModalVisible(false);
-    navigate('Profile');
+    navigate('EditProfile');
   }
   function handleOpenAboutPage() {
     setModalVisible(false);

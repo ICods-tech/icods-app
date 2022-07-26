@@ -26,11 +26,11 @@ const HeaderDashboard = ({
   avatar,
   ellipsisPressed,
 }: HeaderProps) => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation();
 
   return (
     <Container>
-      <HeaderUserInfoContainer onPress={() => navigation.navigate('Profile')}>
+      <HeaderUserInfoContainer onPress={() => navigation.navigate('EditProfile')}>
         {
           <HeaderUserPhoto
             source={avatar ? {uri: avatar} : profilePictureDashboard}

@@ -4,10 +4,12 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {LogBox, SafeAreaView} from 'react-native';
 import * as Progress from 'react-native-progress';
 import {RFValue} from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components/native';
 import {Colors} from '../../@types/interfaces';
 import {Spacer} from '../../components/atoms/Spacer';
 import {HeaderHistory} from '../../components/History/HeaderHistory';
 import {HistoryCards} from '../../components/History/HistoryCards';
+import theme from '../../global/styles/theme';
 import {useAuth} from '../../hooks/auth';
 import api from '../../services/api';
 import {filteredQRCodesByDatePlaceholder} from '../../utils/filteredQRCodesByDatePlaceholder';
@@ -34,6 +36,7 @@ export interface FilteredQRCodes {
   id: string;
   enabled: boolean;
   link: string;
+  status: string;
   content: string;
   favorited: boolean;
   postId: string | null;
@@ -49,6 +52,7 @@ export interface FilteredQRCodesByDate {
 const History = () => {
   const {token} = useAuth();
   const navigation = useNavigation<any>();
+  const theme = useTheme();
   const [reloadState, setReloadState] = useState(false);
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(
     filteredQRCodesByDatePlaceholder,
@@ -144,6 +148,7 @@ const History = () => {
                           favorited,
                           qrCodeCreatorName,
                           link,
+                          status,
                         } = item;
                         return (
                           <>
@@ -157,6 +162,7 @@ const History = () => {
                                   color,
                                   creator: qrCodeCreatorName,
                                   favorite: favorited,
+                                  status,
                                   link,
                                 });
                               }}
@@ -183,7 +189,7 @@ const History = () => {
                       indeterminate={true}
                       borderWidth={16}
                       thickness={8}
-                      color={'#2b90d9'}
+                      color={theme.colors.primary}
                     />
                   </NotFoundContainer>
                 );

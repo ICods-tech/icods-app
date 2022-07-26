@@ -56,7 +56,7 @@ const SignIn = () => {
       setErrored(true);
 
       displayToast({
-        message1: 'Email/Password ou senha incorretos',
+        message1: 'Email ou senha inválidos',
         type: 'error',
         duration: 1000,
       });

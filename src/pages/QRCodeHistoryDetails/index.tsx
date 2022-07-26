@@ -33,6 +33,7 @@ import {
 
 import {displayToast} from '../../utils/Toast';
 import {useBackHandler} from '../../utils/useBackHandler';
+import { Share } from 'react-native';
 
 export interface QRCodeHistoryDetailsProps {
   id: string;
@@ -48,6 +49,7 @@ export interface RouteParams {
       favorite: boolean;
       creator: string;
       link: string;
+      status: string;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onGoBack: (changed: boolean) => void;
     };
@@ -62,6 +64,7 @@ const QRCodeHistoryDetails = ({route}: RouteParams) => {
     creator,
     favorite: initialFavoriteState,
     link,
+    status,
     onGoBack,
   } = route.params;
 
@@ -79,6 +82,31 @@ const QRCodeHistoryDetails = ({route}: RouteParams) => {
 
   const [saveChangesModalOpen, setSaveChangesModalOpen] = useState(false);
 
+  const openVideo = () => {
+    if (link && status === "ACTIVE") {
+      navigation.navigate('VideoPlayer', {
+        qrcode: {
+          link,
+          updatedFavorite,
+          setUpdatedFavorite,
+        },
+        isHistoryDetails: true,
+      });
+    }else{
+      displayToast({
+        message1: "Aguarde um momento!",
+        message2: "Seu vídeo está sendo processado e estará disponível em breve.",
+        type: "warning",
+        duration: 3000,
+      });
+    }
+  }
+  const onSharePress = async () => {
+    await Share.share({
+      message:`Olha que vídeo incrível que recebi!\n\n ${link}` ,
+    });
+  };
+  
   function handleCloseModal() {
     setSaveChangesModalOpen(false);
     navigation.goBack();
@@ -201,7 +229,7 @@ const QRCodeHistoryDetails = ({route}: RouteParams) => {
               ) : (
                 <></>
               )}
-              <ShareButton onPress={() => {}} background="WHITE" />
+              <ShareButton onPress={onSharePress} background="WHITE" />
             </IconsContainer>
           </QRCodeInfoTopContainer>
           <ColorSelectContainer>
@@ -213,31 +241,22 @@ const QRCodeHistoryDetails = ({route}: RouteParams) => {
             />
           </ColorSelectContainer>
           <OptionsButtonsQRContainer>
-            <IconReactButton
+            {/* <IconReactButton
               color={'White'}
               onPress={() => {}}
               style={{width: RFValue(212)}}
               text="Público"
               icon={UnlockIcon}
-            />
+              noIcon
             <Separator />
+            /> */}
             <IconReactButton
               color={'White'}
-              onPress={() => {
-                if (link) {
-                  navigation.navigate('VideoPlayer', {
-                    qrcode: {
-                      link,
-                      updatedFavorite,
-                      setUpdatedFavorite,
-                    },
-                    isHistoryDetails: true,
-                  });
-                }
-              }}
+              onPress={openVideo}
               style={{width: RFValue(212)}}
-              text="Visualizar Conteúdo"
+              text="Visualizar vídeo"
               icon={PlayIcon}
+              noIcon
             />
           </OptionsButtonsQRContainer>
         </QRCodeInfoContainer>
@@ -258,6 +277,7 @@ const QRCodeHistoryDetails = ({route}: RouteParams) => {
             style={{width: RFValue(212)}}
             text="Salvar alterações"
             icon={SaveIcon}
+            noIcon
           />
         </ContainerButton>
       </Content>

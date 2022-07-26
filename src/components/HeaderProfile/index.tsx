@@ -44,7 +44,7 @@ const HeaderProfile = ({
   follower,
   edit,
 }: ProfileProps) => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation();
 
   return (
     <>
@@ -84,11 +84,11 @@ const HeaderProfile = ({
               </RightCloudsContainer>
             </ProfileContainer>
           </View>
-          <LineSeparator />
+          {/*<LineSeparator />
           <Connections>
             <WhiteText>Seguidores: 0</WhiteText>
             <WhiteText>Seguindo: 0</WhiteText>
-          </Connections>
+          </Connections> */}
           {!edit && (
             <>
               <LineSeparator />
@@ -96,10 +96,7 @@ const HeaderProfile = ({
                 <SubmitButton
                   text="Editar Conta"
                   onPress={() =>
-                    navigation.navigate('EditProfile', {
-                      following,
-                      follower,
-                    })
+                    navigation.navigate('EditProfile')
                   }
                   darkMode={true}
                 />

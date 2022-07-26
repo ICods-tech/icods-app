@@ -2,7 +2,7 @@ import Toast from 'react-native-toast-message';
 
 interface IToastProps {
   message1: string;
-  type: 'success' | 'error' | 'warning' | 'info';
+  type: 'success' | 'error' | 'warning';
   message2?: string;
   duration?: number;
 }
