@@ -1,53 +1,51 @@
+import styled from 'styled-components/native';
 import { StyleSheet, Dimensions } from 'react-native';
+import GiftIcon from '../../assets/images/Icons/editor/gift-open.svg'
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const { height, width } = Dimensions.get('window');
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: width,
-    height: height,
-  },
-  icon: {
-    backgroundColor: '#2B90D9',
-    width: width * 0.4,
-    height: width * 0.4,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: width,
-    marginBottom: 24,
-  },
-  title: {
-    fontWeight: '800',
-    fontSize: 28,
-    marginBottom: 14,
-    // fontFamily: 'Manrope',
-  },
-  text: {
-    // fontFamily: 'Manrope',
-    width: width * 0.7,
-    fontWeight: '600',
-    fontSize: 16,
-    textAlign: 'center',
-    setLetterSpacing: 0.02,
+export const Container = styled.View`
+  flex: 1;
+  background-color: ${({ theme }) => theme.colors.white};
+  align-items: center;
+  justify-content: center;
+  width: ${width}px;
+  height: ${height}px;
+`;
 
-    color: 'rgba(40, 44, 55, 0.4)',
-    marginBottom: 17,
-  },
-  button: {
-    width: width * 0.7,
-    height: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#2B90D9',
-    borderRadius: 4,
+export const GiftContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  margin-bottom: ${RFValue(24)}px;
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-radius: ${width}px;
+  width: ${width * 0.4}px;
+  height: ${width * 0.4}px;
+`;
 
-    shadowOffset: { width: 1, height: 3, },
-    shadowColor: 'black',
-    shadowOpacity: 0.1
-  },
-});
+export const Gift = styled(GiftIcon).attrs({})``;
 
-export default styles;
+export const GiftOpenTitle = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.medium};
+  font-weight: 700;
+  font-size: ${RFValue(28)}px;
+
+  color: ${({ theme }) => theme.colors.black};
+  margin-bottom: ${RFValue(35)}px;
+`;
+
+export const GiftOpenSubtitle = styled.Text`
+  font-family: ${({ theme }) => theme.fonts.medium};
+  font-weight: 400;
+  font-size: ${RFValue(14)}px;
+  width: ${width * 0.7}px;
+  text-align: center;
+
+  color: ${({ theme }) => theme.colors.gray_200};
+  margin-bottom: ${RFValue(36)}px;
+`;
+
+export const GiftOpenButtonContainer = styled.View`
+  width: ${width * 0.7}px;
+`;

@@ -53,6 +53,14 @@ const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  const validatorToken = useCallback(async () => {
+    try {
+      await api.get('/validator_token');
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  }, []);
+
   const loadStorageData = async () => {
     const [token, user] = await AsyncStorage.multiGet([
       '@ICods:token',
@@ -62,12 +70,18 @@ const AuthProvider: React.FC = ({ children }) => {
     if (token[1] && user[1]) {
       log.warn('token carregado:' + token[1] + user[1]);
       api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
-      const userId = JSON.parse(user[1])
-      setData({ token: token[1], user: userId });
-      setIsLoading(false);
+
+      try {
+        await validatorToken();  
+        const userId = JSON.parse(user[1])
+        setData({ token: token[1], user: userId });
+        setIsLoading(false);
+      } catch (error) {
+        log.error(error);
+        setIsLoading(false); 
+      }
     }
   }
-
 
   useEffect(() => {
     loadStorageData();
