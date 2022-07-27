@@ -6,13 +6,14 @@ import LargeSearch from '../../assets/images/Icons/large-search.svg';
 import NotFavoritedCardButton from '../../assets/images/Icons/notFavorited_qrcode_card.svg';
 import Delete from '../../assets/images/Icons/trash_qrcode_card.svg';
 
-import {Dimensions, FlatList} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {FilteredQRCodes, FilteredQRCodesByDate} from '.';
+import { Dimensions, FlatList } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { FilteredQRCodes, FilteredQRCodesByDate } from '.';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 export const Container = styled.View`
   flex: 1;
-  background-color: ${({theme}) => theme.colors.white};
+  background-color: ${({ theme }) => theme.colors.white};
 `;
 
 export const Content = styled.View`
@@ -29,10 +30,10 @@ export const QRCodeTitleContainer = styled.View`
 `;
 
 export const QRCodeTitleDate = styled.Text`
-  font-family: ${({theme}) => theme.fonts.extra_bold};
+  font-family: ${({ theme }) => theme.fonts.extra_bold};
   font-size: ${RFValue(16)}px;
 
-  color: ${({theme}) => theme.colors.dark_800};
+  color: ${({ theme }) => theme.colors.dark_800};
 
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
 `;
@@ -92,9 +93,15 @@ export const DeleteButtonIcon = styled(Delete).attrs({
   height: RFValue(45),
 })``;
 
+//MT COMPLICADO
 export const QRCodeDateList = styled(
   FlatList as new () => FlatList<FilteredQRCodesByDate>,
-)``;
+).attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingBottom: getBottomSpace() + RFValue(83),
+  },
+})``;
 
 export const QRCodeList = styled(
   FlatList as new () => FlatList<FilteredQRCodes>,
@@ -115,16 +122,16 @@ export const LargeSearchIcon = styled(LargeSearch).attrs({
 
 export const NoResultsFoundText = styled.Text`
   font-size: ${RFValue(24)}px;
-  font-family: ${({theme}) => theme.fonts.bold};
-  color: ${({theme}) => theme.colors.dark_800};
+  font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme }) => theme.colors.dark_800};
   text-align: center;
   letter-spacing: ${RFValue(0.18)}px;
 `;
 
 export const NoResultsFoundDescriptionText = styled.Text`
   font-size: ${RFValue(16)}px;
-  font-family: ${({theme}) => theme.fonts.semi_bold};
-  color: ${({theme}) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.semi_bold};
+  color: ${({ theme }) => theme.colors.text};
   text-align: center;
   letter-spacing: ${RFValue(0.5)}px;
 `;

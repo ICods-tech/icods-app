@@ -1,23 +1,23 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
-import {SafeAreaView, Text, TouchableWithoutFeedback, View} from 'react-native';
-import {RNCamera} from 'react-native-camera';
-import {Configuration, VESDK} from 'react-native-videoeditorsdk';
-import {useTheme} from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { RNCamera } from 'react-native-camera';
+import { Configuration, VESDK } from 'react-native-videoeditorsdk';
+import { useTheme } from 'styled-components/native';
 import ConfirmationIcon from '../../assets/images/Icons/confirmation_edit_icon.svg';
 import Menu from '../../components/Editor/Menu';
 import Header from '../../components/Header';
-import {WarningModal} from '../../components/WarningModal';
-import {LOG} from '../../config';
-import styles from './styles';
+import { WarningModal } from '../../components/WarningModal';
+import { LOG } from '../../config';
+import styles, { HeaderContainer } from './styles';
 const log = LOG.extend('Editor');
 
-const Editor = ({route, _}: any) => {
+const Editor = ({ route, _ }: any) => {
   const navigation = useNavigation<any>();
   const theme = useTheme();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const {qrcode} = route.params;
+  const { qrcode } = route.params;
 
   const [camera, setCamera] = useState<RNCamera>();
   const [type, setType] = useState(false);
@@ -40,7 +40,7 @@ const Editor = ({route, _}: any) => {
     }
 
     setModalVisible(false);
-    navigation.navigate('Processing', {qrcode, video});
+    navigation.navigate('Processing', { qrcode, video });
   };
 
   const handleFlipCamera = () => {
@@ -100,15 +100,15 @@ const Editor = ({route, _}: any) => {
           categories: [
             // Create sticker category with stickers
             // Reorder and use existing sticker categories
-            {identifier: 'imgly_sticker_category_animated'},
-            {identifier: 'imgly_sticker_category_emoticons'},
+            { identifier: 'imgly_sticker_category_animated' },
+            { identifier: 'imgly_sticker_category_emoticons' },
             // Modify existing sticker category
             {
               identifier: 'imgly_sticker_category_shapes',
               items: [
-                {identifier: 'imgly_sticker_shapes_badge_01'},
-                {identifier: 'imgly_sticker_shapes_arrow_02'},
-                {identifier: 'imgly_sticker_shapes_spray_03'},
+                { identifier: 'imgly_sticker_shapes_badge_01' },
+                { identifier: 'imgly_sticker_shapes_arrow_02' },
+                { identifier: 'imgly_sticker_shapes_spray_03' },
               ],
             },
           ],
@@ -120,7 +120,7 @@ const Editor = ({route, _}: any) => {
       VESDK.openEditor(video, configuration).then(
         async (result) => {
           log.debug(result);
-          const {video} = result;
+          const { video } = result;
           setModalVisible(true);
 
           setVideo(video);
@@ -135,7 +135,7 @@ const Editor = ({route, _}: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <RNCamera
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         ref={(camera: RNCamera) => {
           setCamera(camera);
         }}
@@ -166,12 +166,13 @@ const Editor = ({route, _}: any) => {
         }}>
         {!isRecording && (
           <>
-            <Header page="" navigate="Dashboard" color="#FFFFFF" />
-
+            <HeaderContainer>
+              <Header title="" navigate="Dashboard" />
+            </HeaderContainer>
             {recordedData !== '' && (
               <TouchableWithoutFeedback onPress={openEditor}>
                 <View style={styles.buttonNext}>
-                  <Text style={{color: '#fff'}}>Próximo</Text>
+                  <Text style={{ color: '#fff' }}>Próximo</Text>
                 </View>
               </TouchableWithoutFeedback>
             )}

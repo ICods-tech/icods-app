@@ -10,7 +10,7 @@ export declare global {
       ForgotPassword: undefined;
       RedefinePassword: undefined;
       ConnectionProblems: undefined;
-
+      Deeplink: undefined;
       // App
       Início: undefined;
       Histórico: undefined;
@@ -19,6 +19,7 @@ export declare global {
       Social: undefined;
 
       //Dashboard
+      TabBarRoutes: undefined;
       Dashboard: undefined;
       Profile: undefined;
       Support: undefined;

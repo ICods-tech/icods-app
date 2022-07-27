@@ -1,17 +1,17 @@
-import {useNavigation} from '@react-navigation/native';
-import {Moment} from 'moment';
-import React, {useCallback, useEffect, useState} from 'react';
-import {LogBox, SafeAreaView} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Moment } from 'moment';
+import React, { useCallback, useEffect, useState } from 'react';
+import { LogBox, SafeAreaView } from 'react-native';
 import * as Progress from 'react-native-progress';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {useTheme} from 'styled-components/native';
-import {Colors} from '../../@types/interfaces';
-import {Spacer} from '../../components/atoms/Spacer';
-import {HeaderHistory} from '../../components/History/HeaderHistory';
-import {HistoryCards} from '../../components/History/HistoryCards';
-import {useAuth} from '../../hooks/auth';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { useTheme } from 'styled-components/native';
+import { Colors } from '../../@types/interfaces';
+import { Spacer } from '../../components/atoms/Spacer';
+import { HeaderHistory } from '../../components/History/HeaderHistory';
+import { HistoryCards } from '../../components/History/HistoryCards';
+import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
-import {filteredQRCodesByDatePlaceholder} from '../../utils/filteredQRCodesByDatePlaceholder';
+import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
 import formattedDate from '../../utils/formatDates';
 import {
   CloudContainer,
@@ -49,7 +49,7 @@ export interface FilteredQRCodesByDate {
 }
 
 const History = () => {
-  const {token} = useAuth();
+  const { token } = useAuth();
   const navigation = useNavigation<any>();
   const theme = useTheme();
   const [reloadState, setReloadState] = useState(false);
@@ -98,7 +98,7 @@ const History = () => {
   }, [reloadState]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <Container>
         <HeaderHistory
           selectedColor={color}
@@ -117,11 +117,13 @@ const History = () => {
         <Content>
           <QRCodeDateList
             data={qrCodes}
+            refreshing={loading}
+            onRefresh={() => loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)}
             keyExtractor={(item) => {
               const [date] = Object.keys(item);
               return date;
             }}
-            renderItem={({item}) => {
+            renderItem={({ item }) => {
               const [date] = Object.keys(item);
               if (date !== '0' && date !== null && date !== undefined) {
                 return (
@@ -138,7 +140,7 @@ const History = () => {
                       data={item[date]}
                       keyExtractor={(item) => item.id}
                       ItemSeparatorComponent={() => <Spacer bottom={8} />}
-                      renderItem={({item}) => {
+                      renderItem={({ item }) => {
                         const {
                           id,
                           color,

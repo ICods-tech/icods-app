@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {RFValue} from 'react-native-responsive-fontsize';
+import { StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 import theme from '../../global/styles/theme';
 
 const styles = StyleSheet.create({
@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
   textContainer: {
     position: 'absolute',
     paddingHorizontal: RFValue(15),
+    paddingVertical: RFValue(20),
     justifyContent: 'space-around',
   },
 
