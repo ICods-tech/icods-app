@@ -1,31 +1,23 @@
-import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-  Modal,
-  Alert,
-} from 'react-native';
-import styles, { ModalCancelButtonText, ModalConfirmButtonText, PopUpButton } from './styles';
-import { RNCamera } from 'react-native-camera';
-import Header from '../../components/Header';
-import Menu from '../../components/Editor/Menu';
-import { VESDK, Configuration } from 'react-native-videoeditorsdk';
-import { useNavigation } from '@react-navigation/native';
-import DangerIcon from '../../assets/images/Icons/danger_icon.svg';
-import { LOG } from '../../config';
-import { WarningModal } from '../../components/WarningModal';
-import { useTheme } from 'styled-components/native';
+import {useNavigation} from '@react-navigation/native';
+import React, {useState} from 'react';
+import {SafeAreaView, Text, TouchableWithoutFeedback, View} from 'react-native';
+import {RNCamera} from 'react-native-camera';
+import {Configuration, VESDK} from 'react-native-videoeditorsdk';
+import {useTheme} from 'styled-components/native';
 import ConfirmationIcon from '../../assets/images/Icons/confirmation_edit_icon.svg';
+import Menu from '../../components/Editor/Menu';
+import Header from '../../components/Header';
+import {WarningModal} from '../../components/WarningModal';
+import {LOG} from '../../config';
+import styles from './styles';
 const log = LOG.extend('Editor');
 
-const Editor = ({ route, _ }: any) => {
+const Editor = ({route, _}: any) => {
   const navigation = useNavigation<any>();
   const theme = useTheme();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { qrcode } = route.params;
+  const {qrcode} = route.params;
 
   const [camera, setCamera] = useState<RNCamera>();
   const [type, setType] = useState(false);
@@ -33,22 +25,23 @@ const Editor = ({ route, _ }: any) => {
   const [focus, setFocus] = useState(RNCamera.Constants.AutoFocus.on);
   const [cameraZoom, setCameraZoom] = useState(0.0);
   const [isRecording, setIsRecording] = useState(false);
-  const [video, setVideo] = useState("");
+  const [video, setVideo] = useState('');
 
   const [recordedData, setRecordedData] = useState('');
 
   const handleCancel = () => {
     setModalVisible(false);
     openEditor();
-  }
+  };
 
   const handleConfirm = () => {
-    if (video === '')
+    if (video === '') {
       return;
+    }
 
     setModalVisible(false);
-    navigation.navigate('Processing', { qrcode, video });
-  }
+    navigation.navigate('Processing', {qrcode, video});
+  };
 
   const handleFlipCamera = () => {
     setType(!type);
@@ -99,7 +92,6 @@ const Editor = ({ route, _ }: any) => {
       const video = recordedData;
 
       const configuration: Configuration = {
-
         // Configure sticker tool
         sticker: {
           // Enable personal stickers
@@ -108,27 +100,27 @@ const Editor = ({ route, _ }: any) => {
           categories: [
             // Create sticker category with stickers
             // Reorder and use existing sticker categories
-            { identifier: 'imgly_sticker_category_animated' },
-            { identifier: 'imgly_sticker_category_emoticons' },
+            {identifier: 'imgly_sticker_category_animated'},
+            {identifier: 'imgly_sticker_category_emoticons'},
             // Modify existing sticker category
             {
               identifier: 'imgly_sticker_category_shapes',
               items: [
-                { identifier: 'imgly_sticker_shapes_badge_01' },
-                { identifier: 'imgly_sticker_shapes_arrow_02' },
-                { identifier: 'imgly_sticker_shapes_spray_03' },
+                {identifier: 'imgly_sticker_shapes_badge_01'},
+                {identifier: 'imgly_sticker_shapes_arrow_02'},
+                {identifier: 'imgly_sticker_shapes_spray_03'},
               ],
             },
           ],
         },
       };
 
-      VESDK.unlockWithLicense(require('./vesdk_license.json'))
+      VESDK.unlockWithLicense(require('./vesdk_license.json'));
 
       VESDK.openEditor(video, configuration).then(
         async (result) => {
           log.debug(result);
-          const { video } = result;
+          const {video} = result;
           setModalVisible(true);
 
           setVideo(video);
@@ -143,7 +135,7 @@ const Editor = ({ route, _ }: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <RNCamera
-        style={{ flex: 1 }}
+        style={{flex: 1}}
         ref={(camera: RNCamera) => {
           setCamera(camera);
         }}
@@ -176,14 +168,13 @@ const Editor = ({ route, _ }: any) => {
           <>
             <Header page="" navigate="Dashboard" color="#FFFFFF" />
 
-            {recordedData !== "" && (
+            {recordedData !== '' && (
               <TouchableWithoutFeedback onPress={openEditor}>
                 <View style={styles.buttonNext}>
-                  <Text style={{ color: '#fff' }}>Próximo</Text>
+                  <Text style={{color: '#fff'}}>Próximo</Text>
                 </View>
               </TouchableWithoutFeedback>
             )}
-
           </>
         )}
         <Menu
@@ -195,9 +186,9 @@ const Editor = ({ route, _ }: any) => {
         />
       </RNCamera>
       <WarningModal
-        title='Confirma a edição do iCod?'
-        description='Caso confirme, não será mais
-        permitido a edição desse iCod'
+        title="Confirma a edição do iCod?"
+        description="Caso confirme, não será mais
+        permitido a edição desse iCod"
         visible={modalVisible}
         onCloseModal={handleCancel}
         iconBackgroundColor={theme.colors.primary}
@@ -205,7 +196,6 @@ const Editor = ({ route, _ }: any) => {
         isFooterButtonsActived
         handleConfirmed={handleConfirm}
       />
-
     </SafeAreaView>
   );
 };

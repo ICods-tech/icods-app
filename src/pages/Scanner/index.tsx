@@ -56,6 +56,7 @@ const Scanner = (props: ScannerProps) => {
   const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
   const page = user ? 'Início' : 'SignIn';
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [camera, setCamera] = useState<RNCamera>();
   const [qrCodeValidate, setQrCodeValidate] = useState(false);
   const [qrcode, setQrcode] = useState<QRCode>();
@@ -133,7 +134,7 @@ const Scanner = (props: ScannerProps) => {
   };
 
   const handleCloseButton = () => {
-    if (popUp?.press == 'Scanner') {
+    if (popUp?.press === 'Scanner') {
       setQrCodeValidate(false);
       setQrcode(undefined);
     }
@@ -228,6 +229,7 @@ const Scanner = (props: ScannerProps) => {
 
   useEffect(() => {
     qrCodeIdFromDeeplink.length && handleQRCode(qrCodeIdFromDeeplink);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [qrCodeIdFromDeeplink]);
   qrCodeContainsGift;
   return (

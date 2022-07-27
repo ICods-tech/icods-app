@@ -7,7 +7,6 @@ import NotFavoritedCardButton from '../../assets/images/Icons/notFavorited_qrcod
 import Delete from '../../assets/images/Icons/trash_qrcode_card.svg';
 
 import {Dimensions, FlatList} from 'react-native';
-import {getBottomSpace} from 'react-native-iphone-x-helper';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {FilteredQRCodes, FilteredQRCodesByDate} from '.';
 
@@ -95,12 +94,7 @@ export const DeleteButtonIcon = styled(Delete).attrs({
 
 export const QRCodeDateList = styled(
   FlatList as new () => FlatList<FilteredQRCodesByDate>,
-).attrs({
-  showsVerticalScrollIndicator: false,
-  contentContainerStyle: {
-    paddingBottom: getBottomSpace() + RFValue(83),
-  },
-})``;
+)``;
 
 export const QRCodeList = styled(
   FlatList as new () => FlatList<FilteredQRCodes>,

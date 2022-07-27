@@ -1,5 +1,16 @@
+import analytics from '@react-native-firebase/analytics';
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
+import {People, Scan, TimeCircle} from 'react-native-iconly';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {useTheme} from 'styled-components';
+import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
+import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
+import HeaderDashboard from '../../components/Dashboard/HeaderDashboard';
+import {HighlightButton} from '../../components/Dashboard/HighlightButton';
+import {ModalMoreDashboard} from '../../components/Dashboard/ModalMoreDashboard';
+import {useAuth} from '../../hooks/auth';
+import extractNameAndSurname from '../../utils/extractNameAndSurname';
 import {
   CloudLargeContainer,
   CloudSmallContainer,
@@ -21,20 +32,6 @@ import {
   WelcomeTitleContainer,
 } from './styles';
 
-import {useTheme} from 'styled-components';
-import {HighlightButton} from '../../components/Dashboard/HighlightButton';
-import {ModalMoreDashboard} from '../../components/Dashboard/ModalMoreDashboard';
-import {useAuth} from '../../hooks/auth';
-
-import analytics from '@react-native-firebase/analytics';
-import CloudLeftLarge from '../../assets/images/cloud-left-stripe-lg.svg';
-import CloudRightSmall from '../../assets/images/cloud-right-stripe-sm.svg';
-import HistoryIcon from '../../assets/images/Icons/Highlight/history.svg';
-import ScanIcon from '../../assets/images/Icons/Highlight/scanner.svg';
-import SocialIcon from '../../assets/images/Icons/Highlight/social.svg';
-import HeaderDashboard from '../../components/Dashboard/HeaderDashboard';
-import extractNameAndSurname from '../../utils/extractNameAndSurname';
-
 const Dashboard = () => {
   const theme = useTheme();
   const {navigate} = useNavigation();
@@ -48,6 +45,11 @@ const Dashboard = () => {
     : {name: '', lastname: ''};
   const nameAndLastname = `${name} ${lastname ? lastname : ''}`;
   const avatar = `https://ui-avatars.com/api/?size=1000&name=${nameAndLastname}&length=2&background=${theme.colors.profilePic}&rounded=true`;
+  const highlighButtonProps = {
+    color: theme.colors.white,
+    width: RFValue(47),
+    height: RFValue(47),
+  };
 
   function handleOpenDashboardModal() {
     setModalVisible(true);
@@ -107,33 +109,29 @@ const Dashboard = () => {
         <CloudSmallContainer />
         <HighlightTitle>Selecione uma das opções abaixo</HighlightTitle>
       </WelcomeContainer>
-
       <HightLightListContainer>
         <HighlightButtonList>
           <HighlightButton
             text="Escanear"
-            icon={ScanIcon}
+            icon={<Scan {...highlighButtonProps} />}
             onPress={() => navigate('Escanear')}
           />
-
           <HighlightButton
             text="Histórico"
-            icon={HistoryIcon}
+            icon={<TimeCircle {...highlighButtonProps} />}
             onPress={() => navigate('Histórico')}
           />
 
           <HighlightButton
             text="Social"
-            icon={SocialIcon}
+            icon={<People {...highlighButtonProps} />}
             onPress={() => navigate('Social')}
           />
         </HighlightButtonList>
       </HightLightListContainer>
-
       <FeedContainer>
         <FeedHeader>
           <FeedTitle>Atividades</FeedTitle>
-
           <FeedOptionsTitleContainer>
             <FeedOptionTitleButton
               onPress={() => setChoosenActivityScope('all')}
@@ -142,7 +140,6 @@ const Dashboard = () => {
                 Todas
               </FeedOptionTitle>
             </FeedOptionTitleButton>
-
             <FeedOptionTitleButton
               onPress={() => setChoosenActivityScope('mine')}
               active={choosenActivityScope === 'mine'}>
@@ -152,7 +149,6 @@ const Dashboard = () => {
             </FeedOptionTitleButton>
           </FeedOptionsTitleContainer>
         </FeedHeader>
-
         <FeedSubTitleContainer>
           <FeedSubTitle>Fique por dentro de tudo que aconteceu</FeedSubTitle>
         </FeedSubTitleContainer>

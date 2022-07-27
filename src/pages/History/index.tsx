@@ -4,12 +4,11 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {LogBox, SafeAreaView} from 'react-native';
 import * as Progress from 'react-native-progress';
 import {RFValue} from 'react-native-responsive-fontsize';
-import { useTheme } from 'styled-components/native';
+import {useTheme} from 'styled-components/native';
 import {Colors} from '../../@types/interfaces';
 import {Spacer} from '../../components/atoms/Spacer';
 import {HeaderHistory} from '../../components/History/HeaderHistory';
 import {HistoryCards} from '../../components/History/HistoryCards';
-import theme from '../../global/styles/theme';
 import {useAuth} from '../../hooks/auth';
 import api from '../../services/api';
 import {filteredQRCodesByDatePlaceholder} from '../../utils/filteredQRCodesByDatePlaceholder';
@@ -115,7 +114,6 @@ const History = () => {
             loadQRCodes(color, selectedDate?.toDate(), !favoriteFilter);
           }}
         />
-
         <Content>
           <QRCodeDateList
             data={qrCodes}

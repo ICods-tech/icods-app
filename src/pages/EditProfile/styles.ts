@@ -22,9 +22,8 @@ export const EditContainer = styled.View`
 `;
 
 export const EditText = styled.Text`
-  font-family: ${({theme}) => theme.fonts.medium};
-  font-weight: 700;
-  font-size: ${RFValue(16)}px;
+  font-family: ${({theme}) => theme.fonts.bold};
+  font-size: ${RFValue(14)}px;
   line-height: ${RFValue(19)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   color: ${({theme}) => theme.colors.black};
