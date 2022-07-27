@@ -73,20 +73,37 @@ const History = () => {
       selectedDate: Date | undefined,
       favoriteFilter: boolean,
     ) => {
-      const response = await api.get('filtered_qrcodes/data', {
-        params: {
+      try {
+        console.log('fui chamado porra', { color, selectedDate, favoriteFilter, token });
+
+        const dateObject = selectedDate ? {
+          month: selectedDate.getMonth(),
+          year: selectedDate.getFullYear(),
+        } : {}
+
+        console.log('ESSE É O OBJETO QUE EU TO PASSANDO PRA API', {
           color,
           favorite: favoriteFilter.toString(),
-          month: selectedDate ? selectedDate.getMonth() : null,
-          year: selectedDate ? selectedDate.getFullYear() : null,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setQRCodes(response.data.data);
-      setLoading(false);
-      setReloadState(false);
+          ...dateObject
+        },)
+
+        const response = await api.get('filtered_qrcodes/data', {
+          params: {
+            color,
+            favorite: favoriteFilter.toString(),
+            ...dateObject
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setQRCodes(response.data.data);
+        setLoading(false);
+        setReloadState(false);
+      } catch (err: any) {
+        console.log("ERRO INSANO")
+        console.log(err.response.data)
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [reloadState],
