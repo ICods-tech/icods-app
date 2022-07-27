@@ -1,23 +1,15 @@
-import React, { useState } from 'react';
-import {
-  SafeAreaView,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-  Modal,
-  Alert,
-} from 'react-native';
-import styles, { ModalCancelButtonText, ModalConfirmButtonText, PopUpButton } from './styles';
-import { RNCamera } from 'react-native-camera';
-import Header from '../../components/Header';
-import Menu from '../../components/Editor/Menu';
-import { VESDK, Configuration } from 'react-native-videoeditorsdk';
 import { useNavigation } from '@react-navigation/native';
-import DangerIcon from '../../assets/images/Icons/danger_icon.svg';
-import { LOG } from '../../config';
-import { WarningModal } from '../../components/WarningModal';
+import React, { useState } from 'react';
+import { SafeAreaView, Text, TouchableWithoutFeedback, View } from 'react-native';
+import { RNCamera } from 'react-native-camera';
+import { Configuration, VESDK } from 'react-native-videoeditorsdk';
 import { useTheme } from 'styled-components/native';
 import ConfirmationIcon from '../../assets/images/Icons/confirmation_edit_icon.svg';
+import Menu from '../../components/Editor/Menu';
+import Header from '../../components/Header';
+import { WarningModal } from '../../components/WarningModal';
+import { LOG } from '../../config';
+import styles, { HeaderContainer } from './styles';
 const log = LOG.extend('Editor');
 
 const Editor = ({ route, _ }: any) => {
@@ -33,22 +25,23 @@ const Editor = ({ route, _ }: any) => {
   const [focus, setFocus] = useState(RNCamera.Constants.AutoFocus.on);
   const [cameraZoom, setCameraZoom] = useState(0.0);
   const [isRecording, setIsRecording] = useState(false);
-  const [video, setVideo] = useState("");
+  const [video, setVideo] = useState('');
 
   const [recordedData, setRecordedData] = useState('');
 
   const handleCancel = () => {
     setModalVisible(false);
     openEditor();
-  }
+  };
 
   const handleConfirm = () => {
-    if (video === '')
+    if (video === '') {
       return;
+    }
 
     setModalVisible(false);
     navigation.navigate('Processing', { qrcode, video });
-  }
+  };
 
   const handleFlipCamera = () => {
     setType(!type);
@@ -99,7 +92,6 @@ const Editor = ({ route, _ }: any) => {
       const video = recordedData;
 
       const configuration: Configuration = {
-
         // Configure sticker tool
         sticker: {
           // Enable personal stickers
@@ -123,7 +115,7 @@ const Editor = ({ route, _ }: any) => {
         },
       };
 
-      VESDK.unlockWithLicense(require('./vesdk_license.json'))
+      VESDK.unlockWithLicense(require('./vesdk_license.json'));
 
       VESDK.openEditor(video, configuration).then(
         async (result) => {
@@ -174,16 +166,16 @@ const Editor = ({ route, _ }: any) => {
         }}>
         {!isRecording && (
           <>
-            <Header page="" navigate="Dashboard" color="#FFFFFF" />
-
-            {recordedData !== "" && (
+            <HeaderContainer>
+              <Header title="" navigate="Dashboard" />
+            </HeaderContainer>
+            {recordedData !== '' && (
               <TouchableWithoutFeedback onPress={openEditor}>
                 <View style={styles.buttonNext}>
                   <Text style={{ color: '#fff' }}>Próximo</Text>
                 </View>
               </TouchableWithoutFeedback>
             )}
-
           </>
         )}
         <Menu
@@ -195,9 +187,9 @@ const Editor = ({ route, _ }: any) => {
         />
       </RNCamera>
       <WarningModal
-        title='Confirma a edição do iCod?'
-        description='Caso confirme, não será mais
-        permitido a edição desse iCod'
+        title="Confirma a edição do iCod?"
+        description="Caso confirme, não será mais
+        permitido a edição desse iCod"
         visible={modalVisible}
         onCloseModal={handleCancel}
         iconBackgroundColor={theme.colors.primary}
@@ -205,7 +197,6 @@ const Editor = ({ route, _ }: any) => {
         isFooterButtonsActived
         handleConfirmed={handleConfirm}
       />
-
     </SafeAreaView>
   );
 };

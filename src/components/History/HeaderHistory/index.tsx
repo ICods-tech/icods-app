@@ -2,6 +2,7 @@ import {Moment} from 'moment';
 import React, {useState} from 'react';
 import {Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {useTheme} from 'styled-components';
+import {Colors} from '../../../@types/interfaces';
 import {FavoriteButton} from '../../FavoriteButton';
 import {FilterButton} from '../../FilterButton';
 import Header from '../../Header';
@@ -42,11 +43,6 @@ export function HeaderHistory({
 }: HeaderHistoryProps) {
   const [modalVisible, setModalVisible] = useState(false);
   const theme = useTheme();
-  const [searchEntry, setSearchEntry] = useState('');
-
-  function SearchInputSubmitTest() {
-    setSearchEntry('Input do Histórico funcionando');
-  }
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -59,17 +55,13 @@ export function HeaderHistory({
         {!qrCodeDetails && (
           <SearchContainer>
             <SearchInput
-              autoCorrect
-              autoCapitalize="none"
               placeholder="Procurar"
+              editable={false}
+              selectTextOnFocus={false}
               placeholderTextColor={theme.colors.subtitle}
-              onChangeText={(text) => setSearchEntry(text)}
-              onSubmitEditing={() => SearchInputSubmitTest()}
-              submitFunction={() => SearchInputSubmitTest()}
-              value={searchEntry}
+              submitFunction={() => {}}
               returnKeyType="send"
             />
-
             <OptionalButtonsContainer>
               <FavoriteButton
                 onPress={() => setFavorite()}

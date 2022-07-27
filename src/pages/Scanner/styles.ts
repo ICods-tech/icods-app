@@ -1,6 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-const { width, height } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
+import theme from '../../global/styles/theme';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,19 +9,18 @@ const styles = StyleSheet.create({
 
   textContainer: {
     position: 'absolute',
-    height: height * 0.25,
-    paddingHorizontal: 15,
+    paddingHorizontal: RFValue(15),
+    paddingVertical: RFValue(20),
     justifyContent: 'space-around',
   },
 
   textParagraph: {
-    fontWeight: '800',
-    fontSize: 18,
-    color: '#fff',
-
-    fontFamily: 'Manrope',
+    marginTop: RFValue(36),
+    marginLeft: RFValue(16),
+    fontSize: RFValue(16),
+    color: theme.colors.white,
+    fontFamily: theme.fonts.medium,
   },
-
 });
 
 export default styles;
