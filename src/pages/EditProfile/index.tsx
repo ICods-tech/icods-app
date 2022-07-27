@@ -23,8 +23,6 @@ import {
   UserLabelAndInfoContainer,
 } from './styles';
 
-
-
 type UserFields = 'id' | 'name' | 'email' | 'username' | 'visibility';
 
 const EditProfile = () => {

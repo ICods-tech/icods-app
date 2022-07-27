@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Dimensions, StyleSheet } from 'react-native';
+import theme from '../../global/styles/theme';
 
 export const PopUpButton = styled.TouchableOpacity`
     padding: ${RFValue(6)}px ${RFValue(8)}px;
@@ -8,6 +9,10 @@ export const PopUpButton = styled.TouchableOpacity`
     
     align-items: center;
     justify-content: center;
+`;
+
+export const HeaderContainer = styled.View`
+  margin-left: ${RFValue(15)}px;
 `;
 
 export const ModalConfirmButtonText = styled.Text`
@@ -25,7 +30,7 @@ export const ModalCancelButtonText = styled.Text`
     font-size: ${RFValue(14)}px;
     letter-spacing: ${Dimensions.get('window').width * 0.001}px;
     
-    color: ${({ theme }) => theme.colors.cancelButton};
+    /* color: ${({ theme }) => theme.colors.cancelButton}; */
     opacity: 0.40;
 `;
 
@@ -43,7 +48,7 @@ const styles = StyleSheet.create({
     width: 125,
     height: 32,
 
-    backgroundColor: '#2B90D9',
+    backgroundColor: theme.colors.primary,
     alignItems: 'center',
     justifyContent: 'center',
 
@@ -58,7 +63,7 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: width * 0.8,
     height: height * 0.35,
-    backgroundColor: '#fff',
+    backgroundColor: theme.colors.white,
     borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',

@@ -1,24 +1,18 @@
 import React from 'react';
 import {RectButtonProps} from 'react-native-gesture-handler';
-import {RFValue} from 'react-native-responsive-fontsize';
-import {SvgProps} from 'react-native-svg';
 
 import {Button, Gradient, Title} from './styles';
 
 interface HighlightButtonProps extends RectButtonProps {
   text: string;
-  icon: React.FC<SvgProps>;
+  icon: any;
 }
 
-export function HighlightButton({
-  text,
-  icon: Icon,
-  ...rest
-}: HighlightButtonProps) {
+export function HighlightButton({text, icon, ...rest}: HighlightButtonProps) {
   return (
     <Gradient>
       <Button {...rest}>
-        <Icon width={RFValue(47)} height={RFValue(47)} />
+        {icon}
         <Title>{text}</Title>
       </Button>
     </Gradient>

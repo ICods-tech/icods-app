@@ -19,9 +19,7 @@ export const FooterContainer = styled.View`
 `;
 
 export const FooterText = styled.Text`
-  font-family: Manrope;
-  font-style: normal;
-  font-weight: bold;
+  font-family: ${({theme}) => theme.fonts.medium};
   font-size: ${RFValue(16)}px;
   line-height: ${RFValue(22)}px;
   text-align: center;
