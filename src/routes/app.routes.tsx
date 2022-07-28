@@ -8,7 +8,6 @@ const { Navigator, Screen } = createStackNavigator();
 
 import About from '../pages/About';
 import ConnectionProblems from '../pages/ConnectionProblems';
-import Dashboard from '../pages/Dashboard';
 import EditProfile from '../pages/EditProfile';
 import Profile from '../pages/Profile';
 import Support from '../pages/Support';
@@ -24,7 +23,6 @@ export function AppRoutes() {
         headerShown: false,
       }}>
       <Screen name="TabBarRoutes" component={BottomTabRoutes} />
-      <Screen name="Dashboard" component={Dashboard} />
       <Screen name="Profile" component={Profile} />
       <Screen name="Support" component={Support} />
       <Screen name="About" component={About} />

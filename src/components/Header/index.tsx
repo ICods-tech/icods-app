@@ -7,7 +7,7 @@ import {Container, Title} from './styles';
 
 interface HeaderProps {
   title: string;
-  navigate: string;
+  navigate?: string;
   whiteMode?: boolean;
   customBackBehavior?: () => void;
 }

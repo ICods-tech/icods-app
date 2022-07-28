@@ -1,15 +1,16 @@
-import { useNavigation } from '@react-navigation/native'
 import React from 'react';
-import { View, Text, Image, StatusBar, Button } from 'react-native';
-import styles from './styles';
+import { StatusBar, View } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import Asteroid from '../../../assets/images/asteroid_image_2.svg';
 import IcodsIcon from '../../../assets/images/icods_icon.svg';
+import styles from './styles';
 
 const HeaderAuthentication = () => {
+  const theme = useTheme()
   return (
     <View>
       <StatusBar
-        backgroundColor="#2b90d9"
+        backgroundColor={theme.colors.primary}
         barStyle="light-content"
       />
       <View style={styles.container}>
