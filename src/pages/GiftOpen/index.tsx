@@ -15,9 +15,8 @@ const GiftOpen = () =>
         Presente aberto!
       </GiftOpenTitle>
       <GiftOpenSubtitle>
-        Deseja curtir a mensagem?
-        Salvar para visualizar depois?
-        Crie uma conta iCods, é fácil e rápido
+        Para curtir é necessário fazer login.
+        Crie uma conta iCods, é fácil e rápido!
       </GiftOpenSubtitle>
       <GiftOpenButtonContainer>
         <SubmitButton
