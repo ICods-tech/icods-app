@@ -42,8 +42,6 @@ type IDeeplinkStatus =
   | 'Verifying';
 
 const DeepLink = ({route, _}: any) => {
-  console.log('-----------------------');
-  console.log('-----CHAMOU DEEPLINK-----------');
 
   const url = route.params;
   const qrCodeIdFromDeeplink = url ? url : '';
@@ -96,7 +94,6 @@ const DeepLink = ({route, _}: any) => {
 
   const verifyQRCodeContent = useCallback(
     async (qrCode: QRCode) => {
-      console.log('USER QUE FUNCIONA OU NÃO', user);
       if (qrCode.status === 'INACTIVE' && !user) {
         qrCodeIsNotActiveBecauseUserIsNotLogged();
         return;
@@ -107,7 +104,6 @@ const DeepLink = ({route, _}: any) => {
         return;
       }
 
-      console.log("QRCODE MIZERA'", qrcode);
       if (qrCode.status === 'ACTIVE') {
         const {id} = qrCode;
         if (

@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Moment } from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
-import { LogBox, SafeAreaView } from 'react-native';
+import { LogBox, RefreshControl, SafeAreaView } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
@@ -40,6 +40,7 @@ export interface FilteredQRCodes {
   favorited: boolean;
   postId: string | null;
   comparisonDate: string;
+  active_at: string;
   qrCodeCreatorName: string;
   color: Colors;
 }
@@ -74,18 +75,11 @@ const History = () => {
       favoriteFilter: boolean,
     ) => {
       try {
-        console.log('fui chamado porra', { color, selectedDate, favoriteFilter, token });
 
         const dateObject = selectedDate ? {
           month: selectedDate.getMonth(),
           year: selectedDate.getFullYear(),
         } : {}
-
-        console.log('ESSE É O OBJETO QUE EU TO PASSANDO PRA API', {
-          color,
-          favorite: favoriteFilter.toString(),
-          ...dateObject
-        },)
 
         const response = await api.get('filtered_qrcodes/data', {
           params: {
@@ -101,7 +95,6 @@ const History = () => {
         setLoading(false);
         setReloadState(false);
       } catch (err: any) {
-        console.log("ERRO INSANO")
         console.log(err.response.data)
       }
     },
@@ -134,8 +127,13 @@ const History = () => {
         <Content>
           <QRCodeDateList
             data={qrCodes}
-            refreshing={loading}
-            onRefresh={() => loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)}
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={() => loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)}
+                colors={[theme.colors.primary]}
+              />
+            }
             keyExtractor={(item) => {
               const [date] = Object.keys(item);
               return date;
@@ -161,7 +159,7 @@ const History = () => {
                         const {
                           id,
                           color,
-                          comparisonDate,
+                          active_at,
                           favorited,
                           qrCodeCreatorName,
                           link,
@@ -186,7 +184,7 @@ const History = () => {
                               key={id}
                               id={id}
                               creator={qrCodeCreatorName}
-                              date={formattedDate(new Date(comparisonDate))}
+                              date={formattedDate(new Date(active_at))}
                               color={color}
                               link={link}
                               favorite={favorited}
@@ -198,19 +196,8 @@ const History = () => {
                     />
                   </>
                 );
-              } else if (!qrCodes[0]['0'].length && loading) {
-                return (
-                  <NotFoundContainer>
-                    <Progress.Circle
-                      size={RFValue(120)}
-                      indeterminate={true}
-                      borderWidth={16}
-                      thickness={8}
-                      color={theme.colors.primary}
-                    />
-                  </NotFoundContainer>
-                );
-              } else {
+              } 
+              else if (!loading) {
                 return (
                   <NotFoundContainer>
                     <LargeSearchIcon />
@@ -222,6 +209,8 @@ const History = () => {
                     </NoResultsFoundDescriptionText>
                   </NotFoundContainer>
                 );
+              } else {
+                return null;
               }
             }}
           />

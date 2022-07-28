@@ -57,7 +57,7 @@ export const QRCodeInfoContainer = styled.View`
   border-top-width: ${RFValue(0.1)}px;
   shadow-offset: 0px 10px;
   shadow-color: #000;
-  shadow-opacity: 0.25;
+  shadow-opacity: 0.01;
   shadow-radius: ${RFValue(10)}px;
   margin-bottom: ${RFValue(36)}px;
   padding-bottom: ${RFValue(36)}px;

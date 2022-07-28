@@ -90,7 +90,7 @@ export function HistoryCards({
               <QRCodeInfoText>Data: {date}</QRCodeInfoText>
             </QRCodeInfo>
             <QRCodeCardOptions>
-              <OptionsButton>
+              <OptionsButton  onPress={pressed}>
                 <OptionsButtonIcon />
               </OptionsButton>
             </QRCodeCardOptions>

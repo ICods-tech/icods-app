@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
   textContainer: {
     position: 'absolute',
     paddingHorizontal: RFValue(15),
-    paddingVertical: RFValue(20),
     justifyContent: 'space-around',
   },
 

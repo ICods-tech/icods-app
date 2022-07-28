@@ -21,6 +21,8 @@ import {displayToast} from '../../utils/Toast';
 import {errorsBoilerplate, handleError} from './utils/handleInputErrors';
 import {
   BackButtonContainer,
+  BottomTextContainer,
+  BottomTextHighlight,
   Container,
   ContainerButton,
   EmailText,
@@ -48,6 +50,7 @@ const RedefinePassword = ({route}: any) => {
   const [isPasswordErrored, setIsPasswordErrored] = useState(false);
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
   const [confirmationCodeError, setConfirmationCodeError] = useState(false);
+  const [resendEmailSent, setResendEmailSent] = useState(false);
   const [value, setValue] = useState(pass);
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [success, setSuccess] = useState(false);
@@ -86,6 +89,26 @@ const RedefinePassword = ({route}: any) => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [Keyboard]);
+
+  const handleResendCode = useCallback(async () => {
+    try {
+      const connection = await checkConnection();
+      if (!connection) {
+        navigation.navigate('ConnectionProblems');
+        return;
+      }
+      await api.patch('resetPasswordWithoutPass', {
+        email,
+      });
+    } catch (error: any) {
+      displayToast({
+        message1: error.message,
+        type: 'error',
+      });
+    } finally {
+      setResendEmailSent(true);
+    }
+  }, [email]);
 
   const handleRedefinePassword = useCallback(async () => {
     try {
@@ -132,7 +155,7 @@ const RedefinePassword = ({route}: any) => {
   }, [pass, value, password, passwordConfirmation, email, navigation]);
 
   const filledInput = () => {
-    return password.length > 0 || passwordConfirmation.length > 0;
+    return password.length > 0 && passwordConfirmation.length > 0;
   };
 
   const handleBackButton = () => {
@@ -228,6 +251,9 @@ const RedefinePassword = ({route}: any) => {
                 text={'Alterar senha'}
               />
             </ContainerButton>
+            <BottomTextContainer activeOpacity={1} onPress={async () => !resendEmailSent && await handleResendCode()}>
+              <BottomTextHighlight disabled={resendEmailSent}>Reenviar e-mail</BottomTextHighlight>
+            </BottomTextContainer>
           </RedefinePasswordForm>
         </Container>
       </TouchableWithoutFeedback>

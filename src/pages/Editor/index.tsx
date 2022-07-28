@@ -167,7 +167,7 @@ const Editor = ({ route, _ }: any) => {
         {!isRecording && (
           <>
             <HeaderContainer>
-              <Header title="" navigate="Dashboard" />
+              <Header title="" customBackBehavior={()=> navigation.navigate("TabBarRoutes", { screen: "Início", initial: false })} />
             </HeaderContainer>
             {recordedData !== '' && (
               <TouchableWithoutFeedback onPress={openEditor}>

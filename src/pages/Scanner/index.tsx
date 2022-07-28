@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import Mask from '../../components/Scanner/Mask';
 import api from '../../services/api';
 import styles from './styles';
 
-import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView, Text, View} from 'react-native';
-import {BarCodeReadEvent, RNCamera} from 'react-native-camera';
-import {SvgProps} from 'react-native-svg';
-import {useTheme} from 'styled-components/native';
-import {WarningModal} from '../../components/WarningModal';
-import {LOG} from '../../config';
-import {useAuth} from '../../hooks/auth';
-import {QRCode} from '../../types/QRCode';
-import {checkConnection} from '../../utils/checkConnection';
+import { useNavigation } from '@react-navigation/native';
+import { SafeAreaView, StatusBar, Text, View } from 'react-native';
+import { BarCodeReadEvent, RNCamera } from 'react-native-camera';
+import { SvgProps } from 'react-native-svg';
+import { useTheme } from 'styled-components/native';
+import { WarningModal } from '../../components/WarningModal';
+import { LOG } from '../../config';
+import { useAuth, User } from '../../hooks/auth';
+import { QRCode } from '../../types/QRCode';
+import { checkConnection } from '../../utils/checkConnection';
 
 import CancelIcon from '../../assets/images/Icons/scanner/cancel_icon.svg';
 import CheckIcon from '../../assets/images/Icons/scanner/check_icon.svg';
@@ -22,7 +22,7 @@ import EyeCloseIcon from '../../assets/images/Icons/scanner/eye_close_icon.svg';
 import GiftIcon from '../../assets/images/Icons/scanner/gift_icon.svg';
 import EdicionIcon from '../../assets/images/Icons/scanner/login_icon.svg';
 import theme from '../../global/styles/theme';
-import {useBackHandler} from '../../utils/useBackHandler';
+import { useBackHandler } from '../../utils/useBackHandler';
 
 const log = LOG.extend('Scanner');
 
@@ -50,17 +50,19 @@ const defaultPopUp = {
 
 const Scanner = (props: ScannerProps) => {
   const theme = useTheme();
-  const {user} = useAuth();
+  const { user } = useAuth();
   const navigation = useNavigation<any>();
 
   const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
-  const page = user ? 'Início' : 'SignIn';
+  const page = user ? 'TabBarRoutes' : 'SignIn';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [camera, setCamera] = useState<RNCamera>();
   const [qrCodeValidate, setQrCodeValidate] = useState(false);
   const [qrcode, setQrcode] = useState<QRCode>();
   const [popUp, setPopUp] = useState<PopUp>(defaultPopUp as PopUp);
+
+  const customBackButtonBehaviour = () => user ? navigation.navigate("TabBarRoutes", { screen: "Início", initial: false }) : navigation.navigate("SignIn")
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -133,14 +135,30 @@ const Scanner = (props: ScannerProps) => {
     });
   };
 
-  const handleCloseButton = () => {
-    if (popUp?.press === 'Scanner') {
-      setQrCodeValidate(false);
-      setQrcode(undefined);
+
+  const showFavoriteIcon = (userFavorite: User, qrcodeFavorite: QRCode | undefined) => {
+    if (userFavorite) {
+      const qrcodeCreatedByUser = qrcodeFavorite?.user === 'Você'
+
+      return qrcodeCreatedByUser ? false : true
     }
+
+    return false
+  }
+
+  const handleCloseButton = () => {
+    console.log(popUp);
+
+    if (popUp?.press === 'Scanner') {
+      setQrcode(undefined);
+      setQrCodeValidate(false);
+    }
+
+
     navigation.navigate(popUp?.press || 'Scanner', {
       qrcode,
       isHistoryDetails: false,
+      showFavoriteIcon: false,
     });
   };
 
@@ -156,7 +174,7 @@ const Scanner = (props: ScannerProps) => {
     }
 
     if (qrCode.status === 'ACTIVE') {
-      const {id} = qrCode;
+      const { id } = qrCode;
       // if (qrCode.receivedUser.id === user?.id) {
       const qrCodeId = qrCode.receivedUser === null ? id : null;
       qrCodeContainsGift(qrCodeId);
@@ -171,7 +189,7 @@ const Scanner = (props: ScannerProps) => {
     }
   };
 
-  const barcodeRecognized = async ({data}: BarCodeReadEvent) => {
+  const barcodeRecognized = async ({ data }: BarCodeReadEvent) => {
     await handleQRCode(data);
   };
 
@@ -234,17 +252,22 @@ const Scanner = (props: ScannerProps) => {
   qrCodeContainsGift;
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor={theme.colors.primary}
+        barStyle="light-content"
+        translucent={false}
+      />
       <RNCamera
         ref={(camera: RNCamera) => {
           setCamera(camera);
         }}
-        style={{flex: 1}}
+        style={{ flex: 1 }}
         onBarCodeRead={barcodeRecognized}>
         <Mask read={qrCodeValidate} />
 
         <View style={styles.textContainer}>
-          <Header title="Escanear" navigate={page} whiteMode={true} />
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <Header title="Escanear" whiteMode={true} customBackBehavior={customBackButtonBehaviour} />
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <Text style={styles.textParagraph}>
               Aponte o QR CODE para região abaixo
             </Text>

@@ -12,6 +12,7 @@ import styles from './styles';
 interface VideoPlayerFooterProps {
   url: string;
   updatedFavorite: boolean;
+  showFavoriteIcon?: boolean;
   setUpdatedFavorite: (updatedFavorite: boolean) => void;
 }
 
@@ -19,6 +20,7 @@ const VideoPlayerFooter = ({
   url,
   updatedFavorite,
   setUpdatedFavorite,
+  showFavoriteIcon = true,
 }: VideoPlayerFooterProps) => {
   const {user} = useAuth();
   const navigation = useNavigation<any>();
@@ -63,10 +65,12 @@ const VideoPlayerFooter = ({
       <TouchableOpacity onPress={onDownloadPress}>
         <IconDownload />
       </TouchableOpacity>
-
-      <TouchableOpacity onPress={onLikePress}>
-        {favoriteButton ? <HeartVideoIconFilled /> : <HeartVideoIcon />}
-      </TouchableOpacity>
+      
+      {showFavoriteIcon && (
+        <TouchableOpacity onPress={onLikePress}>
+          {favoriteButton ? <HeartVideoIconFilled /> : <HeartVideoIcon />}
+        </TouchableOpacity>
+      )} 
 
       <TouchableOpacity onPress={onSharePress}>
         <IconShare />
