@@ -37,7 +37,6 @@ export const Container = styled.View<ContentProps>`
     color !== 'noColor' && color !== 'noFilter' ? 0 : RFValue(10)}px;
 
   align-items: center;
-  /* background-color: green; */
 `;
 
 export const Content = styled.View`
@@ -45,7 +44,6 @@ export const Content = styled.View`
   flex: 1;
   align-items: center;
   margin-left: ${RFValue(11)}px;
-  /* background-color: red; */
 `;
 
 export const MainContainer = styled.View`
@@ -110,7 +108,8 @@ export const OptionsButton = styled(BorderlessButton)`
 export const OptionsButtonIcon = styled(ArrowIcon).attrs({
   width: RFValue(16),
   height: RFValue(16),
-})``;
+})`
+`;
 
 // Color Makers
 export const BlackMarker = styled(BlackMarkerIcon).attrs({

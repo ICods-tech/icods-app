@@ -40,6 +40,7 @@ export interface FilteredQRCodes {
   favorited: boolean;
   postId: string | null;
   comparisonDate: string;
+  active_at: string;
   qrCodeCreatorName: string;
   color: Colors;
 }
@@ -74,18 +75,11 @@ const History = () => {
       favoriteFilter: boolean,
     ) => {
       try {
-        console.log('fui chamado porra', { color, selectedDate, favoriteFilter, token });
 
         const dateObject = selectedDate ? {
           month: selectedDate.getMonth(),
           year: selectedDate.getFullYear(),
         } : {}
-
-        console.log('ESSE É O OBJETO QUE EU TO PASSANDO PRA API', {
-          color,
-          favorite: favoriteFilter.toString(),
-          ...dateObject
-        },)
 
         const response = await api.get('filtered_qrcodes/data', {
           params: {
@@ -101,7 +95,6 @@ const History = () => {
         setLoading(false);
         setReloadState(false);
       } catch (err: any) {
-        console.log("ERRO INSANO")
         console.log(err.response.data)
       }
     },
@@ -166,7 +159,7 @@ const History = () => {
                         const {
                           id,
                           color,
-                          comparisonDate,
+                          active_at,
                           favorited,
                           qrCodeCreatorName,
                           link,
@@ -191,7 +184,7 @@ const History = () => {
                               key={id}
                               id={id}
                               creator={qrCodeCreatorName}
-                              date={formattedDate(new Date(comparisonDate))}
+                              date={formattedDate(new Date(active_at))}
                               color={color}
                               link={link}
                               favorite={favorited}
