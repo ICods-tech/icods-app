@@ -68,7 +68,7 @@ const ForgotPassword = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSendButton, count]);
 
-  const handleSend = async () => {
+  const handleSend = () => {
     emailSchema
       .validate({email})
       .then(async () => {

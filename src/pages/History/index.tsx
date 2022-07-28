@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Moment } from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
-import { LogBox, SafeAreaView } from 'react-native';
+import { LogBox, RefreshControl, SafeAreaView } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useTheme } from 'styled-components/native';
@@ -134,8 +134,13 @@ const History = () => {
         <Content>
           <QRCodeDateList
             data={qrCodes}
-            refreshing={loading}
-            onRefresh={() => loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)}
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={() => loadQRCodes(color, selectedDate?.toDate(), favoriteFilter)}
+                colors={[theme.colors.primary]}
+              />
+            }
             keyExtractor={(item) => {
               const [date] = Object.keys(item);
               return date;
@@ -198,19 +203,8 @@ const History = () => {
                     />
                   </>
                 );
-              } else if (!qrCodes[0]['0'].length && loading) {
-                return (
-                  <NotFoundContainer>
-                    <Progress.Circle
-                      size={RFValue(120)}
-                      indeterminate={true}
-                      borderWidth={16}
-                      thickness={8}
-                      color={theme.colors.primary}
-                    />
-                  </NotFoundContainer>
-                );
-              } else {
+              } 
+              else if (!loading) {
                 return (
                   <NotFoundContainer>
                     <LargeSearchIcon />
@@ -222,6 +216,8 @@ const History = () => {
                     </NoResultsFoundDescriptionText>
                   </NotFoundContainer>
                 );
+              } else {
+                return null;
               }
             }}
           />

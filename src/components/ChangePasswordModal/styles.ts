@@ -106,7 +106,7 @@ interface IFooterButtonTextProps {
 
 export const FooterButtonText = styled.Text<IFooterButtonTextProps>`
   text-transform: uppercase;
-  font-family: ${({ theme }) => theme.fonts.semi_bold};
+  font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(14)}px;
   line-height: ${RFValue(24)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.001}px;

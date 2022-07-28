@@ -8,6 +8,10 @@ interface Props {
   isKeyboardVisible: boolean;
 }
 
+interface BottomTextHighlightProps {
+  disabled: boolean;
+}
+
 export const SafeAreaView = styled.SafeAreaView`
   flex: 1;
 `;
@@ -40,7 +44,7 @@ export const RedefinePasswordFormLabel = styled.Text`
   font-size: ${RFValue(16)}px;
   padding: 0 ${RFValue(12)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
-  margin: ${RFValue(32)}px ${RFValue(0)}px ${RFValue(28)}px;
+  margin: ${RFValue(24)}px ${RFValue(0)}px ${RFValue(20)}px;
   letter-spacing: ${Dimensions.get('window').width * 0.002}px;
   color: ${({ theme }) => theme.colors.dark_800};
 `;
@@ -71,7 +75,7 @@ interface ErrorStyleProps {
 }
 
 export const InputContainer = styled.View<ErrorStyleProps>`
-  margin: 0 ${RFValue(32)}px ${RFValue(36)}px;
+  margin: 0 ${RFValue(32)}px ${RFValue(30)}px;
   border: 1px solid
     ${({ isErrored, theme }) =>
     isErrored ? theme.colors.attention : theme.colors.light_line};
@@ -122,3 +126,17 @@ export const ContainerButton = styled.View`
   align-self: center;
   margin-bottom: ${RFValue(16)}px;
 `;
+
+export const BottomTextContainer = styled.TouchableOpacity`
+  margin-top: ${RFValue(4)}px;
+`
+
+export const BottomTextHighlight = styled.Text<BottomTextHighlightProps>`
+  font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme, disabled }) => disabled ? theme.colors.gray_400_2 : theme.colors.primary};
+  text-align: center;
+  font-size: ${RFValue(10)}px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${({theme, disabled}) => disabled ? theme.colors.gray_400_2 : theme.colors.primary};
+  letter-spacing: ${Dimensions.get('window').width * 0.002}px;
+`

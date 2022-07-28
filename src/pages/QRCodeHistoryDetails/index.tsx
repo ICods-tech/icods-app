@@ -79,7 +79,7 @@ const QRCodeHistoryDetails = ({route}: RouteParams) => {
   const [lastSavedColor, setLastSavedColor] = useState<Colors>(
     initialColorState,
   );
-
+// HISTORY > DETAIL > VIDEOPLAY > FOOTVIDEOLAPY
   const [saveChangesModalOpen, setSaveChangesModalOpen] = useState(false);
 
   const openVideo = () => {
@@ -91,6 +91,7 @@ const QRCodeHistoryDetails = ({route}: RouteParams) => {
           setUpdatedFavorite,
         },
         isHistoryDetails: true,
+        showFavoriteIcon: creator !== "Você",
       });
     }else{
       displayToast({
