@@ -67,8 +67,11 @@ const EditProfile = () => {
 
   return (
     <Container>
-      <SafeAreaView style={{backgroundColor: '#2b90d9'}} />
-      <StatusBar backgroundColor="#3097db" barStyle="light-content" />
+      <SafeAreaView style={{backgroundColor: theme.colors.primary}} />
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor={theme.colors.primary}
+      />
       <HeaderProfile
         fullName={String(handleUserObject('name', user))}
         edit

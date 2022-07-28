@@ -24,7 +24,7 @@ const VideoPlayer = ({route, _}: any) => {
     isHistoryDetails,
     showFavoriteIcon
   } = route.params;
-  const page = isHistoryDetails ? 'back' : user ? 'Dashboard' : 'SignIn';
+  const page = isHistoryDetails ? 'back' : user ? 'TabBarRoutes' : 'SignIn';
   const player = useRef(null);
   const url = 'https://icods-studio.s3.amazonaws.com/icods.mp4';
   const videoError = (err: LoadError) => {

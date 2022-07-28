@@ -5,7 +5,7 @@ import api from '../../services/api';
 import styles from './styles';
 
 import {useNavigation} from '@react-navigation/native';
-import {SafeAreaView, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 import {BarCodeReadEvent, RNCamera} from 'react-native-camera';
 import {SvgProps} from 'react-native-svg';
 import {useTheme} from 'styled-components/native';
@@ -54,13 +54,15 @@ const Scanner = (props: ScannerProps) => {
   const navigation = useNavigation<any>();
 
   const qrCodeIdFromDeeplink = props.route.path ? props.route.path : '';
-  const page = user ? 'Início' : 'SignIn';
+  const page = user ? 'TabBarRoutes' : 'SignIn';
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [camera, setCamera] = useState<RNCamera>();
   const [qrCodeValidate, setQrCodeValidate] = useState(false);
   const [qrcode, setQrcode] = useState<QRCode>();
   const [popUp, setPopUp] = useState<PopUp>(defaultPopUp as PopUp);
+
+  const customBackButtonBehaviour = () => user ? navigation.navigate("TabBarRoutes", { screen: "Início", initial: false }) : navigation.navigate("SignIn")
 
   const [isVisible, setIsVisible] = useState(false);
 
@@ -139,8 +141,8 @@ const Scanner = (props: ScannerProps) => {
     
     if (popUp?.press === 'Scanner') {
       setQrcode(undefined);
+      setQrCodeValidate(false);
     }
-    setQrCodeValidate(false);
     navigation.navigate(popUp?.press || 'Scanner', {
       qrcode,
       isHistoryDetails: false,
@@ -237,6 +239,11 @@ const Scanner = (props: ScannerProps) => {
   qrCodeContainsGift;
   return (
     <SafeAreaView style={styles.container}>
+    <StatusBar
+            backgroundColor={theme.colors.primary}
+            barStyle="light-content"
+            translucent={false}
+          />
       <RNCamera
         ref={(camera: RNCamera) => {
           setCamera(camera);
@@ -246,7 +253,7 @@ const Scanner = (props: ScannerProps) => {
         <Mask read={qrCodeValidate} />
 
         <View style={styles.textContainer}>
-          <Header title="Escanear" navigate={page} whiteMode={true} />
+          <Header title="Escanear" whiteMode={true} customBackBehavior={customBackButtonBehaviour} />
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <Text style={styles.textParagraph}>
               Aponte o QR CODE para região abaixo
