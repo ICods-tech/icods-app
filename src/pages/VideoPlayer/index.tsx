@@ -22,6 +22,7 @@ const VideoPlayer = ({route, _}: any) => {
   const {
     qrcode: {updatedFavorite, link, setUpdatedFavorite},
     isHistoryDetails,
+    showFavoriteIcon
   } = route.params;
   const page = isHistoryDetails ? 'back' : user ? 'Dashboard' : 'SignIn';
   const player = useRef(null);
@@ -61,6 +62,7 @@ const VideoPlayer = ({route, _}: any) => {
           url={link ? link : url}
           updatedFavorite={updatedFavorite}
           setUpdatedFavorite={setUpdatedFavorite}
+          showFavoriteIcon={showFavoriteIcon}
         />
       </IconsContainer>
     </Container>

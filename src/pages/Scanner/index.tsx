@@ -134,10 +134,13 @@ const Scanner = (props: ScannerProps) => {
   };
 
   const handleCloseButton = () => {
+    console.log('handleCloseButton');
+    console.log(popUp);
+    
     if (popUp?.press === 'Scanner') {
-      setQrCodeValidate(false);
       setQrcode(undefined);
     }
+    setQrCodeValidate(false);
     navigation.navigate(popUp?.press || 'Scanner', {
       qrcode,
       isHistoryDetails: false,

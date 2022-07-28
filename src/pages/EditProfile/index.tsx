@@ -99,7 +99,7 @@ const EditProfile = () => {
           visible={changePasswordModalOpen}
           icon={ChangePasswordIcon}
           confirmText={'Alterar senha'}
-          iconBackgroundColor={theme.colors.primary}
+          iconBackgroundColor={theme.colors.white}
           isFooterButtonsActived
           onCloseModal={handleCloseChangePasswordModal}
         />
