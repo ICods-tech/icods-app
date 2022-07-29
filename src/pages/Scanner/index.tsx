@@ -157,7 +157,7 @@ const Scanner = (props: ScannerProps) => {
     navigation.navigate(popUp?.press || 'Scanner', {
       qrcode,
       isHistoryDetails: false,
-      showFavoriteIcon: !user ? true : showFavoriteIcon(user, qrcode),
+      showFavoriteIcon: !user,
     });
   };
 
