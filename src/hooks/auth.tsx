@@ -55,31 +55,33 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const validatorToken = useCallback(async () => {
     try {
-      await api.get('/validator_token');
+      await api.get('/validator-token');
     } catch (error: any) {
       throw new Error(error.message);
     }
   }, []);
 
   const loadStorageData = async () => {
-    const [token, user] = await AsyncStorage.multiGet([
-      '@ICods:token',
-      '@ICods:user',
-    ]);
+    try {
+      const [token, user] = await AsyncStorage.multiGet([
+        '@ICods:token',
+        '@ICods:user',
+      ]);
 
-    if (token[1] && user[1]) {
-      log.warn('token carregado:' + token[1] + user[1]);
-      api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
-
-      try {
-        await validatorToken();  
-        const userId = JSON.parse(user[1])
-        setData({ token: token[1], user: userId });
+      if (!token[1] || !user[1]) {
         setIsLoading(false);
-      } catch (error) {
-        log.error(error);
-        setIsLoading(false); 
+        return;
       }
+
+      api.defaults.headers.common['Authorization'] = `Bearer ${token[1]}`;
+    
+      await validatorToken();  
+      const userId = JSON.parse(user[1])
+      setData({ token: token[1], user: userId });
+      setIsLoading(false);
+    } catch (error) {
+      log.error(error);
+      setIsLoading(false); 
     }
   }
 
