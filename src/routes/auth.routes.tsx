@@ -9,6 +9,7 @@ import Scanner from '../pages/Scanner';
 import SignIn from '../pages/SignIn';
 import Deeplink from '../pages/Deeplink';
 import VideoPlayer from '../pages/VideoPlayer';
+import GiftOpen from '../pages/GiftOpen';
 const {Navigator, Screen} = createStackNavigator();
 
 export function AuthRoutes() {
@@ -24,6 +25,7 @@ export function AuthRoutes() {
       <Screen name="RedefinePassword" component={RedefinePassword} />
       <Screen name="ConnectionProblems" component={ConnectionProblems} />
       <Screen name="VideoPlayer" component={VideoPlayer} />
+      <Screen name="GiftOpen" component={GiftOpen} />
       <Screen name="Deeplink" component={Deeplink} />
     </Navigator>
   );

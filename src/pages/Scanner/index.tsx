@@ -154,11 +154,10 @@ const Scanner = (props: ScannerProps) => {
       setQrCodeValidate(false);
     }
 
-
     navigation.navigate(popUp?.press || 'Scanner', {
       qrcode,
       isHistoryDetails: false,
-      showFavoriteIcon: false,
+      showFavoriteIcon: !user,
     });
   };
 
