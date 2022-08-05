@@ -100,6 +100,11 @@ const RedefinePassword = ({route}: any) => {
       await api.patch('resetPasswordWithoutPass', {
         email,
       });
+
+      displayToast({
+        message1: 'Email enviado com sucesso!',
+        type: 'success',
+      });
     } catch (error: any) {
       displayToast({
         message1: error.message,
