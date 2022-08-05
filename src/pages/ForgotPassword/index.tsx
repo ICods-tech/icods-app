@@ -150,16 +150,6 @@ const ForgotPassword = () => {
         iconBackgroundColor={theme.colors.primary}
         onCloseModal={handleCloseModal}
       />
-
-      {!activeSendButton && (
-        <InfoSendEmailContainer>
-          <InfoSendEmailText isBlue={false}>
-            Não recebeu o e-mail?{' '}
-            <InfoSendEmailText isBlue>Aguarde {count}s </InfoSendEmailText>
-            para receber novamente
-          </InfoSendEmailText>
-        </InfoSendEmailContainer>
-      )}
     </SafeAreaView>
   );
 };
