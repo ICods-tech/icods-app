@@ -11,6 +11,7 @@ import { HeaderHistory } from '../../components/History/HeaderHistory';
 import { HistoryCards } from '../../components/History/HistoryCards';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
+import { checkConnection } from '../../utils/checkConnection';
 import { filteredQRCodesByDatePlaceholder } from '../../utils/filteredQRCodesByDatePlaceholder';
 import formattedDate from '../../utils/formatDates';
 import {
@@ -30,6 +31,9 @@ import {
 } from './styles';
 
 LogBox.ignoreLogs(['EventEmitter.removeListener']);
+const MAX_ATTEMPTS = 3;
+let attempts = 0;
+let retryTimeout: NodeJS.Timeout;
 
 export interface FilteredQRCodes {
   id: string;
@@ -50,6 +54,7 @@ export interface FilteredQRCodesByDate {
 }
 
 const History = () => {
+  console.log('Attemts: ', attempts);
   const { token } = useAuth();
   const navigation = useNavigation<any>();
   const theme = useTheme();
@@ -57,6 +62,7 @@ const History = () => {
   const [qrCodes, setQRCodes] = useState<FilteredQRCodesByDate[]>(
     filteredQRCodesByDatePlaceholder,
   );
+  
   const [color, setColor] = useState<Colors>('noFilter');
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState<Moment | undefined>(
@@ -66,6 +72,12 @@ const History = () => {
 
   function handleFavoriteFilter() {
     setFavoriteFilter(!favoriteFilter);
+  }
+
+  function maxAttemptsToRetry() {
+    attempts = 0;
+    clearTimeout(retryTimeout);
+    navigation.navigate('ConnectionProblems');
   }
 
   const loadQRCodes = useCallback(
@@ -80,6 +92,19 @@ const History = () => {
           month: selectedDate.getMonth(),
           year: selectedDate.getFullYear(),
         } : {}
+
+        const connection = await checkConnection();
+        if (!connection) {
+          retryTimeout = setTimeout(() => {
+            attempts++;
+            if (attempts === MAX_ATTEMPTS) {
+              maxAttemptsToRetry();
+              return;
+            }
+            return loadQRCodes(color, selectedDate, favoriteFilter);
+          } , 5000);
+          return;
+        }
 
         const response = await api.get('filtered_qrcodes/data', {
           params: {
