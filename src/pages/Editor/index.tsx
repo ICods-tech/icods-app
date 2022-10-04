@@ -9,6 +9,7 @@ import Menu from '../../components/Editor/Menu';
 import Header from '../../components/Header';
 import { WarningModal } from '../../components/WarningModal';
 import { LOG } from '../../config';
+import { useBackHandler } from '../../utils/useBackHandler';
 import styles, { HeaderContainer } from './styles';
 const log = LOG.extend('Editor');
 
@@ -18,7 +19,6 @@ const Editor = ({ route, _ }: any) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const { qrcode } = route.params;
-
   const [camera, setCamera] = useState<RNCamera>();
   const [type, setType] = useState(false);
   const [flash, setFlash] = useState(false);
@@ -132,6 +132,15 @@ const Editor = ({ route, _ }: any) => {
     }
   };
 
+  const customBackButtonBehaviour = () => {
+    navigation.navigate('TabBarRoutes', { screen: 'Início', initial: false });
+  };
+
+  useBackHandler(() => {
+    customBackButtonBehaviour();
+    return true;
+  });
+
   return (
     <SafeAreaView style={styles.container}>
       <RNCamera
@@ -167,7 +176,15 @@ const Editor = ({ route, _ }: any) => {
         {!isRecording && (
           <>
             <HeaderContainer>
-              <Header title="" customBackBehavior={()=> navigation.navigate("TabBarRoutes", { screen: "Início", initial: false })} />
+              <Header
+                title=""
+                customBackBehavior={() =>
+                  navigation.navigate('TabBarRoutes', {
+                    screen: 'Início',
+                    initial: false,
+                  })
+                }
+              />
             </HeaderContainer>
             {recordedData !== '' && (
               <TouchableWithoutFeedback onPress={openEditor}>
