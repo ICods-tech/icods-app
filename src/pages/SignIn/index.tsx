@@ -31,6 +31,7 @@ import Input from '../../components/Input';
 import PasswordInput from '../../components/PasswordInput';
 import handleLinkNavigation from '../../utils/handleLinkNavigation';
 import {displayToast} from '../../utils/Toast';
+import { checkConnection } from '../../utils/checkConnection';
 
 const log = LOG.extend('Signin');
 
@@ -47,6 +48,12 @@ const SignIn = () => {
   const emailRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const handleLogin = useCallback(async () => {
+    const connection = await checkConnection();
+
+    if (!connection) {
+      return;
+    }
+    
     setIsLoading(true);
     try {
       await signIn({email, password});

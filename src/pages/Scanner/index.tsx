@@ -216,7 +216,6 @@ const Scanner = (props: ScannerProps) => {
 
     const connection = await checkConnection();
     if (!connection) {
-      navigation.navigate('ConnectionProblems');
       return;
     }
 

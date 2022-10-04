@@ -1,8 +1,10 @@
 import React from "react";
-import { Button, ButtonText, Container, Message, Title } from './styles';
+import { ButtonContainer, Container, Message, Title } from './styles';
 import WiFiImage from '../../assets/images/Icons/eva_wifi-off-fill.svg';
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from "../../hooks/auth";
+import { SubmitButton } from "../../components/SubmitButton";
+import Header from "../../components/Header";
 
 const ConnectionProblems = () => {
   const navigation = useNavigation();
@@ -19,12 +21,20 @@ const ConnectionProblems = () => {
 
   return (
     <Container>
+      <Header 
+        title=""
+        navigate="Início"
+      />
       <WiFiImage />
       <Title>Sem conexão</Title>
       <Message>Sua conexão com internet está atualmente indisponível, por favor verifique ou tente novamente </Message>
-      <Button onPress={handleButton}>
-        <ButtonText>Tentar Novamente</ButtonText>
-      </Button>
+      <ButtonContainer>
+        <SubmitButton 
+          enabled={true}
+          onPress={handleButton}
+          text="Tentar novamente"
+        />
+      </ButtonContainer>
     </Container>
   );
 }

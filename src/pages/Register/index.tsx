@@ -32,6 +32,7 @@ import Input from '../../components/Input';
 import ModalUseTerms from '../../components/ModalUseTerms';
 import PasswordInput from '../../components/PasswordInput';
 import { displayToast } from '../../utils/Toast';
+import { checkConnection } from '../../utils/checkConnection';
 const log = LOG.extend('Register');
 
 export interface IRouteErrors {
@@ -89,6 +90,11 @@ const Register = () => {
 
   const handleSignUp = useCallback(async () => {
     setIsLoading(true);
+    const connection = await checkConnection();
+    if (!connection) {
+      return;
+    }
+
     const data = {
       name,
       username,
